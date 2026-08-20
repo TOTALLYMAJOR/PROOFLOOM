@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "design-intelligence"
+version = "0.1.0"
+description = "Standalone design intelligence package for Codex and Claude."
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "TOTALLYMAJOR" }]
+license = { text = "Proprietary" }
+dependencies = []
+
+[project.scripts]
+design-intelligence-inspect = "repo_fit.inspect:main"
+design-intelligence-assess = "repo_fit.assess:main"
+
+[tool.setuptools]
+packages = ["repo_fit"]

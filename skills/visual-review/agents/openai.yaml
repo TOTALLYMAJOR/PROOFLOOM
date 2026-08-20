@@ -1,0 +1,3 @@
+interface:
+  display_name: "Visual Review"
+  short_description: "Inspect rendered UI and classify defects by severity and cause"

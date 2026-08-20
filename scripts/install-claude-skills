@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+DESTINATION="${1:-${CLAUDE_SKILLS_HOME:-$HOME/.claude/skills}}"
+
+mkdir -p "$DESTINATION"
+
+for skill in "$ROOT_DIR"/skills/*; do
+  name="$(basename "$skill")"
+  rm -rf "$DESTINATION/$name"
+  cp -R "$skill" "$DESTINATION/$name"
+done
+
+printf 'Installed Design Intelligence skills to %s\n' "$DESTINATION"
