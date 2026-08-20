@@ -1,4 +1,4 @@
-# Design Intelligence v0.1.0
+# Design Intelligence v0.1.1
 
 Design Intelligence is a small, production-usable repository that gives Codex and Claude a reusable product-design capability without turning into a second application scaffold.
 
@@ -96,4 +96,4 @@ python3 /mnt/c/Users/Administrator/.codex/skills/.system/skill-creator/scripts/q
 
 ## Release
 
-`VERSION` and package metadata are pinned to `0.1.0`. Tag releases after validation passes.
+`VERSION` and package metadata are pinned to `0.1.1`. Tag releases after validation passes.
