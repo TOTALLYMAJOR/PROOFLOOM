@@ -1,0 +1,135 @@
+{
+  "title": "Design QA Control Deck",
+  "headings": [
+    {
+      "level": 1,
+      "text": "Design QA Control Deck"
+    },
+    {
+      "level": 2,
+      "text": "Five checks, one promotion boundary"
+    },
+    {
+      "level": 2,
+      "text": "Only validated outcomes survive the cycle"
+    },
+    {
+      "level": 2,
+      "text": "Measured, not imagined"
+    },
+    {
+      "level": 2,
+      "text": "Evidence receipt"
+    }
+  ],
+  "landmarks": [
+    "header",
+    "nav",
+    "main",
+    "aside"
+  ],
+  "controls": [
+    {
+      "tag": "a",
+      "name": "Design Intelligence V2",
+      "enforceBounds": false,
+      "rect": {
+        "x": 57.59375,
+        "y": 26,
+        "width": 195.78125,
+        "height": 19,
+        "right": 253.375,
+        "bottom": 45
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Pipeline",
+      "enforceBounds": false,
+      "rect": {
+        "x": 1155.765625,
+        "y": 18,
+        "width": 68.046875,
+        "height": 35,
+        "right": 1223.8125,
+        "bottom": 53
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Memory",
+      "enforceBounds": false,
+      "rect": {
+        "x": 1247.8125,
+        "y": 18,
+        "width": 51.046875,
+        "height": 35,
+        "right": 1298.859375,
+        "bottom": 53
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Quality",
+      "enforceBounds": false,
+      "rect": {
+        "x": 1322.859375,
+        "y": 18,
+        "width": 59.546875,
+        "height": 35,
+        "right": 1382.40625,
+        "bottom": 53
+      }
+    },
+    {
+      "tag": "button",
+      "name": "Inspect latest evidence",
+      "enforceBounds": true,
+      "rect": {
+        "x": 1069.40625,
+        "y": 475.625,
+        "width": 286,
+        "height": 48,
+        "right": 1355.40625,
+        "bottom": 523.625
+      }
+    }
+  ],
+  "offscreenControls": [],
+  "horizontalOverflow": false,
+  "scrollWidth": 1440,
+  "viewportWidth": 1440,
+  "viewportHeight": 1000,
+  "contractAssertions": [
+    {
+      "id": "primary-action-visible",
+      "selector": "[data-qa-primary]",
+      "type": "visible",
+      "passed": true
+    },
+    {
+      "id": "surface-title",
+      "selector": "h1",
+      "type": "text",
+      "passed": true
+    },
+    {
+      "id": "pipeline-visible",
+      "selector": "#pipeline",
+      "type": "visible",
+      "passed": true
+    },
+    {
+      "id": "evidence-details-visible",
+      "selector": "#evidence-details",
+      "type": "visible",
+      "passed": true
+    },
+    {
+      "id": "evidence-expanded",
+      "selector": "[data-qa-primary]",
+      "type": "attribute",
+      "passed": true
+    }
+  ]
+}

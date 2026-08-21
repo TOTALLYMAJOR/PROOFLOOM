@@ -33,6 +33,8 @@ IGNORED_DIR_NAMES = {
     "__pycache__",
 }
 
+TEST_DATA_DIR_NAMES = {"fixtures", "__fixtures__", "snapshots", "__snapshots__"}
+
 DIRECTORY_HINTS = [
     "docs",
     "design",
@@ -170,6 +172,10 @@ def inspect_repository(root: str | Path) -> RepositorySnapshot:
     )
 
     capability_authorities = _collect_capabilities(root_path, candidate_files, contents)
+    if (root_path / ".design/memory/decisions.jsonl").is_file():
+        capability_authorities.setdefault("design_decisions", []).append(".design/memory/decisions.jsonl")
+    if (root_path / ".design/memory/debt.jsonl").is_file():
+        capability_authorities.setdefault("design_debt", []).append(".design/memory/debt.jsonl")
     if "@playwright/test" in dependencies:
         capability_authorities.setdefault("testing_e2e", []).append("package.json")
         capability_authorities.setdefault("visual_validation", []).append("package.json")
@@ -188,8 +194,18 @@ def inspect_repository(root: str | Path) -> RepositorySnapshot:
     typography = _detect_typography(contents)
     design_documentation = _signal_for_capability(capability_authorities, "design_language")
     agent_governance = _signal_for_capability(capability_authorities, "agent_governance")
-    playwright = _detect_test_tool(capability_authorities, "testing_e2e", "playwright")
-    cypress = _detect_test_tool(capability_authorities, "testing_e2e", "cypress")
+    playwright = _detect_test_tool(
+        capability_authorities,
+        "testing_e2e",
+        "playwright",
+        dependency_present="@playwright/test" in dependencies,
+    )
+    cypress = _detect_test_tool(
+        capability_authorities,
+        "testing_e2e",
+        "cypress",
+        dependency_present="cypress" in dependencies,
+    )
     storybook = _signal_for_capability(capability_authorities, "storybook")
     accessibility_tooling = _detect_accessibility(capability_authorities, dependencies, contents)
     existing_design_skills = _detect_existing_design_skills(root_path)
@@ -254,6 +270,8 @@ def select_candidate_files(root: Path) -> list[Path]:
                 dirnames[:] = []
                 continue
             dirnames[:] = [name for name in dirnames if name not in IGNORED_DIR_NAMES]
+            if base == root / "tests" and current == base:
+                dirnames[:] = [name for name in dirnames if name not in TEST_DATA_DIR_NAMES]
             for filename in filenames:
                 path = current / filename
                 if path in seen or not _looks_relevant(path, base):
@@ -312,17 +330,17 @@ def _collect_capabilities(
         ):
             capabilities["architecture_overview"].append(relative)
 
-        if any(token in lowered for token in ("adr", "decision", "rfc")):
+        if any(token in lowered for token in ("adr", "decision", "rfc")) and "design-intelligence: derived-view" not in text:
             if "design" in lowered or "ui" in lowered:
                 capabilities["design_decisions"].append(relative)
             else:
                 capabilities["architecture_decisions"].append(relative)
 
-        if any(token in lowered for token in ("design-system", "design-language", "design/", "product/")):
+        if any(token in lowered for token in ("design-system", "design-language")):
             if path.suffix.lower() in {".md", ".mdx"} or "tailwind.config" in name or path.suffix == ".css":
                 capabilities["design_language"].append(relative)
 
-        if any(token in lowered for token in ("debt", "design-debt")):
+        if any(token in lowered for token in ("debt", "design-debt")) and "design-intelligence: derived-view" not in text:
             if "design" in lowered or "ui" in lowered:
                 capabilities["design_debt"].append(relative)
             else:
@@ -469,11 +487,16 @@ def _detect_typography(contents: dict[Path, str]) -> CapabilitySignal:
     return _signal_from_evidence(evidence, "Detected explicit typography configuration.")
 
 
-def _detect_test_tool(capability_authorities: dict[str, list[str]], capability: str, token: str) -> CapabilitySignal:
+def _detect_test_tool(
+    capability_authorities: dict[str, list[str]],
+    capability: str,
+    token: str,
+    dependency_present: bool = False,
+) -> CapabilitySignal:
     evidence = [
         path for path in capability_authorities.get(capability, []) if token in path.lower()
     ]
-    if not evidence and "package.json" in capability_authorities.get(capability, []):
+    if not evidence and dependency_present and "package.json" in capability_authorities.get(capability, []):
         evidence = ["package.json"]
     return _signal_from_evidence(evidence, f"Detected {token} evidence.")
 

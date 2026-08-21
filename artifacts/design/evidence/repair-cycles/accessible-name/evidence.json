@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "repair-cycle-accessible-name",
+  "findingId": "axe-button-name:mobile-390x844",
+  "beforeStatus": "FAIL",
+  "repairStatus": "APPLIED",
+  "afterStatus": "PASS",
+  "iteration": 1,
+  "maxIterations": 3,
+  "changedFiles": [
+    "index.html"
+  ],
+  "beforeHash": "8e47defd37d89debcba1a9a2ef9cb1ebcd67072590cbfe548296db376c031ad9",
+  "afterHash": "334fbe387dad1f4555c01cbe467f17605682e57de032353e16fc3769136a5e3f",
+  "beforeScreenshot": "artifacts/design/evidence/repair-cycles/accessible-name/before.png",
+  "afterScreenshot": "artifacts/design/evidence/repair-cycles/accessible-name/after.png",
+  "baselineManifestSha256": "03346893f7b9dff8fdd01de647908fb581af1a943ca258ac428057bca65aeef1",
+  "authorityBoundary": "visual-only"
+}

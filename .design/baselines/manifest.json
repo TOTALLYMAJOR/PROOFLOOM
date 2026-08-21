@@ -1,0 +1,41 @@
+{
+  "scenarios": {
+    "design-department-surface": {
+      "approval": {
+        "authorizedBy": "human:user-directive",
+        "decisionId": "DL-DI-0001",
+        "reason": "Create the initial governed baseline after five-viewport DOM, contract, axe, and model visual review passed for the bounded fixture surface.",
+        "validationEvidence": [
+          "artifacts/design/reports/design-department-surface/qa-report.json",
+          "artifacts/design/briefs/ADD-V2-DEMO.json",
+          "artifacts/design/reports/design-department-surface/model-visual-review.json"
+        ],
+        "validationStatus": "PASS"
+      },
+      "approvedAt": "2026-08-21T01:45:12.532080Z",
+      "viewports": {
+        "compact-1024x768": {
+          "path": ".design/baselines/design-department-surface/compact-1024x768/baseline.png",
+          "sha256": "f5e9929e72e44ddbb0e50efdc1dcef3dba62f12c33380137b4738eed35d2c2ef"
+        },
+        "desktop-1280x900": {
+          "path": ".design/baselines/design-department-surface/desktop-1280x900/baseline.png",
+          "sha256": "605099703f0021d7c86a23c5c7c5e06672c43391a798a02378a0a8d4911956b6"
+        },
+        "mobile-390x844": {
+          "path": ".design/baselines/design-department-surface/mobile-390x844/baseline.png",
+          "sha256": "ca60e3df0d05524aad08788de06583b21e2bc932c2cef5c53774b82d983ec297"
+        },
+        "tablet-768x1024": {
+          "path": ".design/baselines/design-department-surface/tablet-768x1024/baseline.png",
+          "sha256": "bb5af8671eee00d1f38e007b1f7a286c677de08a4fbdeefe4e57c654f2879cfe"
+        },
+        "wide-desktop-1440x1000": {
+          "path": ".design/baselines/design-department-surface/wide-desktop-1440x1000/baseline.png",
+          "sha256": "d19769cd9eb4b37d54afe3856ff4c0faefc0ba121baa076ff435cd90d87b6345"
+        }
+      }
+    }
+  },
+  "schemaVersion": 1
+}

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -58,6 +60,17 @@ class RepoFitTests(unittest.TestCase):
         self.assertTrue(
             any("runtime restructure is not justified" in note.lower() for note in assessment.notes)
         )
+
+    def test_playwright_dependency_is_not_reported_as_cypress(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "package.json").write_text(
+                json.dumps({"devDependencies": {"@playwright/test": "1.62.1"}}),
+                encoding="utf-8",
+            )
+            snapshot = inspect_repository(root)
+            self.assertNotEqual(snapshot.playwright.status, Presence.NONE)
+            self.assertEqual(snapshot.cypress.status, Presence.NONE)
 
 
 if __name__ == "__main__":

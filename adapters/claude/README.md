@@ -14,3 +14,5 @@ Adapter rules:
 - Use `design-language` first, not generic restyling.
 - Run `design-intelligence assess` or `design-intelligence context` before broad UX changes.
 - Treat `design-linter` and `visual-review` as evidence layers, not taste engines.
+- Retrieve bounded memory and validate a design contract before material implementation.
+- Do not update baselines, lower thresholds, or continue repairs beyond three iterations.

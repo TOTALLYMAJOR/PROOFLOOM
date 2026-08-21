@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "design-department-surface",
+  "surface": "Design QA Control Deck fixture",
+  "product": "Design Intelligence",
+  "actor": "design infrastructure maintainer",
+  "staticRoot": "tests/fixtures/visual-surface",
+  "route": "/",
+  "readinessSelector": "[data-qa-ready]",
+  "artifactRoot": "artifacts/design",
+  "baselineManifest": ".design/baselines/manifest.json",
+  "thresholds": ".design/quality/thresholds.json",
+  "interactions": [
+    {"action": "click", "selector": "[data-qa-primary]"}
+  ],
+  "contractAssertions": [
+    {"id": "primary-action-visible", "type": "visible", "selector": "[data-qa-primary]"},
+    {"id": "surface-title", "type": "text", "selector": "h1", "includes": "Design QA Control Deck"},
+    {"id": "pipeline-visible", "type": "visible", "selector": "#pipeline"},
+    {"id": "evidence-details-visible", "type": "visible", "selector": "#evidence-details"},
+    {"id": "evidence-expanded", "type": "attribute", "selector": "[data-qa-primary]", "attribute": "aria-expanded", "value": "true"}
+  ],
+  "viewports": [
+    {"id": "wide-desktop-1440x1000", "category": "desktop", "width": 1440, "height": 1000},
+    {"id": "desktop-1280x900", "category": "desktop", "width": 1280, "height": 900},
+    {"id": "compact-1024x768", "category": "desktop", "width": 1024, "height": 768},
+    {"id": "tablet-768x1024", "category": "tablet", "width": 768, "height": 1024},
+    {"id": "mobile-390x844", "category": "mobile", "width": 390, "height": 844}
+  ]
+}

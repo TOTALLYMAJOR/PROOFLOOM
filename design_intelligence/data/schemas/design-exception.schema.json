@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/design-exception.schema.json",
+  "title": "Design Exception",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["id", "reason", "scope", "owner", "createdAt", "expiresAt", "status"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^DX-[A-Z0-9-]+$"},
+    "reason": {"type": "string", "minLength": 1},
+    "scope": {"type": "object"},
+    "owner": {"type": "string", "minLength": 1},
+    "createdAt": {"type": "string", "format": "date-time"},
+    "expiresAt": {"type": "string", "format": "date"},
+    "status": {"enum": ["active", "expired", "revoked"]},
+    "ruleIds": {"type": "array", "items": {"type": "string"}},
+    "reviewCondition": {"type": ["string", "null"]}
+  }
+}

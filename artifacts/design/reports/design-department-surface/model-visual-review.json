@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": "visual-review:model",
+  "surface": "Design QA Control Deck fixture",
+  "verdict": "PASS",
+  "severity": null,
+  "coveredViewports": ["wide-desktop-1440x1000", "mobile-390x844-full"],
+  "rootCauseFindings": [],
+  "evidence": [
+    "artifacts/design/screenshots/design-department-surface/wide-desktop-1440x1000/current.png",
+    "artifacts/design/screenshots/design-department-surface/mobile-390x844/full.png"
+  ],
+  "preserve": [
+    "desktop side-by-side evidence hierarchy",
+    "mobile evidence-first reprioritization",
+    "editorial typography and restrained operational color roles",
+    "explicit statement that automated checks do not prove product taste"
+  ],
+  "change": [],
+  "remainingDebt": [
+    "A consuming production product surface still requires its own manual semantic and product-specific visual review."
+  ],
+  "scoringBoundary": "This model review does not contribute numeric points to the deterministic quality score."
+}

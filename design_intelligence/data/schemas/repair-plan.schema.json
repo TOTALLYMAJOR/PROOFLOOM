@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/repair-plan.schema.json",
+  "title": "Bounded Repair Plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "taskId", "authority", "iterationLimit", "allowedFiles", "repairs"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "taskId": {"type": "string", "minLength": 1},
+    "authority": {"const": "visual-only"},
+    "iterationLimit": {"type": "integer", "minimum": 1, "maximum": 3},
+    "allowedFiles": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "repairs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["findingId", "severity", "file", "expected", "replacement", "evidenceId"],
+        "properties": {
+          "findingId": {"type": "string"},
+          "severity": {"enum": ["P0", "P1", "P2"]},
+          "file": {"type": "string"},
+          "expected": {"type": "string", "minLength": 1},
+          "replacement": {"type": "string"},
+          "evidenceId": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

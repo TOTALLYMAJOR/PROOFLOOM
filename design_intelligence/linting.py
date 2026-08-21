@@ -18,9 +18,17 @@ COMPONENT_DIR_RE = re.compile(r"(?:^|/)(?:components|components2|ui|shared-ui|de
 PRIMITIVE_NAMES = {"Button", "Card", "Dialog", "Input", "Modal", "Table", "Tabs", "Badge"}
 
 
-def run_lint(root: str | Path) -> LintReport:
+def run_lint(root: str | Path, scope_paths: list[str] | None = None) -> LintReport:
     root_path = Path(root).resolve()
     files = select_candidate_files(root_path)
+    if scope_paths:
+        normalized = tuple(item.strip("/").replace("\\", "/") for item in scope_paths)
+        files = [
+            path
+            for path in files
+            if path.relative_to(root_path).as_posix() in normalized
+            or path.relative_to(root_path).as_posix().startswith(tuple(f"{item}/" for item in normalized))
+        ]
     findings: list[LintFinding] = []
     intentional_exceptions: list[str] = []
     component_candidates: defaultdict[str, list[str]] = defaultdict(list)

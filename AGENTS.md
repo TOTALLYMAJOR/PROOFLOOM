@@ -1,4 +1,4 @@
-# Design Intelligence Repository Guide
+# Design Intelligence V2 Repository Guide
 
 This repository owns the reusable utility itself. It does not outrank consuming repositories.
 
@@ -13,6 +13,12 @@ This repository owns the reusable utility itself. It does not outrank consuming 
 ## Map
 
 - `design_intelligence/`: vendor-neutral core package and CLI
+- `.design/memory/`: canonical append-oriented decision, outcome, exception, debt, and component records
+- `.design/quality/`: governed deterministic thresholds and score history
+- `.design/baselines/`: approval-bound visual baselines; never update silently
+- `scripts/design/`: Playwright QA, repair proof, and tiered CI orchestration
+- `tests/design/`: route-specific scenario definitions; do not create a parallel product E2E hierarchy
+- `artifacts/design/`: contracts and generated evidence packs
 - `repo_fit/`: V0.1 compatibility wrappers
 - `skills/`: concise skills plus reference docs
 - `templates/` and `examples/`: reusable design artifacts and product profiles
@@ -22,6 +28,9 @@ This repository owns the reusable utility itself. It does not outrank consuming 
 
 ## Validation
 
-- Run `python3 -m unittest discover -s tests -p 'test_*.py'`.
+- Run `npm run design:ci:quick` for core and governance changes.
+- Run `npm run design:ci:standard` for material rendered changes.
+- Run `npm run design:ci:full` before a V2 release.
 - Run the skill validator for each skill before tagging.
 - Keep `VERSION`, `pyproject.toml`, and `design_intelligence/__init__.py` aligned.
+- Automatic repair stops after 3 iterations or at authority, scope, architecture, baseline, threshold, test, backend, or product-behavior boundaries.

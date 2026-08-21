@@ -1,4 +1,15 @@
-# Design Intelligence Architecture
+# Design Intelligence V2 Architecture
+
+## Governed cycle
+
+```text
+request -> relevant memory -> design contract -> implementation -> Playwright render
+        -> screenshot + DOM/state + axe -> visual review -> design linter
+        -> deterministic quality gates -> memory outcome
+                                      \-> bounded repair -> rerender (max 3)
+```
+
+Model review can classify hierarchy, workflow, visual, responsive, accessibility, component, or drift defects. It cannot modify deterministic scores, lower thresholds, update baselines, or promote its own opinion into institutional law.
 
 ## Core shape
 
@@ -15,6 +26,11 @@ It owns:
 - visual-review aggregation
 - validation and evidence packs
 - conservative doctor / repair planning
+- scoped institutional memory and provenance
+- governed baseline promotion and integrity auditing
+- deterministic quality and drift scoring
+- exact bounded repair execution
+- V2 self-audit
 
 `repo_fit/` remains as a compatibility layer for V0.1 entry points.
 
@@ -73,3 +89,26 @@ Material design work can produce an evidence pack containing:
 - remaining debt
 
 This is a Git-friendly record, not a second dashboard or backlog.
+
+## Canonical authorities
+
+- `.design/memory/*.jsonl` owns append-oriented decisions, outcomes, exceptions, and debt.
+- `.design/memory/product-rules.json` owns inherited portfolio, archetype, and product rules.
+- `.design/memory/component-registry.json` is a generated source registry enriched with existing metadata.
+- `.design/quality/thresholds.json` owns measurable quality gates.
+- `.design/baselines/manifest.json` owns baseline hashes and approval provenance.
+- `docs/design/*.md` explains these authorities but is not a second ledger.
+
+## Repair boundary
+
+`repair --apply` performs only an exact text substitution when all of these are true:
+
+- a P0, P1, or clear P2 finding ID exists in supplied evidence
+- the target is explicitly allowlisted
+- the expected text matches exactly once
+- the plan declares `visual-only` authority
+- the iteration is 1 through 3
+- the target is not a baseline, threshold, test, migration, API, server, or backend path
+- the plan has no architecture impact
+
+Anything else returns `BLOCKED` without changing files.

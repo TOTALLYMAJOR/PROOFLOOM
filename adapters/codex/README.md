@@ -13,3 +13,6 @@ Adapter rules:
 - Treat this as a routing layer, not a competing authority.
 - Run `design-intelligence assess` before major design-system or workflow changes.
 - Keep runtime structure unless repository evidence and migration scoring justify convergence.
+- Retrieve bounded memory and validate a design contract before material implementation.
+- Use the consuming repository's existing Playwright hierarchy when present; use the packaged route runner only when the repo lacks an equivalent.
+- Never promote a baseline or apply a repair without explicit authority and evidence.

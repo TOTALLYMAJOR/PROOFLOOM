@@ -1,0 +1,52 @@
+{
+  "surface": "QuoteFlow existing landing",
+  "source": "playwright",
+  "covered_viewports": [
+    "desktop",
+    "mobile"
+  ],
+  "before_screenshots": [],
+  "after_screenshots": [
+    "artifacts/design/consuming-surfaces/quoteflow/screenshots/quoteflow-existing-landing/desktop-1280x900/current.png",
+    "artifacts/design/consuming-surfaces/quoteflow/screenshots/quoteflow-existing-landing/mobile-390x844/current.png"
+  ],
+  "viewport_findings": [
+    {
+      "viewport": "desktop",
+      "severity": "P1",
+      "root_cause": "accessibility",
+      "evidence": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ],
+      "repairable": true,
+      "source": "axe",
+      "evidence_id": "axe-color-contrast:desktop-1280x900"
+    },
+    {
+      "viewport": "mobile",
+      "severity": "P1",
+      "root_cause": "accessibility",
+      "evidence": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ],
+      "repairable": true,
+      "source": "axe",
+      "evidence_id": "axe-color-contrast:mobile-390x844"
+    }
+  ],
+  "remaining_debt": [],
+  "automated_accessibility": "FAIL",
+  "manual_semantic_review": "REQUIRED"
+}

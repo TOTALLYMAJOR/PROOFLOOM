@@ -1,0 +1,87 @@
+{
+  "archetypes": {
+    "community-coordination": [
+      {
+        "category": "responsive",
+        "id": "DL-ARCH-CC-001",
+        "protected": false,
+        "statement": "Prioritize mobile glanceability, role-specific disclosure, and what happens next."
+      }
+    ],
+    "operational-control": [
+      {
+        "category": "hierarchy",
+        "id": "DL-ARCH-OC-001",
+        "protected": false,
+        "statement": "Prioritize state, readiness, blockers, ownership, dependencies, and the next action."
+      }
+    ],
+    "transactional-commercial": [
+      {
+        "category": "hierarchy",
+        "id": "DL-ARCH-TC-001",
+        "protected": false,
+        "statement": "Prioritize speed, confidence, financial clarity, and the commercial next action."
+      }
+    ]
+  },
+  "portfolio": [
+    {
+      "authority": "explicit-user-directive",
+      "category": "accessibility",
+      "id": "DL-PORT-001",
+      "protected": true,
+      "statement": "Accessibility requirements are protected constraints and cannot be silently overridden by a narrower scope."
+    },
+    {
+      "authority": "explicit-user-directive",
+      "category": "evidence",
+      "id": "DL-PORT-002",
+      "protected": true,
+      "statement": "Rendered evidence and measurable checks must precede durable design-memory promotion."
+    },
+    {
+      "authority": "explicit-user-directive",
+      "category": "repair",
+      "id": "DL-PORT-003",
+      "protected": true,
+      "statement": "Automatic repair is limited to three deterministic visual iterations and stops at authority, scope, or architecture boundaries."
+    }
+  ],
+  "products": {
+    "leaguepilot": {
+      "archetype": "community-coordination",
+      "rules": [
+        {
+          "category": "product",
+          "id": "DL-LP-001",
+          "protected": false,
+          "statement": "Everyone knows what is next; disclose actions by role and current context."
+        }
+      ]
+    },
+    "quietpilot": {
+      "archetype": "operational-control",
+      "rules": [
+        {
+          "category": "product",
+          "id": "DL-QUIET-001",
+          "protected": false,
+          "statement": "Promise -> Prepare -> Deliver; operational truth and blockers remain explicit."
+        }
+      ]
+    },
+    "quotepilot": {
+      "archetype": "transactional-commercial",
+      "rules": [
+        {
+          "category": "product",
+          "id": "DL-QP-001",
+          "protected": false,
+          "statement": "Build -> Decide -> Book; quote construction remains primary over secondary reporting."
+        }
+      ]
+    }
+  },
+  "schemaVersion": 1
+}

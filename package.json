@@ -1,0 +1,20 @@
+{
+  "name": "design-intelligence-visual-qa",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Optional Playwright runtime for Design Intelligence visual QA.",
+  "scripts": {
+    "design:qa": "node scripts/design/visual-qa.mjs --scenario tests/design/scenarios/design-department-surface.json --output artifacts/design",
+    "design:repair:prove": "node scripts/design/prove-repairs.mjs",
+    "design:ci:quick": "python3 scripts/design/ci.py quick",
+    "design:ci:standard": "python3 scripts/design/ci.py standard",
+    "design:ci:full": "python3 scripts/design/ci.py full"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.62.1",
+    "pixelmatch": "7.2.0",
+    "pngjs": "7.0.0"
+  }
+}

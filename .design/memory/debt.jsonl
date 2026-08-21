@@ -1,0 +1,1 @@
+{"createdAt":"2026-08-20T12:00:00Z","description":"Automated axe checks and DOM assertions do not replace manual semantic accessibility review on consuming product surfaces.","id":"DD-DI-0001","owner":"design-intelligence-maintainer","reviewAfter":"2026-11-20","scope":{"product":"design-intelligence","surface":"Design QA Control Deck fixture"},"status":"open"}
