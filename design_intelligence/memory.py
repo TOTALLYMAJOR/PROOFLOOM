@@ -74,6 +74,7 @@ def initialize_memory(repository_root: str | Path, allow_existing_authority: boo
         "design-exception.schema.json",
         "design-outcome.schema.json",
         "baseline-review-request.schema.json",
+        "baseline-review-receipt.schema.json",
         "repair-plan.schema.json",
         "validation-evidence.schema.json",
     ):
@@ -92,6 +93,15 @@ def initialize_memory(repository_root: str | Path, allow_existing_authority: boo
     baseline_manifest = root / ".design/baselines/manifest.json"
     if not baseline_manifest.exists():
         atomic_write_json(baseline_manifest, {"schemaVersion": 1, "scenarios": {}})
+    review_policy_path = root / ".design/baselines/review-policy.json"
+    if not review_policy_path.exists():
+        review_policy = files("design_intelligence").joinpath(
+            "data/defaults/baseline-review-policy.json"
+        )
+        atomic_write_json(
+            review_policy_path,
+            json.loads(review_policy.read_text(encoding="utf-8")),
+        )
     return {
         "status": "READY",
         "root": str(destination),

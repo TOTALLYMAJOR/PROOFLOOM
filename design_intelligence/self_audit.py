@@ -9,6 +9,11 @@ from .contracts import load_and_validate_contract
 from .memory import audit_memory
 from .quality import audit_thresholds, load_thresholds
 from .registry import audit_component_registry
+from .review_lifecycle import (
+    audit_baseline_review_receipt,
+    evaluate_baseline_review_lifecycle,
+    load_review_policy,
+)
 
 
 REQUIRED_V2_PATHS = (
@@ -28,8 +33,11 @@ REQUIRED_V2_PATHS = (
 
 REQUIRED_V3_SLICE0_PATHS = (
     ".design/memory/schemas/baseline-review-request.schema.json",
+    ".design/memory/schemas/baseline-review-receipt.schema.json",
+    ".design/baselines/review-policy.json",
     ".github/workflows/design-ci.yml",
     "design_intelligence/data/schemas/baseline-review-request.schema.json",
+    "design_intelligence/data/schemas/baseline-review-receipt.schema.json",
     "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md",
 )
 
@@ -77,6 +85,42 @@ def run_self_audit(repository_root: str | Path) -> dict[str, Any]:
         "requests": request_statuses,
         "errors": request_errors,
     }
+    receipt_paths = sorted((root / "artifacts/design/baseline-decisions").glob("*.json"))
+    receipt_errors: list[str] = []
+    receipt_decisions: dict[str, str | None] = {}
+    for path in receipt_paths:
+        try:
+            result = audit_baseline_review_receipt(root, path)
+        except ValueError as error:
+            receipt_decisions[path.name] = None
+            receipt_errors.append(f"{path.name}: {error}")
+        else:
+            receipt_decisions[path.name] = result.get("decision")
+            receipt_errors.extend(
+                f"{path.name}: {error}" for error in result.get("errors", [])
+            )
+    checks["baselineReviewReceipts"] = {
+        "status": "PASS" if not receipt_errors else "FAIL",
+        "count": len(receipt_paths),
+        "receipts": receipt_decisions,
+        "errors": receipt_errors,
+    }
+    try:
+        review_policy = load_review_policy(root)
+        policy_errors: list[str] = []
+    except ValueError as error:
+        review_policy = None
+        policy_errors = [str(error)]
+    checks["baselineReviewPolicy"] = {
+        "status": "PASS" if not policy_errors else "FAIL",
+        "policy": review_policy,
+        "errors": policy_errors,
+    }
+    try:
+        lifecycle = evaluate_baseline_review_lifecycle(root)
+    except ValueError as error:
+        lifecycle = {"status": "FAIL", "errors": [str(error)]}
+    checks["baselineReviewLifecycle"] = lifecycle
 
     workflow_path = root / ".github/workflows/design-ci.yml"
     workflow = workflow_path.read_text(encoding="utf-8") if workflow_path.is_file() else ""

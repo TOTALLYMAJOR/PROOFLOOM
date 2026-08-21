@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +33,12 @@ from .quality import load_thresholds, score_quality, write_quality_report
 from .references import analyze_references, render_reference_text
 from .registry import audit_component_registry, build_component_registry, write_component_registry
 from .repair import apply_repair_plan
+from .review_lifecycle import (
+    audit_baseline_review_receipt,
+    create_baseline_review_receipt,
+    evaluate_baseline_review_lifecycle,
+    preflight_baseline_promotion,
+)
 from .repository import inspect_repository, render_snapshot_text
 from .reviewing import render_review_text, review_manifest
 from .self_audit import run_self_audit
@@ -135,6 +142,20 @@ def main(argv: list[str] | None = None) -> int:
     baseline_request.add_argument("--output", required=True)
     baseline_request_audit = _add_root_format_parser(baseline_subparsers, "request-audit")
     baseline_request_audit.add_argument("--input", required=True)
+    baseline_decide = _add_root_format_parser(baseline_subparsers, "decide")
+    baseline_decide.add_argument("--request", required=True)
+    baseline_decide.add_argument("--decision", required=True)
+    baseline_decide.add_argument("--output", required=True)
+    baseline_receipt_audit = _add_root_format_parser(baseline_subparsers, "receipt-audit")
+    baseline_receipt_audit.add_argument("--input", required=True)
+    baseline_receipt_audit.add_argument("--as-of")
+    baseline_preflight = _add_root_format_parser(baseline_subparsers, "preflight")
+    baseline_preflight.add_argument("--receipt", required=True)
+    baseline_preflight.add_argument("--as-of")
+    baseline_lifecycle = _add_root_format_parser(baseline_subparsers, "lifecycle")
+    baseline_lifecycle.add_argument("--requests-root", default="artifacts/design/baseline-requests")
+    baseline_lifecycle.add_argument("--receipts-root", default="artifacts/design/baseline-decisions")
+    baseline_lifecycle.add_argument("--as-of")
     _add_root_format_parser(baseline_subparsers, "audit")
 
     repair_parser = _add_root_format_parser(subparsers, "repair")
@@ -303,10 +324,40 @@ def _dispatch(args: argparse.Namespace) -> int:
             )
         elif args.baseline_command == "request-audit":
             report = audit_baseline_review_request(root, args.input)
+        elif args.baseline_command == "decide":
+            report = create_baseline_review_receipt(
+                root,
+                args.request,
+                _load_json_required(args.decision),
+                args.output,
+            )
+        elif args.baseline_command == "receipt-audit":
+            report = audit_baseline_review_receipt(
+                root,
+                args.input,
+                as_of=_parse_as_of(args.as_of),
+            )
+        elif args.baseline_command == "preflight":
+            report = preflight_baseline_promotion(
+                root,
+                args.receipt,
+                as_of=_parse_as_of(args.as_of),
+            )
+        elif args.baseline_command == "lifecycle":
+            report = evaluate_baseline_review_lifecycle(
+                root,
+                requests_root=args.requests_root,
+                receipts_root=args.receipts_root,
+                as_of=_parse_as_of(args.as_of),
+            )
         else:
             report = audit_baselines(root)
         _emit(report, _simple_text("BASELINE GOVERNANCE", report), args.format)
-        audit_command = args.baseline_command in {"audit", "request-audit"}
+        if args.baseline_command == "preflight":
+            return 0 if report.get("status") == "READY" else 1
+        audit_command = args.baseline_command in {
+            "audit", "request-audit", "receipt-audit", "lifecycle",
+        }
         return 1 if audit_command and report.get("status") != "PASS" else 0
     if args.command == "repair":
         report_object = apply_repair_plan(
@@ -350,6 +401,15 @@ def _root_arg(args: argparse.Namespace) -> str:
 
 def _simple_text(title: str, report: dict[str, Any]) -> str:
     return f"{title}\n\n" + json.dumps(report, indent=2)
+
+
+def _parse_as_of(value: str | None) -> datetime | None:
+    if not value:
+        return None
+    parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        raise ValueError("--as-of must include a timezone")
+    return parsed
 
 
 if __name__ == "__main__":

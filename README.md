@@ -34,7 +34,7 @@ V1 remains intact:
 
 ## V3 development
 
-V3 Slice 0 adds hash-bound baseline review requests and read-only remote CI without changing V2 promotion authority. Requests can be `REVIEWABLE` or `BLOCKED`; neither state mutates a baseline or authorizes repair. See `docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md`.
+V3 Slice 0 adds hash-bound baseline review requests and read-only remote CI without changing V2 promotion authority. Slice 1 adds append-only human decision receipts, protected review windows, stale/superseded lifecycle evaluation, and non-mutating promotion preflight. Requests and receipts never mutate a baseline or authorize repair by themselves. See `docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md`.
 
 ## Non-goals
 
@@ -87,6 +87,10 @@ design-intelligence contract validate --input work/design-contract.json
 design-intelligence registry scan --root /path/to/repo
 design-intelligence baseline request --root /path/to/repo --scenario surface --product Product --qa-report qa-report.json --model-review model-review.json --candidate-root screenshots/surface --requested-by agent:codex --output baseline-request.json
 design-intelligence baseline request-audit --root /path/to/repo --input baseline-request.json
+design-intelligence baseline decide --root /path/to/repo --request baseline-request.json --decision human-decision.json --output review-receipt.json
+design-intelligence baseline receipt-audit --root /path/to/repo --input review-receipt.json
+design-intelligence baseline lifecycle --root /path/to/repo
+design-intelligence baseline preflight --root /path/to/repo --receipt review-receipt.json
 design-intelligence baseline audit --root /path/to/repo
 design-intelligence quality --input artifacts/design/reports/surface/qa-report.json --thresholds .design/quality/thresholds.json
 design-intelligence repair --root /path/to/repo --plan repair-plan.json --evidence qa-report.json --iteration 1 --apply

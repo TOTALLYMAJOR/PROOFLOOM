@@ -1,0 +1,17 @@
+{
+  "authorizedBy": "human:user-directive",
+  "baselineMutationPerformed": false,
+  "decidedAt": "2026-08-21T15:12:56.358360Z",
+  "decision": "DEFER",
+  "id": "BDR-B597544BA89A63A0",
+  "promotionPerformed": false,
+  "reason": "The user explicitly placed QuotePilot repair and baseline progression on hold.",
+  "requestEvidence": {
+    "path": "artifacts/design/baseline-requests/quotepilot-existing-landing-v2.json",
+    "sha256": "15e52e5b1e9442086f9d5c4e722dd90d50c68be73f28be0e0f188018d70ba91e"
+  },
+  "requestId": "BR-9C2D4593B699634F",
+  "reviewAfter": "2026-09-04T17:00:00Z",
+  "schemaVersion": 1,
+  "supersedes": null
+}

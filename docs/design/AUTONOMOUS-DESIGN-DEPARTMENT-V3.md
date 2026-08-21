@@ -2,7 +2,7 @@
 
 ## Status
 
-V3 is in development on top of the merged V2 foundation. Slice 0 establishes the governance prerequisites for remote execution and future baseline review. It does not declare a V3 release and does not change the package version.
+V3 is in development on top of the merged V2 foundation. Slice 0 established remote execution and baseline review requests. Slice 1 adds append-only human decision receipts and lifecycle/preflight governance. Neither slice declares a V3 release or changes the package version.
 
 ## Slice 0 objective
 
@@ -93,15 +93,57 @@ Neither product repository is modified by request creation.
 
 Local proof does not equal product-owner visual acceptance, production deployment, or baseline approval.
 
+## Slice 1: review decisions and lifecycle
+
+Record a human decision from an explicit input file:
+
+```bash
+python3 -m design_intelligence.cli baseline decide \
+  --root . \
+  --request artifacts/design/baseline-requests/product-surface.json \
+  --decision artifacts/design/human-review/product-surface-decision.json \
+  --output artifacts/design/baseline-decisions/product-surface-decision.json \
+  --format json
+```
+
+Receipt decisions are deliberately asymmetric:
+
+- `APPROVE` requires a non-stale `REVIEWABLE` request, explicit `human:` authority, accepted design-memory decision, hash-bound visual acceptance, hash-bound semantic accessibility acceptance, and a validity window no longer than seven days.
+- `DEFER` may preserve a blocked request without fabricating acceptance. It requires human authority and a future `reviewAfter` date, but grants no promotion authority.
+- `REJECT` records a final human decision without requiring acceptance evidence and grants no promotion authority.
+
+Every receipt is append-only, binds the request SHA-256, records `baselineMutationPerformed: false` and `promotionPerformed: false`, and may supersede only an earlier receipt for the same request. A later valid receipt invalidates preflight from the superseded approval.
+
+Lifecycle evaluation is non-mutating:
+
+```bash
+python3 -m design_intelligence.cli baseline receipt-audit --root . --input review-receipt.json
+python3 -m design_intelligence.cli baseline lifecycle --root .
+python3 -m design_intelligence.cli baseline preflight --root . --receipt review-receipt.json
+```
+
+Lifecycle states include `REVIEWABLE`, `BLOCKED`, `STALE`, `SUPERSEDED`, `APPROVED_PENDING_PROMOTION`, `APPROVAL_EXPIRED`, `DEFERRED`, `REVIEW_DUE`, `REJECTED`, `CONFLICT`, and `INVALID`. Repository policy may shorten the 14-day request, seven-day approval, or 30-day defer windows but cannot extend them or disable required human and bound-evidence controls. A second receipt must explicitly supersede the current receipt for that request.
+
+Promotion preflight returns `READY` only for an active, unsuperseded `APPROVE` receipt whose request, candidates, human evidence, and accepted decision memory still pass integrity checks. It returns a compatible approval payload but does not write that payload, invoke `baseline promote`, or mutate a baseline.
+
+The `human:` authority identifier provides repository traceability only. It does not prove cryptographic identity; signed identity-provider or protected-environment verification remains future work.
+
+## Slice 1 product proof - 2026-08-21
+
+- QuietPilot remains `REVIEWABLE`; no approval receipt exists because human visual and semantic acceptance has not been supplied.
+- QuotePilot receipt `BDR-B597544BA89A63A0` records the existing user hold as `DEFER`, audits `PASS`, and is review-due after `2026-09-04T17:00:00Z`.
+- Lifecycle evaluation reports one `REVIEWABLE` request and one `DEFERRED` request.
+- The hardened local full tier passed 42 tests, five-viewport fixture QA, quality 100/100, drift 0, three deterministic repair cycles, five V1 skill validators, dependency audit, and self-audit.
+- The governed baseline manifest SHA-256 remains `03346893f7b9dff8fdd01de647908fb581af1a943ca258ac428057bca65aeef1`.
+
 ## Deferred V3 work
 
 Later V3 slices may add:
 
-- protected-environment or signed approval adapters for the existing promotion command
+- protected-environment or signed identity adapters for review receipts
 - cross-browser evidence policy beyond Chromium
 - federated read-only product evidence ingestion
-- retention and stale-request lifecycle rules
 - PR annotations that link requests without granting write authority
-- human UAT receipts and outcome feedback into institutional memory
+- human UAT outcome feedback into institutional memory
 
-These are deferred until Slice 0 is proven remotely. Baseline thresholds, authority requirements, and repair limits are not candidates for weakening.
+These are deferred until Slices 0 and 1 are proven remotely. Baseline thresholds, authority requirements, and repair limits are not candidates for weakening.
