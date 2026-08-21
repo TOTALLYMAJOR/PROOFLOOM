@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "quietpilot-existing-landing",
+  "surface": "QuietPilot existing public landing",
+  "product": "QuietPilot",
+  "actor": "catering operator evaluating operational readiness",
+  "route": "/landing",
+  "readinessSelector": "main[data-landing-design='obsidian']",
+  "baselineManifest": ".design/baselines/manifest.json",
+  "thresholds": ".design/quality/thresholds.json",
+  "contractAssertions": [
+    {"id": "landing-main-visible", "type": "visible", "selector": "main[data-landing-design='obsidian']"},
+    {"id": "headline-visible", "type": "visible", "selector": "main[data-landing-design='obsidian'] h1"},
+    {"id": "prospect-action-visible", "type": "visible", "selector": "[data-landing-component='prospect-intake-action']"},
+    {"id": "purchase-action-visible", "type": "visible", "selector": "[data-landing-component='workspace-purchase-action']"},
+    {"id": "operating-chain-visible", "type": "visible", "selector": "[data-landing-component='operating-chain']"}
+  ],
+  "viewports": [
+    {"id": "wide-desktop-1440x1000", "category": "desktop", "width": 1440, "height": 1000},
+    {"id": "desktop-1280x900", "category": "desktop", "width": 1280, "height": 900},
+    {"id": "compact-1024x768", "category": "desktop", "width": 1024, "height": 768},
+    {"id": "tablet-768x1024", "category": "tablet", "width": 768, "height": 1024},
+    {"id": "mobile-390x844", "category": "mobile", "width": 390, "height": 844}
+  ]
+}

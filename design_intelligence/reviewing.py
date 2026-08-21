@@ -20,14 +20,14 @@ def review_manifest(manifest: dict) -> ReviewReport:
         )
         for item in items
     ]
-    covered_viewports = sorted({finding.viewport for finding in findings})
+    covered_viewports = sorted(set(manifest.get("covered_viewports", [])) | {finding.viewport for finding in findings})
     remaining_debt = manifest.get("remaining_debt", [])
     verdict = _verdict(findings, covered_viewports)
     notes = []
     if "desktop" not in covered_viewports or "mobile" not in covered_viewports:
         notes.append("Material UI work should validate both desktop and mobile; one viewport is missing.")
-    if not findings:
-        notes.append("No visual findings were supplied; this is only a placeholder review.")
+    if not findings and not manifest.get("covered_viewports"):
+        notes.append("No visual findings or explicit viewport coverage were supplied; this is only a placeholder review.")
     return ReviewReport(
         surface=surface,
         verdict=verdict,

@@ -1,0 +1,131 @@
+{
+  "title": "QuietPilot - Catering",
+  "headings": [
+    {
+      "level": 1,
+      "text": "QuietPilot provesyou can deliver it."
+    }
+  ],
+  "landmarks": [
+    "main",
+    "header",
+    "nav"
+  ],
+  "controls": [
+    {
+      "tag": "a",
+      "name": "Skip to actions",
+      "enforceBounds": false,
+      "rect": {
+        "x": 16,
+        "y": -100.546875,
+        "width": 137.078125,
+        "height": 38.3125,
+        "right": 153.078125,
+        "bottom": -62.234375
+      }
+    },
+    {
+      "tag": "a",
+      "name": "QuietPilot - Catering landing",
+      "enforceBounds": false,
+      "rect": {
+        "x": 51.1875,
+        "y": 30,
+        "width": 259.8125,
+        "height": 19.6875,
+        "right": 311,
+        "bottom": 49.6875
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Log in",
+      "enforceBounds": false,
+      "rect": {
+        "x": 1184.828125,
+        "y": 25.609375,
+        "width": 43.984375,
+        "height": 27.78125,
+        "right": 1228.8125,
+        "bottom": 53.390625
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Enter QuietPilot",
+      "enforceBounds": false,
+      "rect": {
+        "x": 51.1875,
+        "y": 368.15625,
+        "width": 215.6875,
+        "height": 45.59375,
+        "right": 266.875,
+        "bottom": 413.75
+      }
+    },
+    {
+      "tag": "button",
+      "name": "Buy now",
+      "enforceBounds": false,
+      "rect": {
+        "x": 285.265625,
+        "y": 380.859375,
+        "width": 54.9375,
+        "height": 20.1875,
+        "right": 340.203125,
+        "bottom": 401.046875
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Walk the demo",
+      "enforceBounds": false,
+      "rect": {
+        "x": 358.59375,
+        "y": 380.859375,
+        "width": 96.078125,
+        "height": 20.1875,
+        "right": 454.671875,
+        "bottom": 401.046875
+      }
+    }
+  ],
+  "offscreenControls": [],
+  "horizontalOverflow": false,
+  "scrollWidth": 1280,
+  "viewportWidth": 1280,
+  "viewportHeight": 900,
+  "contractAssertions": [
+    {
+      "id": "landing-main-visible",
+      "selector": "main[data-landing-design='obsidian']",
+      "type": "visible",
+      "passed": true
+    },
+    {
+      "id": "headline-visible",
+      "selector": "main[data-landing-design='obsidian'] h1",
+      "type": "visible",
+      "passed": true
+    },
+    {
+      "id": "prospect-action-visible",
+      "selector": "[data-landing-component='prospect-intake-action']",
+      "type": "visible",
+      "passed": true
+    },
+    {
+      "id": "purchase-action-visible",
+      "selector": "[data-landing-component='workspace-purchase-action']",
+      "type": "visible",
+      "passed": true
+    },
+    {
+      "id": "operating-chain-visible",
+      "selector": "[data-landing-component='operating-chain']",
+      "type": "visible",
+      "passed": true
+    }
+  ]
+}

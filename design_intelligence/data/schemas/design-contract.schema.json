@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/design-contract.schema.json",
+  "title": "Design Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "taskId", "product", "surface", "actor", "object", "goal",
+    "decision", "state", "blocker", "authority", "primaryAction", "informationPriority",
+    "preserve", "change", "reuse", "introduce", "doNotTouch", "responsiveRequirements",
+    "accessibilityRequirements", "acceptanceCriteria", "relevantDesignDecisions"
+  ],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "taskId": {"type": "string", "minLength": 1},
+    "product": {"type": "string", "minLength": 1},
+    "surface": {"type": "string", "minLength": 1},
+    "actor": {"type": "string", "minLength": 1},
+    "object": {"type": "string", "minLength": 1},
+    "goal": {"type": "string", "minLength": 1},
+    "decision": {"type": "string", "minLength": 1},
+    "state": {"type": "string", "minLength": 1},
+    "blocker": {"type": "string", "minLength": 1},
+    "authority": {"type": "string", "minLength": 1},
+    "primaryAction": {"type": "string", "minLength": 1},
+    "informationPriority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["primary", "secondary", "supporting", "rare"],
+      "properties": {
+        "primary": {"type": "array", "items": {"type": "string"}},
+        "secondary": {"type": "array", "items": {"type": "string"}},
+        "supporting": {"type": "array", "items": {"type": "string"}},
+        "rare": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "preserve": {"type": "array", "items": {"type": "string"}},
+    "change": {"type": "array", "items": {"type": "string"}},
+    "reuse": {"type": "array", "items": {"type": "string"}},
+    "introduce": {"type": "array", "items": {"type": "string"}},
+    "doNotTouch": {"type": "array", "items": {"type": "string"}},
+    "responsiveRequirements": {"type": "array", "items": {"type": "string"}},
+    "accessibilityRequirements": {"type": "array", "items": {"type": "string"}},
+    "acceptanceCriteria": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "relevantDesignDecisions": {"type": "array", "items": {"type": "string"}}
+  }
+}

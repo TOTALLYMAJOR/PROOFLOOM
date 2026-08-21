@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Design QA Control Deck</title>
+    <link rel="stylesheet" href="/surface.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#main">Design Intelligence <span>V2</span></a>
+      <nav aria-label="Evidence navigation">
+        <a href="#pipeline">Pipeline</a>
+        <a href="#memory">Memory</a>
+        <a href="#quality">Quality</a>
+      </nav>
+    </header>
+
+    <main id="main" class="page-shell" data-qa-ready>
+      <section class="workspace" aria-labelledby="page-title">
+        <p class="eyebrow">Autonomous Design Department / governed run</p>
+        <div class="hero-row">
+          <div>
+            <h1 id="page-title">Design QA Control Deck</h1>
+            <p class="lede">One bounded surface showing how evidence moves from a contract to rendered verification without changing product authority.</p>
+          </div>
+          <span class="run-state" aria-label="Run status: ready">Ready</span>
+        </div>
+
+        <section id="pipeline" class="pipeline" aria-labelledby="pipeline-title">
+          <div class="section-heading">
+            <div>
+              <p class="section-index">01 / Evidence pipeline</p>
+              <h2 id="pipeline-title">Five checks, one promotion boundary</h2>
+            </div>
+            <p class="section-note">Deterministic checks can fail the run. Model review can diagnose, but cannot silently create law.</p>
+          </div>
+          <ol class="stage-grid" tabindex="0" aria-label="Evidence pipeline stages">
+            <li><span>01</span><strong>Contract</strong><small>Scope fixed</small></li>
+            <li><span>02</span><strong>Render</strong><small>5 viewports</small></li>
+            <li><span>03</span><strong>Measure</strong><small>DOM + axe</small></li>
+            <li><span>04</span><strong>Compare</strong><small>0.5% gate</small></li>
+            <li><span>05</span><strong>Promote</strong><small>Human boundary</small></li>
+          </ol>
+        </section>
+
+        <section id="memory" class="memory-panel" aria-labelledby="memory-title">
+          <div>
+            <p class="section-index">02 / Institutional memory</p>
+            <h2 id="memory-title">Only validated outcomes survive the cycle</h2>
+          </div>
+          <dl class="memory-stats">
+            <div><dt>Inherited rules</dt><dd>6</dd></div>
+            <div><dt>Active exceptions</dt><dd>0</dd></div>
+            <div><dt>Stale decisions</dt><dd>0</dd></div>
+          </dl>
+        </section>
+
+        <section id="quality" class="quality-panel" aria-labelledby="quality-title">
+          <p class="section-index">03 / Quality gate</p>
+          <h2 id="quality-title">Measured, not imagined</h2>
+          <div class="quality-meter">
+            <span class="score">90</span>
+            <div>
+              <strong>Minimum passing score</strong>
+              <p>Accessibility and baseline governance remain mandatory even when the aggregate score is high.</p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <aside class="evidence-rail" aria-labelledby="evidence-title">
+        <p class="section-index">Current run</p>
+        <h2 id="evidence-title">Evidence receipt</h2>
+        <ul class="receipt-list">
+          <li><span>Design contract</span><strong>Bound</strong></li>
+          <li><span>Viewport matrix</span><strong>5 / 5</strong></li>
+          <li><span>Accessibility</span><strong>Automated</strong></li>
+          <li><span>Baseline</span><strong>Governed</strong></li>
+        </ul>
+        <button class="primary-action" type="button" data-qa-primary data-qa-bounds aria-expanded="false" aria-controls="evidence-details">
+          Inspect latest evidence
+        </button>
+        <div id="evidence-details" class="evidence-details" hidden>
+          <strong>Manual review remains required.</strong>
+          <p>Automated checks establish containment, semantics, and drift. They do not prove product taste.</p>
+        </div>
+        <p class="boundary-note">Repair stops at iteration 3, architecture change, or authority expansion.</p>
+      </aside>
+    </main>
+
+    <script>
+      const trigger = document.querySelector("[data-qa-primary]");
+      const details = document.querySelector("#evidence-details");
+      trigger.addEventListener("click", () => {
+        const expanded = trigger.getAttribute("aria-expanded") === "true";
+        trigger.setAttribute("aria-expanded", String(!expanded));
+        details.hidden = expanded;
+      });
+    </script>
+  </body>
+</html>

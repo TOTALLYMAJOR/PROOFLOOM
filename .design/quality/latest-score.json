@@ -1,0 +1,56 @@
+{
+  "categories": {
+    "accessibility": {
+      "critical": 0,
+      "max": 25,
+      "moderate": 0,
+      "score": 25,
+      "serious": 0
+    },
+    "contract": {
+      "max": 10,
+      "passed": 25,
+      "score": 10,
+      "total": 25
+    },
+    "domState": {
+      "max": 20,
+      "passed": 25,
+      "score": 20,
+      "total": 25
+    },
+    "viewportContainment": {
+      "failures": 0,
+      "max": 25,
+      "score": 25
+    },
+    "visualDrift": {
+      "max": 20,
+      "passed": 5,
+      "score": 20,
+      "total": 5
+    }
+  },
+  "deterministic_only": true,
+  "drift_score": 0,
+  "mandatory_gates": {
+    "baselineGovernance": true,
+    "contract": true,
+    "criticalAccessibility": true,
+    "repairLimit": true,
+    "seriousAccessibility": true,
+    "viewportContainment": true,
+    "viewportCoverage": true,
+    "visualThreshold": true
+  },
+  "metadata": {
+    "source": "artifacts/design/reports/design-department-surface/qa-report.json"
+  },
+  "notes": [
+    "The score contains measurable categories only; model visual-review findings are reported separately.",
+    "Automated accessibility passing does not replace manual semantic review."
+  ],
+  "pass_threshold": 90,
+  "score": 100,
+  "status": "PASS"
+}

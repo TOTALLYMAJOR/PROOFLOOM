@@ -1,0 +1,27 @@
+{
+  "surface": "Design QA Control Deck fixture",
+  "source": "playwright",
+  "covered_viewports": [
+    "desktop",
+    "tablet",
+    "mobile"
+  ],
+  "before_screenshots": [
+    ".design/baselines/design-department-surface/wide-desktop-1440x1000/baseline.png",
+    ".design/baselines/design-department-surface/desktop-1280x900/baseline.png",
+    ".design/baselines/design-department-surface/compact-1024x768/baseline.png",
+    ".design/baselines/design-department-surface/tablet-768x1024/baseline.png",
+    ".design/baselines/design-department-surface/mobile-390x844/baseline.png"
+  ],
+  "after_screenshots": [
+    "artifacts/design/screenshots/design-department-surface/wide-desktop-1440x1000/current.png",
+    "artifacts/design/screenshots/design-department-surface/desktop-1280x900/current.png",
+    "artifacts/design/screenshots/design-department-surface/compact-1024x768/current.png",
+    "artifacts/design/screenshots/design-department-surface/tablet-768x1024/current.png",
+    "artifacts/design/screenshots/design-department-surface/mobile-390x844/current.png"
+  ],
+  "viewport_findings": [],
+  "remaining_debt": [],
+  "automated_accessibility": "PASS",
+  "manual_semantic_review": "REQUIRED"
+}

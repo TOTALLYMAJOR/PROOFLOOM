@@ -1,0 +1,478 @@
+{
+  "title": "QuotePilot by MBMApps | Catering quotes and event operations",
+  "headings": [
+    {
+      "level": 1,
+      "text": "Every event is a document that won’t hold still."
+    },
+    {
+      "level": 2,
+      "text": "Morgan Wedding"
+    },
+    {
+      "level": 2,
+      "text": "Running a business means carrying all of it."
+    },
+    {
+      "level": 2,
+      "text": "One request. Every consequence in view."
+    },
+    {
+      "level": 2,
+      "text": "Your attention, protected"
+    },
+    {
+      "level": 2,
+      "text": "Complexity, carried"
+    },
+    {
+      "level": 2,
+      "text": "Time, returned"
+    },
+    {
+      "level": 2,
+      "text": "Your time is the one thing the business cannot replace."
+    },
+    {
+      "level": 3,
+      "text": "Begin with what the customer meant, not a blank form."
+    },
+    {
+      "level": 3,
+      "text": "Let one adjustment explain everything it touches."
+    },
+    {
+      "level": 3,
+      "text": "Carry the truth forward without carrying it alone."
+    },
+    {
+      "level": 2,
+      "text": "From inquiry to a prepared event"
+    },
+    {
+      "level": 3,
+      "text": "Capture the event"
+    },
+    {
+      "level": 3,
+      "text": "Build the offer"
+    },
+    {
+      "level": 3,
+      "text": "Review the numbers"
+    },
+    {
+      "level": 3,
+      "text": "Share the proposal"
+    },
+    {
+      "level": 3,
+      "text": "Prepare the handoff"
+    },
+    {
+      "level": 2,
+      "text": "Make the customer’s next decision feel simple."
+    },
+    {
+      "level": 2,
+      "text": "Let the team arrive prepared, not preoccupied."
+    },
+    {
+      "level": 3,
+      "text": "The next conversation"
+    },
+    {
+      "level": 3,
+      "text": "The day ahead"
+    },
+    {
+      "level": 3,
+      "text": "The people"
+    },
+    {
+      "level": 3,
+      "text": "The handoff"
+    },
+    {
+      "level": 2,
+      "text": "Five caterers will shape what this becomes."
+    },
+    {
+      "level": 2,
+      "text": "An app should make life easier."
+    }
+  ],
+  "landmarks": [
+    "header",
+    "main",
+    "aside",
+    "header",
+    "footer",
+    "footer",
+    "nav"
+  ],
+  "controls": [
+    {
+      "tag": "a",
+      "name": "Skip to content",
+      "enforceBounds": false,
+      "rect": {
+        "x": 12,
+        "y": -64.80000305175781,
+        "width": 143,
+        "height": 48,
+        "right": 155,
+        "bottom": -16.800003051757812
+      }
+    },
+    {
+      "tag": "a",
+      "name": "QuotePilot home",
+      "enforceBounds": false,
+      "rect": {
+        "x": 40.953125,
+        "y": 16,
+        "width": 143.546875,
+        "height": 44,
+        "right": 184.5,
+        "bottom": 60
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Staff login",
+      "enforceBounds": false,
+      "rect": {
+        "x": 687.859375,
+        "y": 27.671875,
+        "width": 70,
+        "height": 20.640625,
+        "right": 757.859375,
+        "bottom": 48.3125
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Become a design partner",
+      "enforceBounds": false,
+      "rect": {
+        "x": 773.859375,
+        "y": 12,
+        "width": 209.1875,
+        "height": 52,
+        "right": 983.046875,
+        "bottom": 64
+      }
+    },
+    {
+      "tag": "button",
+      "name": "01Paste the inquiry",
+      "enforceBounds": false,
+      "rect": {
+        "x": 36.46875,
+        "y": 441.40625,
+        "width": 156.203125,
+        "height": 37.5,
+        "right": 192.671875,
+        "bottom": 478.90625
+      }
+    },
+    {
+      "tag": "button",
+      "name": "02Proposal room",
+      "enforceBounds": false,
+      "rect": {
+        "x": 200.671875,
+        "y": 441.40625,
+        "width": 139.203125,
+        "height": 37.5,
+        "right": 339.875,
+        "bottom": 478.90625
+      }
+    },
+    {
+      "tag": "button",
+      "name": "03Payment",
+      "enforceBounds": false,
+      "rect": {
+        "x": 347.875,
+        "y": 441.40625,
+        "width": 105.203125,
+        "height": 37.5,
+        "right": 453.078125,
+        "bottom": 478.90625
+      }
+    },
+    {
+      "tag": "button",
+      "name": "04Staffing",
+      "enforceBounds": false,
+      "rect": {
+        "x": 36.46875,
+        "y": 486.90625,
+        "width": 99.203125,
+        "height": 37.5,
+        "right": 135.671875,
+        "bottom": 524.40625
+      }
+    },
+    {
+      "tag": "button",
+      "name": "05Kitchen copy",
+      "enforceBounds": false,
+      "rect": {
+        "x": 143.671875,
+        "y": 486.90625,
+        "width": 131.203125,
+        "height": 37.5,
+        "right": 274.875,
+        "bottom": 524.40625
+      }
+    },
+    {
+      "tag": "button",
+      "name": "06Plans",
+      "enforceBounds": false,
+      "rect": {
+        "x": 282.875,
+        "y": 486.90625,
+        "width": 83.203125,
+        "height": 37.5,
+        "right": 366.078125,
+        "bottom": 524.40625
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Become a design partner",
+      "enforceBounds": false,
+      "rect": {
+        "x": 36.46875,
+        "y": 542.40625,
+        "width": 209.1875,
+        "height": 52,
+        "right": 245.65625,
+        "bottom": 594.40625
+      }
+    },
+    {
+      "tag": "button",
+      "name": "Replay the document revision",
+      "enforceBounds": false,
+      "rect": {
+        "x": 826.375,
+        "y": 630.34375,
+        "width": 161.15625,
+        "height": 28.25,
+        "right": 987.53125,
+        "bottom": 658.59375
+      }
+    },
+    {
+      "tag": "a",
+      "name": "See it as a design partner →",
+      "enforceBounds": false,
+      "rect": {
+        "x": 813.15625,
+        "y": 2166.46875,
+        "width": 171.453125,
+        "height": 18.71875,
+        "right": 984.609375,
+        "bottom": 2185.1875
+      }
+    },
+    {
+      "tag": "button",
+      "name": "Play film",
+      "enforceBounds": false,
+      "rect": {
+        "x": 788.78125,
+        "y": 2236,
+        "width": 90.90625,
+        "height": 44,
+        "right": 879.6875,
+        "bottom": 2280
+      }
+    },
+    {
+      "tag": "button",
+      "name": "Sound on",
+      "enforceBounds": false,
+      "rect": {
+        "x": 887.6875,
+        "y": 2236,
+        "width": 95.359375,
+        "height": 44,
+        "right": 983.046875,
+        "bottom": 2280
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Explore the platform",
+      "enforceBounds": false,
+      "rect": {
+        "x": 16,
+        "y": 2786.90625,
+        "width": 150.984375,
+        "height": 20.390625,
+        "right": 166.984375,
+        "bottom": 2807.296875
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Apply for a partner seat",
+      "enforceBounds": false,
+      "rect": {
+        "x": 24,
+        "y": 7230.109375,
+        "width": 199.1875,
+        "height": 52,
+        "right": 223.1875,
+        "bottom": 7282.109375
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Apply for a partner seat",
+      "enforceBounds": false,
+      "rect": {
+        "x": 680.828125,
+        "y": 7778,
+        "width": 199.1875,
+        "height": 52,
+        "right": 880.015625,
+        "bottom": 7830
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Staff login",
+      "enforceBounds": false,
+      "rect": {
+        "x": 892.8125,
+        "y": 7778,
+        "width": 115.1875,
+        "height": 52,
+        "right": 1008,
+        "bottom": 7830
+      }
+    },
+    {
+      "tag": "a",
+      "name": "QuotePilot home",
+      "enforceBounds": false,
+      "rect": {
+        "x": 16,
+        "y": 8237,
+        "width": 143.546875,
+        "height": 44,
+        "right": 159.546875,
+        "bottom": 8281
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Features",
+      "enforceBounds": false,
+      "rect": {
+        "x": 833.8125,
+        "y": 8237,
+        "width": 57,
+        "height": 19.6875,
+        "right": 890.8125,
+        "bottom": 8256.6875
+      }
+    },
+    {
+      "tag": "a",
+      "name": "How it works",
+      "enforceBounds": false,
+      "rect": {
+        "x": 926,
+        "y": 8237,
+        "width": 82,
+        "height": 19.6875,
+        "right": 1008,
+        "bottom": 8256.6875
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Platform",
+      "enforceBounds": false,
+      "rect": {
+        "x": 833.8125,
+        "y": 8269.484375,
+        "width": 57,
+        "height": 19.6875,
+        "right": 890.8125,
+        "bottom": 8289.171875
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Staff login",
+      "enforceBounds": false,
+      "rect": {
+        "x": 926,
+        "y": 8269.484375,
+        "width": 82,
+        "height": 19.6875,
+        "right": 1008,
+        "bottom": 8289.171875
+      }
+    },
+    {
+      "tag": "a",
+      "name": "Contact",
+      "enforceBounds": false,
+      "rect": {
+        "x": 833.8125,
+        "y": 8301.96875,
+        "width": 57,
+        "height": 19.6875,
+        "right": 890.8125,
+        "bottom": 8321.65625
+      }
+    }
+  ],
+  "offscreenControls": [],
+  "horizontalOverflow": false,
+  "scrollWidth": 1024,
+  "viewportWidth": 1024,
+  "viewportHeight": 768,
+  "contractAssertions": [
+    {
+      "id": "landing-main-visible",
+      "selector": "#landing-main",
+      "type": "visible",
+      "passed": true
+    },
+    {
+      "id": "hero-title-visible",
+      "selector": "#dh-title",
+      "type": "visible",
+      "passed": true
+    },
+    {
+      "id": "partner-action-visible",
+      "selector": "a[href='#design-partner']",
+      "type": "visible",
+      "passed": true
+    },
+    {
+      "id": "event-tabs-visible",
+      "selector": "[role='tablist'][aria-label='Follow the event']",
+      "type": "visible",
+      "passed": true
+    },
+    {
+      "id": "partner-section-visible",
+      "selector": "#design-partner",
+      "type": "visible",
+      "passed": true
+    }
+  ]
+}

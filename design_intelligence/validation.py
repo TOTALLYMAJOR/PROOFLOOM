@@ -7,10 +7,10 @@ from .repository import inspect_repository
 from .reviewing import review_manifest
 
 
-def validate_repository(root: str, review_data: dict | None = None) -> ValidationReport:
+def validate_repository(root: str, review_data: dict | None = None, scope_paths: list[str] | None = None) -> ValidationReport:
     snapshot = inspect_repository(root)
     assessment = assess_repository(root)
-    lint_report = run_lint(root)
+    lint_report = run_lint(root, scope_paths)
     review_report = review_manifest(review_data) if review_data else None
     status = _status(lint_report.status.value, review_report.verdict.value if review_report else None)
     notes = []

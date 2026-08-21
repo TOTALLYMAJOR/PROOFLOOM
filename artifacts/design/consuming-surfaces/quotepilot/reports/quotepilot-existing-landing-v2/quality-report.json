@@ -1,0 +1,58 @@
+{
+  "categories": {
+    "accessibility": {
+      "critical": 0,
+      "max": 25,
+      "moderate": 0,
+      "score": 0,
+      "serious": 30
+    },
+    "contract": {
+      "max": 10,
+      "passed": 25,
+      "score": 10,
+      "total": 25
+    },
+    "domState": {
+      "max": 20,
+      "passed": 25,
+      "score": 20,
+      "total": 25
+    },
+    "viewportContainment": {
+      "failures": 0,
+      "max": 25,
+      "score": 25
+    },
+    "visualDrift": {
+      "max": 20,
+      "measured": 0,
+      "passed": 0,
+      "score": 0,
+      "total": 5
+    }
+  },
+  "deterministic_only": true,
+  "drift_score": 0,
+  "mandatory_gates": {
+    "baselineGovernance": false,
+    "contract": true,
+    "criticalAccessibility": true,
+    "repairLimit": true,
+    "seriousAccessibility": false,
+    "viewportContainment": true,
+    "viewportCoverage": true,
+    "visualThreshold": false
+  },
+  "metadata": {
+    "source": "artifacts/design/consuming-surfaces/quotepilot/reports/quotepilot-existing-landing-v2/qa-report.json"
+  },
+  "notes": [
+    "The score contains measurable categories only; model visual-review findings are reported separately.",
+    "Automated accessibility passing does not replace manual semantic review.",
+    "Governed pixel evidence was unavailable for one or more viewports; those viewports receive no visual points and cannot pass baseline gates."
+  ],
+  "pass_threshold": 90,
+  "score": 55,
+  "status": "FAIL"
+}

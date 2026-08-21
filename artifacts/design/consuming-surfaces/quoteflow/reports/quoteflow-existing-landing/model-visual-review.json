@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "source": "visual-review:model",
+  "surface": "QuoteFlow existing landing",
+  "verdict": "FAIL",
+  "severity": "P1",
+  "coveredViewports": [
+    "desktop-1280x900",
+    "mobile-390x844"
+  ],
+  "rootCauseFindings": [
+    {
+      "id": "external-contrast-debt",
+      "rootCause": "Muted eyebrow and metadata color tokens fall just below the deterministic WCAG contrast floor on warm neutral surfaces.",
+      "evidence": "Axe measured 12 serious nodes across two viewports at ratios of 4.20, 4.34, and 4.45 against 4.5:1.",
+      "repairable": false,
+      "boundary": "The consuming QuoteFlow repository was read-only and no product-owner repair authority was granted."
+    }
+  ],
+  "evidence": [
+    "artifacts/design/consuming-surfaces/quoteflow/screenshots/quoteflow-existing-landing/desktop-1280x900/current.png",
+    "artifacts/design/consuming-surfaces/quoteflow/screenshots/quoteflow-existing-landing/mobile-390x844/current.png",
+    "artifacts/design/consuming-surfaces/quoteflow/reports/quoteflow-existing-landing/qa-report.json"
+  ],
+  "preserve": [
+    "document-led visual metaphor and editorial hierarchy",
+    "clear design-partner action at desktop and mobile",
+    "responsive reflow without horizontal overflow",
+    "branch-specific typography and warm neutral palette"
+  ],
+  "change": [
+    "Raise the affected metadata and eyebrow tokens above the 4.5:1 contrast floor in the QuoteFlow repository, then rerun its product-owned visual review."
+  ],
+  "remainingDebt": [
+    "No governed QuoteFlow baseline was available for pixel-drift scoring.",
+    "Manual semantic and product-owner visual acceptance remain required."
+  ],
+  "scoringBoundary": "This model review does not contribute numeric points to the deterministic quality score and does not authorize a cross-repository repair."
+}

@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "portfolio": [
+    {
+      "id": "DL-PORT-001",
+      "category": "accessibility",
+      "statement": "Accessibility requirements are protected constraints and cannot be silently overridden by a narrower scope.",
+      "protected": true,
+      "authority": "explicit-user-directive"
+    },
+    {
+      "id": "DL-PORT-002",
+      "category": "evidence",
+      "statement": "Rendered evidence and measurable checks must precede durable design-memory promotion.",
+      "protected": true,
+      "authority": "explicit-user-directive"
+    },
+    {
+      "id": "DL-PORT-003",
+      "category": "repair",
+      "statement": "Automatic repair is limited to three deterministic visual iterations and stops at authority, scope, or architecture boundaries.",
+      "protected": true,
+      "authority": "explicit-user-directive"
+    }
+  ],
+  "archetypes": {
+    "transactional-commercial": [
+      {"id": "DL-ARCH-TC-001", "category": "hierarchy", "statement": "Prioritize speed, confidence, financial clarity, and the commercial next action.", "protected": false}
+    ],
+    "operational-control": [
+      {"id": "DL-ARCH-OC-001", "category": "hierarchy", "statement": "Prioritize state, readiness, blockers, ownership, dependencies, and the next action.", "protected": false}
+    ],
+    "community-coordination": [
+      {"id": "DL-ARCH-CC-001", "category": "responsive", "statement": "Prioritize mobile glanceability, role-specific disclosure, and what happens next.", "protected": false}
+    ]
+  },
+  "products": {
+    "quotepilot": {
+      "archetype": "transactional-commercial",
+      "rules": [
+        {"id": "DL-QP-001", "category": "product", "statement": "Build -> Decide -> Book; quote construction remains primary over secondary reporting.", "protected": false}
+      ]
+    },
+    "quietpilot": {
+      "archetype": "operational-control",
+      "rules": [
+        {"id": "DL-QUIET-001", "category": "product", "statement": "Promise -> Prepare -> Deliver; operational truth and blockers remain explicit.", "protected": false}
+      ]
+    },
+    "leaguepilot": {
+      "archetype": "community-coordination",
+      "rules": [
+        {"id": "DL-LP-001", "category": "product", "statement": "Everyone knows what is next; disclose actions by role and current context.", "protected": false}
+      ]
+    }
+  }
+}

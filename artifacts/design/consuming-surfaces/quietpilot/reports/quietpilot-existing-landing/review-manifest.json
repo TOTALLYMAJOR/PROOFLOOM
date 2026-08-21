@@ -1,0 +1,21 @@
+{
+  "surface": "QuietPilot existing public landing",
+  "source": "playwright",
+  "covered_viewports": [
+    "desktop",
+    "tablet",
+    "mobile"
+  ],
+  "before_screenshots": [],
+  "after_screenshots": [
+    "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/wide-desktop-1440x1000/current.png",
+    "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/desktop-1280x900/current.png",
+    "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/compact-1024x768/current.png",
+    "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/tablet-768x1024/current.png",
+    "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/mobile-390x844/current.png"
+  ],
+  "viewport_findings": [],
+  "remaining_debt": [],
+  "automated_accessibility": "PASS",
+  "manual_semantic_review": "REQUIRED"
+}

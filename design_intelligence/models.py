@@ -74,6 +74,30 @@ class LintStatus(StrEnum):
     FAIL = "FAIL"
 
 
+class AuthorityLevel(StrEnum):
+    PORTFOLIO = "portfolio"
+    ARCHETYPE = "archetype"
+    PRODUCT = "product"
+    SURFACE = "surface"
+    COMPONENT = "component"
+    EXCEPTION = "exception"
+
+
+class DecisionStatus(StrEnum):
+    PROPOSED = "proposed"
+    ACCEPTED = "accepted"
+    SUPERSEDED = "superseded"
+    DEPRECATED = "deprecated"
+    REJECTED = "rejected"
+    EXPERIMENTAL = "experimental"
+
+
+class OutcomeResult(StrEnum):
+    ACCEPTED = "accepted"
+    REJECTED = "rejected"
+    INCONCLUSIVE = "inconclusive"
+
+
 @dataclass
 class CapabilitySignal:
     status: Presence
@@ -310,6 +334,9 @@ class EvidencePack:
     review_summary: dict[str, Any]
     decision_summary: str
     known_debt: list[str]
+    quality_summary: dict[str, Any] = field(default_factory=dict)
+    drift_summary: dict[str, Any] = field(default_factory=dict)
+    memory_context: dict[str, Any] = field(default_factory=dict)
     notes: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
@@ -350,6 +377,57 @@ class DoctorReport:
     safe_repairs: list[RepairCandidate]
     bounded_repair_policy: str
     notes: list[str] = field(default_factory=list)
+
+    def to_dict(self) -> dict[str, Any]:
+        return _normalize(asdict(self))
+
+
+@dataclass
+class MemoryContext:
+    product: str | None
+    archetype: str | None
+    surface: str | None
+    component: str | None
+    inherited_rules: list[dict[str, Any]]
+    decisions: list[dict[str, Any]]
+    active_exceptions: list[dict[str, Any]]
+    rejected_outcomes: list[dict[str, Any]]
+    unresolved_debt: list[dict[str, Any]]
+    stale_records: list[dict[str, Any]]
+    conflicts: list[dict[str, Any]]
+    bounded: bool
+    total_available: int
+
+    def to_dict(self) -> dict[str, Any]:
+        return _normalize(asdict(self))
+
+
+@dataclass
+class QualityReport:
+    status: ReviewVerdict
+    score: int
+    pass_threshold: int
+    categories: dict[str, dict[str, Any]]
+    mandatory_gates: dict[str, bool]
+    deterministic_only: bool
+    drift_score: int
+    notes: list[str] = field(default_factory=list)
+
+    def to_dict(self) -> dict[str, Any]:
+        return _normalize(asdict(self))
+
+
+@dataclass
+class RepairRun:
+    plan_id: str
+    status: str
+    iteration: int
+    max_iterations: int
+    changed_files: list[str]
+    applied_repairs: list[dict[str, Any]]
+    blocked_reasons: list[str]
+    before_hashes: dict[str, str]
+    after_hashes: dict[str, str]
 
     def to_dict(self) -> dict[str, Any]:
         return _normalize(asdict(self))

@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 1,
+  "scenario": "design-department-surface",
+  "surface": "Design QA Control Deck fixture",
+  "route": "/",
+  "browser": "chromium",
+  "generatedAt": "2026-08-21T08:31:31.926Z",
+  "commitSha": "7d6b09679842f4101c467a7ef2d52ddbb0b84676",
+  "sourceRevision": {
+    "repository": "design-intelligence",
+    "branch": "codex/autonomous-design-department-v2",
+    "commitSha": "7d6b09679842f4101c467a7ef2d52ddbb0b84676"
+  },
+  "status": "PASS",
+  "repairIterations": 0,
+  "thresholds": {
+    "maxCriticalAccessibilityViolations": 0,
+    "maxPixelDiffRatio": 0.005,
+    "maxRepairIterations": 3,
+    "maxSeriousAccessibilityViolations": 0,
+    "minimumTapTargetPx": 44,
+    "qualityPassScore": 90,
+    "requiredViewportCount": 5,
+    "schemaVersion": 1,
+    "weights": {
+      "accessibility": 25,
+      "contract": 10,
+      "domState": 20,
+      "viewportContainment": 25,
+      "visualDrift": 20
+    }
+  },
+  "viewports": [
+    {
+      "id": "wide-desktop-1440x1000",
+      "category": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "status": "PASS",
+      "dom": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440,
+        "overflowCount": 0,
+        "offscreenCount": 0,
+        "assertionsPassed": 5,
+        "assertionsTotal": 5
+      },
+      "accessibility": {
+        "violations": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "manualSemanticReview": "REQUIRED"
+      },
+      "visual": {
+        "status": "PASS",
+        "governed": true,
+        "diffRatio": 0,
+        "maxDiffRatio": 0.005,
+        "baselinePath": ".design/baselines/design-department-surface/wide-desktop-1440x1000/baseline.png",
+        "baselineSha256": "d19769cd9eb4b37d54afe3856ff4c0faefc0ba121baa076ff435cd90d87b6345",
+        "diffPath": "artifacts/design/diffs/design-department-surface/wide-desktop-1440x1000/diff.png"
+      },
+      "artifacts": {
+        "currentScreenshot": "artifacts/design/screenshots/design-department-surface/wide-desktop-1440x1000/current.png",
+        "fullScreenshot": "artifacts/design/screenshots/design-department-surface/wide-desktop-1440x1000/full.png",
+        "dom": "artifacts/design/DOM/design-department-surface/wide-desktop-1440x1000.json",
+        "accessibility": "artifacts/design/accessibility/design-department-surface/wide-desktop-1440x1000.json"
+      }
+    },
+    {
+      "id": "desktop-1280x900",
+      "category": "desktop",
+      "width": 1280,
+      "height": 900,
+      "status": "PASS",
+      "dom": {
+        "scrollWidth": 1280,
+        "viewportWidth": 1280,
+        "overflowCount": 0,
+        "offscreenCount": 0,
+        "assertionsPassed": 5,
+        "assertionsTotal": 5
+      },
+      "accessibility": {
+        "violations": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "manualSemanticReview": "REQUIRED"
+      },
+      "visual": {
+        "status": "PASS",
+        "governed": true,
+        "diffRatio": 0,
+        "maxDiffRatio": 0.005,
+        "baselinePath": ".design/baselines/design-department-surface/desktop-1280x900/baseline.png",
+        "baselineSha256": "605099703f0021d7c86a23c5c7c5e06672c43391a798a02378a0a8d4911956b6",
+        "diffPath": "artifacts/design/diffs/design-department-surface/desktop-1280x900/diff.png"
+      },
+      "artifacts": {
+        "currentScreenshot": "artifacts/design/screenshots/design-department-surface/desktop-1280x900/current.png",
+        "fullScreenshot": "artifacts/design/screenshots/design-department-surface/desktop-1280x900/full.png",
+        "dom": "artifacts/design/DOM/design-department-surface/desktop-1280x900.json",
+        "accessibility": "artifacts/design/accessibility/design-department-surface/desktop-1280x900.json"
+      }
+    },
+    {
+      "id": "compact-1024x768",
+      "category": "desktop",
+      "width": 1024,
+      "height": 768,
+      "status": "PASS",
+      "dom": {
+        "scrollWidth": 1024,
+        "viewportWidth": 1024,
+        "overflowCount": 0,
+        "offscreenCount": 0,
+        "assertionsPassed": 5,
+        "assertionsTotal": 5
+      },
+      "accessibility": {
+        "violations": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "manualSemanticReview": "REQUIRED"
+      },
+      "visual": {
+        "status": "PASS",
+        "governed": true,
+        "diffRatio": 0,
+        "maxDiffRatio": 0.005,
+        "baselinePath": ".design/baselines/design-department-surface/compact-1024x768/baseline.png",
+        "baselineSha256": "f5e9929e72e44ddbb0e50efdc1dcef3dba62f12c33380137b4738eed35d2c2ef",
+        "diffPath": "artifacts/design/diffs/design-department-surface/compact-1024x768/diff.png"
+      },
+      "artifacts": {
+        "currentScreenshot": "artifacts/design/screenshots/design-department-surface/compact-1024x768/current.png",
+        "fullScreenshot": "artifacts/design/screenshots/design-department-surface/compact-1024x768/full.png",
+        "dom": "artifacts/design/DOM/design-department-surface/compact-1024x768.json",
+        "accessibility": "artifacts/design/accessibility/design-department-surface/compact-1024x768.json"
+      }
+    },
+    {
+      "id": "tablet-768x1024",
+      "category": "tablet",
+      "width": 768,
+      "height": 1024,
+      "status": "PASS",
+      "dom": {
+        "scrollWidth": 768,
+        "viewportWidth": 768,
+        "overflowCount": 0,
+        "offscreenCount": 0,
+        "assertionsPassed": 5,
+        "assertionsTotal": 5
+      },
+      "accessibility": {
+        "violations": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "manualSemanticReview": "REQUIRED"
+      },
+      "visual": {
+        "status": "PASS",
+        "governed": true,
+        "diffRatio": 0,
+        "maxDiffRatio": 0.005,
+        "baselinePath": ".design/baselines/design-department-surface/tablet-768x1024/baseline.png",
+        "baselineSha256": "bb5af8671eee00d1f38e007b1f7a286c677de08a4fbdeefe4e57c654f2879cfe",
+        "diffPath": "artifacts/design/diffs/design-department-surface/tablet-768x1024/diff.png"
+      },
+      "artifacts": {
+        "currentScreenshot": "artifacts/design/screenshots/design-department-surface/tablet-768x1024/current.png",
+        "fullScreenshot": "artifacts/design/screenshots/design-department-surface/tablet-768x1024/full.png",
+        "dom": "artifacts/design/DOM/design-department-surface/tablet-768x1024.json",
+        "accessibility": "artifacts/design/accessibility/design-department-surface/tablet-768x1024.json"
+      }
+    },
+    {
+      "id": "mobile-390x844",
+      "category": "mobile",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "dom": {
+        "scrollWidth": 390,
+        "viewportWidth": 390,
+        "overflowCount": 0,
+        "offscreenCount": 0,
+        "assertionsPassed": 5,
+        "assertionsTotal": 5
+      },
+      "accessibility": {
+        "violations": 0,
+        "critical": 0,
+        "serious": 0,
+        "moderate": 0,
+        "manualSemanticReview": "REQUIRED"
+      },
+      "visual": {
+        "status": "PASS",
+        "governed": true,
+        "diffRatio": 0,
+        "maxDiffRatio": 0.005,
+        "baselinePath": ".design/baselines/design-department-surface/mobile-390x844/baseline.png",
+        "baselineSha256": "ca60e3df0d05524aad08788de06583b21e2bc932c2cef5c53774b82d983ec297",
+        "diffPath": "artifacts/design/diffs/design-department-surface/mobile-390x844/diff.png"
+      },
+      "artifacts": {
+        "currentScreenshot": "artifacts/design/screenshots/design-department-surface/mobile-390x844/current.png",
+        "fullScreenshot": "artifacts/design/screenshots/design-department-surface/mobile-390x844/full.png",
+        "dom": "artifacts/design/DOM/design-department-surface/mobile-390x844.json",
+        "accessibility": "artifacts/design/accessibility/design-department-surface/mobile-390x844.json"
+      }
+    }
+  ],
+  "totals": {
+    "criticalAccessibilityViolations": 0,
+    "seriousAccessibilityViolations": 0,
+    "moderateAccessibilityViolations": 0,
+    "containmentFailures": 0,
+    "domAssertionsPassed": 25,
+    "domAssertionsTotal": 25,
+    "contractAssertionsPassed": 25,
+    "contractAssertionsTotal": 25
+  },
+  "findings": [],
+  "evidenceBoundary": "Deterministic browser, DOM, accessibility, and pixel evidence. Manual semantic and model visual review remain separate."
+}

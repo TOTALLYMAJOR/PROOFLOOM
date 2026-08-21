@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "qualityPassScore": 90,
+  "maxPixelDiffRatio": 0.005,
+  "maxCriticalAccessibilityViolations": 0,
+  "maxSeriousAccessibilityViolations": 0,
+  "requiredViewportCount": 5,
+  "maxRepairIterations": 3,
+  "minimumTapTargetPx": 44,
+  "weights": {
+    "accessibility": 25,
+    "viewportContainment": 25,
+    "domState": 20,
+    "visualDrift": 20,
+    "contract": 10
+  }
+}

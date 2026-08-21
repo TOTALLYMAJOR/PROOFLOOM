@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "quoteflow-existing-landing",
+  "surface": "QuoteFlow existing landing",
+  "product": "QuotePilot",
+  "actor": "catering operator evaluating QuotePilot",
+  "route": "/",
+  "readinessSelector": "#landing-main",
+  "artifactRoot": "artifacts/design/consuming-surfaces/quoteflow",
+  "baselineManifest": ".design/baselines/manifest.json",
+  "thresholds": ".design/quality/thresholds.json",
+  "contractAssertions": [
+    {"id": "main-visible", "type": "visible", "selector": "#landing-main"},
+    {"id": "hero-title-visible", "type": "visible", "selector": "#dh-title"},
+    {"id": "partner-action-visible", "type": "visible", "selector": "a[href='#design-partner']"}
+  ],
+  "viewports": [
+    {"id": "desktop-1280x900", "category": "desktop", "width": 1280, "height": 900},
+    {"id": "mobile-390x844", "category": "mobile", "width": 390, "height": 844}
+  ]
+}
