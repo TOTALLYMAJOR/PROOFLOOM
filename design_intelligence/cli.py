@@ -43,6 +43,13 @@ from .repository import inspect_repository, render_snapshot_text
 from .reviewing import render_review_text, review_manifest
 from .self_audit import run_self_audit
 from .validation import render_validation_text, validate_repository
+from .workflows import (
+    build_handoff,
+    build_workflow,
+    render_workflow_text,
+    write_contract_from_workflow,
+    write_handoff,
+)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -85,6 +92,23 @@ def main(argv: list[str] | None = None) -> int:
     reference_parser.add_argument("--input", required=True, help="JSON file of reference objects.")
     reference_parser.add_argument("--profile", choices=("quotepilot", "quietpilot", "leaguepilot"))
     reference_parser.add_argument("--format", choices=("json", "text"), default="text")
+
+    work_parser = _add_root_format_parser(subparsers, "work")
+    work_parser.add_argument("--task", required=True, help="The material design task to organize.")
+    work_parser.add_argument("--profile", choices=("quotepilot", "quietpilot", "leaguepilot"))
+    work_parser.add_argument("--surface", help="The product surface being changed.")
+    work_parser.add_argument("--brief-file", help="Optional JSON actor/task fields.")
+    work_parser.add_argument("--reference", action="append", help="External reference URL or name; repeatable.")
+    work_parser.add_argument("--contract-out", help="Explicit path for a validated design contract JSON.")
+
+    handoff_parser = _add_root_format_parser(subparsers, "handoff")
+    handoff_parser.add_argument("--task", required=True, help="The material design task to hand to an agent.")
+    handoff_parser.add_argument("--profile", choices=("quotepilot", "quietpilot", "leaguepilot"))
+    handoff_parser.add_argument("--surface", help="The product surface being changed.")
+    handoff_parser.add_argument("--brief-file", help="Optional JSON actor/task fields.")
+    handoff_parser.add_argument("--reference", action="append", help="External reference URL or name; repeatable.")
+    handoff_parser.add_argument("--adapter", choices=("codex", "claude"), default="codex")
+    handoff_parser.add_argument("--output", help="Explicit Markdown or JSON output path.")
 
     memory_parser = subparsers.add_parser("memory")
     memory_subparsers = memory_parser.add_subparsers(dest="memory_command", required=True)
@@ -255,6 +279,23 @@ def _dispatch(args: argparse.Namespace) -> int:
     if args.command == "reference":
         report = analyze_references(_load_json_required(args.input), args.profile)
         return _emit(report.to_dict(), render_reference_text(report), args.format)
+    if args.command == "work":
+        workflow = build_workflow(
+            _root_arg(args), args.task, args.profile, args.surface, _load_json(args.brief_file), args.reference
+        )
+        if args.contract_out:
+            write_contract_from_workflow(workflow, args.contract_out)
+            workflow["contract_output"] = str(Path(args.contract_out).resolve())
+        return _emit(workflow, render_workflow_text(workflow), args.format)
+    if args.command == "handoff":
+        workflow = build_workflow(
+            _root_arg(args), args.task, args.profile, args.surface, _load_json(args.brief_file), args.reference
+        )
+        packet = build_handoff(workflow, args.adapter)
+        if args.output:
+            write_handoff(packet, args.output)
+            packet["output"] = str(Path(args.output).resolve())
+        return _emit(packet, packet["prompt"], args.format)
     if args.command == "memory":
         root = _root_arg(args)
         if args.memory_command == "init":

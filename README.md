@@ -82,6 +82,8 @@ design-intelligence refactor-risk --root /path/to/repo
 design-intelligence review --input work/review-manifest.json
 design-intelligence validate --root /path/to/repo --review-input work/review-manifest.json --evidence-pack-out work/evidence-pack.md
 design-intelligence doctor --root /path/to/repo
+design-intelligence work --root /path/to/repo --task "Improve proposal comparison" --profile quotepilot
+design-intelligence handoff --root /path/to/repo --task "Improve proposal comparison" --profile quotepilot --reference https://aura.build --output work/handoff.md
 design-intelligence memory context --root /path/to/repo --product quotepilot --surface QuoteWorkspace --component QuoteSidebar
 design-intelligence contract validate --input work/design-contract.json
 design-intelligence registry scan --root /path/to/repo
@@ -98,6 +100,8 @@ design-intelligence self-audit --root /path/to/repo
 ```
 
 All commands remain read-only unless an explicit output path, registry `--write`, baseline review `request`, baseline `promote`, or repair `--apply` is supplied. A baseline review request writes only its declared request file.
+
+`work` organizes a material design task into a repository-aware contract, evidence-discovery plan, and explicit next action. It writes a contract only with `--contract-out`. `handoff` turns that plan into a compact Codex or Claude instruction packet and writes only with `--output`.
 
 ## Rendered QA
 
