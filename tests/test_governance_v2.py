@@ -54,6 +54,33 @@ class GovernanceV2Tests(unittest.TestCase):
         self.assertTrue(audit_thresholds({**thresholds, "qualityPassScore": 80}))
         self.assertTrue(audit_thresholds({**thresholds, "maxPixelDiffRatio": 0.1}))
 
+    def test_quality_keeps_missing_pixel_evidence_unscored(self) -> None:
+        thresholds = load_thresholds()
+        qa = {
+            "repairIterations": 0,
+            "viewports": [
+                {"visual": {"status": "NOT_RUN", "governed": False, "diffRatio": None}}
+                for _ in range(5)
+            ],
+            "totals": {
+                "criticalAccessibilityViolations": 0,
+                "seriousAccessibilityViolations": 0,
+                "moderateAccessibilityViolations": 0,
+                "containmentFailures": 0,
+                "domAssertionsPassed": 25,
+                "domAssertionsTotal": 25,
+                "contractAssertionsPassed": 25,
+                "contractAssertionsTotal": 25,
+            },
+        }
+        report = score_quality(qa, thresholds)
+        self.assertEqual(report.status.value, "FAIL")
+        self.assertEqual(report.categories["visualDrift"]["score"], 0)
+        self.assertEqual(report.categories["visualDrift"]["measured"], 0)
+        self.assertFalse(report.mandatory_gates["baselineGovernance"])
+        self.assertFalse(report.mandatory_gates["visualThreshold"])
+        self.assertTrue(any("pixel evidence was unavailable" in note for note in report.notes))
+
     def test_repair_enforces_evidence_scope_and_three_iteration_limit(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

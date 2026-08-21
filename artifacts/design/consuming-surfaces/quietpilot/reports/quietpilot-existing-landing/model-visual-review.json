@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "source": "visual-review:model",
+  "surface": "QuietPilot existing public landing",
+  "verdict": "WARN",
+  "severity": "P2",
+  "coveredViewports": [
+    "wide-desktop-1440x1000",
+    "mobile-390x844"
+  ],
+  "rootCauseFindings": [
+    {
+      "id": "quietpilot-low-salience-evidence",
+      "rootCause": "Secondary operational evidence and proof-boundary copy use intentionally subdued values against the black field, making the lower evidence region visually difficult to scan despite automated contrast passing.",
+      "evidence": "Desktop and mobile captures preserve the text, but the evidence ledger and boundary copy recede substantially below the headline and actions.",
+      "repairable": false,
+      "boundary": "This run has review authority only; product-owner approval is required before changing QuietPilot's canonical landing tokens."
+    }
+  ],
+  "evidence": [
+    "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/wide-desktop-1440x1000/current.png",
+    "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/mobile-390x844/current.png",
+    "artifacts/design/consuming-surfaces/quietpilot/reports/quietpilot-existing-landing/qa-report.json"
+  ],
+  "preserve": [
+    "single-screen operational-instrument composition",
+    "clear hierarchy from promise to primary action",
+    "explicit sample-data and readiness proof boundary",
+    "responsive reflow without overflow or missing actions"
+  ],
+  "change": [
+    "Request product-owner review of secondary evidence salience before any token change or baseline promotion."
+  ],
+  "remainingDebt": [
+    "No governed QuietPilot pixel baselines are available.",
+    "Manual semantic accessibility and product-owner visual acceptance remain required."
+  ],
+  "scoringBoundary": "This model review contributes no points to the deterministic quality score and grants no repair authority."
+}

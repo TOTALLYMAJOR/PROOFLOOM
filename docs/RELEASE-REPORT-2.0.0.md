@@ -39,7 +39,7 @@ add a second application framework, component system, backlog, or E2E hierarchy.
 
 | Gate | Result |
 |---|---:|
-| Unit and governance tests | 28/28 PASS |
+| Unit and governance tests | 29/29 PASS |
 | V1 skill validators | 5/5 PASS |
 | Governed fixture viewports | 5/5 PASS |
 | Deterministic quality score | 100/100 PASS |
@@ -118,6 +118,15 @@ contrast violations remain. The three Design Intelligence CI commands pass.
 - Automatic repair is intentionally limited to exact visual-only mutations and
   stops at iteration 3 or any authority, scope, architecture, test, backend,
   threshold, or baseline boundary.
+
+## Supplemental Product Run
+
+On August 21, 2026, V2 was run across five viewports on the current QuietPilot
+and QuotePilot public landing surfaces. QuietPilot passed browser, DOM,
+containment, and Axe checks but remains quality FAIL until governed pixel
+baselines exist. QuotePilot remains FAIL on serious contrast findings and no
+repair was attempted. See
+`artifacts/design/consuming-surfaces/product-validation-2026-08-21/V2-PRODUCT-VALIDATION-2026-08-21.md`.
 
 ## V3 Opportunities
 

@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 1,
+  "scenario": "quotepilot-existing-landing-v2",
+  "surface": "QuotePilot existing public landing",
+  "route": "/",
+  "browser": "chromium",
+  "generatedAt": "2026-08-21T08:20:22.527Z",
+  "commitSha": "c0b213f2e728365c66a272d3d0277c46ce51d3e7",
+  "sourceRevision": {
+    "repository": "quoteflow",
+    "branch": "feature/landing-document-hero",
+    "commitSha": "c0b213f2e728365c66a272d3d0277c46ce51d3e7"
+  },
+  "status": "FAIL",
+  "repairIterations": 0,
+  "thresholds": {
+    "maxCriticalAccessibilityViolations": 0,
+    "maxPixelDiffRatio": 0.005,
+    "maxRepairIterations": 3,
+    "maxSeriousAccessibilityViolations": 0,
+    "minimumTapTargetPx": 44,
+    "qualityPassScore": 90,
+    "requiredViewportCount": 5,
+    "schemaVersion": 1,
+    "weights": {
+      "accessibility": 25,
+      "contract": 10,
+      "domState": 20,
+      "viewportContainment": 25,
+      "visualDrift": 20
+    }
+  },
+  "viewports": [
+    {
+      "id": "wide-desktop-1440x1000",
+      "category": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "status": "FAIL",
+      "dom": {
+        "scrollWidth": 1440,
+        "viewportWidth": 1440,
+        "overflowCount": 0,
+        "offscreenCount": 0,
+        "assertionsPassed": 5,
+        "assertionsTotal": 5
+      },
+      "accessibility": {
+        "violations": 1,
+        "critical": 0,
+        "serious": 6,
+        "moderate": 0,
+        "manualSemanticReview": "REQUIRED"
+      },
+      "visual": {
+        "status": "NOT_RUN",
+        "governed": false,
+        "diffRatio": null,
+        "reason": "No governed baseline entry"
+      },
+      "artifacts": {
+        "currentScreenshot": "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/wide-desktop-1440x1000/current.png",
+        "fullScreenshot": "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/wide-desktop-1440x1000/full.png",
+        "dom": "artifacts/design/consuming-surfaces/quotepilot/DOM/quotepilot-existing-landing-v2/wide-desktop-1440x1000.json",
+        "accessibility": "artifacts/design/consuming-surfaces/quotepilot/accessibility/quotepilot-existing-landing-v2/wide-desktop-1440x1000.json"
+      }
+    },
+    {
+      "id": "desktop-1280x900",
+      "category": "desktop",
+      "width": 1280,
+      "height": 900,
+      "status": "FAIL",
+      "dom": {
+        "scrollWidth": 1280,
+        "viewportWidth": 1280,
+        "overflowCount": 0,
+        "offscreenCount": 0,
+        "assertionsPassed": 5,
+        "assertionsTotal": 5
+      },
+      "accessibility": {
+        "violations": 1,
+        "critical": 0,
+        "serious": 6,
+        "moderate": 0,
+        "manualSemanticReview": "REQUIRED"
+      },
+      "visual": {
+        "status": "NOT_RUN",
+        "governed": false,
+        "diffRatio": null,
+        "reason": "No governed baseline entry"
+      },
+      "artifacts": {
+        "currentScreenshot": "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/desktop-1280x900/current.png",
+        "fullScreenshot": "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/desktop-1280x900/full.png",
+        "dom": "artifacts/design/consuming-surfaces/quotepilot/DOM/quotepilot-existing-landing-v2/desktop-1280x900.json",
+        "accessibility": "artifacts/design/consuming-surfaces/quotepilot/accessibility/quotepilot-existing-landing-v2/desktop-1280x900.json"
+      }
+    },
+    {
+      "id": "compact-1024x768",
+      "category": "desktop",
+      "width": 1024,
+      "height": 768,
+      "status": "FAIL",
+      "dom": {
+        "scrollWidth": 1024,
+        "viewportWidth": 1024,
+        "overflowCount": 0,
+        "offscreenCount": 0,
+        "assertionsPassed": 5,
+        "assertionsTotal": 5
+      },
+      "accessibility": {
+        "violations": 1,
+        "critical": 0,
+        "serious": 6,
+        "moderate": 0,
+        "manualSemanticReview": "REQUIRED"
+      },
+      "visual": {
+        "status": "NOT_RUN",
+        "governed": false,
+        "diffRatio": null,
+        "reason": "No governed baseline entry"
+      },
+      "artifacts": {
+        "currentScreenshot": "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/compact-1024x768/current.png",
+        "fullScreenshot": "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/compact-1024x768/full.png",
+        "dom": "artifacts/design/consuming-surfaces/quotepilot/DOM/quotepilot-existing-landing-v2/compact-1024x768.json",
+        "accessibility": "artifacts/design/consuming-surfaces/quotepilot/accessibility/quotepilot-existing-landing-v2/compact-1024x768.json"
+      }
+    },
+    {
+      "id": "tablet-768x1024",
+      "category": "tablet",
+      "width": 768,
+      "height": 1024,
+      "status": "FAIL",
+      "dom": {
+        "scrollWidth": 768,
+        "viewportWidth": 768,
+        "overflowCount": 0,
+        "offscreenCount": 0,
+        "assertionsPassed": 5,
+        "assertionsTotal": 5
+      },
+      "accessibility": {
+        "violations": 1,
+        "critical": 0,
+        "serious": 6,
+        "moderate": 0,
+        "manualSemanticReview": "REQUIRED"
+      },
+      "visual": {
+        "status": "NOT_RUN",
+        "governed": false,
+        "diffRatio": null,
+        "reason": "No governed baseline entry"
+      },
+      "artifacts": {
+        "currentScreenshot": "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/tablet-768x1024/current.png",
+        "fullScreenshot": "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/tablet-768x1024/full.png",
+        "dom": "artifacts/design/consuming-surfaces/quotepilot/DOM/quotepilot-existing-landing-v2/tablet-768x1024.json",
+        "accessibility": "artifacts/design/consuming-surfaces/quotepilot/accessibility/quotepilot-existing-landing-v2/tablet-768x1024.json"
+      }
+    },
+    {
+      "id": "mobile-390x844",
+      "category": "mobile",
+      "width": 390,
+      "height": 844,
+      "status": "FAIL",
+      "dom": {
+        "scrollWidth": 390,
+        "viewportWidth": 390,
+        "overflowCount": 0,
+        "offscreenCount": 0,
+        "assertionsPassed": 5,
+        "assertionsTotal": 5
+      },
+      "accessibility": {
+        "violations": 1,
+        "critical": 0,
+        "serious": 6,
+        "moderate": 0,
+        "manualSemanticReview": "REQUIRED"
+      },
+      "visual": {
+        "status": "NOT_RUN",
+        "governed": false,
+        "diffRatio": null,
+        "reason": "No governed baseline entry"
+      },
+      "artifacts": {
+        "currentScreenshot": "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/mobile-390x844/current.png",
+        "fullScreenshot": "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/mobile-390x844/full.png",
+        "dom": "artifacts/design/consuming-surfaces/quotepilot/DOM/quotepilot-existing-landing-v2/mobile-390x844.json",
+        "accessibility": "artifacts/design/consuming-surfaces/quotepilot/accessibility/quotepilot-existing-landing-v2/mobile-390x844.json"
+      }
+    }
+  ],
+  "totals": {
+    "criticalAccessibilityViolations": 0,
+    "seriousAccessibilityViolations": 30,
+    "moderateAccessibilityViolations": 0,
+    "containmentFailures": 0,
+    "domAssertionsPassed": 25,
+    "domAssertionsTotal": 25,
+    "contractAssertionsPassed": 25,
+    "contractAssertionsTotal": 25
+  },
+  "findings": [
+    {
+      "id": "axe-color-contrast:wide-desktop-1440x1000",
+      "viewport": "wide-desktop-1440x1000",
+      "viewportCategory": "desktop",
+      "severity": "P1",
+      "rootCause": "accessibility",
+      "message": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "repairable": true,
+      "source": "axe",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ]
+    },
+    {
+      "id": "axe-color-contrast:desktop-1280x900",
+      "viewport": "desktop-1280x900",
+      "viewportCategory": "desktop",
+      "severity": "P1",
+      "rootCause": "accessibility",
+      "message": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "repairable": true,
+      "source": "axe",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ]
+    },
+    {
+      "id": "axe-color-contrast:compact-1024x768",
+      "viewport": "compact-1024x768",
+      "viewportCategory": "desktop",
+      "severity": "P1",
+      "rootCause": "accessibility",
+      "message": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "repairable": true,
+      "source": "axe",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ]
+    },
+    {
+      "id": "axe-color-contrast:tablet-768x1024",
+      "viewport": "tablet-768x1024",
+      "viewportCategory": "tablet",
+      "severity": "P1",
+      "rootCause": "accessibility",
+      "message": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "repairable": true,
+      "source": "axe",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ]
+    },
+    {
+      "id": "axe-color-contrast:mobile-390x844",
+      "viewport": "mobile-390x844",
+      "viewportCategory": "mobile",
+      "severity": "P1",
+      "rootCause": "accessibility",
+      "message": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "repairable": true,
+      "source": "axe",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ]
+    }
+  ],
+  "evidenceBoundary": "Deterministic browser, DOM, accessibility, and pixel evidence. Manual semantic and model visual review remain separate."
+}

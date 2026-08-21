@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "source": "visual-review:model",
+  "surface": "QuotePilot existing public landing",
+  "verdict": "FAIL",
+  "severity": "P1",
+  "coveredViewports": [
+    "wide-desktop-1440x1000",
+    "mobile-390x844"
+  ],
+  "rootCauseFindings": [
+    {
+      "id": "quotepilot-contrast-debt-held",
+      "rootCause": "Muted eyebrow and metadata color tokens fall below the deterministic 4.5:1 contrast floor on warm neutral surfaces.",
+      "evidence": "Axe found six serious nodes at each of five viewports, for 30 serious nodes total; DOM contracts and containment still passed.",
+      "repairable": false,
+      "boundary": "The user explicitly placed QuotePilot repair on hold."
+    }
+  ],
+  "evidence": [
+    "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/wide-desktop-1440x1000/current.png",
+    "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/mobile-390x844/current.png",
+    "artifacts/design/consuming-surfaces/quotepilot/reports/quotepilot-existing-landing-v2/qa-report.json"
+  ],
+  "preserve": [
+    "document-led event revision metaphor",
+    "strong editorial hierarchy and commercial action",
+    "responsive hero reflow without horizontal overflow",
+    "clear separation between customer request and operational consequences"
+  ],
+  "change": [
+    "Keep the measured contrast repair queued but unmodified until the hold is lifted."
+  ],
+  "remainingDebt": [
+    "Thirty serious contrast nodes remain across five governed viewport sizes.",
+    "No governed QuotePilot pixel baselines are available.",
+    "Manual semantic and product-owner visual acceptance remain required."
+  ],
+  "scoringBoundary": "This model review contributes no points to the deterministic quality score and does not override the repair hold."
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "quotepilot-existing-landing-v2",
+  "surface": "QuotePilot existing public landing",
+  "product": "QuotePilot",
+  "actor": "catering operator evaluating quote operations",
+  "route": "/",
+  "readinessSelector": "#landing-main",
+  "baselineManifest": ".design/baselines/manifest.json",
+  "thresholds": ".design/quality/thresholds.json",
+  "contractAssertions": [
+    {"id": "landing-main-visible", "type": "visible", "selector": "#landing-main"},
+    {"id": "hero-title-visible", "type": "visible", "selector": "#dh-title"},
+    {"id": "partner-action-visible", "type": "visible", "selector": "a[href='#design-partner']"},
+    {"id": "event-tabs-visible", "type": "visible", "selector": "[role='tablist'][aria-label='Follow the event']"},
+    {"id": "partner-section-visible", "type": "visible", "selector": "#design-partner"}
+  ],
+  "viewports": [
+    {"id": "wide-desktop-1440x1000", "category": "desktop", "width": 1440, "height": 1000},
+    {"id": "desktop-1280x900", "category": "desktop", "width": 1280, "height": 900},
+    {"id": "compact-1024x768", "category": "desktop", "width": 1024, "height": 768},
+    {"id": "tablet-768x1024", "category": "tablet", "width": 768, "height": 1024},
+    {"id": "mobile-390x844", "category": "mobile", "width": 390, "height": 844}
+  ]
+}

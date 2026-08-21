@@ -1,0 +1,107 @@
+{
+  "surface": "QuotePilot existing public landing",
+  "source": "playwright",
+  "covered_viewports": [
+    "desktop",
+    "tablet",
+    "mobile"
+  ],
+  "before_screenshots": [],
+  "after_screenshots": [
+    "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/wide-desktop-1440x1000/current.png",
+    "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/desktop-1280x900/current.png",
+    "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/compact-1024x768/current.png",
+    "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/tablet-768x1024/current.png",
+    "artifacts/design/consuming-surfaces/quotepilot/screenshots/quotepilot-existing-landing-v2/mobile-390x844/current.png"
+  ],
+  "viewport_findings": [
+    {
+      "viewport": "desktop",
+      "severity": "P1",
+      "root_cause": "accessibility",
+      "evidence": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ],
+      "repairable": true,
+      "source": "axe",
+      "evidence_id": "axe-color-contrast:wide-desktop-1440x1000"
+    },
+    {
+      "viewport": "desktop",
+      "severity": "P1",
+      "root_cause": "accessibility",
+      "evidence": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ],
+      "repairable": true,
+      "source": "axe",
+      "evidence_id": "axe-color-contrast:desktop-1280x900"
+    },
+    {
+      "viewport": "desktop",
+      "severity": "P1",
+      "root_cause": "accessibility",
+      "evidence": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ],
+      "repairable": true,
+      "source": "axe",
+      "evidence_id": "axe-color-contrast:compact-1024x768"
+    },
+    {
+      "viewport": "tablet",
+      "severity": "P1",
+      "root_cause": "accessibility",
+      "evidence": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ],
+      "repairable": true,
+      "source": "axe",
+      "evidence_id": "axe-color-contrast:tablet-768x1024"
+    },
+    {
+      "viewport": "mobile",
+      "severity": "P1",
+      "root_cause": "accessibility",
+      "evidence": "Elements must meet minimum color contrast ratio thresholds (6 node(s))",
+      "preserve": [
+        "governed baseline",
+        "design contract",
+        "existing product authority"
+      ],
+      "change": [
+        "bounded deterministic source correction"
+      ],
+      "repairable": true,
+      "source": "axe",
+      "evidence_id": "axe-color-contrast:mobile-390x844"
+    }
+  ],
+  "remaining_debt": [],
+  "automated_accessibility": "FAIL",
+  "manual_semantic_review": "REQUIRED"
+}

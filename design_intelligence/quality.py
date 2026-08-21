@@ -29,6 +29,11 @@ def score_quality(qa_report: dict[str, Any], thresholds: dict[str, Any]) -> Qual
     contract_passed = int(totals.get("contractAssertionsPassed", 0))
     contract_total = int(totals.get("contractAssertionsTotal", 0))
     visual_passed = sum(1 for item in viewports if item.get("visual", {}).get("status") == "PASS")
+    visual_ratios = [
+        float(value)
+        for item in viewports
+        if isinstance((value := item.get("visual", {}).get("diffRatio")), (int, float))
+    ]
     viewport_count = len(viewports)
 
     accessibility_points = max(0, weights["accessibility"] - critical * 25 - serious * 10 - moderate * 2)
@@ -40,7 +45,13 @@ def score_quality(qa_report: dict[str, Any], thresholds: dict[str, Any]) -> Qual
         "accessibility": {"score": accessibility_points, "max": weights["accessibility"], "critical": critical, "serious": serious, "moderate": moderate},
         "viewportContainment": {"score": containment_points, "max": weights["viewportContainment"], "failures": containment_failures},
         "domState": {"score": dom_points, "max": weights["domState"], "passed": dom_passed, "total": dom_total},
-        "visualDrift": {"score": visual_points, "max": weights["visualDrift"], "passed": visual_passed, "total": viewport_count},
+        "visualDrift": {
+            "score": visual_points,
+            "max": weights["visualDrift"],
+            "passed": visual_passed,
+            "total": viewport_count,
+            "measured": len(visual_ratios),
+        },
         "contract": {"score": contract_points, "max": weights["contract"], "passed": contract_passed, "total": contract_total},
     }
     score = sum(int(category["score"]) for category in categories.values())
@@ -56,9 +67,17 @@ def score_quality(qa_report: dict[str, Any], thresholds: dict[str, Any]) -> Qual
     }
     status = ReviewVerdict.PASS if score >= thresholds["qualityPassScore"] and all(gates.values()) else ReviewVerdict.FAIL
     structural_drift = min(100, containment_failures * 25 + (dom_total - dom_passed) * 10)
-    visual_drift = max((float(item.get("visual", {}).get("diffRatio", 0)) for item in viewports), default=0.0)
+    visual_drift = max(visual_ratios, default=0.0)
     normalized_visual = min(100, round(visual_drift / max(thresholds["maxPixelDiffRatio"], 0.000001) * 50))
     drift_score = min(100, structural_drift + normalized_visual)
+    notes = [
+        "The score contains measurable categories only; model visual-review findings are reported separately.",
+        "Automated accessibility passing does not replace manual semantic review.",
+    ]
+    if len(visual_ratios) < viewport_count:
+        notes.append(
+            "Governed pixel evidence was unavailable for one or more viewports; those viewports receive no visual points and cannot pass baseline gates."
+        )
     return QualityReport(
         status=status,
         score=score,
@@ -67,10 +86,7 @@ def score_quality(qa_report: dict[str, Any], thresholds: dict[str, Any]) -> Qual
         mandatory_gates=gates,
         deterministic_only=True,
         drift_score=drift_score,
-        notes=[
-            "The score contains measurable categories only; model visual-review findings are reported separately.",
-            "Automated accessibility passing does not replace manual semantic review.",
-        ],
+        notes=notes,
     )
 
 

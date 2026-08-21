@@ -4,12 +4,12 @@
   "surface": "Design QA Control Deck fixture",
   "route": "/",
   "browser": "chromium",
-  "generatedAt": "2026-08-21T02:59:25.944Z",
-  "commitSha": "04ada5e7716f089cfc8557b2b6403d60c9d35261",
+  "generatedAt": "2026-08-21T08:31:31.926Z",
+  "commitSha": "7d6b09679842f4101c467a7ef2d52ddbb0b84676",
   "sourceRevision": {
     "repository": "design-intelligence",
     "branch": "codex/autonomous-design-department-v2",
-    "commitSha": "04ada5e7716f089cfc8557b2b6403d60c9d35261"
+    "commitSha": "7d6b09679842f4101c467a7ef2d52ddbb0b84676"
   },
   "status": "PASS",
   "repairIterations": 0,

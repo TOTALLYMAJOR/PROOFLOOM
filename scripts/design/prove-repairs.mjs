@@ -130,8 +130,8 @@ async function proveRepair(repairCase) {
     await fs.mkdir(evidenceRoot, { recursive: true });
     const beforeScreenshot = path.join(beforeOutput, "screenshots", scenario.id, "mobile-390x844", "current.png");
     const afterScreenshot = path.join(afterOutput, "screenshots", scenario.id, "mobile-390x844", "current.png");
-    await fs.copyFile(beforeScreenshot, path.join(evidenceRoot, "before.png"));
-    await fs.copyFile(afterScreenshot, path.join(evidenceRoot, "after.png"));
+    await copyEvidenceImage(beforeScreenshot, path.join(evidenceRoot, "before.png"));
+    await copyEvidenceImage(afterScreenshot, path.join(evidenceRoot, "after.png"));
     const evidence = {
       schemaVersion: 1,
       id: `repair-cycle-${repairCase.id}`,
@@ -160,6 +160,16 @@ async function proveRepair(repairCase) {
 async function writeJson(filePath, value) {
   await fs.mkdir(path.dirname(filePath), { recursive: true });
   await fs.writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+}
+
+
+async function copyEvidenceImage(source, destination) {
+  await fs.copyFile(source, destination);
+  await fs.chmod(destination, 0o644);
+  const mode = (await fs.stat(destination)).mode & 0o777;
+  if (mode !== 0o644) {
+    throw new Error(`Evidence image permissions must be 0644: ${destination}`);
+  }
 }
 
 
