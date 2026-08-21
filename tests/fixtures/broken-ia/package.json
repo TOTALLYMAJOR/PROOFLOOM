@@ -1,0 +1,9 @@
+{
+  "name": "broken-ia",
+  "dependencies": {
+    "next": "16.0.0",
+    "react": "19.0.0",
+    "tailwindcss": "4.0.0",
+    "@radix-ui/react-dialog": "1.0.0"
+  }
+}

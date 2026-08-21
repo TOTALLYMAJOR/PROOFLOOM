@@ -1,15 +1,12 @@
 # Responsive Design
 
-Responsive design is not shrinking desktop until it fits.
+Responsive work is not just scaling.
 
-For each breakpoint, decide:
+Questions:
 
-- what remains
-- what disappears
-- what collapses
-- what becomes a drawer or sheet
-- what becomes horizontally scrollable
-- what action becomes sticky
-- what becomes glanceable
+- What is the dominant mobile question?
+- What can be deferred behind progressive disclosure?
+- Which actions must stay thumb-reachable?
+- Which metadata can collapse without breaking the decision?
 
-Mobile should represent task prioritization, not compression.
+Desktop and mobile may legitimately prioritize different information.

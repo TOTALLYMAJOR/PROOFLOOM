@@ -1,13 +1,13 @@
 # Visual Defects
 
-Common defect buckets:
+Classify by root cause:
 
-- spacing inconsistency
-- uncontrolled radius or elevation
-- weak grouping
-- competing emphasis
-- low-contrast text
-- unhelpful motion
-- ambiguous state
-- duplicate primitive appearance
-- accidental drift from established patterns
+- visual polish
+- hierarchy
+- information architecture
+- workflow
+- responsive
+- accessibility
+- component-system drift
+
+The class matters because the fix path changes.

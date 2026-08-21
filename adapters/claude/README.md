@@ -6,4 +6,11 @@ Use the install script to copy the skills into the Claude skills directory:
 ./scripts/install-claude-skills
 ```
 
-Then use the adapter `CLAUDE.md` as a starting point in a consuming repository when that repository does not already provide equivalent design instructions.
+Then use [CLAUDE.md](/home/administrator/design-intelligence/adapters/claude/CLAUDE.md) as a starting point only when the consuming repository does not already provide equivalent design instructions.
+
+Adapter rules:
+
+- Repository truth outranks adapter defaults.
+- Use `design-language` first, not generic restyling.
+- Run `design-intelligence assess` or `design-intelligence context` before broad UX changes.
+- Treat `design-linter` and `visual-review` as evidence layers, not taste engines.

@@ -1,10 +1,9 @@
 # Workflow Diagnosis
 
-Classify the root cause before changing layout:
+Common misdiagnoses:
 
-- workflow defect: steps or order are wrong
-- IA defect: concepts or destinations are grouped poorly
-- hierarchy defect: the right elements exist but emphasis is wrong
-- interaction defect: the control or feedback model is weak
+- "Needs better styling" when the actual problem is missing next-action clarity
+- "Needs more modules" when the current object model is already overloaded
+- "Needs a dashboard" when users really need state plus one next action
 
-Do not label workflow defects as "polish."
+Fix workflow, IA, or hierarchy before polishing components.

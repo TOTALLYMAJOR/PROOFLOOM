@@ -1,6 +1,6 @@
 # Interaction Language
 
-Every important control should account for:
+Every important control should have clear:
 
 - default
 - hover
@@ -9,14 +9,6 @@ Every important control should account for:
 - selected
 - disabled
 - loading
-- error
-- success
+- success or error
 
-Motion should explain:
-
-- causality
-- hierarchy
-- state change
-- orientation
-
-Question motion that exists only to decorate.
+Motion should explain causality, hierarchy, or state change. Decorative motion without product value should be removed.

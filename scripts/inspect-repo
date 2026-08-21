@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-python3 -m repo_fit.assess "$@"
+python3 -m design_intelligence.cli assess "$@"

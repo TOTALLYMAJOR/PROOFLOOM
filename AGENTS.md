@@ -1,29 +1,27 @@
 # Design Intelligence Repository Guide
 
-Use this repository to maintain the reusable package itself, not to redefine consuming repositories.
+This repository owns the reusable utility itself. It does not outrank consuming repositories.
 
 ## Operating rules
 
+- Design intelligence is the primary mission; repository intelligence is supporting infrastructure.
 - Existing repository authorities outrank package defaults.
-- `repo_fit` is read-only and bounded. Do not turn it into a generalized migration platform.
-- Prefer knowledge alignment over runtime migration when that captures most of the value.
-- Do not add databases, dashboards, Docker, autonomous repair, or a competing component system.
+- Read-only by default. Only write artifacts when an explicit output path or installation target is requested.
+- Prefer knowledge alignment over runtime migration when it captures most of the value.
+- Do not add a second component system, second token system, second backlog, or second E2E hierarchy.
 
 ## Map
 
-- `skills/`: the reusable Codex and Claude skill content
-- `repo_fit/`: bounded repository discovery and assessment
-- `templates/`: reusable writing artifacts for product design work
-- `examples/product-profiles/`: QuotePilot, QuietPilot, and LeaguePilot examples
-- `adapters/`: thin integration guidance for Codex and Claude
-- `tests/fixtures/`: small sample repositories that prove repo-fit behavior
+- `design_intelligence/`: vendor-neutral core package and CLI
+- `repo_fit/`: V0.1 compatibility wrappers
+- `skills/`: concise skills plus reference docs
+- `templates/` and `examples/`: reusable design artifacts and product profiles
+- `adapters/`: thin Codex and Claude adapter guidance
+- `docs/`: architecture and release notes
+- `tests/fixtures/`: bounded proof repositories and manifests
 
 ## Validation
 
 - Run `python3 -m unittest discover -s tests -p 'test_*.py'`.
-- Run the skill validator for each skill before release changes.
-
-## Release discipline
-
-- Keep `VERSION` and `pyproject.toml` aligned.
-- Tag only after validation passes.
+- Run the skill validator for each skill before tagging.
+- Keep `VERSION`, `pyproject.toml`, and `design_intelligence/__init__.py` aligned.

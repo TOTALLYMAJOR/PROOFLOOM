@@ -1,12 +1,16 @@
 # Progressive Disclosure
 
-Use disclosure based on:
+Hide complexity because it is not needed yet, not because it is inconvenient.
 
-- role
-- context
-- object state
-- urgency
-- frequency
-- device
+Good uses:
 
-The purpose is to keep the current task easy, not to hide capability arbitrarily.
+- role-specific controls
+- advanced configuration
+- exception handling
+- verbose operational detail behind a status summary
+
+Bad uses:
+
+- hiding the primary action
+- hiding the current blocker
+- burying the key decision in a drawer or tab

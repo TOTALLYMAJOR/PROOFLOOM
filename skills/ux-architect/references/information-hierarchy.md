@@ -1,15 +1,9 @@
 # Information Hierarchy
 
-Hierarchy answers:
+Hierarchy should make three things obvious:
 
-- what matters most
-- what must be understood first
-- what is secondary
-- what can wait
+- what matters now
+- what is true now
+- what the user should do next
 
-Symptoms of weak hierarchy:
-
-- equal visual weight across unrelated items
-- primary action buried in a crowd
-- status and action separated
-- decision-critical data hidden in decoration
+Prefer one dominant action. Secondary capability should remain discoverable but not compete with the main decision.

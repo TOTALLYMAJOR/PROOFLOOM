@@ -1,0 +1,39 @@
+{
+  "name": "LeaguePilot",
+  "archetype": "Community Coordination",
+  "core_promise": "Everyone knows what's next",
+  "design_psychology": [
+    "community",
+    "organization",
+    "confidence",
+    "momentum"
+  ],
+  "ux_implications": [
+    "Mobile glanceability comes first.",
+    "Coach and admin complexity should not leak into parent flows.",
+    "Role-specific disclosure should make what/when/where/action/change instantly clear."
+  ],
+  "density_modes": [
+    "GLANCEABLE",
+    "CONVERSATIONAL"
+  ],
+  "dominant_questions": [
+    "What changed?",
+    "What happens next and when?",
+    "What action does this role need to take now?"
+  ],
+  "design_emphasis": [
+    "Optimize for one-handed mobile comprehension and short decision loops.",
+    "Keep role-specific complexity hidden until it is relevant."
+  ],
+  "actor_defaults": {
+    "actor": "Parent, coach, or admin checking the next coordination step",
+    "object": "Schedule, event, roster, or team update",
+    "goal": "Understand what changed and what action is needed now",
+    "decision": "Whether this role must attend, respond, or update others",
+    "state": "Community state changes frequently and should be easy to scan",
+    "blocker": "Important schedule or action details are buried behind admin complexity",
+    "authority": "Current schedule truth, role permissions, and repository evidence",
+    "next_action": "Show the next role-specific action with time and location context"
+  }
+}

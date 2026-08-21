@@ -1,0 +1,39 @@
+{
+  "name": "QuietPilot",
+  "archetype": "Operational Control System",
+  "core_promise": "Promise -> Prepare -> Deliver",
+  "design_psychology": [
+    "operational intelligence",
+    "command",
+    "readiness",
+    "calm authority"
+  ],
+  "ux_implications": [
+    "State, blockers, dependencies, and next action must dominate.",
+    "Controlled density is acceptable when hierarchy is disciplined.",
+    "Avoid undifferentiated module grids."
+  ],
+  "density_modes": [
+    "OPERATIONAL",
+    "COMMAND-SURFACE"
+  ],
+  "dominant_questions": [
+    "What is true right now?",
+    "What is blocked?",
+    "What must happen next to reach readiness?"
+  ],
+  "design_emphasis": [
+    "Elevate readiness, dependencies, and explicit state changes.",
+    "Use controlled density to support operational command rather than ornamental dashboards."
+  ],
+  "actor_defaults": {
+    "actor": "Operator coordinating readiness and delivery",
+    "object": "Operational workflow, job, or delivery state",
+    "goal": "Move work from promise through preparation to delivery without surprises",
+    "decision": "What blocker or dependency must be resolved next",
+    "state": "Operational truth changes frequently and must remain explicit",
+    "blocker": "Hidden readiness risk or dependency ambiguity",
+    "authority": "Operational state model, repository evidence, and delivery rules",
+    "next_action": "Expose the most urgent unblock or readiness action"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "surface": "Operations dashboard",
+  "source": "existing-browser-harness",
+  "before_screenshots": [
+    "before-desktop.png",
+    "before-mobile.png"
+  ],
+  "after_screenshots": [
+    "after-desktop.png",
+    "after-mobile.png"
+  ],
+  "viewport_findings": [
+    {
+      "viewport": "desktop",
+      "severity": "P1",
+      "root_cause": "hierarchy",
+      "evidence": "Three equal cards compete; the dominant next action is not visible.",
+      "preserve": [
+        "clean token usage"
+      ],
+      "change": [
+        "promote the operational next action"
+      ],
+      "repairable": false
+    },
+    {
+      "viewport": "mobile",
+      "severity": "P1",
+      "root_cause": "workflow",
+      "evidence": "State and blocker information are buried behind visually equal sections.",
+      "preserve": [
+        "surface tone"
+      ],
+      "change": [
+        "elevate state and blocker summary"
+      ],
+      "repairable": false
+    }
+  ],
+  "remaining_debt": [
+    "Need a stronger object/state/action model"
+  ]
+}

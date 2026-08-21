@@ -1,12 +1,11 @@
 # Reference Analysis
 
-Transform references through this chain:
+Decompose each reference into:
 
-1. Reference
-2. Observed pattern
-3. Why it works
-4. Relevance to this product
-5. Transformation
-6. Original implementation
+- observed pattern
+- why it works
+- where it is relevant here
+- how it must be transformed
+- what must not be imported
 
-Never clone branding, proprietary layouts, or distinctive illustration systems.
+Never stop at "make it look like X."

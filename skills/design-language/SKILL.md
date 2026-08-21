@@ -75,4 +75,5 @@ Do not solve structural UX defects with cosmetic changes.
 
 - Use `ux-architect` when the problem is task or information organization.
 - Use `reference-intelligence` only when an external reference is genuinely useful.
+- Use `design-linter` when deterministic token, component, layout, or accessibility drift should be checked.
 - Use `visual-review` after implementation or when a screenshot or render is available.

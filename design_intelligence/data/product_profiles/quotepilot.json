@@ -1,0 +1,39 @@
+{
+  "name": "QuotePilot",
+  "archetype": "Transactional Commercial",
+  "core_promise": "Build -> Decide -> Book",
+  "design_psychology": [
+    "commercial intelligence",
+    "speed",
+    "precision",
+    "calm control"
+  ],
+  "ux_implications": [
+    "Quote construction must dominate the workspace.",
+    "Numeric clarity outranks decorative flourish.",
+    "Progression and acceptance paths should be explicit."
+  ],
+  "density_modes": [
+    "TASK-FOCUSED",
+    "ANALYTICAL"
+  ],
+  "dominant_questions": [
+    "What quote is being built now?",
+    "What decision blocks booking?",
+    "How quickly can the user progress to acceptance?"
+  ],
+  "design_emphasis": [
+    "Prioritize numeric clarity, disciplined spacing, and explicit progression states.",
+    "Avoid generic CRM aesthetics that obscure the commercial task."
+  ],
+  "actor_defaults": {
+    "actor": "Sales or operations user building a quote",
+    "object": "Quote, proposal, or booking decision",
+    "goal": "Assemble a precise commercial package and move it toward acceptance",
+    "decision": "What to include, price, or change before sending or booking",
+    "state": "Commercial context is known but may be incomplete",
+    "blocker": "Missing commercial inputs or ambiguous next commercial step",
+    "authority": "Existing commercial workflow, repository evidence, and product rules",
+    "next_action": "Make the next commercial action unmistakable"
+  }
+}

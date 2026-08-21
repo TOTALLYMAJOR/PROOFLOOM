@@ -1,15 +1,13 @@
 # Accessibility
 
-Accessibility is a design constraint, not a later patch.
+Accessibility changes design decisions.
 
-Check:
+Checks:
 
-- focus visibility
-- keyboard reachability
-- readable contrast
-- target size
-- semantic labels
-- state announcement
-- error clarity
+- hierarchy should survive zoom and contrast changes
+- focus states must be intentional
+- semantic color cannot carry meaning alone
+- controls need accessible names
+- responsive layouts cannot hide essential actions off-screen
 
-If accessibility changes the design decision, the accessible version wins.
+Do not treat accessibility as a late cosmetic patch.

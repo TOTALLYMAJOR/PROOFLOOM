@@ -1,12 +1,13 @@
 # Responsive Review
 
-Check whether mobile is reprioritized rather than merely compressed.
+Validate at least:
 
-Look for:
+- desktop
+- mobile
 
-- hidden or buried primary actions
-- broken hierarchy after collapse
-- unreadable tables
-- lost context when panels stack
-- tap targets that are too small
-- sticky actions that would improve completion
+Checks:
+
+- dominant action still visible
+- no unsafe width or overflow
+- status and context stay attached to the object
+- disclosure stays intentional across breakpoints

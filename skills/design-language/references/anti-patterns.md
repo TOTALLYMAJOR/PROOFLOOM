@@ -1,14 +1,9 @@
 # Anti-Patterns
 
-Avoid:
+Reject:
 
-- excessive nested cards
-- giant dashboards with equal visual weight
-- decorative gradients without purpose
-- generic AI purple defaults
-- random shadows or radii
-- duplicated primitives
-- sidebars that expose every destination equally
-- hidden primary actions
-- mobile as compressed desktop
-- redesigning working UI solely for novelty
+- dramatic restyling that ignores existing product truth
+- decorative color applied to every interactive element
+- generic card-on-card dashboards with no dominant action
+- one-off spacing, widths, and radius values that bypass tokens
+- solving workflow defects with a prettier component skin

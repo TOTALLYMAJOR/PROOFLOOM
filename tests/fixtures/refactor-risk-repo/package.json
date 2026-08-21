@@ -1,0 +1,12 @@
+{
+  "name": "refactor-risk-repo",
+  "dependencies": {
+    "next": "16.0.0",
+    "react": "19.0.0",
+    "tailwindcss": "4.0.0",
+    "@radix-ui/react-dialog": "1.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.55.0"
+  }
+}

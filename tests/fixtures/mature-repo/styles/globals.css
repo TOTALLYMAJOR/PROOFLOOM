@@ -1,0 +1,10 @@
+:root {
+  --brand: #14532d;
+  --surface: #f8fafc;
+  --font-ui: "Geist", sans-serif;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--surface);
+}

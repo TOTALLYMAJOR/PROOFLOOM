@@ -1,12 +1,14 @@
 # Actor Task Model
 
-For each surface, establish:
+For each important surface identify:
 
-- who is acting
-- what object they are acting on
-- what they need to decide
-- what is true right now
-- what blocks progress
-- what they may do next
+- actor
+- object
+- goal
+- decision
+- state
+- blocker
+- authority
+- next action
 
-The UI should make these legible without relying on memory.
+If several of these are unclear, the problem is probably structural rather than visual.

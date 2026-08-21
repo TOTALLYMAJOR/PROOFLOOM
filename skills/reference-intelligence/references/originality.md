@@ -1,7 +1,9 @@
 # Originality
 
-Reject the direction if:
+Originality guardrails:
 
-- someone familiar with the source would immediately recognize a copied template
-- the design could belong to many unrelated SaaS products by only changing text
-- the product loses its own density, tone, or operating model
+- do not copy palette, copy, iconography, or trademark composition
+- preserve the target product's own task model and differentiation
+- transform patterns through product constraints and repository truth
+
+If the result still reads like the source brand, the transformation failed.

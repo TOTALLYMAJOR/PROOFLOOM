@@ -1,35 +1,9 @@
 # Product Archetypes
 
-## Transactional / Commercial Product
+Use archetypes to change what dominates:
 
-Optimizes for speed, confidence, decisions, and money.
+- Transactional Commercial: precision, progression, numeric clarity
+- Operational Control System: state, blockers, readiness, next action
+- Community Coordination: mobile glanceability, role-specific disclosure, immediate what/when/where/action
 
-Traits:
-
-- strong CTA hierarchy
-- numeric clarity
-- concise progression
-- polished customer-facing presentation
-
-## Operational Control System
-
-Optimizes for state, readiness, blockers, ownership, and exceptions.
-
-Traits:
-
-- controlled density
-- exceptional hierarchy
-- risk surfacing
-- explicit next actions
-
-## Community Coordination Product
-
-Optimizes for simplicity, clarity, time-sensitive action, and mobile use.
-
-Traits:
-
-- glanceability
-- warmth
-- accessible language
-- large tap targets
-- role-specific disclosure
+An archetype should alter hierarchy, density, and interaction priorities, not only adjectives.

@@ -14,6 +14,7 @@ Use it when rendered output, screenshots, or a working surface exists.
 ## Review rules
 
 - Validate the rendered result, not only the source code.
+- Prefer existing repository browser tooling, screenshot harnesses, or validation outputs when available.
 - Classify defects by root cause: visual, hierarchy, IA, interaction, workflow, responsive, accessibility, component, or drift.
 - Review desktop and mobile intentionally.
 - Prefer evidence and severity over taste-based commentary.
