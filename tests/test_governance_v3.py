@@ -96,6 +96,12 @@ class GovernanceV3Tests(unittest.TestCase):
         self.assertNotIn("pull_request_target", workflow)
         self.assertNotIn("baseline promote", workflow)
         self.assertNotIn("repair --apply", workflow)
+        self.assertIn("artifacts/design/screenshots/design-department-surface/", workflow)
+        self.assertIn("artifacts/design/diffs/design-department-surface/", workflow)
+
+        fixture_css = (REPOSITORY_ROOT / "tests/fixtures/visual-surface/surface.css").read_text(encoding="utf-8")
+        self.assertIn('font-family: "DejaVu Serif", serif;', fixture_css)
+        self.assertIn('font-family: "DejaVu Sans Mono", monospace;', fixture_css)
 
     def _write_evidence(
         self,

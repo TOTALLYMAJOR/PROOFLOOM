@@ -54,6 +54,10 @@ jobs:
           name: design-standard-${{ github.run_id }}
           path: |
             artifacts/design/reports/design-department-surface/
+            artifacts/design/screenshots/design-department-surface/
+            artifacts/design/diffs/design-department-surface/
+            artifacts/design/DOM/design-department-surface/
+            artifacts/design/accessibility/design-department-surface/
             artifacts/design/evidence/ADD-V2-DEMO/
             .design/quality/latest-score.json
           if-no-files-found: warn
