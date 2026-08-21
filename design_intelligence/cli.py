@@ -45,6 +45,7 @@ from .self_audit import run_self_audit
 from .validation import render_validation_text, validate_repository
 from .workflows import (
     build_handoff,
+    build_start_packet,
     build_workflow,
     render_workflow_text,
     write_contract_from_workflow,
@@ -92,6 +93,18 @@ def main(argv: list[str] | None = None) -> int:
     reference_parser.add_argument("--input", required=True, help="JSON file of reference objects.")
     reference_parser.add_argument("--profile", choices=("quotepilot", "quietpilot", "leaguepilot"))
     reference_parser.add_argument("--format", choices=("json", "text"), default="text")
+
+    start_parser = subparsers.add_parser("start")
+    start_parser.add_argument("root", help="Repository root to inspect.")
+    start_parser.add_argument("task", help="Plain-English design task.")
+    start_parser.add_argument("--profile", choices=("quotepilot", "quietpilot", "leaguepilot"))
+    start_parser.add_argument("--surface", help="The product surface being changed.")
+    start_parser.add_argument("--brief-file", help="Optional JSON actor/task fields.")
+    start_parser.add_argument("--reference", action="append", help="External reference URL or repo; repeatable.")
+    start_parser.add_argument("--adapter", choices=("codex", "claude"), default="codex")
+    start_parser.add_argument("--contract-out", help="Explicit path for a validated design contract JSON.")
+    start_parser.add_argument("--output", help="Explicit Markdown or JSON output path for the handoff.")
+    start_parser.add_argument("--format", choices=("json", "text"), default="text")
 
     work_parser = _add_root_format_parser(subparsers, "work")
     work_parser.add_argument("--task", required=True, help="The material design task to organize.")
@@ -279,6 +292,23 @@ def _dispatch(args: argparse.Namespace) -> int:
     if args.command == "reference":
         report = analyze_references(_load_json_required(args.input), args.profile)
         return _emit(report.to_dict(), render_reference_text(report), args.format)
+    if args.command == "start":
+        packet = build_start_packet(
+            args.root,
+            args.task,
+            args.profile,
+            args.surface,
+            _load_json(args.brief_file),
+            args.reference,
+            args.adapter,
+        )
+        if args.contract_out:
+            write_contract_from_workflow(packet["workflow"], args.contract_out)
+            packet["contract_output"] = str(Path(args.contract_out).resolve())
+        if args.output:
+            write_handoff(packet["handoff"], args.output)
+            packet["output"] = str(Path(args.output).resolve())
+        return _emit(packet, packet["prompt"], args.format)
     if args.command == "work":
         workflow = build_workflow(
             _root_arg(args), args.task, args.profile, args.surface, _load_json(args.brief_file), args.reference

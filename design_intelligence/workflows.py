@@ -8,6 +8,7 @@ from typing import Any
 from .assessment import assess_repository
 from .context import build_context
 from .contracts import create_contract
+from .references import analyze_references
 from .repository import inspect_repository
 
 
@@ -67,6 +68,8 @@ def build_workflow(
             },
         ],
         "evidence_adapter": artifacts,
+        "best_practices": _best_practices(context.to_dict(), artifacts),
+        "style_sources": discover_style_sources(target, references, profile_name),
         "references": {
             "sources": references or [],
             "rule": "Research each source for transferable patterns, then transform them for this product. Do not copy branding, layouts, assets, or copy.",
@@ -109,6 +112,43 @@ def discover_evidence(root: str | Path, task: str | None = None) -> dict[str, An
         "screenshots": candidates["screenshots"],
         "recommended_commands": recommended,
         "note": "Existing test and artifact conventions remain canonical; this adapter only discovers them.",
+    }
+
+
+def discover_style_sources(
+    root: str | Path,
+    references: list[str] | None = None,
+    profile_name: str | None = None,
+) -> dict[str, Any]:
+    """Describe where style guidance should come from before external inspiration dominates."""
+    target = Path(root).resolve()
+    snapshot = inspect_repository(str(target))
+    repo_sources = []
+    repo_sources.extend(snapshot.capability_map.get("design_language").authorities)
+    repo_sources.extend(snapshot.design_documentation.evidence)
+    repo_sources.extend(snapshot.design_tokens.evidence)
+    repo_sources.extend(snapshot.typography.evidence)
+    repo_sources.extend(snapshot.agent_governance.evidence)
+    repo_sources.extend(snapshot.playwright.evidence[:1])
+    repo_sources.extend(snapshot.storybook.evidence[:1])
+    repository_sources = sorted(set(repo_sources))
+
+    reference_sources = [{"source": source} for source in (references or [])]
+    transformed = analyze_references(reference_sources, profile_name).to_dict() if reference_sources else None
+    return {
+        "repository": {
+            "styling": snapshot.styling,
+            "component_system": snapshot.component_system,
+            "sources": repository_sources,
+            "priority": "Repository style authority beats admired references.",
+        },
+        "references": transformed,
+        "research_order": [
+            "Inspect the repository's existing design language, tokens, typography, and component primitives first.",
+            "Look at the repository's current browser or story evidence before introducing a new style direction.",
+            "Use admired repos or external references to extract transferable patterns only after repository truth is clear.",
+            "Transform observed patterns into an original composition tied to the actor, state, and dominant decision.",
+        ],
     }
 
 
@@ -163,11 +203,15 @@ def build_handoff(workflow: dict[str, Any], adapter: str) -> dict[str, Any]:
         "contract": contract,
         "repository_posture": workflow["repository"],
         "evidence_adapter": workflow["evidence_adapter"],
+        "best_practices": workflow["best_practices"],
+        "style_sources": workflow["style_sources"],
         "references": workflow["references"],
         "instructions": [
             "Inspect the repository authorities named in the contract before editing.",
             "Keep runtime and business behavior intact unless the task explicitly authorizes a behavior change.",
             "Use references as pattern research only; never copy their identity, and create an original composition for the actor, state, and decision in this contract.",
+            "Understand established UX and design best practices before styling: make the dominant action obvious, keep state with action, and use progressive disclosure instead of equal visual weight.",
+            "Use the repository itself to find the style baseline before borrowing from admired repos or external references.",
             "Validate desktop and mobile with the repository's existing browser tooling, then run design-intelligence lint and validate.",
             "Do not weaken tests, baselines, thresholds, or accessibility checks to make the work pass.",
         ],
@@ -188,6 +232,8 @@ def render_workflow_text(workflow: dict[str, Any]) -> str:
     lines.extend(f"- {item['step']}: {item['action']}" for item in workflow["workflow"])
     lines.extend(["", "Evidence adapter:"])
     lines.extend(f"- {item}" for item in workflow["evidence_adapter"]["recommended_commands"])
+    lines.extend(["", "Style sources:"])
+    lines.extend(f"- {item}" for item in workflow["style_sources"]["research_order"])
     return "\n".join(lines)
 
 
@@ -206,6 +252,16 @@ def render_handoff_markdown(packet: dict[str, Any]) -> str:
     lines.extend(f"- {item}" for item in contract["doNotTouch"])
     lines.extend(["", "## Instructions"])
     lines.extend(f"- {item}" for item in packet["instructions"])
+    lines.extend(["", "## Best practices"])
+    lines.extend(f"- {item}" for item in packet["best_practices"])
+    lines.extend(["", "## Style research order"])
+    lines.extend(f"- {item}" for item in packet["style_sources"]["research_order"])
+    lines.extend(["", "## Repository style authorities"])
+    lines.extend(
+        f"- {item}"
+        for item in packet["style_sources"]["repository"]["sources"]
+        or ["No explicit style authority was detected; inspect existing UI files before inventing a new visual language."]
+    )
     if packet["references"]["sources"]:
         lines.extend(["", "## References"])
         lines.extend(f"- Research {source}; transfer principles only, never copy its identity." for source in packet["references"]["sources"])
@@ -223,6 +279,31 @@ def write_handoff(packet: dict[str, Any], output: str | Path) -> None:
         path.write_text(json.dumps(packet, indent=2), encoding="utf-8")
         return
     path.write_text(packet["prompt"], encoding="utf-8")
+
+
+def build_start_packet(
+    root: str,
+    task: str,
+    profile_name: str | None = None,
+    surface: str | None = None,
+    brief: dict[str, Any] | None = None,
+    references: list[str] | None = None,
+    adapter: str = "codex",
+) -> dict[str, Any]:
+    workflow = build_workflow(root, task, profile_name, surface, brief, references)
+    handoff = build_handoff(workflow, adapter)
+    return {
+        "status": "READY",
+        "task": task,
+        "root": workflow["root"],
+        "profile": workflow["profile"],
+        "surface": workflow["surface"],
+        "workflow": workflow,
+        "handoff": handoff,
+        "quickstart": f"design-intelligence start {workflow['root']} \"{task}\"",
+        "prompt": handoff["prompt"],
+        "next_action": "Give the prompt to the implementation agent or write it to a handoff file.",
+    }
 
 
 def _artifact_candidates(artifacts_root: Path, task: str | None) -> dict[str, list[str]]:
@@ -251,3 +332,17 @@ def _relative(root: Path, path: Path) -> str:
 
 def _slug(value: str) -> str:
     return re.sub(r"(^-|-$)", "", re.sub(r"[^a-z0-9]+", "-", value.lower())) or "design-work"
+
+
+def _best_practices(context: dict[str, Any], artifacts: dict[str, Any]) -> list[str]:
+    practices = [
+        "Solve actor, object, goal, decision, state, blocker, authority, and next action before visual polish.",
+        "Make one dominant action obvious and keep secondary capability discoverable without equal visual weight.",
+        "Keep status close to the action it informs; do not separate decision-critical information into decorative areas.",
+        "Use progressive disclosure based on role, state, urgency, and device rather than hiding complexity arbitrarily.",
+        "Validate the result at desktop and mobile widths with the repository's existing browser tooling when available.",
+    ]
+    practices.extend(context.get("reference_use", []))
+    if artifacts["browser_tools"] and artifacts["browser_tools"][0] != "No existing browser tool detected":
+        practices.append("Prefer the repository's existing validation and artifact conventions instead of creating a parallel review flow.")
+    return practices

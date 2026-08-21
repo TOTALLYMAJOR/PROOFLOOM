@@ -74,6 +74,7 @@ python3 -m pip install -e .
 Core commands:
 
 ```bash
+design-intelligence start /path/to/repo "Improve proposal comparison" --profile quotepilot --reference https://aura.build
 design-intelligence inspect --root /path/to/repo
 design-intelligence assess --root /path/to/repo
 design-intelligence context --root /path/to/repo --profile quotepilot
@@ -101,7 +102,11 @@ design-intelligence self-audit --root /path/to/repo
 
 All commands remain read-only unless an explicit output path, registry `--write`, baseline review `request`, baseline `promote`, or repair `--apply` is supplied. A baseline review request writes only its declared request file.
 
+`start` is the simplest front door. Give it a repository path and a plain-English task. It returns the repo-aware design contract, best-practice guidance, style-research order, and ready-to-send agent handoff in one step. It writes only with `--contract-out` or `--output`.
+
 `work` organizes a material design task into a repository-aware contract, evidence-discovery plan, and explicit next action. It writes a contract only with `--contract-out`. `handoff` turns that plan into a compact Codex or Claude instruction packet and writes only with `--output`.
+
+Use `start` when you do not want to remember the workflow shape. Use `work` and `handoff` separately only when you want to inspect or save the intermediate plan in more detail.
 
 ## Rendered QA
 
