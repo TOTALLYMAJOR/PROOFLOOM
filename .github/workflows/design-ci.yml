@@ -1,0 +1,89 @@
+name: Design Intelligence CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: design-intelligence-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quick:
+    name: Quick governance
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm run design:ci:quick
+
+  standard:
+    name: Standard rendered QA
+    needs: quick
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npx --no-install playwright install --with-deps chromium
+      - run: npm run design:ci:standard
+      - name: Upload governed QA evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: design-standard-${{ github.run_id }}
+          path: |
+            artifacts/design/reports/design-department-surface/
+            artifacts/design/evidence/ADD-V2-DEMO/
+            .design/quality/latest-score.json
+          if-no-files-found: warn
+          retention-days: 14
+  full:
+    name: Full repair and self-audit
+    needs: standard
+    if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npx --no-install playwright install --with-deps chromium
+      - run: npm run design:ci:full
+      - name: Upload full design evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: design-full-${{ github.run_id }}
+          path: |
+            artifacts/design/reports/
+            artifacts/design/evidence/
+            .design/quality/latest-score.json
+          if-no-files-found: warn
+          retention-days: 14

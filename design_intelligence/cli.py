@@ -6,7 +6,12 @@ from pathlib import Path
 from typing import Any
 
 from .assessment import assess_repository, render_assessment_text
-from .baselines import audit_baselines, promote_baseline
+from .baselines import (
+    audit_baseline_review_request,
+    audit_baselines,
+    create_baseline_review_request,
+    promote_baseline,
+)
 from .contracts import create_contract, load_and_validate_contract
 from .context import build_context, render_context_text
 from .doctor import render_doctor_text, run_doctor
@@ -120,6 +125,16 @@ def main(argv: list[str] | None = None) -> int:
     baseline_promote.add_argument("--scenario", required=True)
     baseline_promote.add_argument("--current-root", required=True)
     baseline_promote.add_argument("--approval", required=True)
+    baseline_request = _add_root_format_parser(baseline_subparsers, "request")
+    baseline_request.add_argument("--scenario", required=True)
+    baseline_request.add_argument("--product", required=True)
+    baseline_request.add_argument("--qa-report", required=True)
+    baseline_request.add_argument("--model-review", required=True)
+    baseline_request.add_argument("--candidate-root", required=True)
+    baseline_request.add_argument("--requested-by", required=True)
+    baseline_request.add_argument("--output", required=True)
+    baseline_request_audit = _add_root_format_parser(baseline_subparsers, "request-audit")
+    baseline_request_audit.add_argument("--input", required=True)
     _add_root_format_parser(baseline_subparsers, "audit")
 
     repair_parser = _add_root_format_parser(subparsers, "repair")
@@ -275,10 +290,24 @@ def _dispatch(args: argparse.Namespace) -> int:
         root = _root_arg(args)
         if args.baseline_command == "promote":
             report = promote_baseline(root, args.scenario, args.current_root, args.approval)
+        elif args.baseline_command == "request":
+            report = create_baseline_review_request(
+                root,
+                args.scenario,
+                args.product,
+                args.qa_report,
+                args.model_review,
+                args.candidate_root,
+                args.requested_by,
+                args.output,
+            )
+        elif args.baseline_command == "request-audit":
+            report = audit_baseline_review_request(root, args.input)
         else:
             report = audit_baselines(root)
         _emit(report, _simple_text("BASELINE GOVERNANCE", report), args.format)
-        return 1 if args.baseline_command == "audit" and report.get("status") != "PASS" else 0
+        audit_command = args.baseline_command in {"audit", "request-audit"}
+        return 1 if audit_command and report.get("status") != "PASS" else 0
     if args.command == "repair":
         report_object = apply_repair_plan(
             _root_arg(args),

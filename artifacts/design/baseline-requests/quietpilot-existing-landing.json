@@ -1,0 +1,57 @@
+{
+  "baselineMutationPerformed": false,
+  "blockers": [],
+  "candidateRoot": "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing",
+  "candidates": {
+    "compact-1024x768": {
+      "path": "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/compact-1024x768/current.png",
+      "sha256": "b007cdfbdb1027a4ca6911741696d9d7407dda7929bf7672adb8b4d93c49a342"
+    },
+    "desktop-1280x900": {
+      "path": "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/desktop-1280x900/current.png",
+      "sha256": "37232150eb6aa60654718239c2e5f7957b54a91fdb9afffeb8c0c1eae7c73187"
+    },
+    "mobile-390x844": {
+      "path": "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/mobile-390x844/current.png",
+      "sha256": "a3210637461a96c17a0a3ffe6288ee04dce7ddabdc47aaab699c864a5b47b282"
+    },
+    "tablet-768x1024": {
+      "path": "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/tablet-768x1024/current.png",
+      "sha256": "6e558ba0304ed9bf7557e861e7fea374eee2dc1629a3f28a4b2d63f6f3c1787c"
+    },
+    "wide-desktop-1440x1000": {
+      "path": "artifacts/design/consuming-surfaces/quietpilot/screenshots/quietpilot-existing-landing/wide-desktop-1440x1000/current.png",
+      "sha256": "dee835a686389ee5c7bfdb45b933f8d74488d3f27c8a7b40d03760be7c08a624"
+    }
+  },
+  "id": "BR-0ABFCCDDFB7A4A62",
+  "modelEvidence": {
+    "path": "artifacts/design/consuming-surfaces/quietpilot/reports/quietpilot-existing-landing/model-visual-review.json",
+    "severity": "P2",
+    "sha256": "bed016c2937d0664606cdef445dcdcae7c4741e485615b1d0517e9758a703208",
+    "verdict": "WARN"
+  },
+  "product": "QuietPilot",
+  "promotionAuthority": "human-required",
+  "qaEvidence": {
+    "path": "artifacts/design/consuming-surfaces/quietpilot/reports/quietpilot-existing-landing/qa-report.json",
+    "sha256": "6a1a05315328aace5eea49c3baa8cb62e95aeed166f4cffac506c338c6ff2d15",
+    "status": "PASS"
+  },
+  "requestedAt": "2026-08-21T09:08:12.520123Z",
+  "requestedBy": "agent:codex",
+  "requiredHumanApprovals": [
+    "Product owner visual acceptance",
+    "Manual semantic accessibility review",
+    "Accepted design-memory decision authorizing baseline promotion"
+  ],
+  "scenarioId": "quietpilot-existing-landing",
+  "schemaVersion": 1,
+  "sourceRevision": {
+    "branch": "feat/ux029-od6-closeout",
+    "commitSha": "874cf1db786c50a437653cae0d17e2f6b58641b0",
+    "repository": "QuietPilot"
+  },
+  "status": "REVIEWABLE",
+  "surface": "QuietPilot existing public landing"
+}

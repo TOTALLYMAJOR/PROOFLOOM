@@ -73,6 +73,7 @@ def initialize_memory(repository_root: str | Path, allow_existing_authority: boo
         "design-decision.schema.json",
         "design-exception.schema.json",
         "design-outcome.schema.json",
+        "baseline-review-request.schema.json",
         "repair-plan.schema.json",
         "validation-evidence.schema.json",
     ):

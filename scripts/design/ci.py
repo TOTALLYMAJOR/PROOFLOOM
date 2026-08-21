@@ -83,7 +83,7 @@ def full_commands() -> list[tuple[str, list[str]]]:
                 "design-linter",
             )
         )
-    commands.append(("V2 self-audit", [PYTHON, "-m", "design_intelligence.cli", "self-audit", "--root", ".", "--format", "json"]))
+    commands.append(("repository self-audit", [PYTHON, "-m", "design_intelligence.cli", "self-audit", "--root", ".", "--format", "json"]))
     return commands
 
 
