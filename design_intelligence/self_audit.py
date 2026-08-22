@@ -4,11 +4,16 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .baselines import audit_baselines
+from .baselines import audit_baseline_review_request, audit_baselines
 from .contracts import load_and_validate_contract
 from .memory import audit_memory
 from .quality import audit_thresholds, load_thresholds
 from .registry import audit_component_registry
+from .review_lifecycle import (
+    audit_baseline_review_receipt,
+    evaluate_baseline_review_lifecycle,
+    load_review_policy,
+)
 
 
 REQUIRED_V2_PATHS = (
@@ -26,6 +31,16 @@ REQUIRED_V2_PATHS = (
     "docs/design/DESIGN-QUALITY.md",
 )
 
+REQUIRED_V3_SLICE0_PATHS = (
+    ".design/memory/schemas/baseline-review-request.schema.json",
+    ".design/memory/schemas/baseline-review-receipt.schema.json",
+    ".design/baselines/review-policy.json",
+    ".github/workflows/design-ci.yml",
+    "design_intelligence/data/schemas/baseline-review-request.schema.json",
+    "design_intelligence/data/schemas/baseline-review-receipt.schema.json",
+    "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md",
+)
+
 V1_SKILLS = (
     "design-language",
     "ux-architect",
@@ -38,7 +53,8 @@ V1_SKILLS = (
 def run_self_audit(repository_root: str | Path) -> dict[str, Any]:
     root = Path(repository_root).resolve()
     checks: dict[str, dict[str, Any]] = {}
-    missing = [path for path in REQUIRED_V2_PATHS if not (root / path).exists()]
+    required_paths = REQUIRED_V2_PATHS + REQUIRED_V3_SLICE0_PATHS
+    missing = [path for path in required_paths if not (root / path).exists()]
     checks["requiredInfrastructure"] = {"status": "PASS" if not missing else "FAIL", "missing": missing}
 
     skill_errors: list[str] = []
@@ -54,6 +70,78 @@ def run_self_audit(repository_root: str | Path) -> dict[str, Any]:
     checks["memory"] = memory
     baselines = audit_baselines(root)
     checks["baselines"] = baselines
+    request_paths = sorted((root / "artifacts/design/baseline-requests").glob("*.json"))
+    request_errors: list[str] = []
+    request_statuses: dict[str, str | None] = {}
+    for path in request_paths:
+        result = audit_baseline_review_request(root, path)
+        request_statuses[path.name] = result.get("requestStatus")
+        request_errors.extend(f"{path.name}: {error}" for error in result.get("errors", []))
+    if not request_paths:
+        request_errors.append("No baseline review request evidence found")
+    checks["baselineReviewRequests"] = {
+        "status": "PASS" if not request_errors else "FAIL",
+        "count": len(request_paths),
+        "requests": request_statuses,
+        "errors": request_errors,
+    }
+    receipt_paths = sorted((root / "artifacts/design/baseline-decisions").glob("*.json"))
+    receipt_errors: list[str] = []
+    receipt_decisions: dict[str, str | None] = {}
+    for path in receipt_paths:
+        try:
+            result = audit_baseline_review_receipt(root, path)
+        except ValueError as error:
+            receipt_decisions[path.name] = None
+            receipt_errors.append(f"{path.name}: {error}")
+        else:
+            receipt_decisions[path.name] = result.get("decision")
+            receipt_errors.extend(
+                f"{path.name}: {error}" for error in result.get("errors", [])
+            )
+    checks["baselineReviewReceipts"] = {
+        "status": "PASS" if not receipt_errors else "FAIL",
+        "count": len(receipt_paths),
+        "receipts": receipt_decisions,
+        "errors": receipt_errors,
+    }
+    try:
+        review_policy = load_review_policy(root)
+        policy_errors: list[str] = []
+    except ValueError as error:
+        review_policy = None
+        policy_errors = [str(error)]
+    checks["baselineReviewPolicy"] = {
+        "status": "PASS" if not policy_errors else "FAIL",
+        "policy": review_policy,
+        "errors": policy_errors,
+    }
+    try:
+        lifecycle = evaluate_baseline_review_lifecycle(root)
+    except ValueError as error:
+        lifecycle = {"status": "FAIL", "errors": [str(error)]}
+    checks["baselineReviewLifecycle"] = lifecycle
+
+    workflow_path = root / ".github/workflows/design-ci.yml"
+    workflow = workflow_path.read_text(encoding="utf-8") if workflow_path.is_file() else ""
+    required_workflow_markers = (
+        "pull_request:", "contents: read", "design:ci:quick", "design:ci:standard", "design:ci:full",
+    )
+    forbidden_workflow_markers = ("pull_request_target", "baseline promote", "repair --apply")
+    workflow_errors = [
+        f"Remote CI missing policy marker: {marker}"
+        for marker in required_workflow_markers
+        if marker not in workflow
+    ]
+    workflow_errors.extend(
+        f"Remote CI contains forbidden authority: {marker}"
+        for marker in forbidden_workflow_markers
+        if marker in workflow
+    )
+    checks["remoteCI"] = {
+        "status": "PASS" if not workflow_errors else "FAIL",
+        "errors": workflow_errors,
+    }
     threshold_errors = audit_thresholds(load_thresholds(root / ".design/quality/thresholds.json"))
     checks["thresholds"] = {"status": "PASS" if not threshold_errors else "FAIL", "errors": threshold_errors}
     registry = audit_component_registry(root)

@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "maxRequestAgeDays": 14,
+  "maxApprovalAgeDays": 7,
+  "maxDeferAgeDays": 30,
+  "requireHumanAuthority": true,
+  "requireBoundVisualAcceptance": true,
+  "requireBoundSemanticAccessibility": true
+}

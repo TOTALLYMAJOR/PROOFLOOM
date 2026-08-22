@@ -1,0 +1,9 @@
+{
+  "decision": "DEFER",
+  "authorizedBy": "human:user-directive",
+  "reason": "The user explicitly placed QuotePilot repair and baseline progression on hold.",
+  "reviewAfter": "2026-09-04T17:00:00Z",
+  "source": "conversation-user-directive",
+  "directive": "HOLD ON QUOTEFLOW",
+  "recordedBy": "agent:codex"
+}

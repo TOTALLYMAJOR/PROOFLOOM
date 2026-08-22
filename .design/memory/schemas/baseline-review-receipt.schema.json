@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://totallymajor.local/schemas/baseline-review-receipt.schema.json",
+  "title": "Baseline Review Decision Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "requestId",
+    "requestEvidence",
+    "decision",
+    "authorizedBy",
+    "reason",
+    "decidedAt",
+    "supersedes",
+    "baselineMutationPerformed",
+    "promotionPerformed"
+  ],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "id": {"type": "string", "pattern": "^BDR-[A-F0-9]{16}$"},
+    "requestId": {"type": "string", "pattern": "^BR-[A-F0-9]{16}$"},
+    "requestEvidence": {"$ref": "#/$defs/fileEvidence"},
+    "decision": {"enum": ["APPROVE", "REJECT", "DEFER"]},
+    "authorizedBy": {"type": "string", "pattern": "^human:.+"},
+    "reason": {"type": "string", "minLength": 1},
+    "decisionMemoryId": {"type": "string", "pattern": "^DL-.+"},
+    "decidedAt": {"type": "string", "format": "date-time"},
+    "validUntil": {"type": "string", "format": "date-time"},
+    "reviewAfter": {"type": "string", "format": "date-time"},
+    "visualAcceptanceEvidence": {"$ref": "#/$defs/humanEvidence"},
+    "semanticAccessibilityEvidence": {"$ref": "#/$defs/humanEvidence"},
+    "supersedes": {
+      "type": ["string", "null"],
+      "pattern": "^BDR-[A-F0-9]{16}$"
+    },
+    "baselineMutationPerformed": {"const": false},
+    "promotionPerformed": {"const": false}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"decision": {"const": "APPROVE"}}},
+      "then": {
+        "required": [
+          "decisionMemoryId",
+          "validUntil",
+          "visualAcceptanceEvidence",
+          "semanticAccessibilityEvidence"
+        ]
+      }
+    },
+    {
+      "if": {"properties": {"decision": {"const": "DEFER"}}},
+      "then": {"required": ["reviewAfter"]}
+    }
+  ],
+  "$defs": {
+    "fileEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "humanEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "status", "reviewedBy", "reviewedAt", "scope"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "status": {"const": "PASS"},
+        "reviewedBy": {"type": "string", "pattern": "^human:.+"},
+        "reviewedAt": {"type": "string", "format": "date-time"},
+        "scope": {"enum": ["visual-acceptance", "semantic-accessibility"]}
+      }
+    }
+  }
+}

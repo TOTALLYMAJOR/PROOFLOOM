@@ -32,6 +32,10 @@ V1 remains intact:
 - `adapters/codex` and `adapters/claude`: thin adapter guidance, not a competing governance layer
 - `templates/` and `examples/product-profiles/`: reusable design artifacts and archetype examples
 
+## V3 development
+
+V3 Slice 0 adds hash-bound baseline review requests and read-only remote CI without changing V2 promotion authority. Slice 1 adds append-only human decision receipts, protected review windows, stale/superseded lifecycle evaluation, and non-mutating promotion preflight. Requests and receipts never mutate a baseline or authorize repair by themselves. See `docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md`.
+
 ## Non-goals
 
 - SaaS server
@@ -81,13 +85,19 @@ design-intelligence doctor --root /path/to/repo
 design-intelligence memory context --root /path/to/repo --product quotepilot --surface QuoteWorkspace --component QuoteSidebar
 design-intelligence contract validate --input work/design-contract.json
 design-intelligence registry scan --root /path/to/repo
+design-intelligence baseline request --root /path/to/repo --scenario surface --product Product --qa-report qa-report.json --model-review model-review.json --candidate-root screenshots/surface --requested-by agent:codex --output baseline-request.json
+design-intelligence baseline request-audit --root /path/to/repo --input baseline-request.json
+design-intelligence baseline decide --root /path/to/repo --request baseline-request.json --decision human-decision.json --output review-receipt.json
+design-intelligence baseline receipt-audit --root /path/to/repo --input review-receipt.json
+design-intelligence baseline lifecycle --root /path/to/repo
+design-intelligence baseline preflight --root /path/to/repo --receipt review-receipt.json
 design-intelligence baseline audit --root /path/to/repo
 design-intelligence quality --input artifacts/design/reports/surface/qa-report.json --thresholds .design/quality/thresholds.json
 design-intelligence repair --root /path/to/repo --plan repair-plan.json --evidence qa-report.json --iteration 1 --apply
 design-intelligence self-audit --root /path/to/repo
 ```
 
-All commands remain read-only unless an explicit output path, registry `--write`, baseline `promote`, or repair `--apply` is supplied.
+All commands remain read-only unless an explicit output path, registry `--write`, baseline review `request`, baseline `promote`, or repair `--apply` is supplied. A baseline review request writes only its declared request file.
 
 ## Rendered QA
 

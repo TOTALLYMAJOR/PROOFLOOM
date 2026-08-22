@@ -27,7 +27,7 @@ body {
     linear-gradient(90deg, rgba(23, 35, 29, 0.035) 1px, transparent 1px),
     var(--paper);
   background-size: 32px 32px;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: "DejaVu Serif", serif;
 }
 
 a {
@@ -58,7 +58,7 @@ a {
 .primary-action,
 .boundary-note,
 nav {
-  font-family: "Courier New", Courier, monospace;
+  font-family: "DejaVu Sans Mono", monospace;
 }
 
 .brand span {
@@ -196,7 +196,7 @@ h2 {
 .stage-grid span,
 .stage-grid small {
   color: var(--muted);
-  font-family: "Courier New", Courier, monospace;
+  font-family: "DejaVu Sans Mono", monospace;
   font-size: 0.7rem;
 }
 
