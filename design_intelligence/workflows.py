@@ -9,7 +9,6 @@ from .assessment import assess_repository
 from .context import build_context
 from .contracts import create_contract
 from .missions import build_mission, render_mission_text
-from .references import analyze_references
 from .repository import inspect_repository
 
 
@@ -135,8 +134,14 @@ def discover_style_sources(
     repo_sources.extend(snapshot.storybook.evidence[:1])
     repository_sources = sorted(set(repo_sources))
 
-    reference_sources = [{"source": source} for source in (references or [])]
-    transformed = analyze_references(reference_sources, profile_name).to_dict() if reference_sources else None
+    reference_sources = list(references or [])
+    transformed = None
+    if reference_sources:
+        transformed = {
+            "status": "RESEARCH_REQUIRED",
+            "sources": reference_sources,
+            "note": "Source names and URLs are not analyzed evidence. Record observed patterns and original transformations before use.",
+        }
     return {
         "repository": {
             "styling": snapshot.styling,

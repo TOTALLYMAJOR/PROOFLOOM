@@ -61,7 +61,7 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(packet["status"], "DIRECTION_REVIEW_REQUIRED")
         self.assertIn("Solve actor, object, goal, decision, state, blocker, authority, and next action", " ".join(packet["workflow"]["best_practices"]))
         self.assertEqual(packet["workflow"]["style_sources"]["repository"]["priority"], "Repository style authority beats admired references.")
-        self.assertEqual(packet["workflow"]["style_sources"]["references"]["overall_clone_risk"], "LOW")
+        self.assertEqual(packet["workflow"]["style_sources"]["references"]["status"], "RESEARCH_REQUIRED")
         self.assertEqual(len(packet["mission"]["directions"]), 3)
         self.assertEqual(packet["mission"]["referenceLedger"]["status"], "RESEARCH_REQUIRED")
         self.assertEqual(packet["mission"]["referenceLedger"]["entries"][0]["status"], "RESEARCH_REQUIRED")
