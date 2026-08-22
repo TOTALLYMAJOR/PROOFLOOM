@@ -8,6 +8,7 @@ from typing import Any
 from .assessment import assess_repository
 from .context import build_context
 from .contracts import create_contract
+from .missions import build_mission, render_mission_text
 from .references import analyze_references
 from .repository import inspect_repository
 
@@ -37,6 +38,7 @@ def build_workflow(
         "root": str(target),
         "surface": surface or context.actor_task_model.object,
         "profile": context.profile.name if context.profile else None,
+        "profile_key": profile_name,
         "contract": contract_from_workflow(task, target, assessment.to_dict(), context.to_dict(), surface),
         "repository": {
             "recommendation": assessment.recommendation.value,
@@ -160,9 +162,10 @@ def contract_from_workflow(
     surface: str | None,
 ) -> dict[str, Any]:
     model = context["actor_task_model"]
+    profile = context.get("profile") or {}
     return {
         "taskId": _slug(task),
-        "product": context.get("profile", {}).get("name") or root.name,
+        "product": profile.get("name") or root.name,
         "surface": surface or model["object"],
         "actor": model["actor"],
         "object": model["object"],
@@ -196,6 +199,22 @@ def write_contract_from_workflow(workflow: dict[str, Any], output: str | Path) -
 
 def build_handoff(workflow: dict[str, Any], adapter: str) -> dict[str, Any]:
     contract = workflow["contract"]
+    mission = workflow.get("mission")
+    selected_direction = None
+    if mission and mission["selectedDirection"]:
+        selected_direction = next(
+            direction for direction in mission["directions"]
+            if direction["id"] == mission["selectedDirection"]
+        )
+    direction_instructions = []
+    if selected_direction:
+        direction_instructions.append(
+            f"Implement the explicitly selected direction: {selected_direction['name']} - {selected_direction['thesis']}"
+        )
+    elif mission:
+        direction_instructions.append(
+            "Do not edit implementation yet. Present the three direction briefs and obtain an explicit direction selection."
+        )
     packet = {
         "adapter": adapter,
         "task": workflow["task"],
@@ -206,7 +225,9 @@ def build_handoff(workflow: dict[str, Any], adapter: str) -> dict[str, Any]:
         "best_practices": workflow["best_practices"],
         "style_sources": workflow["style_sources"],
         "references": workflow["references"],
+        "mission": mission,
         "instructions": [
+            *direction_instructions,
             "Inspect the repository authorities named in the contract before editing.",
             "Keep runtime and business behavior intact unless the task explicitly authorizes a behavior change.",
             "Use references as pattern research only; never copy their identity, and create an original composition for the actor, state, and decision in this contract.",
@@ -239,14 +260,43 @@ def render_workflow_text(workflow: dict[str, Any]) -> str:
 
 def render_handoff_markdown(packet: dict[str, Any]) -> str:
     contract = packet["contract"]
+    mission = packet.get("mission")
     lines = [
-        f"# Design Implementation Handoff: {packet['task']}",
+        f"# Design Mission Handoff: {packet['task']}",
         "",
         f"Target repository: `{packet['root']}`",
         f"Primary action: {contract['primaryAction']}",
-        "",
-        "## Preserve",
     ]
+    if mission:
+        lines.extend([
+            f"Mission status: `{mission['status']}`",
+            f"Surface mode: `{mission['mode']['id']}`",
+            "",
+            "## Direction decision",
+        ])
+        for direction in mission["directions"]:
+            labels = []
+            if direction["recommended"]:
+                labels.append("recommended")
+            if direction["id"] == mission["selectedDirection"]:
+                labels.append("selected")
+            suffix = f" ({', '.join(labels)})" if labels else ""
+            lines.extend([
+                f"### {direction['name']}{suffix}",
+                "",
+                direction["thesis"],
+                "",
+                f"Direction ID: `{direction['id']}`",
+                "",
+            ])
+        if not mission["selectedDirection"]:
+            lines.extend([
+                "Implementation is blocked until a direction is explicitly selected.",
+                "",
+                f"Recommended selection command: `{mission['selectionCommand']}`",
+                "",
+            ])
+    lines.extend(["## Preserve"])
     lines.extend(f"- {item}" for item in contract["preserve"] or ["Repository authority discovered during inspection."])
     lines.extend(["", "## Do not add or change"])
     lines.extend(f"- {item}" for item in contract["doNotTouch"])
@@ -263,9 +313,14 @@ def render_handoff_markdown(packet: dict[str, Any]) -> str:
         or ["No explicit style authority was detected; inspect existing UI files before inventing a new visual language."]
     )
     if packet["references"]["sources"]:
-        lines.extend(["", "## References"])
+        lines.extend(["", "## Reference ledger"])
+        if mission:
+            lines.append(f"Ledger status: `{mission['referenceLedger']['status']}`")
         lines.extend(f"- Research {source}; transfer principles only, never copy its identity." for source in packet["references"]["sources"])
-    lines.extend(["", "## Required proof"])
+    if mission:
+        lines.extend(["", "## Required proof checks"])
+        lines.extend(f"- {item}" for item in mission["proofGate"]["checks"])
+    lines.extend(["", "## Required proof commands"])
     lines.extend(f"- {item}" for item in packet["evidence_adapter"]["recommended_commands"])
     lines.extend(["", "## Stop conditions"])
     lines.extend(f"- {item}" for item in packet["stop_conditions"])
@@ -289,21 +344,58 @@ def build_start_packet(
     brief: dict[str, Any] | None = None,
     references: list[str] | None = None,
     adapter: str = "codex",
+    mode: str | None = None,
+    direction: str | None = None,
 ) -> dict[str, Any]:
     workflow = build_workflow(root, task, profile_name, surface, brief, references)
+    if not surface:
+        workflow["surface"] = task
+        workflow["contract"]["surface"] = task
+    mission = build_mission(workflow, references, mode, direction)
+    workflow["mission"] = mission
+    workflow["next_action"] = mission["nextAction"]
     handoff = build_handoff(workflow, adapter)
     return {
-        "status": "READY",
+        "status": mission["status"],
         "task": task,
         "root": workflow["root"],
         "profile": workflow["profile"],
         "surface": workflow["surface"],
         "workflow": workflow,
+        "mission": mission,
         "handoff": handoff,
-        "quickstart": f"design-intelligence start {workflow['root']} \"{task}\"",
+        "quickstart": f"design-intelligence \"{task}\" --root {workflow['root']}",
         "prompt": handoff["prompt"],
-        "next_action": "Give the prompt to the implementation agent or write it to a handoff file.",
+        "summary": render_mission_text(mission),
+        "next_action": mission["nextAction"],
     }
+
+
+def save_start_packet(packet: dict[str, Any], output_root: str | Path | None = None) -> dict[str, str]:
+    """Write a predictable, explicitly requested mission bundle."""
+    repository_root = Path(packet["root"])
+    base = Path(output_root) if output_root else repository_root / "artifacts" / "design" / "missions" / packet["mission"]["taskId"]
+    base = base.resolve()
+    base.mkdir(parents=True, exist_ok=True)
+
+    mission_path = base / "mission.json"
+    ledger_path = base / "reference-ledger.json"
+    handoff_path = base / "handoff.md"
+    mission_path.write_text(json.dumps(packet["mission"], indent=2) + "\n", encoding="utf-8")
+    ledger_path.write_text(json.dumps(packet["mission"]["referenceLedger"], indent=2) + "\n", encoding="utf-8")
+    handoff_path.write_text(packet["prompt"] + "\n", encoding="utf-8")
+
+    outputs = {
+        "directory": str(base),
+        "mission": str(mission_path),
+        "referenceLedger": str(ledger_path),
+        "handoff": str(handoff_path),
+    }
+    if packet["mission"]["selectedDirection"]:
+        contract_path = base / "design-contract.json"
+        create_contract(packet["workflow"]["contract"], contract_path)
+        outputs["contract"] = str(contract_path)
+    return outputs
 
 
 def _artifact_candidates(artifacts_root: Path, task: str | None) -> dict[str, list[str]]:
