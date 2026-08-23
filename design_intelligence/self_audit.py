@@ -41,6 +41,14 @@ REQUIRED_V3_SLICE0_PATHS = (
     "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md",
 )
 
+REQUIRED_V3_MISSION_PATHS = (
+    "design_intelligence/missions.py",
+    "scripts/design-intelligence",
+    "scripts/install",
+    "skills/design-language/references/mission-workflow.md",
+    "docs/RELEASE-REPORT-3.0.0.md",
+)
+
 V1_SKILLS = (
     "design-language",
     "ux-architect",
@@ -53,7 +61,7 @@ V1_SKILLS = (
 def run_self_audit(repository_root: str | Path) -> dict[str, Any]:
     root = Path(repository_root).resolve()
     checks: dict[str, dict[str, Any]] = {}
-    required_paths = REQUIRED_V2_PATHS + REQUIRED_V3_SLICE0_PATHS
+    required_paths = REQUIRED_V2_PATHS + REQUIRED_V3_SLICE0_PATHS + REQUIRED_V3_MISSION_PATHS
     missing = [path for path in required_paths if not (root / path).exists()]
     checks["requiredInfrastructure"] = {"status": "PASS" if not missing else "FAIL", "missing": missing}
 

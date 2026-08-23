@@ -1,4 +1,15 @@
-# Design Intelligence V2 Architecture
+# Design Intelligence V3 Architecture
+
+## Mission front door
+
+```text
+plain-English task -> repository context -> inferred surface mode -> three direction briefs
+                   -> explicit direction selection -> implementation handoff -> rendered proof
+```
+
+`design-intelligence "<task>"` is read-only and defaults to the current repository. It produces a recommendation but blocks implementation until a direction is explicitly selected. `--save` writes only a generated mission bundle under `artifacts/design/missions/`.
+
+The reference ledger is evidence, not authority. A supplied URL or `DESIGN.md` begins as `RESEARCH_REQUIRED`; it cannot become an imported visual direction without observed patterns, product relevance, original transformation, and explicit rejection notes.
 
 ## Governed cycle
 
@@ -31,6 +42,7 @@ It owns:
 - deterministic quality and drift scoring
 - exact bounded repair execution
 - V2 self-audit
+- V3 surface-mode inference, direction briefs, reference ledger, and rendered-proof mission gate
 
 `repo_fit/` remains as a compatibility layer for V0.1 entry points.
 

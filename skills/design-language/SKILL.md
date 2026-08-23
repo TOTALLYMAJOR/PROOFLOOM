@@ -34,6 +34,8 @@ Do not solve structural UX defects with cosmetic changes.
 
 ## Required behavior
 
+- For material design work in a repository with the CLI installed, run `design-intelligence "<plain-English task>"` as the default front door.
+- Treat inferred surface mode and the recommended direction as proposals. Do not edit implementation until the user explicitly selects a direction.
 - Run `repo_fit` before substantial redesign, design-system work, or repository-wide UI changes.
 - Preserve current runtime structure unless a higher-authority instruction explicitly calls for migration.
 - Distinguish visual defects from hierarchy, information architecture, interaction, workflow, responsive, accessibility, component-system, or drift problems.
@@ -63,6 +65,7 @@ Do not solve structural UX defects with cosmetic changes.
 
 ## Routing
 
+- Read [references/mission-workflow.md](references/mission-workflow.md) when starting a material design task or handling a generated mission.
 - Read [references/design-principles.md](references/design-principles.md) for the general reasoning model.
 - Read [references/surface-hierarchy.md](references/surface-hierarchy.md) when structure, panel nesting, or page composition is the issue.
 - Read [references/interaction-language.md](references/interaction-language.md) when control states, motion, or feedback are involved.

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SKILL_DESTINATION="${1:-${CODEX_HOME:-$HOME/.codex}/skills}"
+BIN_DESTINATION="${2:-$HOME/.local/bin}"
+
+"$ROOT_DIR/scripts/install-codex-skills" "$SKILL_DESTINATION"
+mkdir -p "$BIN_DESTINATION"
+ln -sfn "$ROOT_DIR/scripts/design-intelligence" "$BIN_DESTINATION/design-intelligence"
+
+printf 'Installed Design Intelligence CLI to %s\n' "$BIN_DESTINATION/design-intelligence"
+case ":$PATH:" in
+  *":$BIN_DESTINATION:"*) ;;
+  *) printf 'Add %s to PATH, then restart the shell.\n' "$BIN_DESTINATION" ;;
+esac

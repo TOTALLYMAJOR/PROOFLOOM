@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -29,6 +30,7 @@ from .memory import (
     initialize_memory,
     retrieve_context,
 )
+from .missions import SURFACE_MODES
 from .quality import load_thresholds, score_quality, write_quality_report
 from .references import analyze_references, render_reference_text
 from .registry import audit_component_registry, build_component_registry, write_component_registry
@@ -43,9 +45,26 @@ from .repository import inspect_repository, render_snapshot_text
 from .reviewing import render_review_text, review_manifest
 from .self_audit import run_self_audit
 from .validation import render_validation_text, validate_repository
+from .workflows import (
+    build_handoff,
+    build_start_packet,
+    build_workflow,
+    render_workflow_text,
+    save_start_packet,
+    write_contract_from_workflow,
+    write_handoff,
+)
+
+
+COMMANDS = {
+    "inspect", "assess", "context", "lint", "refactor-risk", "review", "validate", "doctor",
+    "reference", "start", "work", "handoff", "memory", "contract", "registry", "quality",
+    "baseline", "repair", "self-audit",
+}
 
 
 def main(argv: list[str] | None = None) -> int:
+    normalized_argv = _normalize_argv(list(sys.argv[1:] if argv is None else argv))
     parser = argparse.ArgumentParser(prog="design-intelligence")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -85,6 +104,40 @@ def main(argv: list[str] | None = None) -> int:
     reference_parser.add_argument("--input", required=True, help="JSON file of reference objects.")
     reference_parser.add_argument("--profile", choices=("quotepilot", "quietpilot", "leaguepilot"))
     reference_parser.add_argument("--format", choices=("json", "text"), default="text")
+
+    start_parser = subparsers.add_parser("start")
+    start_parser.add_argument("root_or_task", help="Plain-English task, or repository root in the legacy two-argument form.")
+    start_parser.add_argument("task", nargs="?", help="Plain-English task when a repository root is supplied first.")
+    start_parser.add_argument("--root", dest="start_root", help="Repository root; defaults to the current directory.")
+    start_parser.add_argument("--profile", choices=("quotepilot", "quietpilot", "leaguepilot"))
+    start_parser.add_argument("--surface", help="The product surface being changed.")
+    start_parser.add_argument("--mode", choices=SURFACE_MODES, help="Override the inferred surface mode.")
+    start_parser.add_argument("--direction", help="Explicit direction ID, or 'recommended'.")
+    start_parser.add_argument("--brief-file", help="Optional JSON actor/task fields.")
+    start_parser.add_argument("--reference", action="append", help="External reference URL or repo; repeatable.")
+    start_parser.add_argument("--adapter", choices=("codex", "claude"), default="codex")
+    start_parser.add_argument("--contract-out", help="Explicit path for a validated design contract JSON.")
+    start_parser.add_argument("--output", help="Explicit Markdown or JSON output path for the handoff.")
+    start_parser.add_argument("--save", action="store_true", help="Write a mission bundle under artifacts/design/missions/<task>.")
+    start_parser.add_argument("--save-to", help="Write the mission bundle to this explicit directory.")
+    start_parser.add_argument("--format", choices=("json", "text"), default="text")
+
+    work_parser = _add_root_format_parser(subparsers, "work")
+    work_parser.add_argument("--task", required=True, help="The material design task to organize.")
+    work_parser.add_argument("--profile", choices=("quotepilot", "quietpilot", "leaguepilot"))
+    work_parser.add_argument("--surface", help="The product surface being changed.")
+    work_parser.add_argument("--brief-file", help="Optional JSON actor/task fields.")
+    work_parser.add_argument("--reference", action="append", help="External reference URL or name; repeatable.")
+    work_parser.add_argument("--contract-out", help="Explicit path for a validated design contract JSON.")
+
+    handoff_parser = _add_root_format_parser(subparsers, "handoff")
+    handoff_parser.add_argument("--task", required=True, help="The material design task to hand to an agent.")
+    handoff_parser.add_argument("--profile", choices=("quotepilot", "quietpilot", "leaguepilot"))
+    handoff_parser.add_argument("--surface", help="The product surface being changed.")
+    handoff_parser.add_argument("--brief-file", help="Optional JSON actor/task fields.")
+    handoff_parser.add_argument("--reference", action="append", help="External reference URL or name; repeatable.")
+    handoff_parser.add_argument("--adapter", choices=("codex", "claude"), default="codex")
+    handoff_parser.add_argument("--output", help="Explicit Markdown or JSON output path.")
 
     memory_parser = subparsers.add_parser("memory")
     memory_subparsers = memory_parser.add_subparsers(dest="memory_command", required=True)
@@ -166,7 +219,7 @@ def main(argv: list[str] | None = None) -> int:
 
     _add_root_format_parser(subparsers, "self-audit")
 
-    args = parser.parse_args(argv)
+    args = parser.parse_args(normalized_argv)
     return _dispatch(args)
 
 
@@ -255,6 +308,48 @@ def _dispatch(args: argparse.Namespace) -> int:
     if args.command == "reference":
         report = analyze_references(_load_json_required(args.input), args.profile)
         return _emit(report.to_dict(), render_reference_text(report), args.format)
+    if args.command == "start":
+        root, task = _start_args(args)
+        packet = build_start_packet(
+            root,
+            task,
+            args.profile,
+            args.surface,
+            _load_json(args.brief_file),
+            args.reference,
+            args.adapter,
+            args.mode,
+            args.direction,
+        )
+        if args.contract_out:
+            if not packet["mission"]["selectedDirection"]:
+                raise ValueError("--contract-out requires an explicit --direction selection")
+            write_contract_from_workflow(packet["workflow"], args.contract_out)
+            packet["contract_output"] = str(Path(args.contract_out).resolve())
+        if args.output:
+            write_handoff(packet["handoff"], args.output)
+            packet["output"] = str(Path(args.output).resolve())
+        if args.save or args.save_to:
+            packet["saved"] = save_start_packet(packet, args.save_to)
+        text = packet["prompt"] if packet["status"] == "READY_TO_IMPLEMENT" else packet["summary"]
+        return _emit(packet, text, args.format)
+    if args.command == "work":
+        workflow = build_workflow(
+            _root_arg(args), args.task, args.profile, args.surface, _load_json(args.brief_file), args.reference
+        )
+        if args.contract_out:
+            write_contract_from_workflow(workflow, args.contract_out)
+            workflow["contract_output"] = str(Path(args.contract_out).resolve())
+        return _emit(workflow, render_workflow_text(workflow), args.format)
+    if args.command == "handoff":
+        workflow = build_workflow(
+            _root_arg(args), args.task, args.profile, args.surface, _load_json(args.brief_file), args.reference
+        )
+        packet = build_handoff(workflow, args.adapter)
+        if args.output:
+            write_handoff(packet, args.output)
+            packet["output"] = str(Path(args.output).resolve())
+        return _emit(packet, packet["prompt"], args.format)
     if args.command == "memory":
         root = _root_arg(args)
         if args.memory_command == "init":
@@ -397,6 +492,18 @@ def _emit(data: dict[str, Any], text: str, fmt: str) -> int:
 
 def _root_arg(args: argparse.Namespace) -> str:
     return args.root if args.root != "." or args.root_positional is None else args.root_positional
+
+
+def _normalize_argv(argv: list[str]) -> list[str]:
+    if argv and not argv[0].startswith("-") and argv[0] not in COMMANDS:
+        return ["start", *argv]
+    return argv
+
+
+def _start_args(args: argparse.Namespace) -> tuple[str, str]:
+    if args.task is None:
+        return args.start_root or ".", args.root_or_task
+    return args.start_root or args.root_or_task, args.task
 
 
 def _simple_text(title: str, report: dict[str, Any]) -> str:

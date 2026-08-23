@@ -17,6 +17,7 @@ Use it when rendered output, screenshots, or a working surface exists.
 - Prefer existing repository browser tooling, screenshot harnesses, or validation outputs when available.
 - Classify defects by root cause: visual, hierarchy, IA, interaction, workflow, responsive, accessibility, component, or drift.
 - Review desktop and mobile intentionally.
+- When a V3 mission exists, satisfy its surface-specific proof gate and report evidence against the selected direction.
 - Prefer evidence and severity over taste-based commentary.
 - Do not turn this into an autonomous repair loop. The skill reviews; implementation is separate.
 

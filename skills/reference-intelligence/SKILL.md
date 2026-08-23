@@ -13,10 +13,12 @@ Its job is:
 
 ## Rules
 
+- Treat a supplied URL or `DESIGN.md` as `RESEARCH_REQUIRED`, not as analyzed evidence.
 - Never say "make it look like X" and stop there.
 - Decompose each reference into observed pattern, why it works, relevance here, and an original transformation.
 - Existing repository behavior, governance, and tokens outrank the reference.
 - Reject references that would erase intentional product differentiation.
+- Record source, role, observed pattern, why it works, product relevance, original transformation, and rejected identity elements in the mission reference ledger.
 
 ## Output shape
 

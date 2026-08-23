@@ -1,10 +1,12 @@
 # Codex Adapter
 
-Use the install script to copy the Design Intelligence skills into the Codex skills directory:
+Use the unified installer to expose the CLI and copy the Design Intelligence skills into the Codex skills directory:
 
 ```bash
-./scripts/install-codex-skills
+./scripts/install
 ```
+
+The older `./scripts/install-codex-skills` command refreshes only the skill files.
 
 Then use [AGENTS.md](/home/administrator/design-intelligence/adapters/codex/AGENTS.md) as a starting point only when the consuming repository does not already have equivalent design instructions.
 

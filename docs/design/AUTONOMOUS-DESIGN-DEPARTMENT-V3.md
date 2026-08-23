@@ -2,7 +2,26 @@
 
 ## Status
 
-V3 is in development on top of the merged V2 foundation. Slice 0 established remote execution and baseline review requests. Slice 1 adds append-only human decision receipts and lifecycle/preflight governance. Neither slice declares a V3 release or changes the package version.
+V3 is implemented on top of the V2 foundation. Slice 0 established remote execution and baseline review requests. Slice 1 added append-only human decision receipts and lifecycle/preflight governance. Slice 2 adds the plain-English mission front door, surface-specific direction reasoning, reference ledger, explicit direction selection, and rendered-proof gate.
+
+## Slice 2: one-command design missions
+
+Run from a consuming repository:
+
+```bash
+design-intelligence "Improve the proposal comparison flow"
+```
+
+The command is read-only and:
+
+- inspects repository authorities and existing evidence
+- infers `marketing`, `app-workflow`, `customer-proposal`, `mobile`, or `general` mode
+- presents three product-fit design directions and recommends one
+- blocks implementation until a direction is explicitly selected
+- marks supplied references as `RESEARCH_REQUIRED` until their patterns and transformations are recorded
+- defines surface-specific rendered proof using the repository's existing browser hierarchy
+
+An explicit selection can be made with `--direction recommended` or a direction ID. `--save` writes a predictable generated bundle under `artifacts/design/missions/<task>/`; default startup remains read-only. The mission bundle is evidence and handoff material, not a new repository authority.
 
 ## Slice 0 objective
 

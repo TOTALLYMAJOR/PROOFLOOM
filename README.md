@@ -1,4 +1,4 @@
-# Design Intelligence v2.0.0
+# Design Intelligence v3.0.0
 
 Design Intelligence is a production-grade, vendor-neutral utility for repository-aware design work. Its core mission is design intelligence: understand product intent, preserve existing design truth, reason about UX and design-system change, validate rendered outcomes, and record evidence without turning into a second application scaffold.
 
@@ -6,7 +6,36 @@ The governing objective is:
 
 > Product intent -> repository evidence -> design reasoning -> implementation constraints -> rendered validation -> design learning.
 
-## What V2 adds
+## The easy path
+
+From the repository you want to improve:
+
+```bash
+design-intelligence "Improve the proposal comparison flow"
+```
+
+That one command inspects the current repository, infers the surface mode, produces three product-fit directions, recommends one, marks supplied references for honest research, and defines the rendered-proof gate. It is read-only.
+
+To explicitly accept the recommendation and save a complete mission bundle:
+
+```bash
+design-intelligence "Improve the proposal comparison flow" --direction recommended --save
+```
+
+The bundle is written to `artifacts/design/missions/<task>/` and contains the mission, reference ledger, agent handoff, and approved design contract. Existing repository authorities still outrank every generated artifact.
+
+## What V3 adds
+
+- one-command, current-repository startup from a plain-English task
+- automatic `marketing`, `app-workflow`, `customer-proposal`, `mobile`, or `general` mode inference
+- three product-fit direction briefs with one recommendation
+- a hard direction-selection checkpoint before implementation
+- an honest reference ledger where URLs and `DESIGN.md` files begin as `RESEARCH_REQUIRED`
+- surface-specific rendered-proof requirements using the repository's existing browser hierarchy
+- predictable mission bundles through the explicit `--save` convenience write
+- governed human baseline review receipts and non-mutating promotion preflight
+
+V2 remains intact:
 
 - institutional design memory with scoped `portfolio -> archetype -> product -> surface -> component -> exception` inheritance
 - append-oriented decisions, accepted/rejected outcomes, exceptions, debt, stale-record audits, and component registry
@@ -32,9 +61,7 @@ V1 remains intact:
 - `adapters/codex` and `adapters/claude`: thin adapter guidance, not a competing governance layer
 - `templates/` and `examples/product-profiles/`: reusable design artifacts and archetype examples
 
-## V3 development
-
-V3 Slice 0 adds hash-bound baseline review requests and read-only remote CI without changing V2 promotion authority. Slice 1 adds append-only human decision receipts, protected review windows, stale/superseded lifecycle evaluation, and non-mutating promotion preflight. Requests and receipts never mutate a baseline or authorize repair by themselves. See `docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md`.
+V3 baseline governance adds hash-bound review requests, append-only human decision receipts, protected review windows, stale/superseded lifecycle evaluation, and non-mutating promotion preflight. Requests and receipts never mutate a baseline or authorize repair by themselves. See `docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md`.
 
 ## Non-goals
 
@@ -65,15 +92,20 @@ Repository truth outranks package defaults.
 
 ## CLI
 
-Install locally:
+Install the skills and CLI from the repository checkout:
 
 ```bash
-python3 -m pip install -e .
+./scripts/install
 ```
+
+This creates a lightweight CLI link at `~/.local/bin/design-intelligence`; it does not require a global Python package install. If `~/.local/bin` is not already on `PATH`, the installer prints the exact next step.
 
 Core commands:
 
 ```bash
+design-intelligence "Improve proposal comparison"
+design-intelligence "Improve proposal comparison" --direction recommended --save
+design-intelligence start /path/to/repo "Improve proposal comparison" --profile quotepilot --reference https://aura.build
 design-intelligence inspect --root /path/to/repo
 design-intelligence assess --root /path/to/repo
 design-intelligence context --root /path/to/repo --profile quotepilot
@@ -82,6 +114,8 @@ design-intelligence refactor-risk --root /path/to/repo
 design-intelligence review --input work/review-manifest.json
 design-intelligence validate --root /path/to/repo --review-input work/review-manifest.json --evidence-pack-out work/evidence-pack.md
 design-intelligence doctor --root /path/to/repo
+design-intelligence work --root /path/to/repo --task "Improve proposal comparison" --profile quotepilot
+design-intelligence handoff --root /path/to/repo --task "Improve proposal comparison" --profile quotepilot --reference https://aura.build --output work/handoff.md
 design-intelligence memory context --root /path/to/repo --product quotepilot --surface QuoteWorkspace --component QuoteSidebar
 design-intelligence contract validate --input work/design-contract.json
 design-intelligence registry scan --root /path/to/repo
@@ -98,6 +132,14 @@ design-intelligence self-audit --root /path/to/repo
 ```
 
 All commands remain read-only unless an explicit output path, registry `--write`, baseline review `request`, baseline `promote`, or repair `--apply` is supplied. A baseline review request writes only its declared request file.
+
+The quoted task is the simplest front door. It defaults to the current repository and is equivalent to `start "<task>"`. The older `start /path/to/repo "<task>"` form remains compatible. Startup returns repository context, surface mode, direction briefs, reference ledger, proof gate, and an agent handoff. It writes only with `--save`, `--save-to`, `--contract-out`, or `--output`.
+
+The recommended direction is deliberately not automatic approval. Run again with `--direction recommended` or a named direction ID after reviewing the options. This is the boundary between design research and implementation.
+
+`work` organizes a material design task into a repository-aware contract, evidence-discovery plan, and explicit next action. It writes a contract only with `--contract-out`. `handoff` turns that plan into a compact Codex or Claude instruction packet and writes only with `--output`.
+
+Use `start` when you do not want to remember the workflow shape. Use `work` and `handoff` separately only when you want to inspect or save the intermediate plan in more detail.
 
 ## Rendered QA
 
@@ -141,8 +183,10 @@ design-intelligence-assess --root /path/to/repo
 Codex:
 
 ```bash
-./scripts/install-codex-skills
+./scripts/install
 ```
+
+Use `./scripts/install-codex-skills` only when the CLI is already installed and just the skill files need refreshing.
 
 Claude:
 
@@ -183,4 +227,4 @@ python3 /mnt/c/Users/Administrator/.codex/skills/.system/skill-creator/scripts/q
 
 ## Release
 
-`VERSION`, `pyproject.toml`, `package.json`, and package exports are aligned at `2.0.0`. The V2 release report is `docs/RELEASE-REPORT-2.0.0.md`.
+`VERSION`, `pyproject.toml`, `package.json`, and package exports are aligned at `3.0.0`. The V3 release report is `docs/RELEASE-REPORT-3.0.0.md`.

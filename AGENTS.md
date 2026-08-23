@@ -1,4 +1,4 @@
-# Design Intelligence V2 Repository Guide
+# Design Intelligence V3 Repository Guide
 
 This repository owns the reusable utility itself. It does not outrank consuming repositories.
 
@@ -7,6 +7,9 @@ This repository owns the reusable utility itself. It does not outrank consuming 
 - Design intelligence is the primary mission; repository intelligence is supporting infrastructure.
 - Existing repository authorities outrank package defaults.
 - Read-only by default. Only write artifacts when an explicit output path or installation target is requested.
+- `design-intelligence "<task>"` is the canonical front door; preserve its simple current-directory default.
+- A recommended design direction is not approval. Implementation requires explicit direction selection.
+- Supplied references remain `RESEARCH_REQUIRED` until observed patterns and transformations are recorded.
 - Prefer knowledge alignment over runtime migration when it captures most of the value.
 - Do not add a second component system, second token system, second backlog, or second E2E hierarchy.
 
@@ -30,7 +33,7 @@ This repository owns the reusable utility itself. It does not outrank consuming 
 
 - Run `npm run design:ci:quick` for core and governance changes.
 - Run `npm run design:ci:standard` for material rendered changes.
-- Run `npm run design:ci:full` before a V2 release.
+- Run `npm run design:ci:full` before a V3 release.
 - Run the skill validator for each skill before tagging.
 - Keep `VERSION`, `pyproject.toml`, and `design_intelligence/__init__.py` aligned.
 - Automatic repair stops after 3 iterations or at authority, scope, architecture, baseline, threshold, test, backend, or product-behavior boundaries.
