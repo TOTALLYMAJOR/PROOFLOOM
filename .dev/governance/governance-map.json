@@ -785,6 +785,29 @@
       "sha256": "94dda0845ba29c6e819413fcfb132e52879d1f3f5724164cb36d71f91fd42dde"
     },
     {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/RELEASE-REPORT-5.0.1.md",
+      "roles": [
+        "delivery"
+      ],
+      "scope": "domain:RELEASE-REPORT-5.0.1.md",
+      "sha256": "b68a9cfa6851353fa349004882626015716ef5f40b36977ebe89c3d53e69b768"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
+      "roles": [
+        "backlog",
+        "evidence"
+      ],
+      "scope": "domain:ROADMAP-V6-RUNTIME-OUTCOMES.md",
+      "sha256": "a08f06b82608468d552452e5bcdb22296dcc68de74ada22e6922cbc0b254cc56"
+    },
+    {
       "authorityLevel": "binding",
       "declaresAuthority": true,
       "lifecycle": "active",
@@ -1604,11 +1627,11 @@
   "authoritySummary": {
     "adrs": 4,
     "architecture": 12,
-    "backlog": 2,
+    "backlog": 3,
     "contracts": 38,
-    "delivery": 16,
+    "delivery": 17,
     "design": 84,
-    "evidence": 4,
+    "evidence": 5,
     "experiments": 1,
     "governance": 17,
     "instructions": 9,
@@ -1624,6 +1647,7 @@
   "backlogModel": {
     "activeSources": [
       "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+      "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
       "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
     ],
     "canonicalSources": [
@@ -1648,11 +1672,9 @@
   },
   "claimBoundary": "The audit reconstructs repository governance from tracked evidence. It does not ratify product vision, resolve human decisions, or claim implementation completion.",
   "designGate": {
-    "reason": "1 blocking governance or understanding problem(s) must be resolved before design adoption.",
-    "requiredBeforeDesign": [
-      "CRITICAL-AUTHORITY-DRIFT"
-    ],
-    "status": "LOCKED"
+    "reason": "Repository is design ready; design may proceed through normal design contracts and evidence gates.",
+    "requiredBeforeDesign": [],
+    "status": "READY"
   },
   "equivalentSystems": [
     {
@@ -1679,36 +1701,21 @@
     }
   ],
   "finalizationReadiness": {
-    "blockingFindings": [
-      "CRITICAL-AUTHORITY-DRIFT"
-    ],
+    "blockingFindings": [],
     "completionClaimed": false,
     "existingSystemStrategy": "PRESERVE_AND_BIND",
-    "governance": "CONFLICTED",
+    "governance": "COHERENT",
     "missingCoreRoles": [],
-    "status": "GOVERNANCE_CONFLICTED",
+    "status": "DESIGN_READY",
     "understanding": "MAPPED"
   },
   "findingCounts": {
     "P0": 0,
-    "P1": 1,
+    "P1": 0,
     "P2": 0,
     "P3": 0
   },
-  "findings": [
-    {
-      "authority": "repository-owner",
-      "category": "vision",
-      "id": "CRITICAL-AUTHORITY-DRIFT",
-      "message": "Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.",
-      "paths": [
-        "devctl.yaml"
-      ],
-      "requiredAction": "REVIEW_AND_RATIFY_AUTHORITY_CHANGE",
-      "severity": "P1",
-      "title": "Critical governing authority changed"
-    }
-  ],
+  "findings": [],
   "generatedBy": "design-intelligence-governance",
   "implementationRoots": [
     {
@@ -1763,7 +1770,7 @@
   "root": "/home/administrator/design-intelligence",
   "schemaVersion": 1,
   "scriptDamage": [],
-  "status": "REVIEW_REQUIRED",
+  "status": "READY",
   "trackingMode": "git-tracked",
   "untrackedAuthorityCandidates": []
 }

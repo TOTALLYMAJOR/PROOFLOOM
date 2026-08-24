@@ -644,6 +644,25 @@
       "sha256": "94dda0845ba29c6e819413fcfb132e52879d1f3f5724164cb36d71f91fd42dde"
     },
     {
+      "lifecycle": "candidate",
+      "path": "docs/RELEASE-REPORT-5.0.1.md",
+      "roles": [
+        "delivery"
+      ],
+      "scope": "domain:RELEASE-REPORT-5.0.1.md",
+      "sha256": "b68a9cfa6851353fa349004882626015716ef5f40b36977ebe89c3d53e69b768"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
+      "roles": [
+        "backlog",
+        "evidence"
+      ],
+      "scope": "domain:ROADMAP-V6-RUNTIME-OUTCOMES.md",
+      "sha256": "a08f06b82608468d552452e5bcdb22296dcc68de74ada22e6922cbc0b254cc56"
+    },
+    {
       "lifecycle": "active",
       "path": "docs/architecture/ADR-0001-development-control-plane-facade.md",
       "roles": [
@@ -1304,30 +1323,16 @@
       "sha256": "c12279d7c584959bbf43d66e3d795184f9cb622ad1ec54fb49f9d850dcb72156"
     }
   ],
-  "criticalAuthorityCount": 133,
-  "criticalAuthoritySha256": "eaf7addc9194cecca0fd9deff3dfd93501a0950e1fd7b6128cd1ba0bc5da0e79",
+  "criticalAuthorityCount": 135,
+  "criticalAuthoritySha256": "01f1f4a284a11a1a61ea4e60e5cef3396b93a485f196fc18af413448f9ceeef1",
   "designGateAtCreation": {
-    "reason": "1 blocking governance or understanding problem(s) must be resolved before design adoption.",
-    "requiredBeforeDesign": [
-      "CRITICAL-AUTHORITY-DRIFT"
-    ],
-    "status": "LOCKED"
+    "reason": "Repository is design ready; design may proceed through normal design contracts and evidence gates.",
+    "requiredBeforeDesign": [],
+    "status": "READY"
   },
   "generatedBy": "design-intelligence-governance",
-  "lastAuthorityDriftRatification": {
-    "approvedAt": "2026-08-24T02:53:11-05:00",
-    "approvedBy": "repository owner (direct V5.0.1 release authorization)",
-    "authority": "repository-owner",
-    "authorityStateSha256": "411457eabf6009c48815f91d2a893270ae73484c34dab55463744a28783c85c1",
-    "decision": "ACCEPT_AUTHORITY_DRIFT",
-    "kind": "AuthorityDriftRatification",
-    "paths": [
-      "devctl.yaml"
-    ],
-    "reason": "Authorize rebinding the active adoption-evidence pointer to the regenerated V5.0.1 report after package-version provenance changed. Historical reports remain immutable; no design, baseline, threshold, deployment, or consuming-repository authority is changed.",
-    "receiptPath": ".dev/governance/owner-adoption-authority-drift-receipt.json"
-  },
-  "ratificationClaimed": true,
+  "lastAuthorityDriftRatification": null,
+  "ratificationClaimed": false,
   "repository": "design-intelligence",
   "schemaVersion": 1
 }
