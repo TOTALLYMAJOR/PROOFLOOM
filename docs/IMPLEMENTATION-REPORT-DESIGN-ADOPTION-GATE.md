@@ -65,11 +65,11 @@ Generated bounded evidence:
 - `artifacts/design/references/design-department-surface/page.html`
 - `artifacts/design/references/design-department-surface/reference.png`
 - `artifacts/design/references/design-department-surface/reference-analysis.json`
-- `artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/adoption-report.json`
-- `artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/authority-map.json`
-- `artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/design-system-health.json`
-- `artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/reference-analysis.json`
-- `artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/design-contract.json`
+- `artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/adoption-report.json`
+- `artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/authority-map.json`
+- `artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/design-system-health.json`
+- `artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/reference-analysis.json`
+- `artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/design-contract.json`
 
 Generated QuoteFlow pilot evidence:
 
@@ -89,7 +89,7 @@ PYTHONPYCACHEPREFIX=/tmp/design-intelligence-pyc python3 -m compileall -q design
 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_*.py'
 npm run design:reference:capture -- --url http://127.0.0.1:8123/ --output artifacts/design/references/design-department-surface
 python3 -m design_intelligence.cli adopt "Preserve evidence-first Design QA hierarchy" --root . --reference http://127.0.0.1:8123/ --analysis artifacts/design/references/design-department-surface/reference-analysis.json --surface "Design QA Control Deck fixture" --save --strict
-python3 -m design_intelligence.cli adoption-audit --root . --input artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/adoption-report.json
+python3 -m design_intelligence.cli adoption-audit --root . --input artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/adoption-report.json
 npm run design:ci:quick
 npm run design:ci:standard
 npm run design:ci:full
@@ -100,7 +100,7 @@ sha256sum .design/baselines/manifest.json
 Verified results:
 
 - Python tests: 87 passed.
-- Adoption report: `DAR-B3CF087DD00D3423`, replay `PASS`, one source and seven repository authorities checked.
+- Adoption report: `DAR-F501B946828B8852`, replay `PASS`, one source and seven repository authorities checked.
 - QuotePilot pilot v4: `DAR-CB29DC358A4353FE`, replay `PASS`, 32 authorities checked, memory `AVAILABLE/PASS`, governance `HELD`, implementation not ready, and no contract emitted.
 - Legacy reports remain `LEGACY_BLOCKED`; current-schema reports whose authority hashes drift are `HISTORICAL_BLOCKED` only when an exact-scope replacement replays successfully.
 - Index-only memory verifies canonical source paths and SHA-256 hashes; source drift blocks adoption, and `--memory-only` setup installs no quality or baseline infrastructure.
