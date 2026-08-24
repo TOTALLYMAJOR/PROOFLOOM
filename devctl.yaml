@@ -76,7 +76,7 @@
       ]
     },
     "design": {
-      "adoptionReport": "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v9/adoption-report.json",
+      "adoptionReport": "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v11/adoption-report.json",
       "baselineManifest": ".design/baselines/manifest.json",
       "enabled": true,
       "memoryRoot": ".design/memory",

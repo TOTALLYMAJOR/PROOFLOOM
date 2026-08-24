@@ -1,6 +1,6 @@
 {
   "name": "design-intelligence-visual-qa",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "private": true,
   "type": "module",
   "description": "Optional Playwright runtime for Design Intelligence visual QA.",

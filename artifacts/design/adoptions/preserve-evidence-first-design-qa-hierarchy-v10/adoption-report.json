@@ -1,0 +1,2592 @@
+{
+  "analysis": {
+    "analyzer": {
+      "model": "repository-session-adapter",
+      "name": "codex-human-reviewed-visual-observation",
+      "observedAt": "2026-08-23T16:40:00Z",
+      "type": "hybrid",
+      "version": "1"
+    },
+    "capabilityClaims": [],
+    "patterns": [
+      {
+        "category": "layout",
+        "id": "PAT-DD-DECISION-HIERARCHY",
+        "identityElements": [],
+        "implementationImpact": "visual-only",
+        "keywords": [
+          "decision-first hierarchy",
+          "primary evidence action"
+        ],
+        "name": "Decision-first information hierarchy",
+        "observation": "The governed run, promotion boundary, and primary evidence action appear before supporting implementation detail.",
+        "productRelevance": "Design Intelligence must keep evidence and authority boundaries legible before exposing operational detail.",
+        "proposedUse": "Preserve decision-first hierarchy in Design Intelligence control and evidence surfaces.",
+        "recommendedDecision": "ADOPT",
+        "requiredCapabilities": [],
+        "riskFlags": [],
+        "source": "http://127.0.0.1:8123/",
+        "whyItWorks": "A hurried operator can identify the run state, consequence, and next action without scanning every subsystem."
+      },
+      {
+        "category": "layout",
+        "id": "PAT-DD-STATUS-ACTION",
+        "identityElements": [
+          "fixture typography",
+          "fixture warm grid",
+          "fixture red-green palette"
+        ],
+        "implementationImpact": "visual-only",
+        "keywords": [
+          "status-near-action",
+          "evidence summary"
+        ],
+        "name": "Status-near-action evidence summary",
+        "observation": "The evidence receipt keeps contract, viewport, accessibility, and baseline state directly above the inspection action.",
+        "productRelevance": "Generated evidence packs and mission handoffs need compact state summaries without becoming another dashboard.",
+        "proposedUse": "Adapt the status-near-action grouping through the repository's existing contract and evidence-pack formats.",
+        "recommendedDecision": "ADAPT",
+        "requiredCapabilities": [],
+        "riskFlags": [],
+        "source": "http://127.0.0.1:8123/",
+        "whyItWorks": "The operator sees the consequence and its supporting state in one bounded region before taking action."
+      }
+    ],
+    "schemaVersion": 1,
+    "sourceEvidence": [
+      {
+        "artifacts": [
+          {
+            "kind": "screenshot",
+            "path": "artifacts/design/references/design-department-surface/reference.png",
+            "sha256": "0944913675ff53f0c28eec91477fa1fc0144ba0cdb011c32d2a1251e478c3f01"
+          },
+          {
+            "kind": "dom-capture",
+            "path": "artifacts/design/references/design-department-surface/page.html",
+            "sha256": "57f8d89ddd0d42adf2cf0c8eeb38a050e0ae66371ef6bd1d9bac01dbcbcbacdd"
+          }
+        ],
+        "source": "http://127.0.0.1:8123/"
+      }
+    ]
+  },
+  "authorities": {
+    "duplicateAuthorities": [
+      {
+        "authorities": [
+          "docs/ARCHITECTURE.md",
+          "docs/CONTROL-PLANE-ARCHITECTURE-GRAPH.md",
+          "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+          "docs/IMPLEMENTATION-REPORT-ARCHITECTURE-GRAPH.md",
+          "docs/architecture/ADR-0001-development-control-plane-facade.md",
+          "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
+          "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md",
+          "tests/test_architecture_graph.py"
+        ],
+        "capability": "architecture_overview",
+        "note": "Capability appears to have more than one active authority.",
+        "severity": "P2"
+      },
+      {
+        "authorities": [
+          "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
+          "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
+        ],
+        "capability": "backlog",
+        "note": "Capability appears to have more than one active authority.",
+        "severity": "P2"
+      }
+    ],
+    "root": "/home/administrator/design-intelligence",
+    "sources": [
+      {
+        "authorityClass": "repository-governance",
+        "enforcement": "instructional",
+        "id": "AUTH-58E3DF5505D5",
+        "kind": "agent-governance",
+        "path": "AGENTS.md",
+        "sha256": "df70418171ae6d9bb3fbca4f93dc88f8315b2728f8e3573eb67c8f456d282deb",
+        "statements": [
+          {
+            "line": 3,
+            "status": "scoped",
+            "text": "This repository owns the reusable utility itself. It does not outrank consuming repositories."
+          },
+          {
+            "line": 7,
+            "status": "scoped",
+            "text": "- Design intelligence is the primary mission; repository intelligence is supporting infrastructure."
+          },
+          {
+            "line": 8,
+            "status": "scoped",
+            "text": "- Existing repository authorities outrank package defaults."
+          },
+          {
+            "line": 9,
+            "status": "scoped",
+            "text": "- Mature repositories must pass governance convergence before material design work begins."
+          },
+          {
+            "line": 10,
+            "status": "scoped",
+            "text": "- Map vision, actors, requirements, journeys, architecture, backlog, instructions, skills, hooks, and proof before proposing design."
+          },
+          {
+            "line": 11,
+            "status": "scoped",
+            "text": "- Preserve and bind an equally effective repository model instead of installing a competing control system."
+          },
+          {
+            "line": 12,
+            "status": "scoped",
+            "text": "- Read-only by default. Only write artifacts when an explicit output path or installation target is requested."
+          },
+          {
+            "line": 13,
+            "status": "scoped",
+            "text": "- `design-intelligence \"<task>\"` is the canonical front door; preserve its simple current-directory default."
+          },
+          {
+            "line": 14,
+            "status": "scoped",
+            "text": "- A recommended design direction is not approval. Implementation requires explicit direction selection."
+          },
+          {
+            "line": 15,
+            "status": "scoped",
+            "text": "- Supplied references remain `RESEARCH_REQUIRED` until observed patterns and transformations are recorded."
+          },
+          {
+            "line": 16,
+            "status": "scoped",
+            "text": "- Prefer knowledge alignment over runtime migration when it captures most of the value."
+          },
+          {
+            "line": 17,
+            "status": "scoped",
+            "text": "- Do not add a second component system, second token system, second backlog, or second E2E hierarchy."
+          },
+          {
+            "line": 21,
+            "status": "scoped",
+            "text": "- `design_intelligence/`: vendor-neutral core package and CLI"
+          },
+          {
+            "line": 22,
+            "status": "scoped",
+            "text": "- `.design/memory/`: canonical append-oriented decision, outcome, exception, debt, and component records"
+          },
+          {
+            "line": 23,
+            "status": "scoped",
+            "text": "- `.design/quality/`: governed deterministic thresholds and score history"
+          },
+          {
+            "line": 24,
+            "status": "scoped",
+            "text": "- `.design/baselines/`: approval-bound visual baselines; never update silently"
+          },
+          {
+            "line": 25,
+            "status": "scoped",
+            "text": "- `scripts/design/`: Playwright QA, repair proof, and tiered CI orchestration"
+          },
+          {
+            "line": 26,
+            "status": "scoped",
+            "text": "- `tests/design/`: route-specific scenario definitions; do not create a parallel product E2E hierarchy"
+          },
+          {
+            "line": 27,
+            "status": "scoped",
+            "text": "- `artifacts/design/`: contracts and generated evidence packs"
+          },
+          {
+            "line": 28,
+            "status": "scoped",
+            "text": "- `repo_fit/`: V0.1 compatibility wrappers"
+          },
+          {
+            "line": 29,
+            "status": "scoped",
+            "text": "- `skills/`: concise skills plus reference docs"
+          },
+          {
+            "line": 30,
+            "status": "scoped",
+            "text": "- `templates/` and `examples/`: reusable design artifacts and product profiles"
+          },
+          {
+            "line": 31,
+            "status": "scoped",
+            "text": "- `adapters/`: thin Codex and Claude adapter guidance"
+          },
+          {
+            "line": 32,
+            "status": "scoped",
+            "text": "- `devctl.yaml` and `.dev/`: control-plane index, bounded task packets, hash-bound intent index, standards profile, and capability routing; never a second product, design, architecture, or backlog authority"
+          },
+          {
+            "line": 33,
+            "status": "scoped",
+            "text": "- `.dev/governance/`: generated rehabilitation map, adapter, drift manifest, execution plan, human readout, and owner-ratification packet; never canonical product authority"
+          },
+          {
+            "line": 34,
+            "status": "scoped",
+            "text": "- `docs/`: architecture and release notes"
+          },
+          {
+            "line": 35,
+            "status": "scoped",
+            "text": "- `tests/fixtures/`: bounded proof repositories and manifests"
+          },
+          {
+            "line": 39,
+            "status": "scoped",
+            "text": "- Run `npm run design:ci:quick` for core and governance changes."
+          },
+          {
+            "line": 40,
+            "status": "scoped",
+            "text": "- Run `devctl validate` and `devctl doctor` after changing control-plane declarations or authorities."
+          },
+          {
+            "line": 41,
+            "status": "scoped",
+            "text": "- Run `devctl govern audit`, `devctl govern plan`, and `devctl govern verify` after changing critical product understanding or governance."
+          },
+          {
+            "line": 42,
+            "status": "scoped",
+            "text": "- Run `devctl planes audit`, `devctl backlog status`, and `devctl health` after changing intent, journeys, standards applicability, intelligence routing, or backlog sources."
+          },
+          {
+            "line": 43,
+            "status": "scoped",
+            "text": "- Never claim backlog completion from a partial queue. Every declared completion-governed item must have a valid terminal disposition."
+          },
+          {
+            "line": 44,
+            "status": "scoped",
+            "text": "- Run `npm run design:ci:standard` for material rendered changes."
+          },
+          {
+            "line": 45,
+            "status": "scoped",
+            "text": "- Run `npm run design:ci:full` before a release."
+          },
+          {
+            "line": 46,
+            "status": "scoped",
+            "text": "- Run the skill validator for each skill before tagging."
+          },
+          {
+            "line": 47,
+            "status": "scoped",
+            "text": "- Keep `VERSION`, `pyproject.toml`, and `design_intelligence/__init__.py` aligned."
+          },
+          {
+            "line": 48,
+            "status": "scoped",
+            "text": "- Automatic repair stops after 3 iterations or at authority, scope, architecture, baseline, threshold, test, backend, or product-behavior boundaries."
+          }
+        ]
+      },
+      {
+        "authorityClass": "architecture",
+        "enforcement": "documented",
+        "id": "AUTH-FD97592712BB",
+        "kind": "architecture",
+        "path": "docs/ARCHITECTURE.md",
+        "sha256": "2cc834244306fb49ba9870e53059c0dcd83e9109de13dda49b498453654de56a",
+        "statements": [
+          {
+            "line": 5,
+            "status": "current",
+            "text": "```text"
+          },
+          {
+            "line": 6,
+            "status": "current",
+            "text": "plain-English task -> repository context -> inferred surface mode -> three direction briefs"
+          },
+          {
+            "line": 7,
+            "status": "current",
+            "text": "-> explicit direction selection -> implementation handoff -> rendered proof"
+          },
+          {
+            "line": 8,
+            "status": "current",
+            "text": "```"
+          },
+          {
+            "line": 10,
+            "status": "current",
+            "text": "`design-intelligence \"<task>\"` is read-only and defaults to the current repository. It produces a recommendation but blocks implementation until a direction is explicitly selected. `--save` writes only a generated mission bundle under `artifacts/design/missions/`."
+          },
+          {
+            "line": 12,
+            "status": "current",
+            "text": "The reference ledger is evidence, not authority. A supplied URL or `DESIGN.md` begins as `RESEARCH_REQUIRED`; it cannot become an imported visual direction without observed patterns, product relevance, original transformation, and explicit rejection notes."
+          },
+          {
+            "line": 14,
+            "status": "current",
+            "text": "Reference-backed missions add a fail-closed gate between direction selection and implementation:"
+          },
+          {
+            "line": 16,
+            "status": "current",
+            "text": "```text"
+          },
+          {
+            "line": 17,
+            "status": "current",
+            "text": "site/images -> Playwright or local-byte evidence -> typed semantic adapter"
+          },
+          {
+            "line": 18,
+            "status": "current",
+            "text": "-> repository/backlog/hooks/instructions/design-system/memory reconciliation"
+          },
+          {
+            "line": 19,
+            "status": "current",
+            "text": "-> governed human receipt reconciliation -> deterministic adoption report"
+          },
+          {
+            "line": 20,
+            "status": "current",
+            "text": "-> existing design contract -> mission handoff"
+          },
+          {
+            "line": 21,
+            "status": "current",
+            "text": "```"
+          },
+          {
+            "line": 23,
+            "status": "current",
+            "text": "The adapter may observe and recommend. It cannot authorize a product capability, assert absence without bound repository-search evidence, override repository authority, lower quality thresholds, mutate a baseline, or select the final adoption decision. Named product profiles fail closed when institutional memory is unavailable. Supplied human lifecycle receipts are replay-audited and remain authoritative over implementation readiness."
+          },
+          {
+            "line": 27,
+            "status": "current",
+            "text": "```text"
+          },
+          {
+            "line": 28,
+            "status": "current",
+            "text": "request -> relevant memory -> design contract -> implementation -> Playwright render"
+          },
+          {
+            "line": 29,
+            "status": "current",
+            "text": "-> screenshot + DOM/state + axe -> visual review -> design linter"
+          },
+          {
+            "line": 30,
+            "status": "current",
+            "text": "-> deterministic quality gates -> memory outcome"
+          },
+          {
+            "line": 31,
+            "status": "current",
+            "text": "\\-> bounded repair -> rerender (max 3)"
+          },
+          {
+            "line": 32,
+            "status": "current",
+            "text": "```"
+          },
+          {
+            "line": 34,
+            "status": "current",
+            "text": "Model review can classify hierarchy, workflow, visual, responsive, accessibility, component, or drift defects. It cannot modify deterministic scores, lower thresholds, update baselines, or promote its own opinion into institutional law."
+          },
+          {
+            "line": 38,
+            "status": "current",
+            "text": "Phases 0-3 add `devctl` as a repository coordination facade, not another intelligence product:"
+          },
+          {
+            "line": 40,
+            "status": "current",
+            "text": "```text"
+          },
+          {
+            "line": 41,
+            "status": "current",
+            "text": "devctl.yaml -> task packet -> trust-ranked bounded context -> affected verification plan"
+          },
+          {
+            "line": 42,
+            "status": "current",
+            "text": "\\-> existing design/adoption/visual auditors"
+          },
+          {
+            "line": 43,
+            "status": "current",
+            "text": "```"
+          },
+          {
+            "line": 45,
+            "status": "current",
+            "text": "`devctl.yaml` indexes existing instructions, architecture, verification commands, and Design Intelligence authorities. `.dev` stores only the manifest version and task packets. `.design`, existing Playwright scenarios, product backlogs, component systems, and release controls remain canonical. The facade does not execute arbitrary commands in this phase. See `docs/CONTROL-PLANE-PHASES-0-3.md` and ADR-0001."
+          },
+          {
+            "line": 47,
+            "status": "current",
+            "text": "Phase 4 extends the same facade with three governed projections:"
+          },
+          {
+            "line": 49,
+            "status": "current",
+            "text": "```text"
+          },
+          {
+            "line": 50,
+            "status": "current",
+            "text": "Intent       -> source-bound vision, personas, requirements, journeys, metrics, experiments"
+          },
+          {
+            "line": 51,
+            "status": "current",
+            "text": "Architecture -> contextual official-standards versions, applicability, evidence, and expiry"
+          },
+          {
+            "line": 52,
+            "status": "current",
+            "text": "Intelligence -> instruction/skill inventory and vendor-neutral capability routing"
+          },
+          {
+            "line": 53,
+            "status": "current",
+            "text": "```"
+          },
+          {
+            "line": 55,
+            "status": "current",
+            "text": "The intent index points to canonical repository documents by path and SHA-256. It does not become canonical product truth. The backlog portfolio inventories every declared completion-governed source and permits `COMPLETE` only when every item has a valid terminal disposition. The standards profile is a dated engineering assessment, never certification. Capability routing cannot cross product, architecture, security, production, or baseline authority boundaries. See `docs/CONTROL-PLANE-PHASE-4.md` and ADR-0002."
+          },
+          {
+            "line": 59,
+            "status": "current",
+            "text": "`design_intelligence/` is the vendor-neutral core package."
+          },
+          {
+            "line": 61,
+            "status": "current",
+            "text": "It owns:"
+          },
+          {
+            "line": 63,
+            "status": "current",
+            "text": "- bounded repository discovery"
+          },
+          {
+            "line": 64,
+            "status": "current",
+            "text": "- scaffold reconciliation"
+          },
+          {
+            "line": 65,
+            "status": "current",
+            "text": "- migration-risk scoring"
+          },
+          {
+            "line": 66,
+            "status": "current",
+            "text": "- context generation"
+          },
+          {
+            "line": 67,
+            "status": "current",
+            "text": "- reference transformation"
+          },
+          {
+            "line": 68,
+            "status": "current",
+            "text": "- deterministic design linting"
+          },
+          {
+            "line": 69,
+            "status": "current",
+            "text": "- visual-review aggregation"
+          },
+          {
+            "line": 70,
+            "status": "current",
+            "text": "- validation and evidence packs"
+          },
+          {
+            "line": 71,
+            "status": "current",
+            "text": "- conservative doctor / repair planning"
+          },
+          {
+            "line": 72,
+            "status": "current",
+            "text": "- scoped institutional memory and provenance"
+          },
+          {
+            "line": 73,
+            "status": "current",
+            "text": "- governed baseline promotion and integrity auditing"
+          },
+          {
+            "line": 74,
+            "status": "current",
+            "text": "- deterministic quality and drift scoring"
+          },
+          {
+            "line": 75,
+            "status": "current",
+            "text": "- exact bounded repair execution"
+          },
+          {
+            "line": 76,
+            "status": "current",
+            "text": "- V2 self-audit"
+          },
+          {
+            "line": 77,
+            "status": "current",
+            "text": "- V3 surface-mode inference, direction briefs, reference ledger, and rendered-proof mission gate"
+          },
+          {
+            "line": 78,
+            "status": "current",
+            "text": "- evidence-bound reference capture and deterministic design adoption/refusal"
+          },
+          {
+            "line": 80,
+            "status": "current",
+            "text": "`repo_fit/` remains as a compatibility layer for V0.1 entry points."
+          },
+          {
+            "line": 84,
+            "status": "current",
+            "text": "Design Intelligence does not become the new repository authority by default."
+          },
+          {
+            "line": 86,
+            "status": "current",
+            "text": "Established products use index-only institutional memory. The memory rules summarize"
+          },
+          {
+            "line": 87,
+            "status": "current",
+            "text": "canonical repository authorities and bind each source by repository-relative path and"
+          },
+          {
+            "line": 88,
+            "status": "current",
+            "text": "SHA-256; they do not migrate or supersede those authorities. Source drift invalidates"
+          },
+          {
+            "line": 89,
+            "status": "current",
+            "text": "memory retrieval and blocks adoption until a reviewer reconciles and reindexes the"
+          },
+          {
+            "line": 90,
+            "status": "current",
+            "text": "changed authority. Memory-only initialization deliberately omits quality thresholds"
+          },
+          {
+            "line": 91,
+            "status": "current",
+            "text": "and baseline infrastructure so integration cannot create a competing QA system."
+          },
+          {
+            "line": 93,
+            "status": "current",
+            "text": "Priority order:"
+          },
+          {
+            "line": 95,
+            "status": "current",
+            "text": "1. current user requirement"
+          },
+          {
+            "line": 96,
+            "status": "current",
+            "text": "2. existing repository governance"
+          },
+          {
+            "line": 97,
+            "status": "current",
+            "text": "3. existing architecture and design authorities"
+          },
+          {
+            "line": 98,
+            "status": "current",
+            "text": "4. existing tokens, components, and implementation patterns"
+          },
+          {
+            "line": 99,
+            "status": "current",
+            "text": "5. Design Intelligence guidance"
+          },
+          {
+            "line": 103,
+            "status": "current",
+            "text": "Every CLI command is read-only unless the user explicitly requests an output path or installation target."
+          },
+          {
+            "line": 105,
+            "status": "current",
+            "text": "Examples:"
+          },
+          {
+            "line": 107,
+            "status": "current",
+            "text": "- `validate --evidence-pack-out ...` writes an evidence artifact"
+          },
+          {
+            "line": 108,
+            "status": "current",
+            "text": "- install scripts copy skills into Codex or Claude skill directories"
+          },
+          {
+            "line": 110,
+            "status": "current",
+            "text": "The utility does not silently mutate consuming repositories."
+          },
+          {
+            "line": 114,
+            "status": "current",
+            "text": "Two migrations are scored separately:"
+          },
+          {
+            "line": 116,
+            "status": "current",
+            "text": "- knowledge migration: docs, decisions, indexes, AGENTS navigation"
+          },
+          {
+            "line": 117,
+            "status": "current",
+            "text": "- runtime migration: components, imports, package boundaries, filesystem structure"
+          },
+          {
+            "line": 119,
+            "status": "current",
+            "text": "The default preference is 80/20 alignment:"
+          },
+          {
+            "line": 121,
+            "status": "current",
+            "text": "- keep runtime structure"
+          },
+          {
+            "line": 122,
+            "status": "current",
+            "text": "- converge duplicate authorities"
+          },
+          {
+            "line": 123,
+            "status": "current",
+            "text": "- add only missing design capability"
+          },
+          {
+            "line": 127,
+            "status": "current",
+            "text": "QuotePilot, QuietPilot, and LeaguePilot are data-backed product profiles."
+          },
+          {
+            "line": 129,
+            "status": "current",
+            "text": "They live outside the reasoning code as package data and human-readable examples so the core remains vendor-neutral."
+          }
+        ]
+      },
+      {
+        "authorityClass": "architecture",
+        "enforcement": "documented",
+        "id": "AUTH-EF8944941E3D",
+        "kind": "architecture",
+        "path": "docs/CONTROL-PLANE-ARCHITECTURE-GRAPH.md",
+        "sha256": "daf0fee9b278c32a6f4ccf6c40f677d2fd1e850db00ba40fdb67201e1910fa4f",
+        "statements": [
+          {
+            "line": 5,
+            "status": "current",
+            "text": "The architecture graph answers: \"If this task changes these files, what downstream code, contracts, journeys, tests, owners, and protected boundaries require attention?\""
+          },
+          {
+            "line": 7,
+            "status": "current",
+            "text": "It augments the existing repository authorities and verification rules. It does not create a second architecture source of truth."
+          },
+          {
+            "line": 11,
+            "status": "current",
+            "text": "Build the complete bounded static graph:"
+          },
+          {
+            "line": 13,
+            "status": "current",
+            "text": "```bash"
+          },
+          {
+            "line": 14,
+            "status": "current",
+            "text": "./scripts/devctl architecture graph \\"
+          },
+          {
+            "line": 15,
+            "status": "current",
+            "text": "--root . \\"
+          },
+          {
+            "line": 16,
+            "status": "current",
+            "text": "--format json \\"
+          },
+          {
+            "line": 17,
+            "status": "current",
+            "text": "--output artifacts/control-plane/architecture-graph/graph.json"
+          },
+          {
+            "line": 18,
+            "status": "current",
+            "text": "```"
+          },
+          {
+            "line": 20,
+            "status": "current",
+            "text": "Trace a task and one or more changed paths:"
+          },
+          {
+            "line": 22,
+            "status": "current",
+            "text": "```bash"
+          },
+          {
+            "line": 23,
+            "status": "current",
+            "text": "./scripts/devctl architecture impact TASK-ARCHITECTURE-IMPACT-GRAPH \\"
+          },
+          {
+            "line": 24,
+            "status": "current",
+            "text": "--changed design_intelligence/architecture_graph.py \\"
+          },
+          {
+            "line": 25,
+            "status": "current",
+            "text": "--root . \\"
+          },
+          {
+            "line": 26,
+            "status": "current",
+            "text": "--format json \\"
+          },
+          {
+            "line": 27,
+            "status": "current",
+            "text": "--output artifacts/control-plane/architecture-graph/task-impact.json"
+          },
+          {
+            "line": 28,
+            "status": "current",
+            "text": "```"
+          },
+          {
+            "line": 30,
+            "status": "current",
+            "text": "`devctl impact` and `devctl verify affected` also include the architecture result. Graph-derived protected checks are added to the affected-verification plan, but commands are not executed automatically."
+          },
+          {
+            "line": 32,
+            "status": "current",
+            "text": "Quick CI uses `architecture graph --summary`. It performs the same bounded scan but emits only counts, limits, status, and `graphSha256`; use the full command with `--output` when node-and-edge evidence is required."
+          },
+          {
+            "line": 36,
+            "status": "current",
+            "text": "1. Run `devctl init --dry-run --root /path/to/repository` and review the discovered authorities, backlog, scripts, and proposed manifest without writes."
+          },
+          {
+            "line": 37,
+            "status": "current",
+            "text": "2. Run `devctl init` only after confirming the target is authoritative. Existing instructions, design systems, backlogs, tests, and CI remain in place."
+          },
+          {
+            "line": 38,
+            "status": "current",
+            "text": "3. Review `spec.planes.architecture.impactGraph`. Narrow `include`, preserve secret and generated-file exclusions, and set budgets appropriate to the repository."
+          },
+          {
+            "line": 39,
+            "status": "current",
+            "text": "4. Bind real ownership through CODEOWNERS or `ownershipRules`. Do not invent named owners when the repository has not declared them."
+          },
+          {
+            "line": 40,
+            "status": "current",
+            "text": "5. Declare protected `securityRules` with the existing verification command IDs and actual approval authority."
+          },
+          {
+            "line": 41,
+            "status": "current",
+            "text": "6. Bind active intent-index journeys to implementation paths with `journeyBindings`; journey test files remain sourced from the intent index."
+          },
+          {
+            "line": 42,
+            "status": "current",
+            "text": "7. Run `architecture graph`, inspect unresolved or truncated evidence, then use `architecture impact` on a bounded task before implementation."
+          },
+          {
+            "line": 43,
+            "status": "current",
+            "text": "8. Keep the graph command in quick CI. Keep execution, architecture approval, release, deployment, and baseline mutation in their existing governed paths."
+          },
+          {
+            "line": 47,
+            "status": "current",
+            "text": "- `graphSha256` identifies the exact deterministic graph payload."
+          },
+          {
+            "line": 48,
+            "status": "current",
+            "text": "- Every edge includes repository evidence and an optional line number."
+          },
+          {
+            "line": 49,
+            "status": "current",
+            "text": "- `impactedPaths` is the downstream static blast radius, not proof that every runtime path executes."
+          },
+          {
+            "line": 50,
+            "status": "current",
+            "text": "- `securityBoundaries` and `requiredChecks` indicate protected review and verification obligations."
+          },
+          {
+            "line": 51,
+            "status": "current",
+            "text": "- `authorityRequired` means automation must stop at the declared boundary."
+          },
+          {
+            "line": 52,
+            "status": "current",
+            "text": "- `truncated: true` always produces `FAIL`; thresholds must be raised through review or the scan scope must be narrowed honestly."
+          },
+          {
+            "line": 56,
+            "status": "current",
+            "text": "The engine intentionally does not execute code. Dynamic imports, framework aliases, generated clients, reflection, runtime dependency injection, non-literal URLs, database access hidden behind generic adapters, and external service topology may require explicit repository bindings or runtime evidence. Regular expressions identify common JavaScript and HTTP forms; they are not a full compiler."
+          }
+        ]
+      },
+      {
+        "authorityClass": "architecture",
+        "enforcement": "documented",
+        "id": "AUTH-AD0B4B98D417",
+        "kind": "architecture",
+        "path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+        "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e",
+        "statements": [
+          {
+            "line": 5,
+            "status": "approved",
+            "text": "This document is the repository authority for the Design Intelligence development control plane's intent, user journeys, architecture constraints, and intelligence boundaries. It does not outrank a consuming repository. A consuming repository's approved governance, product intent, architecture decisions, backlog, design system, tests, and release controls remain authoritative."
+          },
+          {
+            "line": 7,
+            "status": "current",
+            "text": "The control plane may report evidence, gaps, dependency waves, and bounded plans. It may not claim certification, product acceptance, backlog completion, deployment, or production outcomes without the required repository evidence and human authority."
+          },
+          {
+            "line": 11,
+            "status": "current",
+            "text": "Provide one repository-native control plane that connects product intent, architecture, intelligence, execution, design, evidence, memory, and delivery without creating competing sources of truth."
+          },
+          {
+            "line": 15,
+            "status": "current",
+            "text": "1. Existing repository authority outranks package defaults."
+          },
+          {
+            "line": 16,
+            "status": "current",
+            "text": "2. User-facing work must link requirements, journeys, success metrics, tests, and evidence."
+          },
+          {
+            "line": 17,
+            "status": "current",
+            "text": "3. Backlog completion means every completion-governed item has an authoritative terminal disposition; it never means only the next items were attempted."
+          },
+          {
+            "line": 18,
+            "status": "current",
+            "text": "4. Industry currency is a dated applicability assessment against official sources, not an undated model assertion or certification claim."
+          },
+          {
+            "line": 19,
+            "status": "current",
+            "text": "5. Intelligence routing selects vendor-neutral capability classes. Product, architecture, security, production, and baseline authority remain human-gated."
+          },
+          {
+            "line": 20,
+            "status": "current",
+            "text": "6. Retrieval, execution, repair, and mutation stay bounded by declared scope and repository policy."
+          },
+          {
+            "line": 26,
+            "status": "current",
+            "text": "Needs a truthful view of what the repository is trying to accomplish, what remains open, what standards apply, and which decisions require approval."
+          },
+          {
+            "line": 30,
+            "status": "current",
+            "text": "Needs additive adoption that finds current authorities, scripts, journeys, architecture records, and backlog sources before proposing configuration."
+          },
+          {
+            "line": 34,
+            "status": "current",
+            "text": "Needs frontend changes to preserve the intended starting state, decisions, success state, accessibility, and authoritative application behavior."
+          },
+          {
+            "line": 40,
+            "status": "current",
+            "text": "Discovery must be read-only, identify repository authorities and verification commands, surface readiness gaps, and avoid generating product intent on the owner's behalf."
+          },
+          {
+            "line": 44,
+            "status": "current",
+            "text": "A user-facing task must reference active requirements, journeys, and success metrics. Each active journey must identify its owner, personas, starting state, success state, tests, metrics, and review date."
+          },
+          {
+            "line": 48,
+            "status": "current",
+            "text": "Every item from every declared completion-governed backlog source must be parsed, uniquely identified, dependency-checked, and assigned a current or terminal state. `COMPLETE` is permitted only when all such items are terminal and terminal dispositions carry required evidence or authority."
+          },
+          {
+            "line": 52,
+            "status": "current",
+            "text": "Architecture health must compare the repository's dated standards profile with the bundled official-source catalog, validate contextual applicability and evidence, fail expired or stale versions, and explicitly deny certification claims."
+          },
+          {
+            "line": 56,
+            "status": "current",
+            "text": "Task routing must use work type, risk, and required capabilities. Routing policy must not bind to model vendors and must fail closed at product, architecture, security, production, and governed-baseline boundaries."
+          },
+          {
+            "line": 60,
+            "status": "current",
+            "text": "The bounded Design QA Control Deck journey must preserve the existing design-memory, quality-threshold, Playwright, accessibility, DOM/state, baseline, and three-iteration repair authorities."
+          },
+          {
+            "line": 66,
+            "status": "current",
+            "text": "- Owner: consuming repository owner"
+          },
+          {
+            "line": 67,
+            "status": "current",
+            "text": "- Personas: repository owner; consuming development team"
+          },
+          {
+            "line": 68,
+            "status": "current",
+            "text": "- Starting state: the repository has its own instructions, architecture, product documents, backlog, scripts, and possibly design infrastructure."
+          },
+          {
+            "line": 69,
+            "status": "current",
+            "text": "- Journey: run read-only discovery; review detected authorities and gaps; map intent and journeys; assess applicable official standards; bind capability routing; validate the proposed manifest; approve additive installation; run health and failure-injection checks."
+          },
+          {
+            "line": 70,
+            "status": "current",
+            "text": "- Success state: the repository has one reviewed control-plane index that delegates to existing authorities and reports every backlog item without performing an unauthorized mutation."
+          },
+          {
+            "line": 71,
+            "status": "current",
+            "text": "- Tests: `tests/test_control_plane.py`; `tests/test_planes.py`"
+          },
+          {
+            "line": 72,
+            "status": "current",
+            "text": "- Metrics: complete discovery coverage; zero writes during dry-run; zero duplicate authority systems; all configured planes pass before readiness is claimed."
+          },
+          {
+            "line": 76,
+            "status": "current",
+            "text": "- Owner: Design Intelligence maintainer"
+          },
+          {
+            "line": 77,
+            "status": "current",
+            "text": "- Personas: repository owner; product user"
+          },
+          {
+            "line": 78,
+            "status": "current",
+            "text": "- Starting state: a frontend fixture, governed five-viewport scenario, thresholds, baselines, design memory, and prior adoption evidence exist."
+          },
+          {
+            "line": 79,
+            "status": "current",
+            "text": "- Journey: load linked intent; select affected checks; render governed viewports; validate accessibility and DOM/state; score quality and drift; attempt only bounded deterministic repairs; stop after three iterations or an authority boundary; package evidence; record outcomes."
+          },
+          {
+            "line": 80,
+            "status": "current",
+            "text": "- Success state: deterministic quality and governance audits pass without threshold weakening or baseline mutation, and the evidence pack remains linked to the task and journey."
+          },
+          {
+            "line": 81,
+            "status": "current",
+            "text": "- Tests: `tests/design/scenarios/design-department-surface.json`; `tests/test_control_plane.py`; `tests/test_governance_v3.py`"
+          },
+          {
+            "line": 82,
+            "status": "current",
+            "text": "- Metrics: five governed viewports; quality score at or above the existing threshold; zero unauthorized baseline changes; exactly three proven repair cycles in the repair proof."
+          },
+          {
+            "line": 88,
+            "status": "current",
+            "text": "Dry-run adoption writes zero files and inventories current repository authorities, verification commands, backlog candidates, and plane readiness gaps."
+          },
+          {
+            "line": 92,
+            "status": "current",
+            "text": "Every active user-facing requirement has reciprocal active-journey coverage, each active journey has at least one existing test, and user-facing task packets contain journey links."
+          },
+          {
+            "line": 96,
+            "status": "accepted",
+            "text": "One hundred percent of declared completion-governed backlog items appear in status and dependency-wave evidence; no unparsed or duplicate active item is accepted."
+          },
+          {
+            "line": 100,
+            "status": "current",
+            "text": "Every catalog standard is dispositioned according to repository context, applicable entries cite existing repository evidence, and review expiry fails closed."
+          },
+          {
+            "line": 104,
+            "status": "approved",
+            "text": "Every valid task resolves to one approved vendor-neutral capability class or fails closed; high-risk and authority-bound work requires human approval."
+          },
+          {
+            "line": 108,
+            "status": "current",
+            "text": "The bounded pilot retains its governed quality score, baseline manifest hash, accessibility checks, DOM/state evidence, and repair ceiling without weakening thresholds."
+          },
+          {
+            "line": 112,
+            "status": "current",
+            "text": "- `.dev/` is an index and task packet store, not a replacement product authority, design memory, backlog, architecture tree, or test hierarchy."
+          },
+          {
+            "line": 113,
+            "status": "current",
+            "text": "- Canonical source records are repository-relative and SHA-256 bound."
+          },
+          {
+            "line": 114,
+            "status": "current",
+            "text": "- Standards profiles record applicability and implementation evidence but never represent external certification."
+          },
+          {
+            "line": 115,
+            "status": "current",
+            "text": "- The control-plane facade plans affected commands; repository CI or an authorized operator executes them."
+          },
+          {
+            "line": 116,
+            "status": "blocked",
+            "text": "- Whole-backlog planning respects dependencies, blocked states, staged states, and human gates. It does not bypass them to satisfy a completion target."
+          },
+          {
+            "line": 117,
+            "status": "current",
+            "text": "- Design QA delegates to the existing Design Intelligence engine and governed Playwright hierarchy."
+          },
+          {
+            "line": 121,
+            "status": "current",
+            "text": "Capability routing may distinguish bounded context analysis, deterministic governance, architecture reasoning, and visual evidence analysis. It must not encode vendor or model names. Product strategy, major UX direction, irreversible architecture, security and data policy, production writes, deployment, billing, identity and access changes, and governed baseline mutation require human approval."
+          },
+          {
+            "line": 125,
+            "status": "current",
+            "text": "The bundled catalog uses official references for NIST SSDF, WCAG, OWASP ASVS, SLSA, NIST AI RMF and its Generative AI Profile, NIST CSF, OpenTelemetry, ISO/IEC 25010, ISO 9241-210, and OpenAPI. Repository profiles must record current versions, context-based applicability, rationale, evidence, and a review deadline. Standards with licensing restrictions are referenced only at the public metadata level; the package does not reproduce licensed requirements."
+          },
+          {
+            "line": 129,
+            "status": "blocked",
+            "text": "Valid terminal states are `COMPLETED`, `CANCELLED`, and `DEFERRED_WITH_AUTHORITY`. Completed items require evidence. Cancelled and authority-deferred items require an identified authority and rationale. Active, blocked, staged, unknown, duplicated, unparsed, cyclic, or missing-dependency items prevent a `COMPLETE` claim."
+          }
+        ]
+      },
+      {
+        "authorityClass": "architecture",
+        "enforcement": "documented",
+        "id": "AUTH-164350EBB57C",
+        "kind": "architecture",
+        "path": "docs/IMPLEMENTATION-REPORT-ARCHITECTURE-GRAPH.md",
+        "sha256": "e324c598da35c7bd69bcfc064b0a524a191ed2e965fb6204bab02fc042643cd6",
+        "statements": [
+          {
+            "line": 5,
+            "status": "current",
+            "text": "`TASK-ARCHITECTURE-IMPACT-GRAPH` is complete and the full governed CI tier passes."
+          },
+          {
+            "line": 7,
+            "status": "current",
+            "text": "The existing control-plane path rules remain intact. The new graph adds source-backed downstream impact for imports, packages, APIs, schemas, journeys, tests, ownership, and protected boundaries without creating a graph service, executing repository code, or replacing architecture authorities."
+          },
+          {
+            "line": 11,
+            "status": "current",
+            "text": "- Static, deterministic graph generation with repository-relative includes and secret/generated-file exclusions."
+          },
+          {
+            "line": 12,
+            "status": "current",
+            "text": "- Python AST import discovery and language-scoped JavaScript/TypeScript import and HTTP discovery."
+          },
+          {
+            "line": 13,
+            "status": "current",
+            "text": "- Next.js route, FastAPI-style decorator, Express-style route, and literal frontend API-call nodes."
+          },
+          {
+            "line": 14,
+            "status": "current",
+            "text": "- JSON Schema, Prisma, and SQL schema nodes plus literal schema-use edges."
+          },
+          {
+            "line": 15,
+            "status": "current",
+            "text": "- Intent-index journey nodes with declared test and implementation bindings."
+          },
+          {
+            "line": 16,
+            "status": "current",
+            "text": "- CODEOWNERS support with repository-declared ownership fallback rules."
+          },
+          {
+            "line": 17,
+            "status": "current",
+            "text": "- Explicit protected authority/security nodes that select existing verification commands and stop automation at human boundaries."
+          },
+          {
+            "line": 18,
+            "status": "current",
+            "text": "- Downstream impact traversal capped by source-file, graph-node, impact-node, and depth budgets."
+          },
+          {
+            "line": 19,
+            "status": "current",
+            "text": "- Fail-closed behavior for invalid paths, parse failures, missing journey bindings, invalid checks, and truncated traversal."
+          },
+          {
+            "line": 20,
+            "status": "current",
+            "text": "- `devctl architecture graph`, `devctl architecture graph --summary`, and `devctl architecture impact` commands."
+          },
+          {
+            "line": 21,
+            "status": "current",
+            "text": "- Existing `devctl impact` and `devctl verify affected` now incorporate graph-derived paths and protected checks."
+          },
+          {
+            "line": 22,
+            "status": "current",
+            "text": "- Doctor, health, quick CI, and repository self-audit integration."
+          },
+          {
+            "line": 26,
+            "status": "current",
+            "text": "- Graph: 84 source files, 126 nodes, 670 edges, no truncation."
+          },
+          {
+            "line": 27,
+            "status": "current",
+            "text": "- Graph digest: `f76ca4de4bc6ec8687d3c55c0415a2cc6e8dec69c4a8a46bc54daf5969f34b07`."
+          },
+          {
+            "line": 28,
+            "status": "current",
+            "text": "- Architecture task impact: 16 nodes, 10 repository paths, `design-full` and `unit-governance` selected, authority required, no truncation."
+          },
+          {
+            "line": 29,
+            "status": "current",
+            "text": "- Control plane: manifest, doctor, Intent, Architecture, Intelligence, health, and whole-backlog completion all `PASS`."
+          },
+          {
+            "line": 30,
+            "status": "current",
+            "text": "- Backlog: 3 terminal, 0 open."
+          },
+          {
+            "line": 31,
+            "status": "current",
+            "text": "- Tests: 111 passed, 0 failed; 5 dedicated failure-injection tests."
+          },
+          {
+            "line": 32,
+            "status": "current",
+            "text": "- Rendered QA: 5 viewports, quality 100, drift 0, 25/25 DOM assertions, 25/25 contract assertions, no critical or serious accessibility violations."
+          },
+          {
+            "line": 33,
+            "status": "current",
+            "text": "- Repair proof: 3 deterministic cycles passed; baseline manifest unchanged."
+          },
+          {
+            "line": 34,
+            "status": "current",
+            "text": "- Dependency audit: 0 vulnerabilities."
+          },
+          {
+            "line": 35,
+            "status": "current",
+            "text": "- V1 skills: 5/5 valid."
+          },
+          {
+            "line": 36,
+            "status": "current",
+            "text": "- Self-audit: `PASS`."
+          },
+          {
+            "line": 37,
+            "status": "current",
+            "text": "- Baseline manifest SHA-256 remained `03346893f7b9dff8fdd01de647908fb581af1a943ca258ac428057bca65aeef1`."
+          },
+          {
+            "line": 38,
+            "status": "current",
+            "text": "- Quality-threshold SHA-256 remained `d58ebfb2ac7abdc31ac16cf5ad125f67ea6d3e47db442d3c4660d7b5c50f4743`."
+          },
+          {
+            "line": 40,
+            "status": "current",
+            "text": "The graph summary scan measured 1.36 seconds in this repository. CI summary mode reduced the final full log from more than 14,000 lines during development to 1,287 lines without skipping graph generation."
+          },
+          {
+            "line": 44,
+            "status": "current",
+            "text": "```bash"
+          },
+          {
+            "line": 45,
+            "status": "current",
+            "text": "python3 -m unittest tests.test_architecture_graph -v"
+          },
+          {
+            "line": 46,
+            "status": "current",
+            "text": "python3 -m unittest tests.test_self_audit_v2 tests.test_control_plane tests.test_architecture_graph -v"
+          },
+          {
+            "line": 47,
+            "status": "current",
+            "text": "python3 -m design_intelligence.devctl_cli validate --root . --format json"
+          },
+          {
+            "line": 48,
+            "status": "current",
+            "text": "python3 -m design_intelligence.devctl_cli architecture graph --summary --root . --format json"
+          },
+          {
+            "line": 49,
+            "status": "current",
+            "text": "python3 -m design_intelligence.devctl_cli architecture graph --root . --format json --output artifacts/control-plane/architecture-graph/graph.json"
+          },
+          {
+            "line": 50,
+            "status": "current",
+            "text": "python3 -m design_intelligence.devctl_cli architecture impact TASK-ARCHITECTURE-IMPACT-GRAPH --changed design_intelligence/architecture_graph.py --root . --format json"
+          },
+          {
+            "line": 51,
+            "status": "current",
+            "text": "python3 -m design_intelligence.devctl_cli backlog complete --root . --format json"
+          },
+          {
+            "line": 52,
+            "status": "current",
+            "text": "npm run design:ci:full"
+          },
+          {
+            "line": 53,
+            "status": "current",
+            "text": "git diff --check"
+          },
+          {
+            "line": 54,
+            "status": "current",
+            "text": "```"
+          },
+          {
+            "line": 58,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/graph.json`"
+          },
+          {
+            "line": 59,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/task-impact.json`"
+          },
+          {
+            "line": 60,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/manifest-validation.json`"
+          },
+          {
+            "line": 61,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/doctor.json`"
+          },
+          {
+            "line": 62,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/health.json`"
+          },
+          {
+            "line": 63,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/plane-audit.json`"
+          },
+          {
+            "line": 64,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/backlog-completion.json`"
+          },
+          {
+            "line": 65,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/self-audit.json`"
+          },
+          {
+            "line": 66,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/failure-injection-tests.txt`"
+          },
+          {
+            "line": 67,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/full-ci.log`"
+          },
+          {
+            "line": 68,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/full-ci-summary.json`"
+          },
+          {
+            "line": 69,
+            "status": "current",
+            "text": "- `artifacts/control-plane/architecture-graph/files-changed.txt`"
+          },
+          {
+            "line": 73,
+            "status": "current",
+            "text": "- Static inspection cannot prove runtime execution, dynamic imports, reflection, dependency injection, framework aliases, generated clients, non-literal URLs, or external service topology."
+          },
+          {
+            "line": 74,
+            "status": "current",
+            "text": "- Common JavaScript and route forms are recognized; this is not a full JavaScript/TypeScript compiler or framework plugin system."
+          },
+          {
+            "line": 75,
+            "status": "current",
+            "text": "- Ownership is only as trustworthy as CODEOWNERS or reviewed fallback rules."
+          },
+          {
+            "line": 76,
+            "status": "current",
+            "text": "- Security nodes identify declared protected files and required checks; they do not prove security control effectiveness or provide approval."
+          },
+          {
+            "line": 77,
+            "status": "current",
+            "text": "- The full repository suite remains materially slower than the graph itself. The release-candidate 111-test unit/governance tier took 217.509 seconds; future performance work should profile existing isolated installer and temporary-repository tests rather than remove governance coverage."
+          },
+          {
+            "line": 78,
+            "status": "accepted",
+            "text": "- QuietPilot was not modified or accepted by this task. No production runtime, deployment, merge, or push was performed."
+          },
+          {
+            "line": 82,
+            "status": "current",
+            "text": "1. Add reviewed alias resolvers for TypeScript path maps, Python namespace packages, and framework-specific generated clients."
+          },
+          {
+            "line": 83,
+            "status": "current",
+            "text": "2. Merge OpenAPI, database migration lineage, infrastructure-as-code, and runtime trace evidence into the same typed graph with separate trust labels."
+          },
+          {
+            "line": 84,
+            "status": "current",
+            "text": "3. Cache file hashes and parsed edges by content digest so unchanged repositories avoid repeated parsing in doctor, health, and CI."
+          },
+          {
+            "line": 85,
+            "status": "current",
+            "text": "4. Add graph-diff receipts between commits and require owner review only for changed protected subgraphs."
+          },
+          {
+            "line": 86,
+            "status": "current",
+            "text": "5. Profile and parallelize the existing unit/governance suite while preserving all current gates."
+          },
+          {
+            "line": 87,
+            "status": "current",
+            "text": "6. Pilot read-only discovery against QuietPilot, review its CODEOWNERS/security/journey bindings with the repository owner, and only then authorize installation."
+          }
+        ]
+      },
+      {
+        "authorityClass": "architecture",
+        "enforcement": "documented",
+        "id": "AUTH-F1DBC6BA5B8F",
+        "kind": "architecture",
+        "path": "docs/architecture/ADR-0001-development-control-plane-facade.md",
+        "sha256": "b30dfe461266d5b23f2e38a3879b4e5381f8ad54da1710615be9ed0db7cddb67",
+        "statements": [
+          {
+            "line": 3,
+            "status": "accepted",
+            "text": "- Status: Accepted"
+          },
+          {
+            "line": 4,
+            "status": "current",
+            "text": "- Date: 2026-08-23"
+          },
+          {
+            "line": 8,
+            "status": "current",
+            "text": "Design Intelligence already owns institutional design memory, contracts, reference adoption, Playwright evidence, quality scoring, governed baselines, bounded repair, and self-audit. A development control plane needs repository-wide task, context, and verification coordination, but duplicating those design authorities would create conflicting truth and slow development."
+          },
+          {
+            "line": 12,
+            "status": "current",
+            "text": "Add a dependency-free `devctl` facade and a small `.dev` task store. The facade reads one repository manifest, retrieves bounded trust-ranked context, maps changed paths to declared checks, and delegates design and visual audits to existing Design Intelligence functions."
+          },
+          {
+            "line": 14,
+            "status": "current",
+            "text": "The manifest is JSON-compatible YAML so Python's standard library is sufficient. Commands are stored as argument arrays, not shell strings. Phase 0-3 returns plans only and cannot execute arbitrary task commands."
+          },
+          {
+            "line": 18,
+            "status": "current",
+            "text": "- Existing authorities remain canonical and reusable across repositories."
+          },
+          {
+            "line": 19,
+            "status": "current",
+            "text": "- Installation remains lightweight and does not require a service, database, or YAML package."
+          },
+          {
+            "line": 20,
+            "status": "current",
+            "text": "- Consumers must deliberately map their real instructions, architecture, backlog, tests, and design authorities."
+          },
+          {
+            "line": 21,
+            "status": "deferred",
+            "text": "- More advanced command execution, policy engines, graph storage, and multi-agent orchestration are deferred until evidence shows deterministic manifests and task packets are insufficient."
+          }
+        ]
+      },
+      {
+        "authorityClass": "architecture",
+        "enforcement": "documented",
+        "id": "AUTH-AA5E7285ADEF",
+        "kind": "architecture",
+        "path": "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md",
+        "sha256": "def1de38269f4a195d46ca9437c23ef098eb111f46ad5d741622a8141ead7b0c",
+        "statements": [
+          {
+            "line": 3,
+            "status": "accepted",
+            "text": "- Status: Accepted"
+          },
+          {
+            "line": 4,
+            "status": "current",
+            "text": "- Date: 2026-08-23"
+          },
+          {
+            "line": 5,
+            "status": "current",
+            "text": "- Owner: repository maintainers"
+          },
+          {
+            "line": 9,
+            "status": "current",
+            "text": "Path-to-check rules are fast and deterministic, but they cannot explain which downstream modules, API consumers, schema users, journey tests, owners, or protected boundaries may be affected by a change. A repository-wide graph database or runtime tracer would duplicate authority, increase setup cost, and create confidence that static evidence cannot justify."
+          },
+          {
+            "line": 13,
+            "status": "current",
+            "text": "Add a dependency-free static graph to the existing `devctl` facade. The graph reads only repository-relative files selected by `spec.planes.architecture.impactGraph` and emits typed nodes and source-evidenced edges."
+          },
+          {
+            "line": 15,
+            "status": "current",
+            "text": "The graph covers:"
+          },
+          {
+            "line": 17,
+            "status": "current",
+            "text": "- source files and tests;"
+          },
+          {
+            "line": 18,
+            "status": "current",
+            "text": "- Python and JavaScript/TypeScript imports;"
+          },
+          {
+            "line": 19,
+            "status": "current",
+            "text": "- repository and imported packages;"
+          },
+          {
+            "line": 20,
+            "status": "current",
+            "text": "- Next.js, FastAPI-style, and Express-style HTTP routes plus literal frontend API calls;"
+          },
+          {
+            "line": 21,
+            "status": "current",
+            "text": "- JSON Schema, Prisma, and SQL schema artifacts plus literal schema references;"
+          },
+          {
+            "line": 22,
+            "status": "current",
+            "text": "- intent-index journeys and their declared tests;"
+          },
+          {
+            "line": 23,
+            "status": "current",
+            "text": "- CODEOWNERS or repository-declared ownership fallbacks;"
+          },
+          {
+            "line": 24,
+            "status": "current",
+            "text": "- repository-declared protected security and authority boundaries."
+          },
+          {
+            "line": 26,
+            "status": "current",
+            "text": "Impact traversal follows downstream dependency direction. Package, owner, security, and journey nodes are contextual and may not act as uncontrolled hubs. A journey expands to its implementation and tests only when it is the sole available task seed. Route implementations expand through their API contract to statically discovered consumers."
+          },
+          {
+            "line": 28,
+            "status": "current",
+            "text": "All discovery and traversal limits are explicit. Exceeding `maxSourceFiles`, `maxNodes`, or `maxImpactNodes` fails closed. The engine never imports project code, starts a runtime, executes verification, approves architecture, or modifies a baseline."
+          },
+          {
+            "line": 32,
+            "status": "current",
+            "text": "- A task receives a reviewable blast radius and protected verification requirements before execution."
+          },
+          {
+            "line": 33,
+            "status": "current",
+            "text": "- Static analysis remains fast enough for repository CI and portable to consuming repositories."
+          },
+          {
+            "line": 34,
+            "status": "current",
+            "text": "- Dynamic calls, generated code, aliases, reflection, runtime dependency injection, and undocumented ownership may remain unresolved; these are limitations, not inferred edges."
+          },
+          {
+            "line": 35,
+            "status": "current",
+            "text": "- Protected boundary results indicate that declared human authority is required. They are not approval receipts."
+          },
+          {
+            "line": 36,
+            "status": "current",
+            "text": "- The graph complements architecture documents and ADRs. It does not replace them as authority."
+          },
+          {
+            "line": 40,
+            "status": "rejected",
+            "text": "- A graph database was rejected because the bounded repository graph does not require a service or parallel state authority."
+          },
+          {
+            "line": 41,
+            "status": "rejected",
+            "text": "- Runtime instrumentation was rejected as a default because it executes repository code and cannot be safe during discovery."
+          },
+          {
+            "line": 42,
+            "status": "rejected",
+            "text": "- Fully bidirectional traversal was rejected because packages and journeys turned small changes into repository-wide impact sets."
+          },
+          {
+            "line": 43,
+            "status": "rejected",
+            "text": "- Unbounded best-effort output was rejected because partial graphs must not be reported as complete."
+          }
+        ]
+      },
+      {
+        "authorityClass": "architecture",
+        "enforcement": "documented",
+        "id": "AUTH-74D47C0DAF3D",
+        "kind": "architecture",
+        "path": "tests/test_architecture_graph.py",
+        "sha256": "148c6feb032d17bb44952293e74939751f497cea368b0fe58bba2bf092ec24a6",
+        "statements": [
+          {
+            "line": 1,
+            "status": "current",
+            "text": "from __future__ import annotations"
+          },
+          {
+            "line": 3,
+            "status": "current",
+            "text": "import copy"
+          },
+          {
+            "line": 4,
+            "status": "current",
+            "text": "import json"
+          },
+          {
+            "line": 5,
+            "status": "current",
+            "text": "import tempfile"
+          },
+          {
+            "line": 6,
+            "status": "current",
+            "text": "import unittest"
+          },
+          {
+            "line": 7,
+            "status": "current",
+            "text": "from pathlib import Path"
+          },
+          {
+            "line": 9,
+            "status": "current",
+            "text": "from design_intelligence.architecture_graph import ("
+          },
+          {
+            "line": 10,
+            "status": "current",
+            "text": "analyze_architecture_impact,"
+          },
+          {
+            "line": 11,
+            "status": "current",
+            "text": "build_architecture_graph,"
+          },
+          {
+            "line": 12,
+            "status": "current",
+            "text": ")"
+          },
+          {
+            "line": 13,
+            "status": "current",
+            "text": "from design_intelligence.control_plane import ("
+          },
+          {
+            "line": 14,
+            "status": "current",
+            "text": "architecture_graph_schema,"
+          },
+          {
+            "line": 15,
+            "status": "current",
+            "text": "create_task,"
+          },
+          {
+            "line": 16,
+            "status": "current",
+            "text": "initialize_control_plane,"
+          },
+          {
+            "line": 17,
+            "status": "current",
+            "text": "load_manifest,"
+          },
+          {
+            "line": 18,
+            "status": "current",
+            "text": "validate_control_plane,"
+          },
+          {
+            "line": 19,
+            "status": "current",
+            "text": ")"
+          },
+          {
+            "line": 20,
+            "status": "current",
+            "text": "from design_intelligence.storage import atomic_write_json"
+          },
+          {
+            "line": 23,
+            "status": "current",
+            "text": "class ArchitectureGraphTests(unittest.TestCase):"
+          },
+          {
+            "line": 24,
+            "status": "current",
+            "text": "def test_graph_discovers_imports_api_schemas_journey_ownership_and_security(self) -> None:"
+          },
+          {
+            "line": 25,
+            "status": "current",
+            "text": "with tempfile.TemporaryDirectory() as temporary:"
+          },
+          {
+            "line": 26,
+            "status": "current",
+            "text": "root = self._repository(Path(temporary))"
+          },
+          {
+            "line": 27,
+            "status": "current",
+            "text": "manifest = load_manifest(root)"
+          },
+          {
+            "line": 29,
+            "status": "current",
+            "text": "first = build_architecture_graph(root, manifest)"
+          },
+          {
+            "line": 30,
+            "status": "current",
+            "text": "second = build_architecture_graph(root, manifest)"
+          },
+          {
+            "line": 32,
+            "status": "current",
+            "text": "self.assertEqual(first[\"status\"], \"PASS\", first)"
+          },
+          {
+            "line": 33,
+            "status": "current",
+            "text": "self.assertEqual(first[\"graphSha256\"], second[\"graphSha256\"])"
+          },
+          {
+            "line": 34,
+            "status": "current",
+            "text": "self.assertFalse(first[\"truncated\"])"
+          },
+          {
+            "line": 35,
+            "status": "current",
+            "text": "self.assertFalse((root / \"executed.txt\").exists(), \"Static discovery must not import source files\")"
+          },
+          {
+            "line": 36,
+            "status": "current",
+            "text": "node_types = {node[\"type\"] for node in first[\"nodes\"]}"
+          },
+          {
+            "line": 37,
+            "status": "current",
+            "text": "self.assertTrue("
+          },
+          {
+            "line": 38,
+            "status": "current",
+            "text": "{\"file\", \"test\", \"package\", \"api\", \"schema\", \"journey\", \"owner\", \"security-boundary\"}"
+          },
+          {
+            "line": 39,
+            "status": "current",
+            "text": "<= node_types"
+          },
+          {
+            "line": 40,
+            "status": "current",
+            "text": ")"
+          },
+          {
+            "line": 41,
+            "status": "current",
+            "text": "edges = {(edge[\"source\"], edge[\"type\"], edge[\"target\"]) for edge in first[\"edges\"]}"
+          },
+          {
+            "line": 42,
+            "status": "current",
+            "text": "self.assertIn((\"file:src/service.py\", \"imports\", \"file:src/core.py\"), edges)"
+          },
+          {
+            "line": 43,
+            "status": "current",
+            "text": "self.assertIn((\"file:app/api/orders/route.ts\", \"exposes-api\", \"api:GET:/api/orders\"), edges)"
+          },
+          {
+            "line": 44,
+            "status": "current",
+            "text": "self.assertIn((\"file:src/client.ts\", \"calls-api\", \"api:GET:/api/orders\"), edges)"
+          },
+          {
+            "line": 45,
+            "status": "current",
+            "text": "self.assertNotIn((\"file:src/literal.py\", \"calls-api\", \"api:GET:/api/orders\"), edges)"
+          },
+          {
+            "line": 46,
+            "status": "current",
+            "text": "self.assertIn((\"file:src/schema_user.py\", \"uses-schema\", \"schema:schemas/order.schema.json\"), edges)"
+          },
+          {
+            "line": 47,
+            "status": "current",
+            "text": "self.assertIn((\"journey:JRN-GRAPH-001\", \"verified-by\", \"test:tests/test_feature.py\"), edges)"
+          },
+          {
+            "line": 48,
+            "status": "current",
+            "text": "self.assertIn((\"file:src/core.py\", \"owned-by\", \"owner:@platform\"), edges)"
+          },
+          {
+            "line": 49,
+            "status": "current",
+            "text": "self.assertIn("
+          },
+          {
+            "line": 50,
+            "status": "current",
+            "text": "(\"file:src/core.py\", \"governed-by\", \"security-boundary:protected-core\"),"
+          },
+          {
+            "line": 51,
+            "status": "current",
+            "text": "edges,"
+          },
+          {
+            "line": 52,
+            "status": "current",
+            "text": ")"
+          },
+          {
+            "line": 54,
+            "status": "current",
+            "text": "def test_impact_follows_downstream_blast_radius_and_protected_checks(self) -> None:"
+          },
+          {
+            "line": 55,
+            "status": "current",
+            "text": "with tempfile.TemporaryDirectory() as temporary:"
+          },
+          {
+            "line": 56,
+            "status": "current",
+            "text": "root = self._repository(Path(temporary))"
+          },
+          {
+            "line": 57,
+            "status": "current",
+            "text": "manifest = load_manifest(root)"
+          },
+          {
+            "line": 58,
+            "status": "current",
+            "text": "task = self._task()"
+          },
+          {
+            "line": 60,
+            "status": "current",
+            "text": "module_impact = analyze_architecture_impact("
+          },
+          {
+            "line": 61,
+            "status": "current",
+            "text": "root,"
+          },
+          {
+            "line": 62,
+            "status": "current",
+            "text": "manifest,"
+          },
+          {
+            "line": 63,
+            "status": "current",
+            "text": "task,"
+          },
+          {
+            "line": 64,
+            "status": "current",
+            "text": "changed_paths=[\"src/core.py\"],"
+          },
+          {
+            "line": 65,
+            "status": "current",
+            "text": ")"
+          },
+          {
+            "line": 66,
+            "status": "current",
+            "text": "api_impact = analyze_architecture_impact("
+          },
+          {
+            "line": 67,
+            "status": "current",
+            "text": "root,"
+          },
+          {
+            "line": 68,
+            "status": "current",
+            "text": "manifest,"
+          },
+          {
+            "line": 69,
+            "status": "current",
+            "text": "task,"
+          },
+          {
+            "line": 70,
+            "status": "current",
+            "text": "changed_paths=[\"app/api/orders/route.ts\"],"
+          },
+          {
+            "line": 71,
+            "status": "current",
+            "text": ")"
+          },
+          {
+            "line": 72,
+            "status": "current",
+            "text": "schema_impact = analyze_architecture_impact("
+          },
+          {
+            "line": 73,
+            "status": "current",
+            "text": "root,"
+          },
+          {
+            "line": 74,
+            "status": "current",
+            "text": "manifest,"
+          },
+          {
+            "line": 75,
+            "status": "current",
+            "text": "task,"
+          },
+          {
+            "line": 76,
+            "status": "current",
+            "text": "changed_paths=[\"schemas/order.schema.json\"],"
+          },
+          {
+            "line": 77,
+            "status": "current",
+            "text": ")"
+          },
+          {
+            "line": 79,
+            "status": "current",
+            "text": "self.assertEqual(module_impact[\"status\"], \"PASS\", module_impact)"
+          },
+          {
+            "line": 80,
+            "status": "current",
+            "text": "self.assertTrue("
+          },
+          {
+            "line": 81,
+            "status": "current",
+            "text": "{\"src/core.py\", \"src/service.py\", \"src/consumer.py\"}"
+          },
+          {
+            "line": 82,
+            "status": "current",
+            "text": "<= set(module_impact[\"impactedPaths\"])"
+          },
+          {
+            "line": 83,
+            "status": "current",
+            "text": ")"
+          },
+          {
+            "line": 84,
+            "status": "current",
+            "text": "self.assertEqual(module_impact[\"requiredChecks\"], [\"unit-governance\"])"
+          },
+          {
+            "line": 85,
+            "status": "current",
+            "text": "self.assertEqual([owner[\"label\"] for owner in module_impact[\"owners\"]], [\"@platform\"])"
+          },
+          {
+            "line": 86,
+            "status": "current",
+            "text": "self.assertTrue(module_impact[\"authorityRequired\"])"
+          },
+          {
+            "line": 87,
+            "status": "current",
+            "text": "self.assertIn(\"src/client.ts\", api_impact[\"impactedPaths\"])"
+          },
+          {
+            "line": 88,
+            "status": "current",
+            "text": "self.assertIn(\"src/schema_user.py\", schema_impact[\"impactedPaths\"])"
+          },
+          {
+            "line": 90,
+            "status": "current",
+            "text": "def test_impact_fails_closed_when_node_budget_is_exhausted(self) -> None:"
+          }
+        ]
+      },
+      {
+        "authorityClass": "product-intent",
+        "enforcement": "documented",
+        "id": "AUTH-EB1F2F1AD841",
+        "kind": "backlog",
+        "path": "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
+        "sha256": "a08f06b82608468d552452e5bcdb22296dcc68de74ada22e6922cbc0b254cc56",
+        "statements": [
+          {
+            "line": 5,
+            "status": "current",
+            "text": "V5 determines whether a repository is governed and ready to enter design work. V6 should close the learning loop after a governed change reaches real users:"
+          },
+          {
+            "line": 7,
+            "status": "current",
+            "text": "```text"
+          },
+          {
+            "line": 8,
+            "status": "approved",
+            "text": "approved change -> release evidence -> bounded runtime signals -> outcome assessment -> memory candidate -> human ratification"
+          },
+          {
+            "line": 9,
+            "status": "current",
+            "text": "```"
+          },
+          {
+            "line": 11,
+            "status": "current",
+            "text": "It must not turn operational telemetry into unchecked design authority."
+          },
+          {
+            "line": 15,
+            "status": "current",
+            "text": "Require a human-owned outcome contract before a governed change can be observed. The contract names the user journey, expected user behavior, success and counter-signals, observation window, privacy classification, data owner, and rollback signal. It binds to the change, release evidence, and existing product requirement without duplicating the product backlog."
+          },
+          {
+            "line": 19,
+            "status": "current",
+            "text": "Introduce repository-local adapters that read existing analytics, error, support, accessibility, and release evidence. Adapters produce bounded, normalized evidence packs with source timestamps, retention limits, tenant/privacy constraints, and explicit unknowns. They must never collect secrets, export raw personal data, or create a second analytics system."
+          },
+          {
+            "line": 23,
+            "status": "current",
+            "text": "Evaluate each contract deterministically where possible: release present, observation window complete, required signals available, success thresholds met, and counter-signals absent or explained. Model assistance may summarize evidence and propose explanations, but cannot decide success, alter thresholds, or approve a design decision."
+          },
+          {
+            "line": 27,
+            "status": "current",
+            "text": "Create a reviewable memory candidate only when an outcome is evidence-backed. The candidate links the original decision, implementation, rendered verification, release, measured outcome, and exceptions. A human must ratify any product-, portfolio-, archetype-, security-, accessibility-, or architecture-level rule before it is inherited."
+          },
+          {
+            "line": 31,
+            "status": "current",
+            "text": "Continuously mark stale contracts, expired observations, broken adapters, superseded decisions, and unresolved counter-signals. Staleness blocks promotion of a learning claim; it does not rewrite history. Retire rules only through the existing human-authority and supersession paths."
+          },
+          {
+            "line": 35,
+            "status": "current",
+            "text": "- no autonomous deployment, rollback, baseline promotion, pricing change, or product-scope change"
+          },
+          {
+            "line": 36,
+            "status": "current",
+            "text": "- no cross-repository telemetry warehouse or copied authority graph"
+          },
+          {
+            "line": 37,
+            "status": "current",
+            "text": "- no inference that a design succeeded merely from a deploy, page view, or missing error report"
+          },
+          {
+            "line": 38,
+            "status": "current",
+            "text": "- no weakening of V5 governance, repair limits, visual thresholds, or privacy constraints"
+          },
+          {
+            "line": 42,
+            "status": "current",
+            "text": "Start only after a product selects one bounded journey and identifies an existing runtime-evidence source. The first pilot should be read-only and compare one shipped change against one predeclared outcome contract. Exit the pilot only after provenance, privacy, data freshness, false-positive handling, and human-ratification workflow are proven end to end."
+          },
+          {
+            "line": 46,
+            "status": "current",
+            "text": "- which repository supplies the first pilot journey and its named owner"
+          },
+          {
+            "line": 47,
+            "status": "current",
+            "text": "- which existing runtime evidence source may be read, under what retention and tenant boundaries"
+          },
+          {
+            "line": 48,
+            "status": "current",
+            "text": "- what outcome threshold and counter-signal are valid for that journey"
+          },
+          {
+            "line": 49,
+            "status": "current",
+            "text": "- which human role ratifies a learning candidate and who can retire it"
+          }
+        ]
+      },
+      {
+        "authorityClass": "product-intent",
+        "enforcement": "documented",
+        "id": "AUTH-3F987E9B0475",
+        "kind": "backlog",
+        "path": "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
+        "sha256": "eeee52f324b43c965546c9711057815e10ff25b5c4b50aa10bc107049777a841",
+        "statements": [
+          {
+            "line": 3,
+            "status": "accepted",
+            "text": "- Status: Accepted"
+          },
+          {
+            "line": 4,
+            "status": "current",
+            "text": "- Date: 2026-08-23"
+          },
+          {
+            "line": 5,
+            "status": "current",
+            "text": "- Owners: repository maintainers"
+          },
+          {
+            "line": 9,
+            "status": "current",
+            "text": "The Phase 0-3 facade could bind instructions, task context, affected checks, and existing design evidence. It could not prove what user outcome a task served, whether architecture guidance was current for repository context, how reasoning capability was selected, or whether a completion statement covered the whole backlog rather than the next items."
+          },
+          {
+            "line": 11,
+            "status": "current",
+            "text": "Copying canonical product documents, architecture trees, backlogs, or model-provider configuration into the package would create competing authorities and make consuming repositories less reliable."
+          },
+          {
+            "line": 15,
+            "status": "current",
+            "text": "Add three projections under `spec.planes`:"
+          },
+          {
+            "line": 17,
+            "status": "current",
+            "text": "- Intent uses a hash-bound index into canonical vision, principles, personas, requirements, journeys, metrics, constraints, and experiments."
+          },
+          {
+            "line": 18,
+            "status": "current",
+            "text": "- Architecture uses a dated repository profile against a bundled official-source standards catalog, with explicit applicability, disposition, evidence, and expiry."
+          },
+          {
+            "line": 19,
+            "status": "current",
+            "text": "- Intelligence uses repository instruction and skill discovery plus vendor-neutral capability classes selected by work type, risk, and required capabilities."
+          },
+          {
+            "line": 21,
+            "status": "blocked",
+            "text": "Add whole-backlog accounting under the Intent plane. Every declared completion-governed source is parsed and dependency-checked. Completion requires every item to be completed, cancelled with authority, or deferred with authority. Blocked and staged work remains visible."
+          },
+          {
+            "line": 23,
+            "status": "current",
+            "text": "Keep command execution plan-only. Keep product, architecture, security, production, and baseline decisions human-gated."
+          },
+          {
+            "line": 27,
+            "status": "current",
+            "text": "- User-facing tasks cannot pass without journey, requirement, and success-metric links."
+          },
+          {
+            "line": 28,
+            "status": "current",
+            "text": "- Stale source hashes, reviews, or standards versions fail closed."
+          },
+          {
+            "line": 29,
+            "status": "current",
+            "text": "- A consuming repository must review discovery and author its own plane bindings; initialization cannot invent product intent."
+          },
+          {
+            "line": 30,
+            "status": "current",
+            "text": "- Full-backlog accounting may expose more open work than short-horizon execution plans, but it prevents false completion claims."
+          },
+          {
+            "line": 31,
+            "status": "current",
+            "text": "- Vendor changes do not require task or governance schema changes."
+          },
+          {
+            "line": 32,
+            "status": "current",
+            "text": "- The package can report engineering alignment but cannot claim external certification or consuming-product acceptance."
+          },
+          {
+            "line": 36,
+            "status": "rejected",
+            "text": "- A central copied knowledge graph was rejected because it would compete with repository authorities."
+          },
+          {
+            "line": 37,
+            "status": "rejected",
+            "text": "- Model-provider names in task packets were rejected because they couple governance to vendors and hide capability requirements."
+          },
+          {
+            "line": 38,
+            "status": "blocked",
+            "text": "- Treating blocked or staged items as complete was rejected because it makes portfolio status untruthful."
+          },
+          {
+            "line": 39,
+            "status": "rejected",
+            "text": "- Automatically executing the entire backlog was rejected because dependencies, architecture, security, product, and release gates retain authority."
+          }
+        ]
+      },
+      {
+        "authorityClass": "design-intent",
+        "enforcement": "documented",
+        "id": "AUTH-0902FE18351C",
+        "kind": "design-authority",
+        "path": "docs/design/DESIGN-LANGUAGE.md",
+        "sha256": "a4cf54a10827ee2fa87b0607920aded66a39bac4eda002d980eaddcb913757d9",
+        "statements": [
+          {
+            "line": 3,
+            "status": "current",
+            "text": "The canonical operating instructions remain in `skills/design-language/` and its references. Product-specific defaults remain data-backed under `design_intelligence/data/product_profiles/` and `examples/product-profiles/`."
+          },
+          {
+            "line": 5,
+            "status": "current",
+            "text": "V2 does not introduce a second visual system. It adds retrieval and verification around the existing authority order:"
+          },
+          {
+            "line": 7,
+            "status": "current",
+            "text": "1. Product behavior and requirements"
+          },
+          {
+            "line": 8,
+            "status": "current",
+            "text": "2. Repository governance and design documentation"
+          },
+          {
+            "line": 9,
+            "status": "current",
+            "text": "3. Existing tokens and primitives"
+          },
+          {
+            "line": 10,
+            "status": "current",
+            "text": "4. Validated design decisions"
+          },
+          {
+            "line": 11,
+            "status": "current",
+            "text": "5. References and general convention"
+          },
+          {
+            "line": 12,
+            "status": "current",
+            "text": "6. Agent preference"
+          },
+          {
+            "line": 14,
+            "status": "current",
+            "text": "Substantial work must retrieve relevant memory and bind a design contract before implementation."
+          }
+        ]
+      },
+      {
+        "authorityClass": "design-intent",
+        "enforcement": "documented",
+        "id": "AUTH-2D1F685D73B6",
+        "kind": "design-decision",
+        "path": ".design/memory/decisions.jsonl",
+        "sha256": "873abb1bbe4519393f953e1d115ca4657c49e9f8601ae126a5864f9ba9a4066d",
+        "statements": [
+          {
+            "line": 1,
+            "status": "proposed",
+            "text": "{\"affectedComponents\":[\"BaselineGovernance\",\"VisualQaHarness\"],\"alternatives\":[\"silent snapshot update\",\"threshold relaxation\"],\"authorityLevel\":\"product\",\"category\":\"baseline-governance\",\"createdAt\":\"2026-08-20T12:00:00Z\",\"decision\":\"Visual baselines may change only through an explicit approval record linked to an accepted decision and passing validation evidence.\",\"evidence\":[\"user-directive:codex-autonomous-design-department-v2\"],\"id\":\"DL-DI-0001\",\"problem\":\"Visual regressions can be hidden by silently replacing expected images.\",\"product\":\"design-intelligence\",\"reason\":\"An immutable approval trail keeps pixel comparison as evidence instead of a test-avoidance mechanism.\",\"reviewAfter\":\"2026-11-20\",\"revision\":1,\"status\":\"proposed\",\"supersedes\":null,\"validatedAt\":null}"
+          },
+          {
+            "line": 2,
+            "status": "accepted",
+            "text": "{\"affectedComponents\":[\"BaselineGovernance\",\"VisualQaHarness\"],\"alternatives\":[\"silent snapshot update\",\"threshold relaxation\"],\"authorityLevel\":\"product\",\"category\":\"baseline-governance\",\"createdAt\":\"2026-08-20T12:00:00Z\",\"decision\":\"Visual baselines may change only through an explicit approval record linked to an accepted decision and passing validation evidence.\",\"evidence\":[\"user-directive:codex-autonomous-design-department-v2\",\"test:v1-baseline-14-pass\"],\"id\":\"DL-DI-0001\",\"problem\":\"Visual regressions can be hidden by silently replacing expected images.\",\"product\":\"design-intelligence\",\"promotion\":{\"authorizedBy\":\"human:user-directive\",\"outcomeId\":\"DO-DI-0001\",\"validationEvidence\":[\"user-directive:baseline-governance\",\"test:v1-baseline-14-pass\"]},\"reason\":\"An immutable approval trail keeps pixel comparison as evidence instead of a test-avoidance mechanism.\",\"reviewAfter\":\"2026-11-20\",\"revision\":2,\"status\":\"accepted\",\"supersedes\":null,\"validatedAt\":\"2026-08-20T12:05:00Z\"}"
+          },
+          {
+            "line": 3,
+            "status": "proposed",
+            "text": "{\"affectedComponents\":[\"BoundedRepair\",\"DesignLinter\"],\"alternatives\":[\"unbounded autonomous repair\",\"manual-only deterministic corrections\"],\"authorityLevel\":\"product\",\"category\":\"repair\",\"createdAt\":\"2026-08-20T12:00:00Z\",\"decision\":\"Automatic repair is limited to three iterations and only exact deterministic P0, P1, or clear P2 visual corrections within an explicit file allowlist.\",\"evidence\":[\"user-directive:codex-autonomous-design-department-v2\"],\"id\":\"DL-DI-0002\",\"problem\":\"An unconstrained repair loop can cross authority, scope, architecture, or product-behavior boundaries.\",\"product\":\"design-intelligence\",\"reason\":\"Exact evidence-linked substitutions are auditable and stop before semantic judgment is required.\",\"reviewAfter\":\"2026-11-20\",\"revision\":1,\"status\":\"proposed\",\"supersedes\":null,\"validatedAt\":null}"
+          },
+          {
+            "line": 4,
+            "status": "accepted",
+            "text": "{\"affectedComponents\":[\"BoundedRepair\",\"DesignLinter\"],\"alternatives\":[\"unbounded autonomous repair\",\"manual-only deterministic corrections\"],\"authorityLevel\":\"product\",\"category\":\"repair\",\"createdAt\":\"2026-08-20T12:00:00Z\",\"decision\":\"Automatic repair is limited to three iterations and only exact deterministic P0, P1, or clear P2 visual corrections within an explicit file allowlist.\",\"evidence\":[\"user-directive:codex-autonomous-design-department-v2\",\"test:v1-baseline-14-pass\"],\"id\":\"DL-DI-0002\",\"problem\":\"An unconstrained repair loop can cross authority, scope, architecture, or product-behavior boundaries.\",\"product\":\"design-intelligence\",\"promotion\":{\"authorizedBy\":\"human:user-directive\",\"outcomeId\":\"DO-DI-0002\",\"validationEvidence\":[\"user-directive:max-three-iterations\",\"test:v1-baseline-14-pass\"]},\"reason\":\"Exact evidence-linked substitutions are auditable and stop before semantic judgment is required.\",\"reviewAfter\":\"2026-11-20\",\"revision\":2,\"status\":\"accepted\",\"supersedes\":null,\"validatedAt\":\"2026-08-20T12:05:00Z\"}"
+          }
+        ]
+      },
+      {
+        "authorityClass": "product-intent",
+        "enforcement": "documented",
+        "id": "AUTH-502FF5D04A93",
+        "kind": "requirement",
+        "path": "docs/design/products/leaguepilot.md",
+        "sha256": "ab9f4dbd5a8c218ecdda4e6afca8016f8bcb55f03989bcc24fd4ee0f7718eba9",
+        "statements": [
+          {
+            "line": 3,
+            "status": "current",
+            "text": "Canonical profile data: `design_intelligence/data/product_profiles/leaguepilot.json`."
+          },
+          {
+            "line": 5,
+            "status": "current",
+            "text": "Archetype: Community Coordination. Promise: Everyone knows what is next. Prioritize mobile glanceability, role-specific disclosure, and clear what/when/where/action/change communication."
+          }
+        ]
+      },
+      {
+        "authorityClass": "product-intent",
+        "enforcement": "documented",
+        "id": "AUTH-7D0926DED68E",
+        "kind": "requirement",
+        "path": "docs/design/products/quietpilot.md",
+        "sha256": "a34480f6b05309f3a4e98b3c0f58585f5a58fcc64e6eb533d940ff8b41313200",
+        "statements": [
+          {
+            "line": 3,
+            "status": "current",
+            "text": "Canonical profile data: `design_intelligence/data/product_profiles/quietpilot.json`."
+          },
+          {
+            "line": 5,
+            "status": "current",
+            "text": "Archetype: Operational Control System. Promise: Promise -> Prepare -> Deliver. Prioritize state, blockers, dependencies, readiness, ownership, and the next action."
+          }
+        ]
+      },
+      {
+        "authorityClass": "product-intent",
+        "enforcement": "documented",
+        "id": "AUTH-2A47F08212AA",
+        "kind": "requirement",
+        "path": "docs/design/products/quotepilot.md",
+        "sha256": "852ce03f133589c23dc1c6a1a59a49440ac3fe615520bb30f88ee5ae05e018fc",
+        "statements": [
+          {
+            "line": 3,
+            "status": "current",
+            "text": "Canonical profile data: `design_intelligence/data/product_profiles/quotepilot.json`."
+          },
+          {
+            "line": 5,
+            "status": "current",
+            "text": "Archetype: Transactional Commercial. Promise: Build -> Decide -> Book. Prioritize commercial clarity, speed, precision, and calm control without inventing pricing authority."
+          }
+        ]
+      }
+    ],
+    "status": "PASS"
+  },
+  "baselineMutationPerformed": false,
+  "capabilityClaims": [],
+  "decisions": [],
+  "designContract": null,
+  "designSystemHealth": {
+    "conflicts": [],
+    "evidence": {
+      "accessibilityTooling": {
+        "evidence": [
+          "README.md",
+          "docs/ARCHITECTURE.md",
+          "docs/IMPLEMENTATION-REPORT-DESIGN-ADOPTION-GATE.md",
+          "docs/RELEASE-REPORT-2.0.0.md",
+          "docs/design/DESIGN-QUALITY.md",
+          "package.json",
+          "tests/design/scenarios/design-department-surface.json"
+        ],
+        "note": null,
+        "status": "PRESENT"
+      },
+      "componentSystem": "Unknown",
+      "designDocumentation": {
+        "evidence": [
+          "docs/design/DESIGN-LANGUAGE.md"
+        ],
+        "note": null,
+        "status": "PRESENT"
+      },
+      "designTokens": {
+        "evidence": [],
+        "note": null,
+        "status": "NONE"
+      },
+      "frontend": "Unknown",
+      "styling": "Unknown"
+    },
+    "findings": [
+      {
+        "category": "tokens",
+        "message": "No reusable design-token evidence was detected.",
+        "severity": "P2"
+      },
+      {
+        "category": "components",
+        "message": "No established component system was detected.",
+        "severity": "P2"
+      }
+    ],
+    "requiredActions": [
+      "Define or identify one canonical token authority before adding new visual roles."
+    ],
+    "safeToExtend": false,
+    "score": 70,
+    "status": "NEEDS_ALIGNMENT"
+  },
+  "errors": [],
+  "governanceConstraints": {
+    "errors": [],
+    "receipts": [],
+    "required": false,
+    "status": "NOT_REQUIRED"
+  },
+  "id": "DAR-AC38F07AB1F510AF",
+  "implementationPerformed": false,
+  "implementationReady": false,
+  "memoryContext": {
+    "active_exceptions": [],
+    "archetype": null,
+    "audit": {
+      "counts": {
+        "debt": 1,
+        "decisions": 4,
+        "exceptions": 0,
+        "outcomes": 2,
+        "stale": 0
+      },
+      "errors": [],
+      "stale": [],
+      "status": "PASS",
+      "warnings": []
+    },
+    "bounded": false,
+    "component": null,
+    "conflicts": [],
+    "decisions": [],
+    "inherited_rules": [
+      {
+        "authority": "explicit-user-directive",
+        "authorityLevel": "portfolio",
+        "category": "accessibility",
+        "id": "DL-PORT-001",
+        "protected": true,
+        "statement": "Accessibility requirements are protected constraints and cannot be silently overridden by a narrower scope."
+      },
+      {
+        "authority": "explicit-user-directive",
+        "authorityLevel": "portfolio",
+        "category": "evidence",
+        "id": "DL-PORT-002",
+        "protected": true,
+        "statement": "Rendered evidence and measurable checks must precede durable design-memory promotion."
+      },
+      {
+        "authority": "explicit-user-directive",
+        "authorityLevel": "portfolio",
+        "category": "repair",
+        "id": "DL-PORT-003",
+        "protected": true,
+        "statement": "Automatic repair is limited to three deterministic visual iterations and stops at authority, scope, or architecture boundaries."
+      }
+    ],
+    "maxRecords": 20,
+    "product": null,
+    "rejected_outcomes": [],
+    "stale_records": [],
+    "status": "AVAILABLE",
+    "surface": "Design QA Control Deck fixture",
+    "total_available": 0,
+    "unresolved_debt": []
+  },
+  "memoryRequired": false,
+  "profile": null,
+  "repairPerformed": false,
+  "repositoryRoot": "/home/administrator/design-intelligence",
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "evidence": [
+        {
+          "kind": "screenshot",
+          "path": "artifacts/design/references/design-department-surface/reference.png",
+          "sha256": "0944913675ff53f0c28eec91477fa1fc0144ba0cdb011c32d2a1251e478c3f01"
+        },
+        {
+          "kind": "dom-capture",
+          "path": "artifacts/design/references/design-department-surface/page.html",
+          "sha256": "57f8d89ddd0d42adf2cf0c8eeb38a050e0ae66371ef6bd1d9bac01dbcbcbacdd"
+        }
+      ],
+      "id": "SRC-F35CD6773FD8",
+      "integrityErrors": [],
+      "kind": "url",
+      "location": "http://127.0.0.1:8123/",
+      "status": "ANALYZED"
+    },
+    {
+      "dimensions": {
+        "height": 1254,
+        "width": 1440
+      },
+      "evidence": [
+        {
+          "path": "artifacts/design/references/design-department-surface/reference.png",
+          "sha256": "0944913675ff53f0c28eec91477fa1fc0144ba0cdb011c32d2a1251e478c3f01"
+        }
+      ],
+      "id": "SRC-F960B3E4038A",
+      "kind": "image",
+      "location": "artifacts/design/references/design-department-surface/reference.png",
+      "sha256": "0944913675ff53f0c28eec91477fa1fc0144ba0cdb011c32d2a1251e478c3f01",
+      "status": "RESEARCH_REQUIRED"
+    }
+  ],
+  "status": "RESEARCH_REQUIRED",
+  "surface": "Design QA Control Deck fixture",
+  "task": "Preserve evidence-first Design QA hierarchy"
+}

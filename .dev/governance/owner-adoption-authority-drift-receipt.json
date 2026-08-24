@@ -1,0 +1,12 @@
+{
+  "kind": "AuthorityDriftRatification",
+  "decision": "ACCEPT_AUTHORITY_DRIFT",
+  "authority": "repository-owner",
+  "approvedBy": "repository owner (direct V5.0.1 release authorization)",
+  "approvedAt": "2026-08-24T02:53:11-05:00",
+  "reason": "Authorize rebinding the active adoption-evidence pointer to the regenerated V5.0.1 report after package-version provenance changed. Historical reports remain immutable; no design, baseline, threshold, deployment, or consuming-repository authority is changed.",
+  "paths": [
+    "devctl.yaml"
+  ],
+  "authorityStateSha256": "411457eabf6009c48815f91d2a893270ae73484c34dab55463744a28783c85c1"
+}

@@ -604,7 +604,7 @@
         "governance"
       ],
       "scope": "repository",
-      "sha256": "d8e22a9e12db95810ca57ee8a1116e2efe96aa2b233e72ed828f55bad259b394"
+      "sha256": "a80cb9010775a2e6116664120ad51f2c07af64f05a9a4789c7731a3a1fc4efa7"
     },
     {
       "authorityLevel": "binding",
@@ -976,7 +976,7 @@
         "delivery"
       ],
       "scope": "repository",
-      "sha256": "c823ba9af5578a8e1aede8b893db999ecf0f18f9e08a8886d6772dbbe213c95e"
+      "sha256": "b97c7676675fc74712a65a3bacc404a3ce82e4e9121f6d370ed45eecd110c957"
     },
     {
       "authorityLevel": "candidate",
@@ -988,7 +988,7 @@
         "delivery"
       ],
       "scope": "repository",
-      "sha256": "53c15515c544838d6bce490f927d1572ad638fbe5b98a875e49019b49f5ec5e3"
+      "sha256": "36a6990cb2309a0a87c5e98f808cb6e1e5c9233485bcb1877c09c6a5dd43c027"
     },
     {
       "authorityLevel": "candidate",
@@ -1648,9 +1648,11 @@
   },
   "claimBoundary": "The audit reconstructs repository governance from tracked evidence. It does not ratify product vision, resolve human decisions, or claim implementation completion.",
   "designGate": {
-    "reason": "Repository is design ready; design may proceed through normal design contracts and evidence gates.",
-    "requiredBeforeDesign": [],
-    "status": "READY"
+    "reason": "1 blocking governance or understanding problem(s) must be resolved before design adoption.",
+    "requiredBeforeDesign": [
+      "CRITICAL-AUTHORITY-DRIFT"
+    ],
+    "status": "LOCKED"
   },
   "equivalentSystems": [
     {
@@ -1677,21 +1679,36 @@
     }
   ],
   "finalizationReadiness": {
-    "blockingFindings": [],
+    "blockingFindings": [
+      "CRITICAL-AUTHORITY-DRIFT"
+    ],
     "completionClaimed": false,
     "existingSystemStrategy": "PRESERVE_AND_BIND",
-    "governance": "COHERENT",
+    "governance": "CONFLICTED",
     "missingCoreRoles": [],
-    "status": "DESIGN_READY",
+    "status": "GOVERNANCE_CONFLICTED",
     "understanding": "MAPPED"
   },
   "findingCounts": {
     "P0": 0,
-    "P1": 0,
+    "P1": 1,
     "P2": 0,
     "P3": 0
   },
-  "findings": [],
+  "findings": [
+    {
+      "authority": "repository-owner",
+      "category": "vision",
+      "id": "CRITICAL-AUTHORITY-DRIFT",
+      "message": "Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.",
+      "paths": [
+        "devctl.yaml"
+      ],
+      "requiredAction": "REVIEW_AND_RATIFY_AUTHORITY_CHANGE",
+      "severity": "P1",
+      "title": "Critical governing authority changed"
+    }
+  ],
   "generatedBy": "design-intelligence-governance",
   "implementationRoots": [
     {
@@ -1746,7 +1763,7 @@
   "root": "/home/administrator/design-intelligence",
   "schemaVersion": 1,
   "scriptDamage": [],
-  "status": "READY",
+  "status": "REVIEW_REQUIRED",
   "trackingMode": "git-tracked",
   "untrackedAuthorityCandidates": []
 }

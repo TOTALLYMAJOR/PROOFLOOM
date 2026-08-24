@@ -49,7 +49,7 @@ def quick_commands() -> list[tuple[str, list[str]]]:
             "design adoption integrity",
             [
                 PYTHON, "-m", "design_intelligence.cli", "adoption-audit", "--root", ".",
-                "--input", "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v9/adoption-report.json",
+                "--input", "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v11/adoption-report.json",
                 "--format", "json",
             ],
         ),

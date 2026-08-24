@@ -4,12 +4,12 @@
   "surface": "Design QA Control Deck fixture",
   "route": "/",
   "browser": "chromium",
-  "generatedAt": "2026-08-24T04:53:46.705Z",
-  "commitSha": "e3e98f2624dd757c49cf1518e56c6ca2cd96a731",
+  "generatedAt": "2026-08-24T08:02:43.214Z",
+  "commitSha": "7f9dc2e3f6dc37c0e4a9132a36c272b0395796d8",
   "sourceRevision": {
     "repository": "design-intelligence",
-    "branch": "codex/governance-convergence-v5",
-    "commitSha": "e3e98f2624dd757c49cf1518e56c6ca2cd96a731"
+    "branch": "codex/v5.0.1-release",
+    "commitSha": "7f9dc2e3f6dc37c0e4a9132a36c272b0395796d8"
   },
   "status": "PASS",
   "repairIterations": 0,

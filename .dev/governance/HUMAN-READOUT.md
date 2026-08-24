@@ -4,9 +4,9 @@
 ## Direct Answer
 
 - Product understanding: **MAPPED**
-- Governance condition: **COHERENT**
-- Finalization readiness: **DESIGN_READY**
-- Design work: **READY**
+- Governance condition: **CONFLICTED**
+- Finalization readiness: **GOVERNANCE_CONFLICTED**
+- Design work: **LOCKED**
 - User journey: **DEFINED**
 - Journey verification: **LINKED**
 
@@ -48,7 +48,7 @@ Source: `.dev/intent-index.json`
 
 ## Blocking Problems
 
-- No blocking deterministic governance problem was detected.
+- **P1 Critical governing authority changed**: Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review. (`devctl.yaml`)
 
 ## What The Tool Will Do
 
