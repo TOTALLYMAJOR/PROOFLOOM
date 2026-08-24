@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import shutil
 import struct
 import subprocess
 import sys
@@ -834,6 +835,49 @@ class AdoptionGateTests(unittest.TestCase):
 
             self.assertEqual(audit["status"], "FAIL")
             self.assertIn("must be an object", " ".join(audit["errors"]))
+
+    def test_adoption_audit_replays_after_checkout_relocation(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            original = workspace / "original" / "product"
+            relocated = workspace / "clone" / "product"
+            self._write_healthy_repository(original)
+            image = original / "reference.png"
+            image.write_bytes(
+                b"\x89PNG\r\n\x1a\n" + b"\x00\x00\x00\rIHDR" + struct.pack(">II", 900, 600)
+            )
+            analysis = self._analysis_for({
+                "id": "PAT-RELOCATED",
+                "source": "reference.png",
+                "name": "Portable evidence hierarchy",
+                "category": "layout",
+                "observation": "One action precedes supporting detail.",
+                "whyItWorks": "It preserves a clear decision order.",
+                "productRelevance": "The product has one primary action.",
+                "proposedUse": "Preserve the primary action hierarchy.",
+                "keywords": ["portable evidence"],
+                "requiredCapabilities": [],
+                "riskFlags": [],
+                "identityElements": [],
+                "implementationImpact": "visual-only",
+            })
+            report = evaluate_adoption(
+                original,
+                "Verify portable adoption evidence",
+                images=["reference.png"],
+                analysis=analysis,
+            )
+            save_adoption_bundle(report, original / "artifacts/design/adoptions/portable")
+            shutil.copytree(original, relocated)
+
+            audit = audit_adoption_report(
+                relocated,
+                "artifacts/design/adoptions/portable/adoption-report.json",
+            )
+
+            self.assertEqual(audit["status"], "PASS", audit)
+            self.assertTrue(audit["checkoutRelocated"])
+            self.assertTrue(audit["warnings"])
 
     def test_cli_start_accepts_matching_ready_adoption_report(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

@@ -375,13 +375,23 @@ def audit_adoption_report(
             "checkedSources": 0,
             "checkedAuthorities": 0,
             "errors": errors,
+            "warnings": [],
+            "checkoutRelocated": False,
         }
     report_sources = report.get("sources") if isinstance(report.get("sources"), list) else []
     report_authorities = report.get("authorities") if isinstance(report.get("authorities"), dict) else {}
+    recorded_root = Path(str(report.get("repositoryRoot", ""))).resolve()
+    checkout_relocated = recorded_root != root
+    warnings = (
+        [
+            "adoption report originated in a different checkout; "
+            "relative source and authority hashes were replay-audited against the current root"
+        ]
+        if checkout_relocated
+        else []
+    )
     if report.get("id") != _report_id(report):
         errors.append("adoption report id does not match its evidence identity")
-    if Path(str(report.get("repositoryRoot", ""))).resolve() != root:
-        errors.append("adoption report repository root does not match audit root")
     if not errors:
         for item in report_sources:
             for evidence in item.get("evidence", []):
@@ -424,6 +434,9 @@ def audit_adoption_report(
         "checkedSources": len(report_sources),
         "checkedAuthorities": len(report_authorities.get("sources", [])),
         "errors": errors,
+        "warnings": warnings,
+        "checkoutRelocated": checkout_relocated,
+        "recordedRepositoryRoot": str(recorded_root),
     }
 
 
