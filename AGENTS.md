@@ -6,6 +6,9 @@ This repository owns the reusable utility itself. It does not outrank consuming 
 
 - Design intelligence is the primary mission; repository intelligence is supporting infrastructure.
 - Existing repository authorities outrank package defaults.
+- Mature repositories must pass governance convergence before material design work begins.
+- Map vision, actors, requirements, journeys, architecture, backlog, instructions, skills, hooks, and proof before proposing design.
+- Preserve and bind an equally effective repository model instead of installing a competing control system.
 - Read-only by default. Only write artifacts when an explicit output path or installation target is requested.
 - `design-intelligence "<task>"` is the canonical front door; preserve its simple current-directory default.
 - A recommended design direction is not approval. Implementation requires explicit direction selection.
@@ -27,6 +30,7 @@ This repository owns the reusable utility itself. It does not outrank consuming 
 - `templates/` and `examples/`: reusable design artifacts and product profiles
 - `adapters/`: thin Codex and Claude adapter guidance
 - `devctl.yaml` and `.dev/`: control-plane index, bounded task packets, hash-bound intent index, standards profile, and capability routing; never a second product, design, architecture, or backlog authority
+- `.dev/governance/`: generated rehabilitation map, adapter, drift manifest, execution plan, human readout, and owner-ratification packet; never canonical product authority
 - `docs/`: architecture and release notes
 - `tests/fixtures/`: bounded proof repositories and manifests
 
@@ -34,6 +38,7 @@ This repository owns the reusable utility itself. It does not outrank consuming 
 
 - Run `npm run design:ci:quick` for core and governance changes.
 - Run `devctl validate` and `devctl doctor` after changing control-plane declarations or authorities.
+- Run `devctl govern audit`, `devctl govern plan`, and `devctl govern verify` after changing critical product understanding or governance.
 - Run `devctl planes audit`, `devctl backlog status`, and `devctl health` after changing intent, journeys, standards applicability, intelligence routing, or backlog sources.
 - Never claim backlog completion from a partial queue. Every declared completion-governed item must have a valid terminal disposition.
 - Run `npm run design:ci:standard` for material rendered changes.

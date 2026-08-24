@@ -74,7 +74,10 @@ class PlaneGovernanceTests(unittest.TestCase):
             self.assertIn("docs/governance/README.md", authority_paths)
             self.assertIn("docs/architecture/solution.md", authority_paths)
             self.assertIn("check-boundaries", report["discoveredVerificationCommands"])
-            self.assertEqual(len(report["discoveredBacklogSources"]), 2)
+            self.assertEqual(
+                [item["path"] for item in report["discoveredBacklogSources"]],
+                ["docs/backlog-now.md"],
+            )
 
     def test_whole_backlog_includes_open_blocked_and_staged_items(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

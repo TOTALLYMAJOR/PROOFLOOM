@@ -17,6 +17,8 @@ Before modifying an existing interface:
 
 > Understand the current design language before inventing a new one.
 
+For a mature repository, first verify that the product understanding itself is coherent. Design must not compensate for a missing or drifted vision, journey, architecture, backlog, or authority model.
+
 Do not solve structural UX defects with cosmetic changes.
 
 ## Authority order
@@ -35,6 +37,8 @@ Do not solve structural UX defects with cosmetic changes.
 ## Required behavior
 
 - For material design work in a repository with the CLI installed, run `design-intelligence "<plain-English task>"` as the default front door.
+- Run `design-intelligence govern audit --root <repository>` before material work on an established product. If the design gate is `LOCKED`, stop design and follow the rehabilitation plan.
+- Require a binding actor journey and an executable proof path before treating the repository as design-ready.
 - Treat inferred surface mode and the recommended direction as proposals. Do not edit implementation until the user explicitly selects a direction.
 - When a material design task uses external sites or images, require a replay-audited `READY` design adoption report in addition to direction selection. Product-profile memory and supplied human governance receipts must also pass. Do not implement `DEFER`, `DECLINE`, `BLOCKED`, or governance-held patterns.
 - Run `repo_fit` before substantial redesign, design-system work, or repository-wide UI changes.

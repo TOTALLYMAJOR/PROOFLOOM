@@ -4,7 +4,7 @@
   "metadata": {
     "name": "design-intelligence",
     "owner": "repository",
-    "phase": "0-4"
+    "phase": "0-5"
   },
   "spec": {
     "authorities": [
@@ -76,7 +76,7 @@
       ]
     },
     "design": {
-      "adoptionReport": "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v8/adoption-report.json",
+      "adoptionReport": "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v9/adoption-report.json",
       "baselineManifest": ".design/baselines/manifest.json",
       "enabled": true,
       "memoryRoot": ".design/memory",

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import fnmatch
 import json
+import re
 import shutil
 from datetime import datetime, timezone
 from importlib.resources import files
@@ -16,6 +17,7 @@ from .adoption import (
 from .architecture_graph import analyze_architecture_impact, build_architecture_graph
 from .baselines import audit_baselines
 from .memory import audit_memory
+from .governance import audit_governance, governance_design_preflight
 from .planes import (
     audit_backlog,
     audit_planes,
@@ -367,6 +369,7 @@ def build_manifest(repository_root: str | Path) -> dict[str, Any]:
     root = Path(repository_root).resolve()
     snapshot = inspect_repository(root)
     authorities = _discover_authorities(root)
+    repository_triggers = _repository_trigger_paths(root)
 
     package = read_json(root / "package.json", {}) or {}
     scripts = package.get("scripts", {}) if isinstance(package, dict) else {}
@@ -385,7 +388,7 @@ def build_manifest(repository_root: str | Path) -> dict[str, Any]:
     adoption_reports = sorted((root / "artifacts/design/adoptions").glob("*/adoption-report.json"))
     design: dict[str, Any] = {
         "enabled": design_enabled,
-        "triggerPaths": DEFAULT_DESIGN_TRIGGERS,
+        "triggerPaths": repository_triggers,
     }
     if design_enabled:
         design.update({
@@ -410,7 +413,7 @@ def build_manifest(repository_root: str | Path) -> dict[str, Any]:
         "metadata": {
             "name": root.name,
             "owner": "repository",
-            "phase": "0-4",
+            "phase": "0-5",
         },
         "spec": {
             "instructions": {"root": instruction_root, "adapters": adapters},
@@ -423,7 +426,7 @@ def build_manifest(repository_root: str | Path) -> dict[str, Any]:
             "tasks": {"root": ".dev/tasks"},
             "verification": {
                 "commands": commands,
-                "rules": _default_verification_rules(commands),
+                "rules": _default_verification_rules(commands, repository_triggers),
             },
             "design": design,
             "planes": {
@@ -431,7 +434,7 @@ def build_manifest(repository_root: str | Path) -> dict[str, Any]:
                     "enabled": (root / ".dev/intent-index.json").is_file(),
                     "index": ".dev/intent-index.json",
                     "maxReviewAgeDays": 180,
-                    "journeyRequiredPaths": DEFAULT_JOURNEY_TRIGGERS,
+                    "journeyRequiredPaths": repository_triggers,
                     "backlog": {
                         "completionPolicy": "all-terminal",
                         "sources": backlog_sources,
@@ -473,7 +476,7 @@ def build_manifest(repository_root: str | Path) -> dict[str, Any]:
                     },
                     "impactGraph": {
                         "enabled": True,
-                        "include": DEFAULT_JOURNEY_TRIGGERS + [
+                        "include": repository_triggers + [
                             "design_intelligence/**",
                             "scripts/**",
                             "tests/**",
@@ -972,12 +975,15 @@ def route_task_by_id(repository_root: str | Path, task_id: str) -> dict[str, Any
 def inspect_design(repository_root: str | Path) -> dict[str, Any]:
     root = Path(repository_root).resolve()
     snapshot = inspect_repository(root)
+    governance = audit_governance(root)
     return {
-        "status": "PASS",
+        "status": "PASS" if governance["designGate"]["status"] == "READY" else "BLOCKED",
         "adapter": "design_intelligence.repository.inspect_repository",
         "duplicatedInfrastructure": False,
         "snapshot": snapshot.to_dict(),
         "designSystemHealth": audit_design_system_health(root),
+        "governance": governance,
+        "humanSummary": governance["humanSummary"],
     }
 
 
@@ -986,6 +992,19 @@ def evaluate_design_adoption(
     task: str,
     **kwargs: Any,
 ) -> dict[str, Any]:
+    preflight = governance_design_preflight(repository_root)
+    if preflight["status"] != "PASS":
+        return {
+            "status": "BLOCKED",
+            "adapter": "design_intelligence.governance.governance_design_preflight",
+            "duplicatedInfrastructure": False,
+            "report": {
+                "status": "BLOCKED",
+                "implementationReady": False,
+                "reason": "Repository understanding and governance must converge before design adoption.",
+                "governancePreflight": preflight,
+            },
+        }
     report = evaluate_adoption(repository_root, task, **kwargs)
     return {
         "status": report["status"],
@@ -1089,8 +1108,8 @@ def _validate_manifest_shape(manifest: dict[str, Any], errors: list[str]) -> Non
     metadata = manifest.get("metadata")
     if not isinstance(metadata, dict) or not isinstance(metadata.get("name"), str) or not metadata.get("name"):
         errors.append("metadata.name is required")
-    elif metadata.get("owner") != "repository" or metadata.get("phase") != "0-4":
-        errors.append("metadata must declare repository ownership and phase 0-4")
+    elif metadata.get("owner") != "repository" or metadata.get("phase") != "0-5":
+        errors.append("metadata must declare repository ownership and phase 0-5")
     spec = manifest.get("spec")
     if not isinstance(spec, dict):
         errors.append("spec must be an object")
@@ -1312,7 +1331,10 @@ def _validate_relative(value: Any, label: str, errors: list[str], *, allow_glob:
         errors.append(f"{label} cannot contain glob syntax: {value}")
 
 
-def _default_verification_rules(commands: dict[str, list[str]]) -> list[dict[str, Any]]:
+def _default_verification_rules(
+    commands: dict[str, list[str]],
+    repository_triggers: list[str] | None = None,
+) -> list[dict[str, Any]]:
     rules: list[dict[str, Any]] = []
     unit_check = "unit-governance" if "unit-governance" in commands else None
     design_check = "design-standard" if "design-standard" in commands else "design-quick" if "design-quick" in commands else None
@@ -1325,42 +1347,59 @@ def _default_verification_rules(commands: dict[str, list[str]]) -> list[dict[str
     if design_check:
         rules.append({
             "id": "rendered-design-surface",
-            "paths": DEFAULT_DESIGN_TRIGGERS,
+            "paths": repository_triggers or DEFAULT_DESIGN_TRIGGERS,
             "checks": [design_check],
         })
     return rules
 
 
 def _discover_authorities(root: Path) -> list[dict[str, str]]:
-    candidates: set[str] = set()
-    for relative in ("AGENTS.md", "CLAUDE.md", "README.md", "ARCHITECTURE.md", "docs/ARCHITECTURE.md"):
-        if (root / relative).is_file():
-            candidates.add(relative)
-    for pattern in (
-        "docs/governance/**/*.md",
-        "docs/architecture/**/*.md",
-        "docs/product/**/*.md",
-        "docs/design/**/*.md",
-        "docs/backlog*.md",
-    ):
-        candidates.update(
-            path.relative_to(root).as_posix()
-            for path in root.glob(pattern)
-            if path.is_file()
+    governance = audit_governance(root)
+    equivalent_bindings = {
+        path for system in governance["equivalentSystems"] for path in system["bindings"]
+    }
+    registered_bindings = _registered_governing_paths(root)
+    explicit_bindings = {
+        "AGENTS.md",
+        "CLAUDE.md",
+        "docs/backlog-now.md",
+        "docs/backlog-next.md",
+        "docs/architecture/mvp-golden-path.md",
+        "docs/architecture/solution-design.md",
+        "docs/product/platform-specification.md",
+    }
+    candidates: dict[str, dict[str, Any]] = {}
+    for record in governance["authorities"]:
+        roles = set(record["roles"])
+        if record["lifecycle"] in {"historical", "evidence"}:
+            continue
+        include = (
+            record["path"] in equivalent_bindings
+            or record["path"] in registered_bindings
+            or record["path"] in explicit_bindings
+            or ("adrs" in roles and record["lifecycle"] == "active")
+            or record["path"] == "docs/governance/README.md"
+            or Path(record["path"]).name in {"ARCHITECTURE.md", "solution.md"}
         )
+        if include:
+            candidates[record["path"]] = record
     authorities: list[dict[str, str]] = []
-    for relative in sorted(candidates):
-        lowered = relative.lower()
-        if relative in {"AGENTS.md", "CLAUDE.md"} or "/governance/" in lowered:
-            trust, kind = "repository-governance", "instructions" if relative.endswith(("AGENTS.md", "CLAUDE.md")) else "governance"
-        elif "backlog" in lowered:
+    for relative, record in sorted(candidates.items()):
+        roles = set(record["roles"])
+        if "instructions" in roles or "governance" in roles:
+            trust, kind = "repository-governance", "instructions" if "instructions" in roles else "governance"
+        elif "backlog" in roles:
             trust, kind = "approved-task", "backlog"
-        elif "architecture" in lowered or "/decisions/" in lowered or "adr-" in lowered:
+        elif roles & {"architecture", "adrs"}:
             trust, kind = "domain-authority", "architecture"
-        elif "/design/" in lowered or "ui-ux" in lowered:
+        elif "design" in roles:
             trust, kind = "domain-authority", "design"
-        elif "/product/" in lowered:
+        elif roles & {"vision", "requirements", "personas", "journeys", "metrics"}:
             trust, kind = "domain-authority", "product"
+        elif "security" in roles:
+            trust, kind = "domain-authority", "security"
+        elif "contracts" in roles:
+            trust, kind = "domain-authority", "contracts"
         else:
             trust, kind = "domain-authority", "documentation"
         authorities.append({
@@ -1372,14 +1411,25 @@ def _discover_authorities(root: Path) -> list[dict[str, str]]:
     return authorities
 
 
+def _registered_governing_paths(root: Path) -> set[str]:
+    manifest = root / "docs/atlas/atlas-manifest.yaml"
+    if not manifest.is_file():
+        return set()
+    text = manifest.read_text(encoding="utf-8", errors="ignore")
+    section = text.split("included_domains:", 1)[0]
+    return {
+        match.group(1)
+        for match in re.finditer(
+            r"(?:^\s+path:\s*|^\s+-\s+)([A-Za-z0-9_.@/-]+\.(?:md|mdx|json|yaml|yml))\s*$",
+            section,
+            re.MULTILINE,
+        )
+        if (root / match.group(1)).is_file()
+    }
+
+
 def _discover_backlog_sources(root: Path) -> list[dict[str, Any]]:
-    sources: list[dict[str, Any]] = [{
-        "path": ".dev/tasks",
-        "role": "active",
-        "parser": "task-store",
-        "includeInCompletion": True,
-        "requireItems": False,
-    }]
+    sources: list[dict[str, Any]] = []
     candidates = (
         ("docs/backlog-now.md", "active", True),
         ("docs/backlog-next.md", "staged", True),
@@ -1394,7 +1444,35 @@ def _discover_backlog_sources(root: Path) -> list[dict[str, Any]]:
                 "includeInCompletion": include,
                 "requireItems": True,
             })
+    task_root = root / ".dev/tasks"
+    has_task_packets = task_root.is_dir() and any(task_root.glob("*/*.json"))
+    if has_task_packets or not sources:
+        sources.insert(0, {
+            "path": ".dev/tasks",
+            "role": "active",
+            "parser": "task-store",
+            "includeInCompletion": True,
+            "requireItems": False,
+        })
     return sources
+
+
+def _repository_trigger_paths(root: Path) -> list[str]:
+    triggers = set(DEFAULT_DESIGN_TRIGGERS)
+    package = read_json(root / "package.json", {}) or {}
+    workspaces = package.get("workspaces", []) if isinstance(package, dict) else []
+    if isinstance(workspaces, dict):
+        workspaces = workspaces.get("packages", [])
+    for pattern in workspaces if isinstance(workspaces, list) else []:
+        if not isinstance(pattern, str):
+            continue
+        base = pattern.split("*")[0].rstrip("/")
+        if base and (root / base).is_dir():
+            triggers.add(f"{base}/**")
+    for base in ("apps", "packages", "libs"):
+        if (root / base).is_dir():
+            triggers.add(f"{base}/**")
+    return sorted(triggers)
 
 
 def _authority_id(relative: str) -> str:

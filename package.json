@@ -1,6 +1,6 @@
 {
   "name": "design-intelligence-visual-qa",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "private": true,
   "type": "module",
   "description": "Optional Playwright runtime for Design Intelligence visual QA.",
@@ -15,6 +15,7 @@
     "devctl:architecture": "python3 -m design_intelligence.devctl_cli architecture graph --root . --format json",
     "devctl:health": "python3 -m design_intelligence.devctl_cli health --root . --format json",
     "devctl:backlog": "python3 -m design_intelligence.devctl_cli backlog complete --root . --format json",
+    "devctl:govern": "python3 -m design_intelligence.devctl_cli govern verify --root . --format json",
     "design:ci:quick": "python3 scripts/design/ci.py quick",
     "design:ci:standard": "python3 scripts/design/ci.py standard",
     "design:ci:full": "python3 scripts/design/ci.py full"

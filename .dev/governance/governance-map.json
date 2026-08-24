@@ -1,0 +1,1752 @@
+{
+  "authorities": [
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/baselines/manifest.json",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "03346893f7b9dff8fdd01de647908fb581af1a943ca258ac428057bca65aeef1"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/baselines/review-policy.json",
+      "roles": [
+        "design",
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "d929f11c0db83bbe9ef3d60b882273aced0f5bfe569832fbac00785612155110"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/memory/component-registry.json",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "ede4d96ede653d42e344dd1a0311afbc20a6ee3ed1580a16b4c17d6c42b761e7"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/memory/product-rules.json",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "d764ed01c8913667074e5f830623da187cb33a32912572270a535a69a3e3b822"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/memory/schemas/baseline-review-receipt.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "50d74b50c8ccde69934238640c8e1a593c89b0ffff04af8d4a3e8c1feb2fef89"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/memory/schemas/baseline-review-request.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "b970cd74f9108d9ac1ffdde1adc133c709e0a37ca3cbd8913988daeb01be553b"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": ".design/memory/schemas/design-adoption-report.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "f45382b2f1c70174228c38bcf3aa23ba82b74434ba073afe8d9582c0f871d096"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/memory/schemas/design-contract.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "32167fbf02a4bc170394ee07127bd4d2183a7795b0f22d883efd7f65e691141d"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/memory/schemas/design-decision.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "eea4530a41405a10bdebf820d980e79599d74e025d0613103ca2758b3ae236a9"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/memory/schemas/design-exception.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "043649dcea084fd359e8b2e7fafe4e8dde6dd0ad1e62db2fc448aee2061435c6"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/memory/schemas/design-outcome.schema.json",
+      "roles": [
+        "contracts",
+        "design",
+        "evidence"
+      ],
+      "scope": "repository",
+      "sha256": "337f3721293ed4cb48cb7d07dde5cbbe8326d09a275f528278aaea7cc48f5a6f"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": ".design/memory/schemas/reference-analysis.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "3b0bc54980056a3e070e5895b8b6ad26dd81dc0bc281b74880f894f9de55f52a"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/memory/schemas/repair-plan.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "0de686c53aa30727c39046ef0104530f31f3b60b4a77c07f48ec7ebebc12b8fa"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/memory/schemas/validation-evidence.schema.json",
+      "roles": [
+        "contracts",
+        "design",
+        "evidence"
+      ],
+      "scope": "repository",
+      "sha256": "bad98ed5d3cfb7b17716e9ac63c29d98be13b099238998889ea7cc0bfcfcf2d3"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/quality/latest-score.json",
+      "roles": [
+        "design",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "9226d0acf7fe5281e4190ca96a778aac9e81efd9a319d67162e0bd8415bbfb44"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".design/quality/thresholds.json",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "d58ebfb2ac7abdc31ac16cf5ad125f67ea6d3e47db442d3c4660d7b5c50f4743"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/intent-index.json",
+      "roles": [
+        "experiments",
+        "journeys",
+        "metrics",
+        "personas",
+        "principles",
+        "requirements",
+        "vision"
+      ],
+      "scope": "repository",
+      "sha256": "7ba52a85e49edbb05b8206c2a1628393d6e6cd0ac5fa30625eae3be173ed16cb"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/model-routing.json",
+      "roles": [
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "9cd0b88912c4322eed8efd69e5a79bfba3f65ce8e72d9fb34e5dc620a9f49c4b"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/standards-profile.json",
+      "roles": [
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "50fa79b705d265d7935d068adcccbeea390b0a3fee77b94d5afcddcd180646f4"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/completed/TASK-ARCHITECTURE-IMPACT-GRAPH.json",
+      "roles": [
+        "architecture"
+      ],
+      "scope": "repository",
+      "sha256": "69af3ccaaa51edb33c3a3b865fabcf375eee8e4500f0b3403d5049c598f13597"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/completed/TASK-CONTROL-PLANE-PHASE-4.json",
+      "roles": [
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "9455774ced1adf2c6db4e28776ccf8ce6e06e05a310e46b477614dd7535d5387"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/completed/TASK-DESIGN-CONTROL-PLANE-PILOT.json",
+      "roles": [
+        "design",
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "64603f8b628465b0b6444d9c6c6fba0b57f4d9b19c796f84d7ce0becac7b3962"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".github/workflows/design-ci.yml",
+      "roles": [
+        "delivery",
+        "design",
+        "journeys"
+      ],
+      "scope": "repository",
+      "sha256": "85fd589b4103fd29382be1e858daa7fd1e668bf022c37d03b0afedd89d7c5620"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "AGENTS.md",
+      "roles": [
+        "instructions"
+      ],
+      "scope": "repository",
+      "sha256": "df70418171ae6d9bb3fbca4f93dc88f8315b2728f8e3573eb67c8f456d282deb"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "adapters/claude/CLAUDE.md",
+      "roles": [
+        "instructions"
+      ],
+      "scope": "path:adapters/claude",
+      "sha256": "851c5b29c2a31bc9f489502f2b123a5455208eda2ff55ce8674d69a2c27c9343"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "adapters/codex/AGENTS.md",
+      "roles": [
+        "instructions"
+      ],
+      "scope": "path:adapters/codex",
+      "sha256": "7d816ef7b1440310fb1b007325ac6936bb5965aed82c4f6f1b4323be48852723"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/defaults/baseline-review-policy.json",
+      "roles": [
+        "design",
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "d929f11c0db83bbe9ef3d60b882273aced0f5bfe569832fbac00785612155110"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/defaults/industry-standards.json",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "0c37912ea1c3296f12ef278beba8ee3fa5752e69b8cec41c46aa68a6fc5e3a9f"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/defaults/product-rules.json",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "f09d9041d402ac99857595d1650e84ad10bdba8023663ca0a4770ddd2a73791e"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/defaults/quality-thresholds.json",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "ad84646076a6e467ac0668e3ad84f99540c09d07d4f332308668a1e16b5545ea"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/product_profiles/leaguepilot.json",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "77df8f716918c9218b5b030e15964f0779c6f87946c5308cf94ef4e2e39ba409"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/product_profiles/quietpilot.json",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "b688a832c3828849c70a57517f301a6e3fcf4ab6249925629b004039a37e43e5"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/product_profiles/quotepilot.json",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "f94d6ced2860e7281d61b732800e4aa0621b42bb24744bfc9a33c05d70ceeddf"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/architecture-graph.schema.json",
+      "roles": [
+        "architecture",
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "801c88b5c88ff0cf0058ca27ea74c41c27f83f0c55cdff5de2086233b2ae2dc3"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+      "roles": [
+        "backlog",
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "e37b99aa45be4654ba1c6079643d9eb3e4ef98403e3f75d8fde6a0b8b0c9fd82"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/baseline-review-receipt.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "50d74b50c8ccde69934238640c8e1a593c89b0ffff04af8d4a3e8c1feb2fef89"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/baseline-review-request.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "b970cd74f9108d9ac1ffdde1adc133c709e0a37ca3cbd8913988daeb01be553b"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/design-adoption-report.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "96a9ad9ce7240bae20de34f1409fd64a9fa24290cd07a4513e1c0e7f847867f1"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/design-contract.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "6039c31c8f3822164a92d4c03d38709510b22ef9195925b45962d1e26d8e0eb5"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/design-decision.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "5b652a27ecb2b69c104951059f8cc099920c85f985df610f1a49c946430318b5"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/design-exception.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "56f6224337027c0a6bf6e7e508b7e8825cc75c2e0110b19cf9c2937b0532b9cd"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/design-outcome.schema.json",
+      "roles": [
+        "contracts",
+        "design",
+        "evidence"
+      ],
+      "scope": "repository",
+      "sha256": "73f846c9c40655fea5a8269c834be6868f844af1dc05441421f176c312ec987a"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/devctl.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "97aba79ec27c9bfdad90c993a338a9d181540be60993c973a209f1a32531f199"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/intent-index.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "9db422f9843eda353fe1e1976608e021b3d7c1b6f31c43c860347abaf5494dbe"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/model-routing.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "589c1e3d863c160e1b6ad0b57c5326faa456d29e2dd764873a27c1cdd8abd2bc"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/reference-analysis.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "e67b31412090b17e74a2789ea87626efc3f90c51017c93614fe878ac8315765c"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/repair-plan.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "09e14154708ec45b49e361a678e084d44f8bd7fe20be94d82ddbf9528f652072"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/standards-profile.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "8519174552995d03eb9fc97209c907358b240dc3f5a3f4e8279ea711b31ca72f"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/task-packet.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "a5a744051546ab21c981c6c70f9e2d7190fdf22ad5335390ea650bf47c5c9b83"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/validation-evidence.schema.json",
+      "roles": [
+        "contracts",
+        "design",
+        "evidence"
+      ],
+      "scope": "repository",
+      "sha256": "62917ab0743bd30e3492caa7cdebe8e863165806ec095f60ae03252c4d4f1dcd"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "devctl.yaml",
+      "roles": [
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "d8e22a9e12db95810ca57ee8a1116e2efe96aa2b233e72ed828f55bad259b394"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/ARCHITECTURE.md",
+      "roles": [
+        "architecture"
+      ],
+      "scope": "domain:ARCHITECTURE.md",
+      "sha256": "2cc834244306fb49ba9870e53059c0dcd83e9109de13dda49b498453654de56a"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "active",
+      "path": "docs/CONTROL-PLANE-ARCHITECTURE-GRAPH.md",
+      "roles": [
+        "architecture",
+        "governance"
+      ],
+      "scope": "domain:CONTROL-PLANE-ARCHITECTURE-GRAPH.md",
+      "sha256": "daf0fee9b278c32a6f4ccf6c40f677d2fd1e850db00ba40fdb67201e1910fa4f"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/CONTROL-PLANE-GAP-MAP.md",
+      "roles": [
+        "governance"
+      ],
+      "scope": "domain:CONTROL-PLANE-GAP-MAP.md",
+      "sha256": "8bcff8ef5d5f1f2467823e3b0d15b42ac5fe7287a03aa10a9acf34900f651944"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+      "roles": [
+        "architecture",
+        "governance"
+      ],
+      "scope": "domain:CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+      "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"
+    },
+    {
+      "authorityLevel": "evidence",
+      "declaresAuthority": true,
+      "lifecycle": "historical",
+      "path": "docs/CONTROL-PLANE-PHASE-4.md",
+      "roles": [
+        "governance"
+      ],
+      "scope": "domain:CONTROL-PLANE-PHASE-4.md",
+      "sha256": "0c0ba3b997499a8fe47e092b3f29360bfb2a579001bfb73e03d13b0aaedf65e2"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/CONTROL-PLANE-PHASES-0-3.md",
+      "roles": [
+        "governance"
+      ],
+      "scope": "domain:CONTROL-PLANE-PHASES-0-3.md",
+      "sha256": "1cca76ce5a30e6afb17d1612c628865b564c5974131df5981ec0744dfb7bdcaf"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/CONTROL-PLANE-ROLES.md",
+      "roles": [
+        "governance"
+      ],
+      "scope": "domain:CONTROL-PLANE-ROLES.md",
+      "sha256": "05774b065f549d7e61b75df19a2d56302a27b94e809e7a18144de82b9a804f1b"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/IMPLEMENTATION-REPORT-ARCHITECTURE-GRAPH.md",
+      "roles": [
+        "architecture"
+      ],
+      "scope": "domain:IMPLEMENTATION-REPORT-ARCHITECTURE-GRAPH.md",
+      "sha256": "e324c598da35c7bd69bcfc064b0a524a191ed2e965fb6204bab02fc042643cd6"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASE-4.md",
+      "roles": [
+        "governance"
+      ],
+      "scope": "domain:IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASE-4.md",
+      "sha256": "5751a5e118be71d7715ac31dd91c39a6004248cb4a14b9e870139f32ce0eb2ca"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASES-0-3.md",
+      "roles": [
+        "governance"
+      ],
+      "scope": "domain:IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASES-0-3.md",
+      "sha256": "fcee7972a560900374edf29cc5498d56df74141cd365d790b9a2d49fedd0398f"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/IMPLEMENTATION-REPORT-DESIGN-ADOPTION-GATE.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:IMPLEMENTATION-REPORT-DESIGN-ADOPTION-GATE.md",
+      "sha256": "4f7ae8ffd32be7966e2fda1aacea6e250703164723f01bc65a31c75e9c0ad4b8"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/RELEASE-REPORT-1.0.0.md",
+      "roles": [
+        "delivery"
+      ],
+      "scope": "domain:RELEASE-REPORT-1.0.0.md",
+      "sha256": "9ab47f52556a62d263321e3b781cb2772173ce6841bda499bb7211fc7d153448"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/RELEASE-REPORT-2.0.0.md",
+      "roles": [
+        "delivery"
+      ],
+      "scope": "domain:RELEASE-REPORT-2.0.0.md",
+      "sha256": "5c7945b90a257514f7be992593bdccac42a9cba2a9fb17c35e5f32e79a76a457"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/RELEASE-REPORT-3.0.0.md",
+      "roles": [
+        "delivery"
+      ],
+      "scope": "domain:RELEASE-REPORT-3.0.0.md",
+      "sha256": "2e5d7cb1893083da9f43932ce69c1b37a02afde19af0ba050e206259a632075f"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/RELEASE-REPORT-4.0.0.md",
+      "roles": [
+        "delivery"
+      ],
+      "scope": "domain:RELEASE-REPORT-4.0.0.md",
+      "sha256": "c5994539b23b5711fb5aad6ac70f8a07f958c288907052f06d6102f8b8f27896"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/RELEASE-REPORT-5.0.0.md",
+      "roles": [
+        "delivery"
+      ],
+      "scope": "domain:RELEASE-REPORT-5.0.0.md",
+      "sha256": "94dda0845ba29c6e819413fcfb132e52879d1f3f5724164cb36d71f91fd42dde"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "active",
+      "path": "docs/architecture/ADR-0001-development-control-plane-facade.md",
+      "roles": [
+        "adrs",
+        "architecture",
+        "governance"
+      ],
+      "scope": "domain:architecture",
+      "sha256": "b30dfe461266d5b23f2e38a3879b4e5381f8ad54da1710615be9ed0db7cddb67"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "active",
+      "path": "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
+      "roles": [
+        "adrs",
+        "architecture",
+        "backlog",
+        "governance"
+      ],
+      "scope": "domain:architecture",
+      "sha256": "eeee52f324b43c965546c9711057815e10ff25b5c4b50aa10bc107049777a841"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "active",
+      "path": "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md",
+      "roles": [
+        "adrs",
+        "architecture"
+      ],
+      "scope": "domain:architecture",
+      "sha256": "def1de38269f4a195d46ca9437c23ef098eb111f46ad5d741622a8141ead7b0c"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V2.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "123bf2db7cd53a6ce1066d54b8ebe31395c610b2715746c0ef153d8add7720c6"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "f21748c0d0504d3da4857183c11811f8308703b97019358e7d6a830675dc4fcd"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/COMPONENT-INVENTORY.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "837a5836554b689213c56025058e4d1b521c2f3394c86eebc7a564f1140f7f19"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/DESIGN-ADOPTION-GATE.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "a95699af43ccc12dfa1c7aad45e1e82df8f35e6e5c1e42afa7ada8323f40e3c3"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/DESIGN-DEBT.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "880ba895ecc9b0a8b1354b30d5f70e91b3346dcf4619a34de6483c98d71bf5b1"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/DESIGN-DECISIONS.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "5b82d2fc717eeb2039417aaf235ef47f80fdbdf846e8b9c7ecd92eeddb6361ad"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/DESIGN-LANGUAGE.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "a4cf54a10827ee2fa87b0607920aded66a39bac4eda002d980eaddcb913757d9"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/DESIGN-QUALITY.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "39a9ce3e463b4e96a2b5bc31ff3ddd3a0c420704f364f28c476c91c50417b065"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/REFERENCE-LEDGER.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "c8e1ce8d2cac99c1e64257de068561ed0f7f363059917090097e44241095d043"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/UX-MODELS.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "007e293c254f938d7585ec984fccdb945b10a1b3039bcef79abc6c4cb454c826"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/products/leaguepilot.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "ab9f4dbd5a8c218ecdda4e6afca8016f8bcb55f03989bcc24fd4ee0f7718eba9"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/products/quietpilot.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "a34480f6b05309f3a4e98b3c0f58585f5a58fcc64e6eb533d940ff8b41313200"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/design/products/quotepilot.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:design",
+      "sha256": "852ce03f133589c23dc1c6a1a59a49440ac3fe615520bb30f88ee5ae05e018fc"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "package.json",
+      "roles": [
+        "contracts",
+        "delivery"
+      ],
+      "scope": "repository",
+      "sha256": "c823ba9af5578a8e1aede8b893db999ecf0f18f9e08a8886d6772dbbe213c95e"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "pyproject.toml",
+      "roles": [
+        "contracts",
+        "delivery"
+      ],
+      "scope": "repository",
+      "sha256": "53c15515c544838d6bce490f927d1572ad638fbe5b98a875e49019b49f5ec5e3"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "skills/design-language/SKILL.md",
+      "roles": [
+        "design",
+        "skills"
+      ],
+      "scope": "skill:design-language",
+      "sha256": "237bd9465a994fda0ec3441bc9e888eb97407afcc5ce72148f8b6252ad00f5e2"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-language/agents/openai.yaml",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "549a46e1b2d42b6e2cb0f95a0037f008d0725c32e09c1ce43b50dd856d4fc88a"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-language/references/accessibility.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "5716f1b5cd4384339dad2f0f0349c1bb149b0d98504a2bf9704ff4e60a634c56"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-language/references/anti-patterns.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "7c3e2ffd8e746d5f4bc5e4e9167d6c313114bba17bbc39ce9216b6e3f455d8de"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-language/references/design-principles.md",
+      "roles": [
+        "design",
+        "principles"
+      ],
+      "scope": "repository",
+      "sha256": "18fcecc70600dd243da2005716143357e699be6720d9c27a33e9bd072788e287"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-language/references/interaction-language.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "05ca9d7b9b60d322701bdaeb43d9862d7dac4460544824d1a3b157d12278bd15"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-language/references/mission-workflow.md",
+      "roles": [
+        "design",
+        "journeys",
+        "vision"
+      ],
+      "scope": "repository",
+      "sha256": "72445d61a2c8d5168e2e14c079244e7f0498a12556e05d7a9dea7495a0a32347"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-language/references/product-archetypes.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "f28d6ac5fad4a590ddcde70339d362384ea7588d5c863d5df024b8b199f733c2"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-language/references/responsive-design.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "dfbee68e0589949fc6ebad9028816a3588ad0e7645ac945b447f6e9a17191a8f"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-language/references/surface-hierarchy.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "dbfd26954292747187d3c0d5dee8f032ca6b9b7777ef0990638ece7b97b901c7"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-linter/SKILL.md",
+      "roles": [
+        "design",
+        "skills"
+      ],
+      "scope": "skill:design-linter",
+      "sha256": "b5058421b25d374f1966fda0e7da9d7049edcabc0cbe744aa18bfd6b608ffb84"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-linter/references/deterministic-rules.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "be84ea05195229355e8490895647eb9dead07433f28c6d92f70201ce147dae90"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-linter/references/drift-types.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "ba363002765d6f98df0966f695e46e5e7fdae4919c5133e66c909c444f702042"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/design-linter/references/repair-policy.md",
+      "roles": [
+        "design",
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "0f240330a61cb0615425af66e41a07086e509981648b60d32839c39fa8c3354f"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/reference-intelligence/SKILL.md",
+      "roles": [
+        "skills"
+      ],
+      "scope": "skill:reference-intelligence",
+      "sha256": "6e84257f81d87236c831c7534b93b3038a0b93117d3501fa6da0e66c6565d597"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "skills/ux-architect/SKILL.md",
+      "roles": [
+        "skills"
+      ],
+      "scope": "skill:ux-architect",
+      "sha256": "d790eedf49305a39f5c3c051a94c1bdc179d6b63de9f3631798473f61c565383"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/ux-architect/references/actor-task-model.md",
+      "roles": [
+        "personas"
+      ],
+      "scope": "repository",
+      "sha256": "4ed4e4813673bf304188865bf5aa808eca7a7f958d2c2c2e468df8bc0f01dd75"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "skills/ux-architect/references/workflow-diagnosis.md",
+      "roles": [
+        "journeys"
+      ],
+      "scope": "repository",
+      "sha256": "2a8acc74953a16e087d67783504d113669f4ec07841957433becb0677139a027"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "skills/visual-review/SKILL.md",
+      "roles": [
+        "skills"
+      ],
+      "scope": "skill:visual-review",
+      "sha256": "b02bda4f86516e0a681287ee8eb3df84dbd17a43c0fc420996e89b3425f655d8"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "templates/DESIGN-CONTRACT.md",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "810602ee690cf99088c5e6564aa488dbfaaa71b53e2c1e6dc7c30c224318d3ac"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "templates/DESIGN-DECISION.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "da5588f364ac17655d04239e2660061c7bc347365395341ecc52140b9f48b059"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "templates/PRODUCT-DESIGN-PROFILE.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "29073d0467376f89a0a2b3886783e6bd1d8b86868cb32a6ac6f66aeaad884365"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/design/scenarios/design-department-surface.json",
+      "roles": [
+        "design",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "d28328f4b34cc9c62d9d9aee6c44da777aa6ae1f20bc39e98f3532cf2230eb1c"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/broken-ia/AGENTS.md",
+      "roles": [
+        "instructions",
+        "tests"
+      ],
+      "scope": "path:tests/fixtures/broken-ia",
+      "sha256": "2620fd272ce38916e5cea7033611d0715518ef5ef74f4dccb76e355b8b3ed239"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/broken-ia/docs/design-system.md",
+      "roles": [
+        "design",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "3f10801904e8b043ce8c6fb4a61540911710f5548b1bbad3ec643276148e5bc8"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/broken-ia/package.json",
+      "roles": [
+        "contracts",
+        "delivery",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "b42dc69c6424aa73389e7af703e1b73e244ec8ab9e60d4f0373d2246182d930a"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/broken-ia/review-manifest.json",
+      "roles": [
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "ff74e2ed3781c457fd58d4c51c07e1880045e93ddd6aab2d435f02b2f4e2c1f7"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/conflicted-frontend/.github/workflows/ui.yml",
+      "roles": [
+        "journeys",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "96f8400aee9c30175ab5b0c42b5c3c18fb06a979871a6bec5da0d084c773b804"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/conflicted-frontend/AGENTS.md",
+      "roles": [
+        "instructions",
+        "tests"
+      ],
+      "scope": "path:tests/fixtures/conflicted-frontend",
+      "sha256": "bd701ef92c651c10498201075fb92553cabd68f3b0f5fa5ce2ed50271dc55229"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/conflicted-frontend/docs/design/DESIGN-LANGUAGE.md",
+      "roles": [
+        "design",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "c4fb863c25709a05dcb69c63e0e001555e7a9938969a65a1ccb4af374ce59753"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/conflicted-frontend/docs/product/design-system.md",
+      "roles": [
+        "design",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "58147f3f1769eebe41ade0ded1647b54f226086e0db6712dfa635be40ee5514d"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/conflicted-frontend/package.json",
+      "roles": [
+        "contracts",
+        "delivery",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "05a92b248782caac3857ce8c50cd0f7e242da693a753f953c567e3610697cc3d"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/dual-design-system/AGENTS.md",
+      "roles": [
+        "design",
+        "instructions",
+        "tests"
+      ],
+      "scope": "path:tests/fixtures/dual-design-system",
+      "sha256": "9363339cca9db944f297d65a1226b6e5bf2fff8bd7f8e6f71ef326ef05b7e44f"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/dual-design-system/design/DESIGN-LANGUAGE.md",
+      "roles": [
+        "design",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "113b2b68f88eb1eb736edb534ceb671375cbe585a66c54d893b3e6730b7096ee"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/dual-design-system/docs/design-system.md",
+      "roles": [
+        "design",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "a8a8b7c2b9709b3c3bff321fec2322169afb6add4aaf3b41003661ae03f9e1fc"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/dual-design-system/package.json",
+      "roles": [
+        "contracts",
+        "delivery",
+        "design",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "881713d835cd5c992463541d6fc2c55a3db2b8f9ca024ce1e74249496b29e657"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/established-nextjs/AGENTS.md",
+      "roles": [
+        "instructions",
+        "tests"
+      ],
+      "scope": "path:tests/fixtures/established-nextjs",
+      "sha256": "2176b82bbe193ed1ed9e9089923513167f865f225f0d0f28f0fe4138552bf3d2"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/established-nextjs/docs/product/design-system.md",
+      "roles": [
+        "design",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "efafd318ba4dfabf0a0a9dac855b84e972ed1a3d760a50bb5e4e405b1cc57a7e"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/established-nextjs/package.json",
+      "roles": [
+        "contracts",
+        "delivery",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "d24d7f60b3aaf35c5b79f77825377e2d46522950484a5eea1be9c8941dcaaf67"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/greenfield-empty/README.md",
+      "roles": [
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "fd4010ca5c1787e6e2934be838a334a4c02f2262eec4ddab0be84af8ab1344cf"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/mature-repo/AGENTS.md",
+      "roles": [
+        "instructions",
+        "tests"
+      ],
+      "scope": "path:tests/fixtures/mature-repo",
+      "sha256": "04d116df90cffc44442b2737659a85ce5d29b399e2107670f22ea5b5c0715467"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/mature-repo/ARCHITECTURE.md",
+      "roles": [
+        "architecture",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "9fdae54820d7e8b6a845c5c9bc094c1f0545cf4d707182a86078099a1d001bda"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/mature-repo/docs/decisions/ui-001.md",
+      "roles": [
+        "adrs",
+        "architecture",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "9a4a9c94f0486e6d0dab71d2a5a5d633da1b78c06df0362bc0e7c74b1daf561b"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/mature-repo/docs/design-system.md",
+      "roles": [
+        "design",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "4ad2901377c5594393ec2059c6c9ce32c5f1d76df694ea377dcd4b9f03d74ca4"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/mature-repo/package.json",
+      "roles": [
+        "contracts",
+        "delivery",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "2abe67c663a779825ae005d835f4a83361125a59fecd8227513b0f7ddb2200ed"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/partial-react/package.json",
+      "roles": [
+        "contracts",
+        "delivery",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "95303ef328d372a3a0cfb3dd2b714dcfbe3fd3a2afe3fe2f915fa6b9417cf20c"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/partial-repo/package.json",
+      "roles": [
+        "contracts",
+        "delivery",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "486c7044d8b9b02d88fd98f09671688efdef5b29f2d112176a3ed88ec9df6725"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/refactor-risk-repo/AGENTS.md",
+      "roles": [
+        "instructions",
+        "personas",
+        "tests"
+      ],
+      "scope": "path:tests/fixtures/refactor-risk-repo",
+      "sha256": "e6604c8ae1c18e360145bf080881f31b7e7f95d8ade3a3228d0f872cf866f7a7"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/refactor-risk-repo/ARCHITECTURE.md",
+      "roles": [
+        "architecture",
+        "personas",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "19f2095c87d7a4cd6915b4babd81a9922cf81e33d17b4096bfd2aeae9ab5acec"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/refactor-risk-repo/docs/design-system.md",
+      "roles": [
+        "design",
+        "personas",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "6bcc80e3bde98631c83e6f74fbf61ef4381e0412b352cde7fd94f69856e90887"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/fixtures/refactor-risk-repo/package.json",
+      "roles": [
+        "contracts",
+        "delivery",
+        "personas",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "c12279d7c584959bbf43d66e3d795184f9cb622ad1ec54fb49f9d850dcb72156"
+    }
+  ],
+  "authoritySummary": {
+    "adrs": 4,
+    "architecture": 12,
+    "backlog": 2,
+    "contracts": 38,
+    "delivery": 16,
+    "design": 84,
+    "evidence": 4,
+    "experiments": 1,
+    "governance": 17,
+    "instructions": 9,
+    "journeys": 5,
+    "metrics": 1,
+    "personas": 6,
+    "principles": 2,
+    "requirements": 1,
+    "skills": 5,
+    "tests": 30,
+    "vision": 2
+  },
+  "backlogModel": {
+    "activeSources": [
+      "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
+    ],
+    "canonicalSources": [
+      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
+    ],
+    "completion": "NOT_DETERMINED",
+    "counts": {
+      "ACTIVE": 0,
+      "BLOCKED": 0,
+      "COMPLETED": 0,
+      "DEFERRED": 0,
+      "PARTIAL": 0,
+      "STAGED": 0
+    },
+    "historicalSources": [],
+    "introduceParallelBacklog": false,
+    "itemCount": 0,
+    "items": [],
+    "itemsMissingOutcome": [],
+    "itemsWithoutJourneyStage": [],
+    "status": "MAPPED"
+  },
+  "claimBoundary": "The audit reconstructs repository governance from tracked evidence. It does not ratify product vision, resolve human decisions, or claim implementation completion.",
+  "designGate": {
+    "reason": "Repository is design ready; design may proceed through normal design contracts and evidence gates.",
+    "requiredBeforeDesign": [],
+    "status": "READY"
+  },
+  "equivalentSystems": [
+    {
+      "bindings": [
+        "devctl.yaml",
+        ".dev/intent-index.json",
+        ".dev/standards-profile.json",
+        ".dev/model-routing.json"
+      ],
+      "id": "development-control-plane",
+      "name": "Repository Development Control Plane",
+      "purpose": "Existing intent, architecture, intelligence, backlog, context, and verification coordination.",
+      "status": "READY"
+    },
+    {
+      "bindings": [
+        "AGENTS.md",
+        "skills"
+      ],
+      "id": "agent-governance",
+      "name": "Repository Agent Governance",
+      "purpose": "Existing root instructions and scoped specialist skills.",
+      "status": "READY"
+    }
+  ],
+  "finalizationReadiness": {
+    "blockingFindings": [],
+    "completionClaimed": false,
+    "existingSystemStrategy": "PRESERVE_AND_BIND",
+    "governance": "COHERENT",
+    "missingCoreRoles": [],
+    "status": "DESIGN_READY",
+    "understanding": "MAPPED"
+  },
+  "findingCounts": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "findings": [],
+  "generatedBy": "design-intelligence-governance",
+  "implementationRoots": [
+    {
+      "path": "docs",
+      "purpose": "Product, architecture, governance, and delivery authority"
+    },
+    {
+      "path": "scripts",
+      "purpose": "Verification, automation, and release controls"
+    }
+  ],
+  "journeyModel": {
+    "bindingJourneyCount": 1,
+    "e2eScriptTargets": [],
+    "journeys": [
+      {
+        "binding": true,
+        "existingTestPaths": [
+          "tests/test_control_plane.py",
+          "tests/test_planes.py",
+          "tests/design/scenarios/design-department-surface.json",
+          "tests/test_governance_v3.py"
+        ],
+        "implementationPaths": [],
+        "routes": [],
+        "source": ".dev/intent-index.json",
+        "stageChains": [],
+        "testPaths": [
+          "tests/test_control_plane.py",
+          "tests/test_planes.py",
+          "tests/design/scenarios/design-department-surface.json",
+          "tests/test_governance_v3.py"
+        ],
+        "title": "Intent Index"
+      }
+    ],
+    "linkedTests": [
+      "tests/design/scenarios/design-department-surface.json",
+      "tests/test_control_plane.py",
+      "tests/test_governance_v3.py",
+      "tests/test_planes.py"
+    ],
+    "proofStatus": "LINKED",
+    "status": "DEFINED",
+    "supportingTests": [
+      "tests/design/scenarios/design-department-surface.json",
+      "tests/test_control_plane.py",
+      "tests/test_governance_v3.py",
+      "tests/test_planes.py"
+    ]
+  },
+  "root": "/home/administrator/design-intelligence",
+  "schemaVersion": 1,
+  "scriptDamage": [],
+  "status": "READY",
+  "trackingMode": "git-tracked",
+  "untrackedAuthorityCandidates": []
+}

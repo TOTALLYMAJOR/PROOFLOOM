@@ -1,0 +1,355 @@
+{
+  "authorityBindings": {
+    "adrs": [
+      "docs/architecture/ADR-0001-development-control-plane-facade.md",
+      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
+      "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md",
+      "tests/fixtures/mature-repo/docs/decisions/ui-001.md"
+    ],
+    "architecture": [
+      ".dev/tasks/completed/TASK-ARCHITECTURE-IMPACT-GRAPH.json",
+      "design_intelligence/data/schemas/architecture-graph.schema.json",
+      "docs/ARCHITECTURE.md",
+      "docs/CONTROL-PLANE-ARCHITECTURE-GRAPH.md",
+      "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+      "docs/IMPLEMENTATION-REPORT-ARCHITECTURE-GRAPH.md",
+      "docs/architecture/ADR-0001-development-control-plane-facade.md",
+      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
+      "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md",
+      "tests/fixtures/mature-repo/ARCHITECTURE.md",
+      "tests/fixtures/mature-repo/docs/decisions/ui-001.md",
+      "tests/fixtures/refactor-risk-repo/ARCHITECTURE.md"
+    ],
+    "backlog": [
+      "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
+    ],
+    "contracts": [
+      ".design/memory/schemas/baseline-review-receipt.schema.json",
+      ".design/memory/schemas/baseline-review-request.schema.json",
+      ".design/memory/schemas/design-adoption-report.schema.json",
+      ".design/memory/schemas/design-contract.schema.json",
+      ".design/memory/schemas/design-decision.schema.json",
+      ".design/memory/schemas/design-exception.schema.json",
+      ".design/memory/schemas/design-outcome.schema.json",
+      ".design/memory/schemas/reference-analysis.schema.json",
+      ".design/memory/schemas/repair-plan.schema.json",
+      ".design/memory/schemas/validation-evidence.schema.json",
+      "design_intelligence/data/schemas/architecture-graph.schema.json",
+      "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+      "design_intelligence/data/schemas/baseline-review-receipt.schema.json",
+      "design_intelligence/data/schemas/baseline-review-request.schema.json",
+      "design_intelligence/data/schemas/design-adoption-report.schema.json",
+      "design_intelligence/data/schemas/design-contract.schema.json",
+      "design_intelligence/data/schemas/design-decision.schema.json",
+      "design_intelligence/data/schemas/design-exception.schema.json",
+      "design_intelligence/data/schemas/design-outcome.schema.json",
+      "design_intelligence/data/schemas/devctl.schema.json",
+      "design_intelligence/data/schemas/intent-index.schema.json",
+      "design_intelligence/data/schemas/model-routing.schema.json",
+      "design_intelligence/data/schemas/reference-analysis.schema.json",
+      "design_intelligence/data/schemas/repair-plan.schema.json",
+      "design_intelligence/data/schemas/standards-profile.schema.json",
+      "design_intelligence/data/schemas/task-packet.schema.json",
+      "design_intelligence/data/schemas/validation-evidence.schema.json",
+      "package.json",
+      "pyproject.toml",
+      "templates/DESIGN-CONTRACT.md",
+      "tests/fixtures/broken-ia/package.json",
+      "tests/fixtures/conflicted-frontend/package.json",
+      "tests/fixtures/dual-design-system/package.json",
+      "tests/fixtures/established-nextjs/package.json",
+      "tests/fixtures/mature-repo/package.json",
+      "tests/fixtures/partial-react/package.json",
+      "tests/fixtures/partial-repo/package.json",
+      "tests/fixtures/refactor-risk-repo/package.json"
+    ],
+    "delivery": [
+      ".github/workflows/design-ci.yml",
+      "docs/RELEASE-REPORT-1.0.0.md",
+      "docs/RELEASE-REPORT-2.0.0.md",
+      "docs/RELEASE-REPORT-3.0.0.md",
+      "docs/RELEASE-REPORT-4.0.0.md",
+      "docs/RELEASE-REPORT-5.0.0.md",
+      "package.json",
+      "pyproject.toml",
+      "tests/fixtures/broken-ia/package.json",
+      "tests/fixtures/conflicted-frontend/package.json",
+      "tests/fixtures/dual-design-system/package.json",
+      "tests/fixtures/established-nextjs/package.json",
+      "tests/fixtures/mature-repo/package.json",
+      "tests/fixtures/partial-react/package.json",
+      "tests/fixtures/partial-repo/package.json",
+      "tests/fixtures/refactor-risk-repo/package.json"
+    ],
+    "design": [
+      ".design/baselines/manifest.json",
+      ".design/baselines/review-policy.json",
+      ".design/memory/component-registry.json",
+      ".design/memory/product-rules.json",
+      ".design/memory/schemas/baseline-review-receipt.schema.json",
+      ".design/memory/schemas/baseline-review-request.schema.json",
+      ".design/memory/schemas/design-adoption-report.schema.json",
+      ".design/memory/schemas/design-contract.schema.json",
+      ".design/memory/schemas/design-decision.schema.json",
+      ".design/memory/schemas/design-exception.schema.json",
+      ".design/memory/schemas/design-outcome.schema.json",
+      ".design/memory/schemas/reference-analysis.schema.json",
+      ".design/memory/schemas/repair-plan.schema.json",
+      ".design/memory/schemas/validation-evidence.schema.json",
+      ".design/quality/latest-score.json",
+      ".design/quality/thresholds.json",
+      ".dev/tasks/completed/TASK-DESIGN-CONTROL-PLANE-PILOT.json",
+      ".github/workflows/design-ci.yml",
+      "design_intelligence/data/defaults/baseline-review-policy.json",
+      "design_intelligence/data/defaults/industry-standards.json",
+      "design_intelligence/data/defaults/product-rules.json",
+      "design_intelligence/data/defaults/quality-thresholds.json",
+      "design_intelligence/data/product_profiles/leaguepilot.json",
+      "design_intelligence/data/product_profiles/quietpilot.json",
+      "design_intelligence/data/product_profiles/quotepilot.json",
+      "design_intelligence/data/schemas/architecture-graph.schema.json",
+      "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+      "design_intelligence/data/schemas/baseline-review-receipt.schema.json",
+      "design_intelligence/data/schemas/baseline-review-request.schema.json",
+      "design_intelligence/data/schemas/design-adoption-report.schema.json",
+      "design_intelligence/data/schemas/design-contract.schema.json",
+      "design_intelligence/data/schemas/design-decision.schema.json",
+      "design_intelligence/data/schemas/design-exception.schema.json",
+      "design_intelligence/data/schemas/design-outcome.schema.json",
+      "design_intelligence/data/schemas/devctl.schema.json",
+      "design_intelligence/data/schemas/intent-index.schema.json",
+      "design_intelligence/data/schemas/model-routing.schema.json",
+      "design_intelligence/data/schemas/reference-analysis.schema.json",
+      "design_intelligence/data/schemas/repair-plan.schema.json",
+      "design_intelligence/data/schemas/standards-profile.schema.json",
+      "design_intelligence/data/schemas/task-packet.schema.json",
+      "design_intelligence/data/schemas/validation-evidence.schema.json",
+      "docs/IMPLEMENTATION-REPORT-DESIGN-ADOPTION-GATE.md",
+      "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V2.md",
+      "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md",
+      "docs/design/COMPONENT-INVENTORY.md",
+      "docs/design/DESIGN-ADOPTION-GATE.md",
+      "docs/design/DESIGN-DEBT.md",
+      "docs/design/DESIGN-DECISIONS.md",
+      "docs/design/DESIGN-LANGUAGE.md",
+      "docs/design/DESIGN-QUALITY.md",
+      "docs/design/REFERENCE-LEDGER.md",
+      "docs/design/UX-MODELS.md",
+      "docs/design/products/leaguepilot.md",
+      "docs/design/products/quietpilot.md",
+      "docs/design/products/quotepilot.md",
+      "skills/design-language/SKILL.md",
+      "skills/design-language/agents/openai.yaml",
+      "skills/design-language/references/accessibility.md",
+      "skills/design-language/references/anti-patterns.md",
+      "skills/design-language/references/design-principles.md",
+      "skills/design-language/references/interaction-language.md",
+      "skills/design-language/references/mission-workflow.md",
+      "skills/design-language/references/product-archetypes.md",
+      "skills/design-language/references/responsive-design.md",
+      "skills/design-language/references/surface-hierarchy.md",
+      "skills/design-linter/SKILL.md",
+      "skills/design-linter/references/deterministic-rules.md",
+      "skills/design-linter/references/drift-types.md",
+      "skills/design-linter/references/repair-policy.md",
+      "templates/DESIGN-CONTRACT.md",
+      "templates/DESIGN-DECISION.md",
+      "templates/PRODUCT-DESIGN-PROFILE.md",
+      "tests/design/scenarios/design-department-surface.json",
+      "tests/fixtures/broken-ia/docs/design-system.md",
+      "tests/fixtures/conflicted-frontend/docs/design/DESIGN-LANGUAGE.md",
+      "tests/fixtures/conflicted-frontend/docs/product/design-system.md",
+      "tests/fixtures/dual-design-system/AGENTS.md",
+      "tests/fixtures/dual-design-system/design/DESIGN-LANGUAGE.md",
+      "tests/fixtures/dual-design-system/docs/design-system.md",
+      "tests/fixtures/dual-design-system/package.json",
+      "tests/fixtures/established-nextjs/docs/product/design-system.md",
+      "tests/fixtures/mature-repo/docs/design-system.md",
+      "tests/fixtures/refactor-risk-repo/docs/design-system.md"
+    ],
+    "evidence": [
+      ".design/memory/schemas/design-outcome.schema.json",
+      ".design/memory/schemas/validation-evidence.schema.json",
+      "design_intelligence/data/schemas/design-outcome.schema.json",
+      "design_intelligence/data/schemas/validation-evidence.schema.json"
+    ],
+    "experiments": [
+      ".dev/intent-index.json"
+    ],
+    "governance": [
+      ".design/baselines/review-policy.json",
+      ".dev/model-routing.json",
+      ".dev/standards-profile.json",
+      ".dev/tasks/completed/TASK-CONTROL-PLANE-PHASE-4.json",
+      ".dev/tasks/completed/TASK-DESIGN-CONTROL-PLANE-PILOT.json",
+      "design_intelligence/data/defaults/baseline-review-policy.json",
+      "devctl.yaml",
+      "docs/CONTROL-PLANE-ARCHITECTURE-GRAPH.md",
+      "docs/CONTROL-PLANE-GAP-MAP.md",
+      "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+      "docs/CONTROL-PLANE-PHASES-0-3.md",
+      "docs/CONTROL-PLANE-ROLES.md",
+      "docs/IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASE-4.md",
+      "docs/IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASES-0-3.md",
+      "docs/architecture/ADR-0001-development-control-plane-facade.md",
+      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
+      "skills/design-linter/references/repair-policy.md"
+    ],
+    "instructions": [
+      "AGENTS.md",
+      "adapters/claude/CLAUDE.md",
+      "adapters/codex/AGENTS.md",
+      "tests/fixtures/broken-ia/AGENTS.md",
+      "tests/fixtures/conflicted-frontend/AGENTS.md",
+      "tests/fixtures/dual-design-system/AGENTS.md",
+      "tests/fixtures/established-nextjs/AGENTS.md",
+      "tests/fixtures/mature-repo/AGENTS.md",
+      "tests/fixtures/refactor-risk-repo/AGENTS.md"
+    ],
+    "journeys": [
+      ".dev/intent-index.json",
+      ".github/workflows/design-ci.yml",
+      "skills/design-language/references/mission-workflow.md",
+      "skills/ux-architect/references/workflow-diagnosis.md",
+      "tests/fixtures/conflicted-frontend/.github/workflows/ui.yml"
+    ],
+    "metrics": [
+      ".dev/intent-index.json"
+    ],
+    "personas": [
+      ".dev/intent-index.json",
+      "skills/ux-architect/references/actor-task-model.md",
+      "tests/fixtures/refactor-risk-repo/AGENTS.md",
+      "tests/fixtures/refactor-risk-repo/ARCHITECTURE.md",
+      "tests/fixtures/refactor-risk-repo/docs/design-system.md",
+      "tests/fixtures/refactor-risk-repo/package.json"
+    ],
+    "principles": [
+      ".dev/intent-index.json",
+      "skills/design-language/references/design-principles.md"
+    ],
+    "requirements": [
+      ".dev/intent-index.json"
+    ],
+    "skills": [
+      "skills/design-language/SKILL.md",
+      "skills/design-linter/SKILL.md",
+      "skills/reference-intelligence/SKILL.md",
+      "skills/ux-architect/SKILL.md",
+      "skills/visual-review/SKILL.md"
+    ],
+    "tests": [
+      ".design/quality/latest-score.json",
+      "tests/design/scenarios/design-department-surface.json",
+      "tests/fixtures/broken-ia/AGENTS.md",
+      "tests/fixtures/broken-ia/docs/design-system.md",
+      "tests/fixtures/broken-ia/package.json",
+      "tests/fixtures/broken-ia/review-manifest.json",
+      "tests/fixtures/conflicted-frontend/.github/workflows/ui.yml",
+      "tests/fixtures/conflicted-frontend/AGENTS.md",
+      "tests/fixtures/conflicted-frontend/docs/design/DESIGN-LANGUAGE.md",
+      "tests/fixtures/conflicted-frontend/docs/product/design-system.md",
+      "tests/fixtures/conflicted-frontend/package.json",
+      "tests/fixtures/dual-design-system/AGENTS.md",
+      "tests/fixtures/dual-design-system/design/DESIGN-LANGUAGE.md",
+      "tests/fixtures/dual-design-system/docs/design-system.md",
+      "tests/fixtures/dual-design-system/package.json",
+      "tests/fixtures/established-nextjs/AGENTS.md",
+      "tests/fixtures/established-nextjs/docs/product/design-system.md",
+      "tests/fixtures/established-nextjs/package.json",
+      "tests/fixtures/greenfield-empty/README.md",
+      "tests/fixtures/mature-repo/AGENTS.md",
+      "tests/fixtures/mature-repo/ARCHITECTURE.md",
+      "tests/fixtures/mature-repo/docs/decisions/ui-001.md",
+      "tests/fixtures/mature-repo/docs/design-system.md",
+      "tests/fixtures/mature-repo/package.json",
+      "tests/fixtures/partial-react/package.json",
+      "tests/fixtures/partial-repo/package.json",
+      "tests/fixtures/refactor-risk-repo/AGENTS.md",
+      "tests/fixtures/refactor-risk-repo/ARCHITECTURE.md",
+      "tests/fixtures/refactor-risk-repo/docs/design-system.md",
+      "tests/fixtures/refactor-risk-repo/package.json"
+    ],
+    "vision": [
+      ".dev/intent-index.json",
+      "skills/design-language/references/mission-workflow.md"
+    ]
+  },
+  "backlog": {
+    "activeSources": [
+      "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
+    ],
+    "canonicalSources": [
+      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
+    ],
+    "completion": "NOT_DETERMINED",
+    "counts": {
+      "ACTIVE": 0,
+      "BLOCKED": 0,
+      "COMPLETED": 0,
+      "DEFERRED": 0,
+      "PARTIAL": 0,
+      "STAGED": 0
+    },
+    "historicalSources": [],
+    "introduceParallelBacklog": false,
+    "itemCount": 0,
+    "items": [],
+    "itemsMissingOutcome": [],
+    "itemsWithoutJourneyStage": [],
+    "status": "MAPPED"
+  },
+  "canonicalAuthorityModified": false,
+  "designGate": {
+    "reason": "Repository is design ready; design may proceed through normal design contracts and evidence gates.",
+    "requiredBeforeDesign": [],
+    "status": "READY"
+  },
+  "equivalentSystems": [
+    {
+      "bindings": [
+        "devctl.yaml",
+        ".dev/intent-index.json",
+        ".dev/standards-profile.json",
+        ".dev/model-routing.json"
+      ],
+      "id": "development-control-plane",
+      "name": "Repository Development Control Plane",
+      "purpose": "Existing intent, architecture, intelligence, backlog, context, and verification coordination.",
+      "status": "READY"
+    },
+    {
+      "bindings": [
+        "AGENTS.md",
+        "skills"
+      ],
+      "id": "agent-governance",
+      "name": "Repository Agent Governance",
+      "purpose": "Existing root instructions and scoped specialist skills.",
+      "status": "READY"
+    }
+  ],
+  "generatedBy": "design-intelligence-governance",
+  "implementationRoots": [
+    {
+      "path": "docs",
+      "purpose": "Product, architecture, governance, and delivery authority"
+    },
+    {
+      "path": "scripts",
+      "purpose": "Verification, automation, and release controls"
+    }
+  ],
+  "journeys": [
+    {
+      "binding": true,
+      "source": ".dev/intent-index.json",
+      "title": "Intent Index"
+    }
+  ],
+  "mode": "EQUIVALENT_SYSTEM",
+  "repository": "design-intelligence",
+  "schemaVersion": 1
+}

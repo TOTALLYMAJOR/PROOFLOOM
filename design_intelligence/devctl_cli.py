@@ -26,6 +26,12 @@ from .control_plane import (
     visual_plan,
 )
 from .planes import audit_backlog, audit_planes
+from .governance import (
+    apply_governance_convergence,
+    audit_governance,
+    plan_governance_convergence,
+    verify_governance_convergence,
+)
 from .storage import atomic_write_json, ensure_within
 
 
@@ -53,6 +59,20 @@ def _build_parser() -> argparse.ArgumentParser:
     _common(subparsers.add_parser("validate", help="Validate devctl.yaml and declared authorities."))
     _common(subparsers.add_parser("doctor", help="Audit control-plane and delegated design authorities."))
     _common(subparsers.add_parser("health", help="Report intent, journey, backlog, standards, and routing health."))
+
+    govern = subparsers.add_parser(
+        "govern",
+        help="Map, converge, apply, and verify repository understanding before design.",
+    )
+    govern_subparsers = govern.add_subparsers(dest="govern_command", required=True)
+    _common(govern_subparsers.add_parser("audit", help="Map governing sources, journeys, conflicts, and damage."))
+    _common(govern_subparsers.add_parser("plan", help="Build bounded automatic and authority-gated repair actions."))
+    govern_apply = _common(govern_subparsers.add_parser("apply", help="Write derived bindings and drift protection without changing canonical authority."))
+    govern_apply.add_argument(
+        "--ratification",
+        help="Owner-approved authority-drift ratification JSON required when rebasing changed critical authority.",
+    )
+    _common(govern_subparsers.add_parser("verify", help="Verify convergence, authority drift, and the pre-design gate."))
 
     planes = subparsers.add_parser("planes", help="Audit intent, architecture, and intelligence planes.")
     planes_subparsers = planes.add_subparsers(dest="planes_command", required=True)
@@ -160,6 +180,19 @@ def _dispatch(args: argparse.Namespace) -> int:
     if args.command == "health":
         report = control_plane_health(root)
         return _finish(report, args, "CONTROL PLANE HEALTH", success={"PASS", "WARN"})
+    if args.command == "govern":
+        if args.govern_command == "audit":
+            report = audit_governance(root)
+            return _finish(report, args, "REPOSITORY GOVERNANCE AUDIT", success={"READY", "REVIEW_REQUIRED"})
+        if args.govern_command == "plan":
+            report = plan_governance_convergence(root)
+            report["humanSummary"] = report["audit"]["humanSummary"]
+            return _finish(report, args, "REPOSITORY CONVERGENCE PLAN", success={"READY", "REVIEW_REQUIRED"})
+        if args.govern_command == "apply":
+            report = apply_governance_convergence(root, ratification_path=args.ratification)
+            return _finish(report, args, "REPOSITORY CONVERGENCE APPLY", success={"APPLIED_READY", "APPLIED_REVIEW_REQUIRED"})
+        report = verify_governance_convergence(root)
+        return _finish(report, args, "REPOSITORY CONVERGENCE VERIFY")
     if args.command == "planes":
         from .control_plane import load_manifest
 
@@ -288,6 +321,8 @@ def _emit(report: dict[str, Any], args: argparse.Namespace, *, title: str) -> No
         report = {**report, "evidenceOutput": str(destination)}
     if getattr(args, "format", "text") == "json":
         print(json.dumps(report, indent=2, sort_keys=True))
+    elif report.get("humanSummary"):
+        print(report["humanSummary"])
     else:
         print(f"{title}\n\n{json.dumps(report, indent=2, sort_keys=True)}")
 
@@ -305,6 +340,7 @@ def _command_name(args: argparse.Namespace) -> str:
         getattr(args, field, None)
         for field in (
             "planes_command",
+            "govern_command",
             "backlog_command",
             "intelligence_command",
             "architecture_command",

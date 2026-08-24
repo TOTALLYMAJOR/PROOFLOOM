@@ -15,7 +15,7 @@
       "properties": {
         "name": {"type": "string", "minLength": 1},
         "owner": {"const": "repository"},
-        "phase": {"const": "0-4"}
+        "phase": {"const": "0-5"}
       }
     },
     "spec": {

@@ -34,6 +34,7 @@ def main() -> int:
 def quick_commands() -> list[tuple[str, list[str]]]:
     return [
         ("unit and governance tests", [PYTHON, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"]),
+        ("repository governance convergence", [PYTHON, "-m", "design_intelligence.devctl_cli", "govern", "verify", "--root", ".", "--format", "json"]),
         ("control-plane manifest", [PYTHON, "-m", "design_intelligence.devctl_cli", "validate", "--root", ".", "--format", "json"]),
         ("control-plane doctor", [PYTHON, "-m", "design_intelligence.devctl_cli", "doctor", "--root", ".", "--format", "json"]),
         ("control-plane plane audit", [PYTHON, "-m", "design_intelligence.devctl_cli", "planes", "audit", "--root", ".", "--format", "json"]),
@@ -48,7 +49,7 @@ def quick_commands() -> list[tuple[str, list[str]]]:
             "design adoption integrity",
             [
                 PYTHON, "-m", "design_intelligence.cli", "adoption-audit", "--root", ".",
-                "--input", "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v8/adoption-report.json",
+                "--input", "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v9/adoption-report.json",
                 "--format", "json",
             ],
         ),

@@ -45,7 +45,7 @@ class ControlPlaneTests(unittest.TestCase):
             __version__,
         }
 
-        self.assertEqual(versions, {"4.0.0"})
+        self.assertEqual(versions, {"5.0.0"})
 
     def test_repository_manifest_and_bundled_schemas_validate(self) -> None:
         report = validate_control_plane(ROOT)
@@ -141,7 +141,7 @@ class ControlPlaneTests(unittest.TestCase):
     def test_existing_design_and_visual_evidence_are_delegated_and_audited(self) -> None:
         adoption = audit_design_adoption(
             ROOT,
-            "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v8/adoption-report.json",
+            "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v9/adoption-report.json",
         )
         visual = audit_visual_evidence(
             ROOT,

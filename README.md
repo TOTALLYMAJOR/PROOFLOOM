@@ -1,4 +1,4 @@
-# Design Intelligence v4.0.0 with Repository-Native Development Control Plane
+# Design Intelligence with Repository Rehabilitation and Design Governance
 
 Design Intelligence is a production-grade, vendor-neutral utility for repository-aware design work. Its core mission is design intelligence: understand product intent, preserve existing design truth, reason about UX and design-system change, validate rendered outcomes, and record evidence without turning into a second application scaffold.
 
@@ -6,12 +6,29 @@ The governing objective is:
 
 > Product intent -> repository evidence -> design reasoning -> implementation constraints -> rendered validation -> design learning.
 
-## Development control plane, Phases 0-4
+## Rehabilitate mature repositories before design
+
+For a repository that has accumulated product drift, conflicting instructions, incomplete journeys, or years of partial backlog work, start here:
+
+```bash
+design-intelligence govern audit --root /path/to/repo
+design-intelligence govern plan --root /path/to/repo
+design-intelligence govern apply --root /path/to/repo
+design-intelligence govern verify --root /path/to/repo
+```
+
+The audit maps tracked instructions, skills, hooks, vision, actors, requirements, journeys, architecture, ADRs, contracts, security, backlog, design, tests, and delivery controls. It preserves an equally effective existing model, identifies conflicts and broken controls, generates a bounded rehabilitation plan, detects later authority drift, and locks design until the repository is coherent enough to finish the product. See `docs/REPOSITORY-REHABILITATION-AND-FINALIZATION.md`.
+
+## Development control plane, Phases 0-5
 
 The optional `devctl` facade coordinates repository instructions, hash-bound intent and user journeys, whole-backlog accounting, contextual standards currency, vendor-neutral intelligence routing, bounded task context, affected verification, and the existing Design Intelligence/Playwright evidence systems without creating duplicate authorities.
 
 ```bash
 devctl validate --root /path/to/repo
+devctl govern audit --root /path/to/repo
+devctl govern plan --root /path/to/repo
+devctl govern apply --root /path/to/repo
+devctl govern verify --root /path/to/repo
 devctl doctor --root /path/to/repo
 devctl init --dry-run --root /path/to/repo
 devctl planes audit --root /path/to/repo
@@ -157,6 +174,10 @@ design-intelligence "Improve proposal comparison"
 design-intelligence "Improve proposal comparison" --direction recommended --save
 design-intelligence start /path/to/repo "Improve proposal comparison" --profile quotepilot --reference https://aura.build
 design-intelligence inspect --root /path/to/repo
+design-intelligence govern audit --root /path/to/repo
+design-intelligence govern plan --root /path/to/repo
+design-intelligence govern apply --root /path/to/repo
+design-intelligence govern verify --root /path/to/repo
 design-intelligence assess --root /path/to/repo
 design-intelligence context --root /path/to/repo --profile quotepilot
 design-intelligence lint --root /path/to/repo
@@ -228,7 +249,7 @@ npm run design:ci:standard
 npm run design:ci:full
 ```
 
-- `quick`: unit/governance tests, contracts, memory, baselines, registry, and diff hygiene
+- `quick`: unit/governance tests, repository convergence, contracts, memory, baselines, registry, and diff hygiene
 - `standard`: quick plus five-viewport Playwright QA, deterministic scoring, and integrated evidence pack
 - `full`: standard plus three rendered repair cycles, dependency audit, five skill validators, and self-audit
 
@@ -288,4 +309,4 @@ python3 /mnt/c/Users/Administrator/.codex/skills/.system/skill-creator/scripts/q
 
 ## Release
 
-`VERSION`, `pyproject.toml`, `package.json`, `package-lock.json`, and package exports are aligned at `4.0.0`. The V4 release report is `docs/RELEASE-REPORT-4.0.0.md`.
+`VERSION`, `pyproject.toml`, `package.json`, `package-lock.json`, and package exports are aligned at `5.0.0`. The V5 release report is `docs/RELEASE-REPORT-5.0.0.md`.

@@ -26,6 +26,13 @@ from .context import build_context, render_context_text
 from .doctor import render_doctor_text, run_doctor
 from .evidence import build_evidence_pack, write_evidence_pack
 from .linting import render_lint_text, run_lint
+from .governance import (
+    apply_governance_convergence,
+    audit_governance,
+    governance_design_preflight,
+    plan_governance_convergence,
+    verify_governance_convergence,
+)
 from .migrations import assess_migration, render_migration_text
 from .memory import (
     append_debt,
@@ -66,7 +73,7 @@ from .workflows import (
 COMMANDS = {
     "inspect", "assess", "context", "lint", "refactor-risk", "review", "validate", "doctor",
     "reference", "start", "work", "handoff", "memory", "contract", "registry", "quality",
-    "baseline", "repair", "self-audit", "adopt", "adoption-audit",
+    "baseline", "repair", "self-audit", "adopt", "adoption-audit", "govern",
 }
 
 
@@ -77,6 +84,15 @@ def main(argv: list[str] | None = None) -> int:
 
     _add_root_format_parser(subparsers, "inspect")
     _add_root_format_parser(subparsers, "assess")
+    govern_parser = subparsers.add_parser("govern")
+    govern_subparsers = govern_parser.add_subparsers(dest="govern_command", required=True)
+    for command in ("audit", "plan", "verify"):
+        _add_root_format_parser(govern_subparsers, command)
+    govern_apply = _add_root_format_parser(govern_subparsers, "apply")
+    govern_apply.add_argument(
+        "--ratification",
+        help="Owner-approved authority-drift ratification JSON required when rebasing changed critical authority.",
+    )
     context_parser = _add_root_format_parser(subparsers, "context")
     context_parser.add_argument("--profile", choices=("quotepilot", "quietpilot", "leaguepilot"))
     context_parser.add_argument("--brief-file", help="Optional JSON file with actor/task fields.")
@@ -275,6 +291,23 @@ def _dispatch(args: argparse.Namespace) -> int:
         root = args.root if args.root != "." or args.root_positional is None else args.root_positional
         assessment = assess_repository(root or ".")
         return _emit(assessment.to_dict(), render_assessment_text(assessment), args.format)
+    if args.command == "govern":
+        root = _root_arg(args)
+        if args.govern_command == "audit":
+            report = audit_governance(root)
+            text = report["humanSummary"]
+        elif args.govern_command == "plan":
+            report = plan_governance_convergence(root)
+            text = report["audit"]["humanSummary"]
+        elif args.govern_command == "apply":
+            report = apply_governance_convergence(root, ratification_path=args.ratification)
+            text = _simple_text("REPOSITORY CONVERGENCE APPLY", report)
+        else:
+            report = verify_governance_convergence(root)
+            text = _simple_text("REPOSITORY CONVERGENCE VERIFY", report)
+        _emit(report, text, args.format)
+        accepted = {"READY", "REVIEW_REQUIRED", "APPLIED_READY", "APPLIED_REVIEW_REQUIRED", "PASS"}
+        return 0 if report.get("status") in accepted else 1
     if args.command == "context":
         root = args.root if args.root != "." or args.root_positional is None else args.root_positional
         context = build_context(root or ".", args.profile, _load_json(args.brief_file))
@@ -344,6 +377,16 @@ def _dispatch(args: argparse.Namespace) -> int:
         report = analyze_references(_load_json_required(args.input), args.profile)
         return _emit(report.to_dict(), render_reference_text(report), args.format)
     if args.command == "adopt":
+        preflight = governance_design_preflight(args.root)
+        if preflight["status"] != "PASS":
+            report = {
+                "status": "BLOCKED",
+                "implementationReady": False,
+                "reason": "Repository understanding and governance must converge before design adoption.",
+                "governancePreflight": preflight,
+            }
+            _emit(report, _governance_block_text(preflight), args.format)
+            return 1
         report = evaluate_adoption(
             args.root,
             args.task,
@@ -366,6 +409,17 @@ def _dispatch(args: argparse.Namespace) -> int:
         return 0 if report["status"] == "PASS" else 1
     if args.command == "start":
         root, task = _start_args(args)
+        preflight = governance_design_preflight(root)
+        if preflight["status"] != "PASS":
+            report = {
+                "status": "GOVERNANCE_REQUIRED",
+                "task": task,
+                "root": str(Path(root).resolve()),
+                "governancePreflight": preflight,
+                "nextAction": f"design-intelligence govern plan --root {Path(root).resolve()}",
+            }
+            _emit(report, _governance_block_text(preflight), args.format)
+            return 1
         packet = build_start_packet(
             root,
             task,
@@ -394,6 +448,10 @@ def _dispatch(args: argparse.Namespace) -> int:
         text = packet["prompt"] if packet["status"] == "READY_TO_IMPLEMENT" else packet["summary"]
         return _emit(packet, text, args.format)
     if args.command == "work":
+        preflight = governance_design_preflight(_root_arg(args))
+        if preflight["status"] != "PASS":
+            _emit(preflight, _governance_block_text(preflight), args.format)
+            return 1
         workflow = build_workflow(
             _root_arg(args), args.task, args.profile, args.surface, _load_json(args.brief_file), args.reference
         )
@@ -402,6 +460,10 @@ def _dispatch(args: argparse.Namespace) -> int:
             workflow["contract_output"] = str(Path(args.contract_out).resolve())
         return _emit(workflow, render_workflow_text(workflow), args.format)
     if args.command == "handoff":
+        preflight = governance_design_preflight(_root_arg(args))
+        if preflight["status"] != "PASS":
+            _emit(preflight, _governance_block_text(preflight), args.format)
+            return 1
         workflow = build_workflow(
             _root_arg(args), args.task, args.profile, args.surface, _load_json(args.brief_file), args.reference
         )
@@ -568,6 +630,22 @@ def _start_args(args: argparse.Namespace) -> tuple[str, str]:
 
 def _simple_text(title: str, report: dict[str, Any]) -> str:
     return f"{title}\n\n" + json.dumps(report, indent=2)
+
+
+def _governance_block_text(preflight: dict[str, Any]) -> str:
+    readiness = preflight.get("finalizationReadiness", {}).get("status", "UNKNOWN")
+    lines = [
+        "DESIGN IS LOCKED",
+        "",
+        "The repository must recover and verify its product understanding before design work begins.",
+        f"Finalization readiness: {readiness}",
+        "",
+        "Blocking problems:",
+    ]
+    errors = preflight.get("errors", [])
+    lines.extend(f"- {error}" for error in errors)
+    lines.extend(["", "Next: run `design-intelligence govern plan --root <repository>`." ])
+    return "\n".join(lines)
 
 
 def _parse_as_of(value: str | None) -> datetime | None:

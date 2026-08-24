@@ -21,6 +21,7 @@ Its job is:
 
 ## Rules
 
+- Treat a locked governance or journey gate as non-repairable by design lint. Do not propose cosmetic changes as a substitute for product convergence.
 - Stay deterministic.
 - Flag drift; do not invent aesthetic rules that the repository never adopted.
 - Allow intentional exceptions when they are explicitly marked.

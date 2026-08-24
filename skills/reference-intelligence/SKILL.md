@@ -13,6 +13,7 @@ Its job is:
 
 ## Rules
 
+- Do not analyze a reference for implementation while repository governance is locked. Recover the product model first.
 - Treat a supplied URL or `DESIGN.md` as `RESEARCH_REQUIRED`, not as analyzed evidence.
 - Never say "make it look like X" and stop there.
 - Decompose each reference into observed pattern, why it works, relevance here, and an original transformation.

@@ -8,6 +8,7 @@ from .adoption import audit_adoption_report
 from .baselines import audit_baseline_review_request, audit_baselines
 from .contracts import load_and_validate_contract
 from .control_plane import architecture_graph, validate_control_plane
+from .governance import verify_governance_convergence
 from .memory import audit_memory
 from .planes import audit_planes
 from .quality import audit_thresholds, load_thresholds
@@ -91,6 +92,18 @@ REQUIRED_CONTROL_PLANE_PATHS = (
     "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md",
 )
 
+REQUIRED_V5_GOVERNANCE_PATHS = (
+    "design_intelligence/governance.py",
+    "docs/REPOSITORY-REHABILITATION-AND-FINALIZATION.md",
+    "docs/RELEASE-REPORT-5.0.0.md",
+    ".dev/governance/governance-map.json",
+    ".dev/governance/repository-adapter.json",
+    ".dev/governance/convergence-manifest.json",
+    ".dev/governance/rehabilitation-plan.json",
+    ".dev/governance/HUMAN-READOUT.md",
+    ".dev/governance/OWNER-RATIFICATION.md",
+)
+
 V1_SKILLS = (
     "design-language",
     "ux-architect",
@@ -109,9 +122,12 @@ def run_self_audit(repository_root: str | Path) -> dict[str, Any]:
         + REQUIRED_V3_MISSION_PATHS
         + REQUIRED_V4_ADOPTION_PATHS
         + REQUIRED_CONTROL_PLANE_PATHS
+        + REQUIRED_V5_GOVERNANCE_PATHS
     )
     missing = [path for path in required_paths if not (root / path).exists()]
     checks["requiredInfrastructure"] = {"status": "PASS" if not missing else "FAIL", "missing": missing}
+
+    checks["governanceConvergence"] = verify_governance_convergence(root)
 
     control_plane = validate_control_plane(root)
     checks["controlPlane"] = control_plane
