@@ -1,0 +1,61 @@
+{
+  "completionCriteria": [
+    "The control-plane manifest validates against deterministic repository checks.",
+    "Bounded context and affected verification select only declared repository evidence.",
+    "The visual adapter audits the existing five-viewport Design QA Control Deck evidence without changing thresholds or baselines."
+  ],
+  "context": {
+    "optional": [
+      "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md",
+      "artifacts/design/briefs/ADD-V2-DEMO.json"
+    ],
+    "required": [
+      "AGENTS.md",
+      "tests/design/scenarios/design-department-surface.json"
+    ]
+  },
+  "dependencies": [],
+  "createdAt": "2026-08-23T00:00:00Z",
+  "evidence": [
+    "artifacts/control-plane/phase-0-3/context-pack.json",
+    "artifacts/control-plane/phase-0-3/impact-plan.json",
+    "artifacts/control-plane/phase-0-3/adoption-audit.json",
+    "artifacts/control-plane/phase-0-3/visual-audit.json",
+    "artifacts/control-plane/phase-0-3/doctor.json",
+    "artifacts/control-plane/phase-0-3/self-audit.json"
+  ],
+  "id": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+  "intent": {
+    "backlogItems": ["TASK-DESIGN-CONTROL-PLANE-PILOT"],
+    "experiments": [],
+    "journeys": ["JRN-PILOT-001"],
+    "requirements": ["REQ-VISUAL-001"],
+    "successMetrics": ["MET-VISUAL-001"]
+  },
+  "nonObjectives": [
+    "Do not create a second design-memory, baseline, component, backlog, or E2E authority.",
+    "Do not execute arbitrary verification commands from task input.",
+    "Do not mutate QuotePilot, QuietPilot, or any consuming repository."
+  ],
+  "objective": "Prove the Phase 0-3 development control-plane facade against the existing governed Design QA Control Deck surface.",
+  "risk": "medium",
+  "requiredCapabilities": ["accessibility-analysis", "repository-analysis", "structured-output", "visual-evidence"],
+  "schemaVersion": 2,
+  "scope": {
+    "paths": [
+      "tests/fixtures/visual-surface/**",
+      "tests/design/scenarios/design-department-surface.json",
+      "design_intelligence/control_plane.py",
+      "design_intelligence/devctl_cli.py"
+    ]
+  },
+  "status": "COMPLETED",
+  "title": "Design control-plane bounded pilot",
+  "workType": "design",
+  "verification": {
+    "required": [
+      "unit-governance",
+      "design-standard"
+    ]
+  }
+}

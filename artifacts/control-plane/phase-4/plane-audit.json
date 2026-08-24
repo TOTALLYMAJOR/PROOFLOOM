@@ -1,0 +1,234 @@
+{
+  "architecture": {
+    "catalogVersion": "2026-08-23",
+    "certificationClaimed": false,
+    "contexts": [
+      "ai-assisted-development",
+      "distributable-software",
+      "frontend",
+      "software-tooling",
+      "user-experience"
+    ],
+    "enabled": true,
+    "errors": [],
+    "profile": ".dev/standards-profile.json",
+    "repositoryArchitecture": {
+      "adrCount": 2,
+      "authorityCount": 3,
+      "boundaryChecks": [
+        "unit-governance",
+        "design-full"
+      ],
+      "contractCount": 5,
+      "technologyManifests": [
+        "package.json",
+        "package-lock.json",
+        "pyproject.toml"
+      ],
+      "technologyPolicy": "contextual-not-latest"
+    },
+    "reviewAfter": "2026-11-21",
+    "standards": [
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "NIST-SSDF-1.1",
+        "officialUrl": "https://csrc.nist.gov/pubs/sp/800/218/final",
+        "title": "NIST Secure Software Development Framework",
+        "version": "1.1",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "WCAG-2.2",
+        "officialUrl": "https://www.w3.org/TR/WCAG22/",
+        "title": "Web Content Accessibility Guidelines",
+        "version": "2.2",
+        "versionCurrent": true
+      },
+      {
+        "applicable": false,
+        "disposition": "NOT_APPLICABLE",
+        "id": "OWASP-ASVS-5.0.0",
+        "officialUrl": "https://owasp.org/www-project-application-security-verification-standard/",
+        "title": "OWASP Application Security Verification Standard",
+        "version": "5.0.0",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "SLSA-1.2",
+        "officialUrl": "https://slsa.dev/spec/v1.2/",
+        "title": "Supply-chain Levels for Software Artifacts",
+        "version": "1.2",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "NIST-AI-RMF-1.0",
+        "officialUrl": "https://www.nist.gov/itl/ai-risk-management-framework",
+        "title": "NIST AI Risk Management Framework",
+        "version": "1.0",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "NIST-AI-600-1",
+        "officialUrl": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf",
+        "title": "NIST Generative AI Profile",
+        "version": "1.0",
+        "versionCurrent": true
+      },
+      {
+        "applicable": false,
+        "disposition": "NOT_APPLICABLE",
+        "id": "NIST-CSF-2.0",
+        "officialUrl": "https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20",
+        "title": "NIST Cybersecurity Framework",
+        "version": "2.0",
+        "versionCurrent": true
+      },
+      {
+        "applicable": false,
+        "disposition": "NOT_APPLICABLE",
+        "id": "OTEL-SPEC-1.60.0",
+        "officialUrl": "https://opentelemetry.io/docs/specs/otel/",
+        "title": "OpenTelemetry Specification",
+        "version": "1.60.0",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "ISO-25010-2023",
+        "officialUrl": "https://www.iso.org/standard/78176.html",
+        "title": "Systems and software quality models",
+        "version": "2023",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "ISO-9241-210-2019",
+        "officialUrl": "https://www.iso.org/standard/77520.html",
+        "title": "Human-centred design for interactive systems",
+        "version": "2019",
+        "versionCurrent": true
+      },
+      {
+        "applicable": false,
+        "disposition": "NOT_APPLICABLE",
+        "id": "OPENAPI-3.2.0",
+        "officialUrl": "https://spec.openapis.org/oas/latest.html",
+        "title": "OpenAPI Specification",
+        "version": "3.2.0",
+        "versionCurrent": true
+      }
+    ],
+    "status": "PASS",
+    "warnings": []
+  },
+  "certificationClaimed": false,
+  "intelligence": {
+    "capabilityClassCount": 4,
+    "enabled": true,
+    "errors": [],
+    "instructionCount": 3,
+    "roleCount": 1,
+    "routingPolicy": ".dev/model-routing.json",
+    "skillCount": 5,
+    "status": "PASS",
+    "vendorNeutral": true,
+    "warnings": []
+  },
+  "intent": {
+    "backlog": {
+      "completion": "COMPLETE",
+      "completionPolicy": "all-terminal",
+      "errors": [],
+      "historicalItemCount": 0,
+      "itemCount": 2,
+      "items": [
+        {
+          "authority": null,
+          "dependencies": [
+            "TASK-DESIGN-CONTROL-PLANE-PILOT"
+          ],
+          "evidence": [
+            "artifacts/control-plane/phase-4/manifest-validation.json",
+            "artifacts/control-plane/phase-4/context-pack.json",
+            "artifacts/control-plane/phase-4/impact-plan.json",
+            "artifacts/control-plane/phase-4/intelligence-route.json",
+            "artifacts/control-plane/phase-4/plane-audit.json",
+            "artifacts/control-plane/phase-4/backlog-plan.json",
+            "artifacts/control-plane/phase-4/health.json",
+            "artifacts/control-plane/phase-4/visual-audit.json",
+            "artifacts/control-plane/phase-4/doctor.json",
+            "artifacts/control-plane/phase-4/self-audit.json",
+            "artifacts/control-plane/phase-4/full-ci-summary.json",
+            "artifacts/control-plane/phase-4/files-changed.txt"
+          ],
+          "id": "TASK-CONTROL-PLANE-PHASE-4",
+          "includeInCompletion": true,
+          "rationale": null,
+          "source": ".dev/tasks",
+          "sourceRole": "active",
+          "status": "COMPLETED",
+          "title": "Control-plane Intent, Architecture, Intelligence, and whole-backlog governance"
+        },
+        {
+          "authority": null,
+          "dependencies": [],
+          "evidence": [
+            "artifacts/control-plane/phase-0-3/context-pack.json",
+            "artifacts/control-plane/phase-0-3/impact-plan.json",
+            "artifacts/control-plane/phase-0-3/adoption-audit.json",
+            "artifacts/control-plane/phase-0-3/visual-audit.json",
+            "artifacts/control-plane/phase-0-3/doctor.json",
+            "artifacts/control-plane/phase-0-3/self-audit.json"
+          ],
+          "id": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+          "includeInCompletion": true,
+          "rationale": null,
+          "source": ".dev/tasks",
+          "sourceRole": "active",
+          "status": "COMPLETED",
+          "title": "Design control-plane bounded pilot"
+        }
+      ],
+      "openCount": 0,
+      "sourceCount": 1,
+      "status": "PASS",
+      "terminalCount": 2,
+      "warnings": [],
+      "waves": []
+    },
+    "counts": {
+      "constraints": 1,
+      "experiments": 0,
+      "journeys": 2,
+      "personas": 3,
+      "principles": 2,
+      "requirements": 6,
+      "successMetrics": 6,
+      "vision": 1
+    },
+    "enabled": true,
+    "errors": [],
+    "index": ".dev/intent-index.json",
+    "journeyCoverage": {
+      "activeJourneys": 2,
+      "activeRequirements": 6,
+      "journeyTests": 4,
+      "orphanRequirements": []
+    },
+    "status": "PASS",
+    "warnings": []
+  },
+  "observedAt": "2026-08-24",
+  "status": "PASS"
+}

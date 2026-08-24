@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "details": [],
+      "id": "manifest",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "task-store",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "verification-runtime",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "design-memory",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "governed-baselines",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "quality-thresholds",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "design-adoption",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "root": "/home/administrator/design-intelligence",
+  "status": "PASS",
+  "warnings": []
+}

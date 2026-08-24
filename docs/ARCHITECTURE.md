@@ -33,6 +33,27 @@ request -> relevant memory -> design contract -> implementation -> Playwright re
 
 Model review can classify hierarchy, workflow, visual, responsive, accessibility, component, or drift defects. It cannot modify deterministic scores, lower thresholds, update baselines, or promote its own opinion into institutional law.
 
+## Development control-plane facade
+
+Phases 0-3 add `devctl` as a repository coordination facade, not another intelligence product:
+
+```text
+devctl.yaml -> task packet -> trust-ranked bounded context -> affected verification plan
+                                                    \-> existing design/adoption/visual auditors
+```
+
+`devctl.yaml` indexes existing instructions, architecture, verification commands, and Design Intelligence authorities. `.dev` stores only the manifest version and task packets. `.design`, existing Playwright scenarios, product backlogs, component systems, and release controls remain canonical. The facade does not execute arbitrary commands in this phase. See `docs/CONTROL-PLANE-PHASES-0-3.md` and ADR-0001.
+
+Phase 4 extends the same facade with three governed projections:
+
+```text
+Intent       -> source-bound vision, personas, requirements, journeys, metrics, experiments
+Architecture -> contextual official-standards versions, applicability, evidence, and expiry
+Intelligence -> instruction/skill inventory and vendor-neutral capability routing
+```
+
+The intent index points to canonical repository documents by path and SHA-256. It does not become canonical product truth. The backlog portfolio inventories every declared completion-governed source and permits `COMPLETE` only when every item has a valid terminal disposition. The standards profile is a dated engineering assessment, never certification. Capability routing cannot cross product, architecture, security, production, or baseline authority boundaries. See `docs/CONTROL-PLANE-PHASE-4.md` and ADR-0002.
+
 ## Core shape
 
 `design_intelligence/` is the vendor-neutral core package.

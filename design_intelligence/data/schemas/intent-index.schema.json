@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/intent-index.schema.json",
+  "title": "Repository Intent Index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "vision", "principles", "personas", "requirements", "journeys", "successMetrics", "constraints", "experiments"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "vision": {"$ref": "#/$defs/records"},
+    "principles": {"$ref": "#/$defs/records"},
+    "personas": {"$ref": "#/$defs/records"},
+    "requirements": {"$ref": "#/$defs/records"},
+    "journeys": {"$ref": "#/$defs/records"},
+    "successMetrics": {"$ref": "#/$defs/records"},
+    "constraints": {"$ref": "#/$defs/records"},
+    "experiments": {"$ref": "#/$defs/records"}
+  },
+  "$defs": {
+    "records": {"type": "array", "items": {"$ref": "#/$defs/record"}},
+    "record": {
+      "type": "object",
+      "required": ["id", "status", "lastReviewed", "source"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "status": {"enum": ["ACTIVE", "RETIRED", "PROPOSED"]},
+        "lastReviewed": {"type": "string", "format": "date"},
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256"],
+          "properties": {
+            "path": {"type": "string", "minLength": 1},
+            "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+          }
+        }
+      }
+    }
+  }
+}

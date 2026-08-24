@@ -7,7 +7,9 @@ from typing import Any
 from .adoption import audit_adoption_report
 from .baselines import audit_baseline_review_request, audit_baselines
 from .contracts import load_and_validate_contract
+from .control_plane import architecture_graph, validate_control_plane
 from .memory import audit_memory
+from .planes import audit_planes
 from .quality import audit_thresholds, load_thresholds
 from .registry import audit_component_registry
 from .review_lifecycle import (
@@ -60,6 +62,35 @@ REQUIRED_V4_ADOPTION_PATHS = (
     "docs/design/DESIGN-ADOPTION-GATE.md",
 )
 
+REQUIRED_CONTROL_PLANE_PATHS = (
+    "VERSION",
+    "devctl.yaml",
+    ".dev/VERSION",
+    "design_intelligence/control_plane.py",
+    "design_intelligence/architecture_graph.py",
+    "design_intelligence/devctl_cli.py",
+    "design_intelligence/data/schemas/architecture-graph.schema.json",
+    "design_intelligence/data/schemas/devctl.schema.json",
+    "design_intelligence/data/schemas/task-packet.schema.json",
+    "design_intelligence/planes.py",
+    "design_intelligence/data/defaults/industry-standards.json",
+    "design_intelligence/data/schemas/intent-index.schema.json",
+    "design_intelligence/data/schemas/standards-profile.schema.json",
+    "design_intelligence/data/schemas/model-routing.schema.json",
+    "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+    ".dev/intent-index.json",
+    ".dev/standards-profile.json",
+    ".dev/model-routing.json",
+    "scripts/devctl",
+    "docs/CONTROL-PLANE-PHASES-0-3.md",
+    "docs/CONTROL-PLANE-PHASE-4.md",
+    "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+    "docs/CONTROL-PLANE-ROLES.md",
+    "docs/CONTROL-PLANE-ARCHITECTURE-GRAPH.md",
+    "docs/RELEASE-REPORT-4.0.0.md",
+    "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md",
+)
+
 V1_SKILLS = (
     "design-language",
     "ux-architect",
@@ -77,9 +108,47 @@ def run_self_audit(repository_root: str | Path) -> dict[str, Any]:
         + REQUIRED_V3_SLICE0_PATHS
         + REQUIRED_V3_MISSION_PATHS
         + REQUIRED_V4_ADOPTION_PATHS
+        + REQUIRED_CONTROL_PLANE_PATHS
     )
     missing = [path for path in required_paths if not (root / path).exists()]
     checks["requiredInfrastructure"] = {"status": "PASS" if not missing else "FAIL", "missing": missing}
+
+    control_plane = validate_control_plane(root)
+    checks["controlPlane"] = control_plane
+    if control_plane.get("status") == "PASS":
+        from .control_plane import load_manifest
+
+        checks["controlPlanePlanes"] = audit_planes(root, load_manifest(root))
+        graph = architecture_graph(root)
+        checks["architectureGraph"] = {
+            key: graph[key]
+            for key in (
+                "schemaVersion",
+                "status",
+                "bounded",
+                "limits",
+                "sourceFilesScanned",
+                "discoveredNodeCount",
+                "nodeCount",
+                "edgeCount",
+                "nodeCounts",
+                "graphSha256",
+                "truncated",
+                "claimBoundary",
+                "errors",
+                "warnings",
+            )
+            if key in graph
+        }
+    else:
+        checks["controlPlanePlanes"] = {
+            "status": "FAIL",
+            "errors": ["Plane audit requires a valid control-plane manifest"],
+        }
+        checks["architectureGraph"] = {
+            "status": "FAIL",
+            "errors": ["Architecture graph audit requires a valid control-plane manifest"],
+        }
 
     skill_errors: list[str] = []
     for skill in V1_SKILLS:

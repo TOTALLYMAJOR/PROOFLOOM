@@ -1,0 +1,63 @@
+{
+  "claimBoundary": "Every declared non-historical item is represented; execution remains authority-bound.",
+  "completion": "COMPLETE",
+  "completionPolicy": "all-terminal",
+  "errors": [],
+  "historicalItemCount": 0,
+  "itemCount": 2,
+  "items": [
+    {
+      "authority": null,
+      "dependencies": [
+        "TASK-DESIGN-CONTROL-PLANE-PILOT"
+      ],
+      "evidence": [
+        "artifacts/control-plane/phase-4/manifest-validation.json",
+        "artifacts/control-plane/phase-4/context-pack.json",
+        "artifacts/control-plane/phase-4/impact-plan.json",
+        "artifacts/control-plane/phase-4/intelligence-route.json",
+        "artifacts/control-plane/phase-4/plane-audit.json",
+        "artifacts/control-plane/phase-4/backlog-plan.json",
+        "artifacts/control-plane/phase-4/health.json",
+        "artifacts/control-plane/phase-4/visual-audit.json",
+        "artifacts/control-plane/phase-4/doctor.json",
+        "artifacts/control-plane/phase-4/self-audit.json",
+        "artifacts/control-plane/phase-4/full-ci-summary.json",
+        "artifacts/control-plane/phase-4/files-changed.txt"
+      ],
+      "id": "TASK-CONTROL-PLANE-PHASE-4",
+      "includeInCompletion": true,
+      "rationale": null,
+      "source": ".dev/tasks",
+      "sourceRole": "active",
+      "status": "COMPLETED",
+      "title": "Control-plane Intent, Architecture, Intelligence, and whole-backlog governance"
+    },
+    {
+      "authority": null,
+      "dependencies": [],
+      "evidence": [
+        "artifacts/control-plane/phase-0-3/context-pack.json",
+        "artifacts/control-plane/phase-0-3/impact-plan.json",
+        "artifacts/control-plane/phase-0-3/adoption-audit.json",
+        "artifacts/control-plane/phase-0-3/visual-audit.json",
+        "artifacts/control-plane/phase-0-3/doctor.json",
+        "artifacts/control-plane/phase-0-3/self-audit.json"
+      ],
+      "id": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+      "includeInCompletion": true,
+      "rationale": null,
+      "source": ".dev/tasks",
+      "sourceRole": "active",
+      "status": "COMPLETED",
+      "title": "Design control-plane bounded pilot"
+    }
+  ],
+  "mode": "dependency-waves",
+  "openCount": 0,
+  "sourceCount": 1,
+  "status": "PASS",
+  "terminalCount": 2,
+  "warnings": [],
+  "waves": []
+}

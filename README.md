@@ -1,10 +1,29 @@
-# Design Intelligence v3.0.0 with Design Adoption Gate
+# Design Intelligence v4.0.0 with Repository-Native Development Control Plane
 
 Design Intelligence is a production-grade, vendor-neutral utility for repository-aware design work. Its core mission is design intelligence: understand product intent, preserve existing design truth, reason about UX and design-system change, validate rendered outcomes, and record evidence without turning into a second application scaffold.
 
 The governing objective is:
 
 > Product intent -> repository evidence -> design reasoning -> implementation constraints -> rendered validation -> design learning.
+
+## Development control plane, Phases 0-4
+
+The optional `devctl` facade coordinates repository instructions, hash-bound intent and user journeys, whole-backlog accounting, contextual standards currency, vendor-neutral intelligence routing, bounded task context, affected verification, and the existing Design Intelligence/Playwright evidence systems without creating duplicate authorities.
+
+```bash
+devctl validate --root /path/to/repo
+devctl doctor --root /path/to/repo
+devctl init --dry-run --root /path/to/repo
+devctl planes audit --root /path/to/repo
+devctl backlog status --root /path/to/repo
+devctl health --root /path/to/repo
+devctl intelligence route TASK-ID --root /path/to/repo
+devctl task context TASK-ID --root /path/to/repo
+devctl verify affected TASK-ID --root /path/to/repo --changed src/App.tsx
+devctl visual audit --root /path/to/repo --input artifacts/design/reports/example/qa-report.json
+```
+
+Start with `devctl init --dry-run --root /path/to/repo`, review the detected authorities, scripts, backlog sources, and readiness gaps, then use `devctl init` for the additive manifest and task-store directories. Initialization does not invent product intent, approve standards applicability, create design memory, create a competing backlog, or add an E2E hierarchy. Repository owners must bind reviewed intent, journey, standards, and capability-routing files before all planes can pass. See `docs/CONTROL-PLANE-PHASE-4.md`.
 
 ## The easy path
 
@@ -269,4 +288,4 @@ python3 /mnt/c/Users/Administrator/.codex/skills/.system/skill-creator/scripts/q
 
 ## Release
 
-`VERSION`, `pyproject.toml`, `package.json`, and package exports are aligned at `3.0.0`. The V3 release report is `docs/RELEASE-REPORT-3.0.0.md`.
+`VERSION`, `pyproject.toml`, `package.json`, `package-lock.json`, and package exports are aligned at `4.0.0`. The V4 release report is `docs/RELEASE-REPORT-4.0.0.md`.

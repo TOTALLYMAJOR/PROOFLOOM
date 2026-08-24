@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/devctl.schema.json",
+  "title": "Development Control Plane Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": {"const": "devctl.design-intelligence/v2"},
+    "kind": {"const": "DevelopmentControlPlane"},
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "owner", "phase"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "owner": {"const": "repository"},
+        "phase": {"const": "0-4"}
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instructions", "authorities", "context", "tasks", "verification", "design", "planes"],
+      "properties": {
+        "instructions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["root", "adapters"],
+          "properties": {
+            "root": {"type": ["string", "null"]},
+            "adapters": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+          }
+        },
+        "authorities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "path", "trust", "kind"],
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "path": {"type": "string", "minLength": 1},
+              "trust": {
+                "enum": [
+                  "policy",
+                  "repository-governance",
+                  "approved-task",
+                  "domain-authority",
+                  "institutional-memory",
+                  "source-evidence",
+                  "external-untrusted"
+                ]
+              },
+              "kind": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "context": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["maxFiles", "maxBytes", "neverAutoLoad"],
+          "properties": {
+            "maxFiles": {"type": "integer", "minimum": 1, "maximum": 50},
+            "maxBytes": {"type": "integer", "minimum": 1024, "maximum": 1000000},
+            "neverAutoLoad": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "tasks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["root"],
+          "properties": {"root": {"type": "string", "minLength": 1}}
+        },
+        "verification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["commands", "rules"],
+          "properties": {
+            "commands": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "minItems": 1,
+                "items": {"type": "string", "minLength": 1}
+              }
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["id", "paths", "checks"],
+                "properties": {
+                  "id": {"type": "string", "minLength": 1},
+                  "paths": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+                  "checks": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+                }
+              }
+            }
+          }
+        },
+        "design": {
+          "type": "object",
+          "required": ["enabled", "triggerPaths"],
+          "properties": {
+            "enabled": {"type": "boolean"},
+            "memoryRoot": {"type": "string"},
+            "qualityThresholds": {"type": "string"},
+            "baselineManifest": {"type": "string"},
+            "visualScenario": {"type": "string"},
+            "adoptionReport": {"type": "string"},
+            "triggerPaths": {"type": "array", "items": {"type": "string"}}
+          }
+        },
+        "planes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["intent", "architecture", "intelligence"],
+          "properties": {
+            "intent": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["enabled", "index", "maxReviewAgeDays", "journeyRequiredPaths", "backlog"],
+              "properties": {
+                "enabled": {"type": "boolean"},
+                "index": {"type": "string", "minLength": 1},
+                "maxReviewAgeDays": {"type": "integer", "minimum": 1},
+                "journeyRequiredPaths": {"type": "array", "items": {"type": "string"}},
+                "backlog": {"$ref": "#/$defs/backlog"}
+              }
+            },
+            "architecture": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["enabled", "standardsProfile", "maxReviewAgeDays", "authorityPaths", "contractPaths", "adrGlobs", "boundaryChecks", "technologyCurrency", "impactGraph"],
+              "properties": {
+                "enabled": {"type": "boolean"},
+                "standardsProfile": {"type": "string", "minLength": 1},
+                "maxReviewAgeDays": {"type": "integer", "minimum": 1},
+                "authorityPaths": {"type": "array", "items": {"type": "string"}},
+                "contractPaths": {"type": "array", "items": {"type": "string"}},
+                "adrGlobs": {"type": "array", "items": {"type": "string"}},
+                "boundaryChecks": {"type": "array", "items": {"type": "string"}},
+                "technologyCurrency": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["policy", "reviewedAt", "reviewAfter", "manifests", "evidence"],
+                  "properties": {
+                    "policy": {"const": "contextual-not-latest"},
+                    "reviewedAt": {"type": "string", "format": "date"},
+                    "reviewAfter": {"type": "string", "format": "date"},
+                    "manifests": {"type": "array", "items": {"type": "string"}},
+                    "evidence": {"type": "array", "items": {"type": "string"}}
+                  }
+                },
+                "impactGraph": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["enabled", "include", "exclude", "maxSourceFiles", "maxNodes", "maxImpactNodes", "maxDepth", "codeowners", "ownershipRules", "securityRules", "journeyBindings"],
+                  "properties": {
+                    "enabled": {"type": "boolean"},
+                    "include": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+                    "exclude": {"type": "array", "items": {"type": "string"}},
+                    "maxSourceFiles": {"type": "integer", "minimum": 1, "maximum": 10000},
+                    "maxNodes": {"type": "integer", "minimum": 1, "maximum": 25000},
+                    "maxImpactNodes": {"type": "integer", "minimum": 1, "maximum": 2000},
+                    "maxDepth": {"type": "integer", "minimum": 1, "maximum": 8},
+                    "codeowners": {"type": "array", "items": {"type": "string"}},
+                    "ownershipRules": {"type": "array", "items": {"$ref": "#/$defs/ownershipRule"}},
+                    "securityRules": {"type": "array", "items": {"$ref": "#/$defs/securityRule"}},
+                    "journeyBindings": {"type": "array", "items": {"$ref": "#/$defs/journeyBinding"}}
+                  }
+                }
+              }
+            },
+            "intelligence": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["enabled", "routingPolicy", "instructionPaths", "skillRoots", "rolePaths"],
+              "properties": {
+                "enabled": {"type": "boolean"},
+                "routingPolicy": {"type": "string", "minLength": 1},
+                "instructionPaths": {"type": "array", "items": {"type": "string"}},
+                "skillRoots": {"type": "array", "items": {"type": "string"}},
+                "rolePaths": {"type": "array", "items": {"type": "string"}}
+              }
+            }
+          }
+        },
+        "discovery": {"type": "object"}
+      }
+    }
+  },
+  "$defs": {
+    "ownershipRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "paths", "owners"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "paths": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "owners": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      }
+    },
+    "securityRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "paths", "classification", "authority", "checks"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "paths": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+        "classification": {"type": "string", "minLength": 1},
+        "authority": {"type": "string", "minLength": 1},
+        "checks": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "journeyBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["journeyId", "paths"],
+      "properties": {
+        "journeyId": {"type": "string", "minLength": 1},
+        "paths": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      }
+    },
+    "backlog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["completionPolicy", "sources", "terminalStatuses", "dependencies"],
+      "properties": {
+        "completionPolicy": {"const": "all-terminal"},
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "role", "parser"],
+            "properties": {
+              "path": {"type": "string", "minLength": 1},
+              "role": {"enum": ["active", "staged", "historical"]},
+              "parser": {"enum": ["task-store", "markdown-checkboxes", "markdown-headings", "json-items"]},
+              "includeInCompletion": {"type": "boolean"},
+              "requireItems": {"type": "boolean"}
+            }
+          }
+        },
+        "terminalStatuses": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {"enum": ["COMPLETED", "CANCELLED", "DEFERRED_WITH_AUTHORITY"]}
+        },
+        "dependencies": {
+          "type": "object",
+          "additionalProperties": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

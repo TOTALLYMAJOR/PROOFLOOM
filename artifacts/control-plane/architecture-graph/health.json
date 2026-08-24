@@ -1,0 +1,40 @@
+{
+  "architectureGraph": {
+    "edges": 670,
+    "nodes": 126,
+    "sha256": "f76ca4de4bc6ec8687d3c55c0415a2cc6e8dec69c4a8a46bc54daf5969f34b07",
+    "status": "PASS",
+    "truncated": false
+  },
+  "backlog": {
+    "completion": "COMPLETE",
+    "items": 3,
+    "open": 0,
+    "terminal": 3,
+    "waves": []
+  },
+  "errors": [],
+  "journeys": {
+    "activeJourneys": 2,
+    "activeRequirements": 6,
+    "journeyTests": 4,
+    "orphanRequirements": []
+  },
+  "planes": {
+    "architecture": "PASS",
+    "intelligence": "PASS",
+    "intent": "PASS"
+  },
+  "root": "/home/administrator/design-intelligence",
+  "routing": {
+    "capabilityClasses": 4,
+    "vendorNeutral": true
+  },
+  "standards": {
+    "catalogVersion": "2026-08-23",
+    "certificationClaimed": false,
+    "reviewAfter": "2026-11-21"
+  },
+  "status": "PASS",
+  "warnings": []
+}

@@ -1,0 +1,84 @@
+{
+  "catalogVersion": "2026-08-23",
+  "reviewAfter": "2026-11-21",
+  "verifiedAt": "2026-08-23",
+  "standards": [
+    {
+      "contexts": ["software-tooling", "web-application", "distributable-software"],
+      "id": "NIST-SSDF-1.1",
+      "officialUrl": "https://csrc.nist.gov/pubs/sp/800/218/final",
+      "title": "NIST Secure Software Development Framework",
+      "version": "1.1"
+    },
+    {
+      "contexts": ["frontend", "web-application"],
+      "id": "WCAG-2.2",
+      "officialUrl": "https://www.w3.org/TR/WCAG22/",
+      "title": "Web Content Accessibility Guidelines",
+      "version": "2.2"
+    },
+    {
+      "contexts": ["web-application"],
+      "id": "OWASP-ASVS-5.0.0",
+      "officialUrl": "https://owasp.org/www-project-application-security-verification-standard/",
+      "title": "OWASP Application Security Verification Standard",
+      "version": "5.0.0"
+    },
+    {
+      "contexts": ["distributable-software"],
+      "id": "SLSA-1.2",
+      "officialUrl": "https://slsa.dev/spec/v1.2/",
+      "title": "Supply-chain Levels for Software Artifacts",
+      "version": "1.2"
+    },
+    {
+      "contexts": ["ai-assisted-development", "ai-product"],
+      "id": "NIST-AI-RMF-1.0",
+      "officialUrl": "https://www.nist.gov/itl/ai-risk-management-framework",
+      "title": "NIST AI Risk Management Framework",
+      "version": "1.0"
+    },
+    {
+      "contexts": ["ai-assisted-development", "generative-ai"],
+      "id": "NIST-AI-600-1",
+      "officialUrl": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf",
+      "title": "NIST Generative AI Profile",
+      "version": "1.0"
+    },
+    {
+      "contexts": ["organization-security"],
+      "id": "NIST-CSF-2.0",
+      "officialUrl": "https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20",
+      "title": "NIST Cybersecurity Framework",
+      "version": "2.0"
+    },
+    {
+      "contexts": ["observable-runtime"],
+      "id": "OTEL-SPEC-1.60.0",
+      "officialUrl": "https://opentelemetry.io/docs/specs/otel/",
+      "title": "OpenTelemetry Specification",
+      "version": "1.60.0"
+    },
+    {
+      "contexts": ["software-tooling", "web-application", "ai-product"],
+      "id": "ISO-25010-2023",
+      "officialUrl": "https://www.iso.org/standard/78176.html",
+      "title": "Systems and software quality models",
+      "version": "2023"
+    },
+    {
+      "contexts": ["frontend", "user-experience"],
+      "id": "ISO-9241-210-2019",
+      "officialUrl": "https://www.iso.org/standard/77520.html",
+      "title": "Human-centred design for interactive systems",
+      "version": "2019"
+    },
+    {
+      "contexts": ["http-api"],
+      "id": "OPENAPI-3.2.0",
+      "officialUrl": "https://spec.openapis.org/oas/latest.html",
+      "title": "OpenAPI Specification",
+      "version": "3.2.0"
+    }
+  ]
+}

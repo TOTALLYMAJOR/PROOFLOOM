@@ -1,0 +1,1291 @@
+
+> design-intelligence-visual-qa@4.0.0 design:ci:full
+> python3 scripts/design/ci.py full
+
+
+[full] unit and governance tests
+...............................................................................................................
+----------------------------------------------------------------------
+Ran 111 tests in 175.406s
+
+OK
+
+[full] control-plane manifest
+{
+  "authorityCount": 9,
+  "errors": [],
+  "manifest": "devctl.yaml",
+  "root": "/home/administrator/design-intelligence",
+  "schema": "devctl.schema.json",
+  "status": "PASS",
+  "verificationCommandCount": 4,
+  "warnings": []
+}
+
+[full] control-plane doctor
+{
+  "checks": [
+    {
+      "details": [],
+      "id": "manifest",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "task-store",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "verification-runtime",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "design-memory",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "governed-baselines",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "quality-thresholds",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "design-adoption",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "intent-plane",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "architecture-plane",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "intelligence-plane",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "architecture-impact-graph",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "root": "/home/administrator/design-intelligence",
+  "status": "PASS",
+  "warnings": []
+}
+
+[full] control-plane plane audit
+{
+  "architecture": {
+    "catalogVersion": "2026-08-23",
+    "certificationClaimed": false,
+    "contexts": [
+      "ai-assisted-development",
+      "distributable-software",
+      "frontend",
+      "software-tooling",
+      "user-experience"
+    ],
+    "enabled": true,
+    "errors": [],
+    "profile": ".dev/standards-profile.json",
+    "repositoryArchitecture": {
+      "adrCount": 3,
+      "authorityCount": 4,
+      "boundaryChecks": [
+        "unit-governance",
+        "design-full"
+      ],
+      "contractCount": 6,
+      "technologyManifests": [
+        "package.json",
+        "package-lock.json",
+        "pyproject.toml"
+      ],
+      "technologyPolicy": "contextual-not-latest"
+    },
+    "reviewAfter": "2026-11-21",
+    "standards": [
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "NIST-SSDF-1.1",
+        "officialUrl": "https://csrc.nist.gov/pubs/sp/800/218/final",
+        "title": "NIST Secure Software Development Framework",
+        "version": "1.1",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "WCAG-2.2",
+        "officialUrl": "https://www.w3.org/TR/WCAG22/",
+        "title": "Web Content Accessibility Guidelines",
+        "version": "2.2",
+        "versionCurrent": true
+      },
+      {
+        "applicable": false,
+        "disposition": "NOT_APPLICABLE",
+        "id": "OWASP-ASVS-5.0.0",
+        "officialUrl": "https://owasp.org/www-project-application-security-verification-standard/",
+        "title": "OWASP Application Security Verification Standard",
+        "version": "5.0.0",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "SLSA-1.2",
+        "officialUrl": "https://slsa.dev/spec/v1.2/",
+        "title": "Supply-chain Levels for Software Artifacts",
+        "version": "1.2",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "NIST-AI-RMF-1.0",
+        "officialUrl": "https://www.nist.gov/itl/ai-risk-management-framework",
+        "title": "NIST AI Risk Management Framework",
+        "version": "1.0",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "NIST-AI-600-1",
+        "officialUrl": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf",
+        "title": "NIST Generative AI Profile",
+        "version": "1.0",
+        "versionCurrent": true
+      },
+      {
+        "applicable": false,
+        "disposition": "NOT_APPLICABLE",
+        "id": "NIST-CSF-2.0",
+        "officialUrl": "https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20",
+        "title": "NIST Cybersecurity Framework",
+        "version": "2.0",
+        "versionCurrent": true
+      },
+      {
+        "applicable": false,
+        "disposition": "NOT_APPLICABLE",
+        "id": "OTEL-SPEC-1.60.0",
+        "officialUrl": "https://opentelemetry.io/docs/specs/otel/",
+        "title": "OpenTelemetry Specification",
+        "version": "1.60.0",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "ISO-25010-2023",
+        "officialUrl": "https://www.iso.org/standard/78176.html",
+        "title": "Systems and software quality models",
+        "version": "2023",
+        "versionCurrent": true
+      },
+      {
+        "applicable": true,
+        "disposition": "TAILORED",
+        "id": "ISO-9241-210-2019",
+        "officialUrl": "https://www.iso.org/standard/77520.html",
+        "title": "Human-centred design for interactive systems",
+        "version": "2019",
+        "versionCurrent": true
+      },
+      {
+        "applicable": false,
+        "disposition": "NOT_APPLICABLE",
+        "id": "OPENAPI-3.2.0",
+        "officialUrl": "https://spec.openapis.org/oas/latest.html",
+        "title": "OpenAPI Specification",
+        "version": "3.2.0",
+        "versionCurrent": true
+      }
+    ],
+    "status": "PASS",
+    "warnings": []
+  },
+  "certificationClaimed": false,
+  "intelligence": {
+    "capabilityClassCount": 4,
+    "enabled": true,
+    "errors": [],
+    "instructionCount": 3,
+    "roleCount": 1,
+    "routingPolicy": ".dev/model-routing.json",
+    "skillCount": 5,
+    "status": "PASS",
+    "vendorNeutral": true,
+    "warnings": []
+  },
+  "intent": {
+    "backlog": {
+      "completion": "COMPLETE",
+      "completionPolicy": "all-terminal",
+      "errors": [],
+      "historicalItemCount": 0,
+      "itemCount": 3,
+      "items": [
+        {
+          "authority": null,
+          "dependencies": [
+            "TASK-CONTROL-PLANE-PHASE-4"
+          ],
+          "evidence": [
+            "artifacts/control-plane/architecture-graph/graph.json",
+            "artifacts/control-plane/architecture-graph/task-impact.json",
+            "artifacts/control-plane/architecture-graph/manifest-validation.json",
+            "artifacts/control-plane/architecture-graph/doctor.json",
+            "artifacts/control-plane/architecture-graph/health.json",
+            "artifacts/control-plane/architecture-graph/plane-audit.json",
+            "artifacts/control-plane/architecture-graph/self-audit.json",
+            "artifacts/control-plane/architecture-graph/failure-injection-tests.txt",
+            "artifacts/control-plane/architecture-graph/files-changed.txt"
+          ],
+          "id": "TASK-ARCHITECTURE-IMPACT-GRAPH",
+          "includeInCompletion": true,
+          "rationale": null,
+          "source": ".dev/tasks",
+          "sourceRole": "active",
+          "status": "COMPLETED",
+          "title": "Bounded architecture impact graph"
+        },
+        {
+          "authority": null,
+          "dependencies": [
+            "TASK-DESIGN-CONTROL-PLANE-PILOT"
+          ],
+          "evidence": [
+            "artifacts/control-plane/phase-4/manifest-validation.json",
+            "artifacts/control-plane/phase-4/context-pack.json",
+            "artifacts/control-plane/phase-4/impact-plan.json",
+            "artifacts/control-plane/phase-4/intelligence-route.json",
+            "artifacts/control-plane/phase-4/plane-audit.json",
+            "artifacts/control-plane/phase-4/backlog-plan.json",
+            "artifacts/control-plane/phase-4/health.json",
+            "artifacts/control-plane/phase-4/visual-audit.json",
+            "artifacts/control-plane/phase-4/doctor.json",
+            "artifacts/control-plane/phase-4/self-audit.json",
+            "artifacts/control-plane/phase-4/full-ci-summary.json",
+            "artifacts/control-plane/phase-4/files-changed.txt"
+          ],
+          "id": "TASK-CONTROL-PLANE-PHASE-4",
+          "includeInCompletion": true,
+          "rationale": null,
+          "source": ".dev/tasks",
+          "sourceRole": "active",
+          "status": "COMPLETED",
+          "title": "Control-plane Intent, Architecture, Intelligence, and whole-backlog governance"
+        },
+        {
+          "authority": null,
+          "dependencies": [],
+          "evidence": [
+            "artifacts/control-plane/phase-0-3/context-pack.json",
+            "artifacts/control-plane/phase-0-3/impact-plan.json",
+            "artifacts/control-plane/phase-0-3/adoption-audit.json",
+            "artifacts/control-plane/phase-0-3/visual-audit.json",
+            "artifacts/control-plane/phase-0-3/doctor.json",
+            "artifacts/control-plane/phase-0-3/self-audit.json"
+          ],
+          "id": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+          "includeInCompletion": true,
+          "rationale": null,
+          "source": ".dev/tasks",
+          "sourceRole": "active",
+          "status": "COMPLETED",
+          "title": "Design control-plane bounded pilot"
+        }
+      ],
+      "openCount": 0,
+      "sourceCount": 1,
+      "status": "PASS",
+      "terminalCount": 3,
+      "warnings": [],
+      "waves": []
+    },
+    "counts": {
+      "constraints": 1,
+      "experiments": 0,
+      "journeys": 2,
+      "personas": 3,
+      "principles": 2,
+      "requirements": 6,
+      "successMetrics": 6,
+      "vision": 1
+    },
+    "enabled": true,
+    "errors": [],
+    "index": ".dev/intent-index.json",
+    "journeyCoverage": {
+      "activeJourneys": 2,
+      "activeRequirements": 6,
+      "journeyTests": 4,
+      "orphanRequirements": []
+    },
+    "status": "PASS",
+    "warnings": []
+  },
+  "observedAt": "2026-08-24",
+  "status": "PASS"
+}
+
+[full] bounded architecture graph
+{
+  "bounded": true,
+  "claimBoundary": "Static repository evidence only; the graph does not prove runtime calls, approve boundary changes, or replace repository architecture authorities.",
+  "discoveredNodeCount": 126,
+  "edgeCount": 670,
+  "errors": [],
+  "graphSha256": "f76ca4de4bc6ec8687d3c55c0415a2cc6e8dec69c4a8a46bc54daf5969f34b07",
+  "limits": {
+    "maxDepth": 4,
+    "maxImpactNodes": 300,
+    "maxNodes": 5000,
+    "maxSourceFiles": 2000
+  },
+  "nodeCount": 126,
+  "nodeCounts": {
+    "file": 40,
+    "journey": 2,
+    "owner": 1,
+    "package": 37,
+    "schema": 17,
+    "security-boundary": 2,
+    "test": 27
+  },
+  "root": "/home/administrator/design-intelligence",
+  "schemaVersion": 1,
+  "sourceFilesScanned": 84,
+  "status": "PASS",
+  "truncated": false,
+  "warnings": []
+}
+
+[full] whole-backlog integrity
+{
+  "completion": "COMPLETE",
+  "completionPolicy": "all-terminal",
+  "errors": [],
+  "historicalItemCount": 0,
+  "itemCount": 3,
+  "items": [
+    {
+      "authority": null,
+      "dependencies": [
+        "TASK-CONTROL-PLANE-PHASE-4"
+      ],
+      "evidence": [
+        "artifacts/control-plane/architecture-graph/graph.json",
+        "artifacts/control-plane/architecture-graph/task-impact.json",
+        "artifacts/control-plane/architecture-graph/manifest-validation.json",
+        "artifacts/control-plane/architecture-graph/doctor.json",
+        "artifacts/control-plane/architecture-graph/health.json",
+        "artifacts/control-plane/architecture-graph/plane-audit.json",
+        "artifacts/control-plane/architecture-graph/self-audit.json",
+        "artifacts/control-plane/architecture-graph/failure-injection-tests.txt",
+        "artifacts/control-plane/architecture-graph/files-changed.txt"
+      ],
+      "id": "TASK-ARCHITECTURE-IMPACT-GRAPH",
+      "includeInCompletion": true,
+      "rationale": null,
+      "source": ".dev/tasks",
+      "sourceRole": "active",
+      "status": "COMPLETED",
+      "title": "Bounded architecture impact graph"
+    },
+    {
+      "authority": null,
+      "dependencies": [
+        "TASK-DESIGN-CONTROL-PLANE-PILOT"
+      ],
+      "evidence": [
+        "artifacts/control-plane/phase-4/manifest-validation.json",
+        "artifacts/control-plane/phase-4/context-pack.json",
+        "artifacts/control-plane/phase-4/impact-plan.json",
+        "artifacts/control-plane/phase-4/intelligence-route.json",
+        "artifacts/control-plane/phase-4/plane-audit.json",
+        "artifacts/control-plane/phase-4/backlog-plan.json",
+        "artifacts/control-plane/phase-4/health.json",
+        "artifacts/control-plane/phase-4/visual-audit.json",
+        "artifacts/control-plane/phase-4/doctor.json",
+        "artifacts/control-plane/phase-4/self-audit.json",
+        "artifacts/control-plane/phase-4/full-ci-summary.json",
+        "artifacts/control-plane/phase-4/files-changed.txt"
+      ],
+      "id": "TASK-CONTROL-PLANE-PHASE-4",
+      "includeInCompletion": true,
+      "rationale": null,
+      "source": ".dev/tasks",
+      "sourceRole": "active",
+      "status": "COMPLETED",
+      "title": "Control-plane Intent, Architecture, Intelligence, and whole-backlog governance"
+    },
+    {
+      "authority": null,
+      "dependencies": [],
+      "evidence": [
+        "artifacts/control-plane/phase-0-3/context-pack.json",
+        "artifacts/control-plane/phase-0-3/impact-plan.json",
+        "artifacts/control-plane/phase-0-3/adoption-audit.json",
+        "artifacts/control-plane/phase-0-3/visual-audit.json",
+        "artifacts/control-plane/phase-0-3/doctor.json",
+        "artifacts/control-plane/phase-0-3/self-audit.json"
+      ],
+      "id": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+      "includeInCompletion": true,
+      "rationale": null,
+      "source": ".dev/tasks",
+      "sourceRole": "active",
+      "status": "COMPLETED",
+      "title": "Design control-plane bounded pilot"
+    }
+  ],
+  "openCount": 0,
+  "sourceCount": 1,
+  "status": "PASS",
+  "terminalCount": 3,
+  "warnings": [],
+  "waves": []
+}
+
+[full] control-plane health
+{
+  "architectureGraph": {
+    "edges": 670,
+    "nodes": 126,
+    "sha256": "f76ca4de4bc6ec8687d3c55c0415a2cc6e8dec69c4a8a46bc54daf5969f34b07",
+    "status": "PASS",
+    "truncated": false
+  },
+  "backlog": {
+    "completion": "COMPLETE",
+    "items": 3,
+    "open": 0,
+    "terminal": 3,
+    "waves": []
+  },
+  "errors": [],
+  "journeys": {
+    "activeJourneys": 2,
+    "activeRequirements": 6,
+    "journeyTests": 4,
+    "orphanRequirements": []
+  },
+  "planes": {
+    "architecture": "PASS",
+    "intelligence": "PASS",
+    "intent": "PASS"
+  },
+  "root": "/home/administrator/design-intelligence",
+  "routing": {
+    "capabilityClasses": 4,
+    "vendorNeutral": true
+  },
+  "standards": {
+    "catalogVersion": "2026-08-23",
+    "certificationClaimed": false,
+    "reviewAfter": "2026-11-21"
+  },
+  "status": "PASS",
+  "warnings": []
+}
+
+[full] design contract
+{
+  "status": "PASS",
+  "errors": [],
+  "contract": {
+    "schemaVersion": 1,
+    "taskId": "ADD-V2-DEMO",
+    "product": "Design Intelligence",
+    "surface": "Design QA Control Deck fixture",
+    "actor": "design infrastructure maintainer",
+    "object": "a governed visual QA run",
+    "goal": "verify the V2 evidence and repair pipeline end to end",
+    "decision": "whether the rendered implementation satisfies deterministic quality gates",
+    "state": "V1 utility extended with V2 infrastructure",
+    "blocker": "no governed baseline or rendered proof exists yet",
+    "authority": "explicit user V2 implementation directive",
+    "primaryAction": "inspect latest evidence",
+    "informationPriority": {
+      "primary": [
+        "quality status",
+        "evidence receipt",
+        "promotion boundary"
+      ],
+      "secondary": [
+        "pipeline stages",
+        "memory state"
+      ],
+      "supporting": [
+        "quality threshold categories"
+      ],
+      "rare": [
+        "repair boundary detail"
+      ]
+    },
+    "preserve": [
+      "five V1 skills",
+      "vendor-neutral core",
+      "read-only default"
+    ],
+    "change": [
+      "add deterministic rendered QA and institutional memory"
+    ],
+    "reuse": [
+      "V1 review manifest",
+      "V1 evidence pack",
+      "existing CLI conventions"
+    ],
+    "introduce": [
+      "governed baselines",
+      "quality scoring",
+      "bounded repair proof"
+    ],
+    "doNotTouch": [
+      "consuming product business behavior",
+      "baseline thresholds",
+      "backend authority"
+    ],
+    "responsiveRequirements": [
+      "validate 1440, 1280, 1024, 768, and 390 widths",
+      "reprioritize the evidence rail before the workspace below 900px"
+    ],
+    "accessibilityRequirements": [
+      "zero critical or serious axe violations",
+      "semantic landmarks and accessible control names",
+      "manual semantic review remains required"
+    ],
+    "acceptanceCriteria": [
+      "all five viewports pass containment",
+      "all contract assertions pass",
+      "governed pixel diff remains at or below 0.005",
+      "quality score is at least 90",
+      "three repair demonstrations fail before and pass after"
+    ],
+    "relevantDesignDecisions": [
+      "DL-DI-0001",
+      "DL-DI-0002"
+    ]
+  }
+}
+
+[full] memory integrity
+{
+  "status": "PASS",
+  "counts": {
+    "decisions": 4,
+    "outcomes": 2,
+    "exceptions": 0,
+    "debt": 1,
+    "stale": 0
+  },
+  "errors": [],
+  "warnings": [],
+  "stale": []
+}
+
+[full] baseline integrity
+{
+  "status": "PASS",
+  "checked": 5,
+  "errors": []
+}
+
+[full] component registry
+{
+  "status": "PASS",
+  "components": 0,
+  "missing": [],
+  "drifted": [],
+  "stale": []
+}
+
+[full] design adoption integrity
+{
+  "status": "PASS",
+  "reportId": "DAR-FD587070FCC0E239",
+  "checkedSources": 1,
+  "checkedAuthorities": 14,
+  "errors": []
+}
+
+[full] diff whitespace
+
+[full] governed Playwright QA
+
+> design-intelligence-visual-qa@4.0.0 design:qa
+> node scripts/design/visual-qa.mjs --scenario tests/design/scenarios/design-department-surface.json --output artifacts/design
+
+{
+  "status": "PASS",
+  "report": "artifacts/design/reports/design-department-surface/qa-report.json",
+  "reviewManifest": "artifacts/design/reports/design-department-surface/review-manifest.json"
+}
+
+[full] deterministic quality score
+{
+  "status": "PASS",
+  "score": 100,
+  "pass_threshold": 90,
+  "categories": {
+    "accessibility": {
+      "score": 25,
+      "max": 25,
+      "critical": 0,
+      "serious": 0,
+      "moderate": 0
+    },
+    "viewportContainment": {
+      "score": 25,
+      "max": 25,
+      "failures": 0
+    },
+    "domState": {
+      "score": 20,
+      "max": 20,
+      "passed": 25,
+      "total": 25
+    },
+    "visualDrift": {
+      "score": 20,
+      "max": 20,
+      "passed": 5,
+      "total": 5,
+      "measured": 5
+    },
+    "contract": {
+      "score": 10,
+      "max": 10,
+      "passed": 25,
+      "total": 25
+    }
+  },
+  "mandatory_gates": {
+    "criticalAccessibility": true,
+    "seriousAccessibility": true,
+    "viewportCoverage": true,
+    "viewportContainment": true,
+    "baselineGovernance": true,
+    "visualThreshold": true,
+    "contract": true,
+    "repairLimit": true
+  },
+  "deterministic_only": true,
+  "drift_score": 0,
+  "notes": [
+    "The score contains measurable categories only; model visual-review findings are reported separately.",
+    "Automated accessibility passing does not replace manual semantic review."
+  ]
+}
+
+[full] integrated evidence pack
+VALIDATION
+
+Status: PASS
+Lint status: PASS
+Assessment posture: ALIGN
+Review verdict: PASS
+
+Notes:
+- Validation confirms runtime restructure is not the default path here.
+
+[full] whole-backlog completion gate
+{
+  "completion": "COMPLETE",
+  "completionPolicy": "all-terminal",
+  "errors": [],
+  "historicalItemCount": 0,
+  "itemCount": 3,
+  "items": [
+    {
+      "authority": null,
+      "dependencies": [
+        "TASK-CONTROL-PLANE-PHASE-4"
+      ],
+      "evidence": [
+        "artifacts/control-plane/architecture-graph/graph.json",
+        "artifacts/control-plane/architecture-graph/task-impact.json",
+        "artifacts/control-plane/architecture-graph/manifest-validation.json",
+        "artifacts/control-plane/architecture-graph/doctor.json",
+        "artifacts/control-plane/architecture-graph/health.json",
+        "artifacts/control-plane/architecture-graph/plane-audit.json",
+        "artifacts/control-plane/architecture-graph/self-audit.json",
+        "artifacts/control-plane/architecture-graph/failure-injection-tests.txt",
+        "artifacts/control-plane/architecture-graph/files-changed.txt"
+      ],
+      "id": "TASK-ARCHITECTURE-IMPACT-GRAPH",
+      "includeInCompletion": true,
+      "rationale": null,
+      "source": ".dev/tasks",
+      "sourceRole": "active",
+      "status": "COMPLETED",
+      "title": "Bounded architecture impact graph"
+    },
+    {
+      "authority": null,
+      "dependencies": [
+        "TASK-DESIGN-CONTROL-PLANE-PILOT"
+      ],
+      "evidence": [
+        "artifacts/control-plane/phase-4/manifest-validation.json",
+        "artifacts/control-plane/phase-4/context-pack.json",
+        "artifacts/control-plane/phase-4/impact-plan.json",
+        "artifacts/control-plane/phase-4/intelligence-route.json",
+        "artifacts/control-plane/phase-4/plane-audit.json",
+        "artifacts/control-plane/phase-4/backlog-plan.json",
+        "artifacts/control-plane/phase-4/health.json",
+        "artifacts/control-plane/phase-4/visual-audit.json",
+        "artifacts/control-plane/phase-4/doctor.json",
+        "artifacts/control-plane/phase-4/self-audit.json",
+        "artifacts/control-plane/phase-4/full-ci-summary.json",
+        "artifacts/control-plane/phase-4/files-changed.txt"
+      ],
+      "id": "TASK-CONTROL-PLANE-PHASE-4",
+      "includeInCompletion": true,
+      "rationale": null,
+      "source": ".dev/tasks",
+      "sourceRole": "active",
+      "status": "COMPLETED",
+      "title": "Control-plane Intent, Architecture, Intelligence, and whole-backlog governance"
+    },
+    {
+      "authority": null,
+      "dependencies": [],
+      "evidence": [
+        "artifacts/control-plane/phase-0-3/context-pack.json",
+        "artifacts/control-plane/phase-0-3/impact-plan.json",
+        "artifacts/control-plane/phase-0-3/adoption-audit.json",
+        "artifacts/control-plane/phase-0-3/visual-audit.json",
+        "artifacts/control-plane/phase-0-3/doctor.json",
+        "artifacts/control-plane/phase-0-3/self-audit.json"
+      ],
+      "id": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+      "includeInCompletion": true,
+      "rationale": null,
+      "source": ".dev/tasks",
+      "sourceRole": "active",
+      "status": "COMPLETED",
+      "title": "Design control-plane bounded pilot"
+    }
+  ],
+  "openCount": 0,
+  "sourceCount": 1,
+  "status": "PASS",
+  "terminalCount": 3,
+  "warnings": [],
+  "waves": []
+}
+
+[full] three rendered repair cycles
+
+> design-intelligence-visual-qa@4.0.0 design:repair:prove
+> node scripts/design/prove-repairs.mjs
+
+{
+  "status": "PASS",
+  "cycles": [
+    {
+      "id": "repair-cycle-overflow",
+      "status": "PASS",
+      "findingId": "dom-horizontal-overflow:mobile-390x844"
+    },
+    {
+      "id": "repair-cycle-offscreen-primary-action",
+      "status": "PASS",
+      "findingId": "dom-offscreen-control:mobile-390x844"
+    },
+    {
+      "id": "repair-cycle-accessible-name",
+      "status": "PASS",
+      "findingId": "axe-button-name:mobile-390x844"
+    }
+  ],
+  "baselineManifestUnchanged": true
+}
+
+[full] npm dependency audit
+found 0 vulnerabilities
+
+[full] validate skill design-language
+Skill is valid!
+
+[full] validate skill ux-architect
+Skill is valid!
+
+[full] validate skill reference-intelligence
+Skill is valid!
+
+[full] validate skill visual-review
+Skill is valid!
+
+[full] validate skill design-linter
+Skill is valid!
+
+[full] repository self-audit
+{
+  "status": "PASS",
+  "checks": {
+    "requiredInfrastructure": {
+      "status": "PASS",
+      "missing": []
+    },
+    "controlPlane": {
+      "status": "PASS",
+      "root": "/home/administrator/design-intelligence",
+      "manifest": "devctl.yaml",
+      "schema": "devctl.schema.json",
+      "authorityCount": 9,
+      "verificationCommandCount": 4,
+      "errors": [],
+      "warnings": []
+    },
+    "controlPlanePlanes": {
+      "status": "PASS",
+      "observedAt": "2026-08-24",
+      "intent": {
+        "status": "PASS",
+        "enabled": true,
+        "index": ".dev/intent-index.json",
+        "counts": {
+          "vision": 1,
+          "principles": 2,
+          "personas": 3,
+          "requirements": 6,
+          "journeys": 2,
+          "successMetrics": 6,
+          "constraints": 1,
+          "experiments": 0
+        },
+        "journeyCoverage": {
+          "activeJourneys": 2,
+          "activeRequirements": 6,
+          "journeyTests": 4,
+          "orphanRequirements": []
+        },
+        "backlog": {
+          "status": "PASS",
+          "completion": "COMPLETE",
+          "completionPolicy": "all-terminal",
+          "sourceCount": 1,
+          "itemCount": 3,
+          "historicalItemCount": 0,
+          "terminalCount": 3,
+          "openCount": 0,
+          "items": [
+            {
+              "id": "TASK-ARCHITECTURE-IMPACT-GRAPH",
+              "title": "Bounded architecture impact graph",
+              "status": "COMPLETED",
+              "dependencies": [
+                "TASK-CONTROL-PLANE-PHASE-4"
+              ],
+              "authority": null,
+              "rationale": null,
+              "evidence": [
+                "artifacts/control-plane/architecture-graph/graph.json",
+                "artifacts/control-plane/architecture-graph/task-impact.json",
+                "artifacts/control-plane/architecture-graph/manifest-validation.json",
+                "artifacts/control-plane/architecture-graph/doctor.json",
+                "artifacts/control-plane/architecture-graph/health.json",
+                "artifacts/control-plane/architecture-graph/plane-audit.json",
+                "artifacts/control-plane/architecture-graph/self-audit.json",
+                "artifacts/control-plane/architecture-graph/failure-injection-tests.txt",
+                "artifacts/control-plane/architecture-graph/files-changed.txt"
+              ],
+              "source": ".dev/tasks",
+              "sourceRole": "active",
+              "includeInCompletion": true
+            },
+            {
+              "id": "TASK-CONTROL-PLANE-PHASE-4",
+              "title": "Control-plane Intent, Architecture, Intelligence, and whole-backlog governance",
+              "status": "COMPLETED",
+              "dependencies": [
+                "TASK-DESIGN-CONTROL-PLANE-PILOT"
+              ],
+              "authority": null,
+              "rationale": null,
+              "evidence": [
+                "artifacts/control-plane/phase-4/manifest-validation.json",
+                "artifacts/control-plane/phase-4/context-pack.json",
+                "artifacts/control-plane/phase-4/impact-plan.json",
+                "artifacts/control-plane/phase-4/intelligence-route.json",
+                "artifacts/control-plane/phase-4/plane-audit.json",
+                "artifacts/control-plane/phase-4/backlog-plan.json",
+                "artifacts/control-plane/phase-4/health.json",
+                "artifacts/control-plane/phase-4/visual-audit.json",
+                "artifacts/control-plane/phase-4/doctor.json",
+                "artifacts/control-plane/phase-4/self-audit.json",
+                "artifacts/control-plane/phase-4/full-ci-summary.json",
+                "artifacts/control-plane/phase-4/files-changed.txt"
+              ],
+              "source": ".dev/tasks",
+              "sourceRole": "active",
+              "includeInCompletion": true
+            },
+            {
+              "id": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+              "title": "Design control-plane bounded pilot",
+              "status": "COMPLETED",
+              "dependencies": [],
+              "authority": null,
+              "rationale": null,
+              "evidence": [
+                "artifacts/control-plane/phase-0-3/context-pack.json",
+                "artifacts/control-plane/phase-0-3/impact-plan.json",
+                "artifacts/control-plane/phase-0-3/adoption-audit.json",
+                "artifacts/control-plane/phase-0-3/visual-audit.json",
+                "artifacts/control-plane/phase-0-3/doctor.json",
+                "artifacts/control-plane/phase-0-3/self-audit.json"
+              ],
+              "source": ".dev/tasks",
+              "sourceRole": "active",
+              "includeInCompletion": true
+            }
+          ],
+          "waves": [],
+          "errors": [],
+          "warnings": []
+        },
+        "errors": [],
+        "warnings": []
+      },
+      "architecture": {
+        "status": "PASS",
+        "enabled": true,
+        "profile": ".dev/standards-profile.json",
+        "catalogVersion": "2026-08-23",
+        "reviewAfter": "2026-11-21",
+        "contexts": [
+          "ai-assisted-development",
+          "distributable-software",
+          "frontend",
+          "software-tooling",
+          "user-experience"
+        ],
+        "repositoryArchitecture": {
+          "authorityCount": 4,
+          "contractCount": 6,
+          "adrCount": 3,
+          "boundaryChecks": [
+            "unit-governance",
+            "design-full"
+          ],
+          "technologyManifests": [
+            "package.json",
+            "package-lock.json",
+            "pyproject.toml"
+          ],
+          "technologyPolicy": "contextual-not-latest"
+        },
+        "standards": [
+          {
+            "id": "NIST-SSDF-1.1",
+            "title": "NIST Secure Software Development Framework",
+            "officialUrl": "https://csrc.nist.gov/pubs/sp/800/218/final",
+            "version": "1.1",
+            "applicable": true,
+            "disposition": "TAILORED",
+            "versionCurrent": true
+          },
+          {
+            "id": "WCAG-2.2",
+            "title": "Web Content Accessibility Guidelines",
+            "officialUrl": "https://www.w3.org/TR/WCAG22/",
+            "version": "2.2",
+            "applicable": true,
+            "disposition": "TAILORED",
+            "versionCurrent": true
+          },
+          {
+            "id": "OWASP-ASVS-5.0.0",
+            "title": "OWASP Application Security Verification Standard",
+            "officialUrl": "https://owasp.org/www-project-application-security-verification-standard/",
+            "version": "5.0.0",
+            "applicable": false,
+            "disposition": "NOT_APPLICABLE",
+            "versionCurrent": true
+          },
+          {
+            "id": "SLSA-1.2",
+            "title": "Supply-chain Levels for Software Artifacts",
+            "officialUrl": "https://slsa.dev/spec/v1.2/",
+            "version": "1.2",
+            "applicable": true,
+            "disposition": "TAILORED",
+            "versionCurrent": true
+          },
+          {
+            "id": "NIST-AI-RMF-1.0",
+            "title": "NIST AI Risk Management Framework",
+            "officialUrl": "https://www.nist.gov/itl/ai-risk-management-framework",
+            "version": "1.0",
+            "applicable": true,
+            "disposition": "TAILORED",
+            "versionCurrent": true
+          },
+          {
+            "id": "NIST-AI-600-1",
+            "title": "NIST Generative AI Profile",
+            "officialUrl": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf",
+            "version": "1.0",
+            "applicable": true,
+            "disposition": "TAILORED",
+            "versionCurrent": true
+          },
+          {
+            "id": "NIST-CSF-2.0",
+            "title": "NIST Cybersecurity Framework",
+            "officialUrl": "https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20",
+            "version": "2.0",
+            "applicable": false,
+            "disposition": "NOT_APPLICABLE",
+            "versionCurrent": true
+          },
+          {
+            "id": "OTEL-SPEC-1.60.0",
+            "title": "OpenTelemetry Specification",
+            "officialUrl": "https://opentelemetry.io/docs/specs/otel/",
+            "version": "1.60.0",
+            "applicable": false,
+            "disposition": "NOT_APPLICABLE",
+            "versionCurrent": true
+          },
+          {
+            "id": "ISO-25010-2023",
+            "title": "Systems and software quality models",
+            "officialUrl": "https://www.iso.org/standard/78176.html",
+            "version": "2023",
+            "applicable": true,
+            "disposition": "TAILORED",
+            "versionCurrent": true
+          },
+          {
+            "id": "ISO-9241-210-2019",
+            "title": "Human-centred design for interactive systems",
+            "officialUrl": "https://www.iso.org/standard/77520.html",
+            "version": "2019",
+            "applicable": true,
+            "disposition": "TAILORED",
+            "versionCurrent": true
+          },
+          {
+            "id": "OPENAPI-3.2.0",
+            "title": "OpenAPI Specification",
+            "officialUrl": "https://spec.openapis.org/oas/latest.html",
+            "version": "3.2.0",
+            "applicable": false,
+            "disposition": "NOT_APPLICABLE",
+            "versionCurrent": true
+          }
+        ],
+        "errors": [],
+        "warnings": [],
+        "certificationClaimed": false
+      },
+      "intelligence": {
+        "status": "PASS",
+        "enabled": true,
+        "routingPolicy": ".dev/model-routing.json",
+        "instructionCount": 3,
+        "skillCount": 5,
+        "roleCount": 1,
+        "capabilityClassCount": 4,
+        "vendorNeutral": true,
+        "errors": [],
+        "warnings": []
+      },
+      "certificationClaimed": false
+    },
+    "architectureGraph": {
+      "schemaVersion": 1,
+      "status": "PASS",
+      "bounded": true,
+      "limits": {
+        "maxSourceFiles": 2000,
+        "maxNodes": 5000,
+        "maxImpactNodes": 300,
+        "maxDepth": 4
+      },
+      "sourceFilesScanned": 84,
+      "discoveredNodeCount": 126,
+      "nodeCount": 126,
+      "edgeCount": 670,
+      "nodeCounts": {
+        "file": 40,
+        "journey": 2,
+        "owner": 1,
+        "package": 37,
+        "schema": 17,
+        "security-boundary": 2,
+        "test": 27
+      },
+      "graphSha256": "f76ca4de4bc6ec8687d3c55c0415a2cc6e8dec69c4a8a46bc54daf5969f34b07",
+      "truncated": false,
+      "claimBoundary": "Static repository evidence only; the graph does not prove runtime calls, approve boundary changes, or replace repository architecture authorities.",
+      "errors": [],
+      "warnings": []
+    },
+    "v1Skills": {
+      "status": "PASS",
+      "errors": []
+    },
+    "memory": {
+      "status": "PASS",
+      "counts": {
+        "decisions": 4,
+        "outcomes": 2,
+        "exceptions": 0,
+        "debt": 1,
+        "stale": 0
+      },
+      "errors": [],
+      "warnings": [],
+      "stale": []
+    },
+    "baselines": {
+      "status": "PASS",
+      "checked": 5,
+      "errors": []
+    },
+    "baselineReviewRequests": {
+      "status": "PASS",
+      "count": 2,
+      "requests": {
+        "quietpilot-existing-landing.json": "REVIEWABLE",
+        "quotepilot-existing-landing-v2.json": "BLOCKED"
+      },
+      "errors": []
+    },
+    "baselineReviewReceipts": {
+      "status": "PASS",
+      "count": 1,
+      "receipts": {
+        "quotepilot-hold-2026-08-21.json": "DEFER"
+      },
+      "errors": []
+    },
+    "baselineReviewPolicy": {
+      "status": "PASS",
+      "policy": {
+        "schemaVersion": 1,
+        "maxRequestAgeDays": 14,
+        "maxApprovalAgeDays": 7,
+        "maxDeferAgeDays": 30,
+        "requireHumanAuthority": true,
+        "requireBoundVisualAcceptance": true,
+        "requireBoundSemanticAccessibility": true
+      },
+      "errors": []
+    },
+    "baselineReviewLifecycle": {
+      "status": "PASS",
+      "asOf": "2026-08-24T02:40:00.593103Z",
+      "maxRequestAgeDays": 14,
+      "counts": {
+        "REVIEWABLE": 1,
+        "DEFERRED": 1
+      },
+      "requests": [
+        {
+          "requestId": "BR-0ABFCCDDFB7A4A62",
+          "product": "QuietPilot",
+          "scenarioId": "quietpilot-existing-landing",
+          "state": "REVIEWABLE",
+          "path": "artifacts/design/baseline-requests/quietpilot-existing-landing.json"
+        },
+        {
+          "requestId": "BR-9C2D4593B699634F",
+          "product": "QuotePilot",
+          "scenarioId": "quotepilot-existing-landing-v2",
+          "state": "DEFERRED",
+          "path": "artifacts/design/baseline-requests/quotepilot-existing-landing-v2.json"
+        }
+      ],
+      "errors": []
+    },
+    "remoteCI": {
+      "status": "PASS",
+      "errors": []
+    },
+    "thresholds": {
+      "status": "PASS",
+      "errors": []
+    },
+    "componentRegistry": {
+      "status": "PASS",
+      "components": 0,
+      "missing": [],
+      "drifted": [],
+      "stale": []
+    },
+    "designContracts": {
+      "status": "PASS",
+      "errors": []
+    },
+    "designAdoptions": {
+      "status": "PASS",
+      "count": 8,
+      "current": 1,
+      "reports": {
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy/adoption-report.json": "LEGACY_BLOCKED",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v2/adoption-report.json": "HISTORICAL_BLOCKED",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/adoption-report.json": "HISTORICAL_BLOCKED",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/adoption-report.json": "HISTORICAL_BLOCKED",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v5/adoption-report.json": "HISTORICAL_BLOCKED",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v6/adoption-report.json": "HISTORICAL_BLOCKED",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v7/adoption-report.json": "HISTORICAL_BLOCKED",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v8/adoption-report.json": "PASS"
+      },
+      "errors": [],
+      "warnings": [
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy/adoption-report.json: legacy report remains historical evidence and cannot authorize implementation",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v2/adoption-report.json: historical report cannot authorize implementation: source SRC-F35CD6773FD8: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v2/adoption-report.json: historical report cannot authorize implementation: authority AUTH-58E3DF5505D5: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v2/adoption-report.json: historical report cannot authorize implementation: authority AUTH-FD97592712BB: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/adoption-report.json: historical report cannot authorize implementation: source SRC-F35CD6773FD8: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/adoption-report.json: historical report cannot authorize implementation: authority AUTH-58E3DF5505D5: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/adoption-report.json: historical report cannot authorize implementation: authority AUTH-FD97592712BB: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/adoption-report.json: historical report cannot authorize implementation: authority AUTH-58E3DF5505D5: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/adoption-report.json: historical report cannot authorize implementation: authority AUTH-FD97592712BB: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v5/adoption-report.json: historical report cannot authorize implementation: authority AUTH-58E3DF5505D5: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v5/adoption-report.json: historical report cannot authorize implementation: authority AUTH-FD97592712BB: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v6/adoption-report.json: historical report cannot authorize implementation: authority AUTH-58E3DF5505D5: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v7/adoption-report.json: historical report cannot authorize implementation: authority AUTH-164350EBB57C: hash mismatch"
+      ]
+    },
+    "repairCycles": {
+      "status": "PASS",
+      "count": 3,
+      "errors": []
+    },
+    "quality": {
+      "status": "PASS",
+      "errors": [],
+      "score": 100
+    }
+  },
+  "failures": [],
+  "proofBoundary": "Local repository, deterministic test, and rendered fixture evidence only; no production product acceptance is claimed."
+}
+
+DESIGN CI FULL: PASS

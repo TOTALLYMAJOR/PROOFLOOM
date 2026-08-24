@@ -26,14 +26,18 @@ This repository owns the reusable utility itself. It does not outrank consuming 
 - `skills/`: concise skills plus reference docs
 - `templates/` and `examples/`: reusable design artifacts and product profiles
 - `adapters/`: thin Codex and Claude adapter guidance
+- `devctl.yaml` and `.dev/`: control-plane index, bounded task packets, hash-bound intent index, standards profile, and capability routing; never a second product, design, architecture, or backlog authority
 - `docs/`: architecture and release notes
 - `tests/fixtures/`: bounded proof repositories and manifests
 
 ## Validation
 
 - Run `npm run design:ci:quick` for core and governance changes.
+- Run `devctl validate` and `devctl doctor` after changing control-plane declarations or authorities.
+- Run `devctl planes audit`, `devctl backlog status`, and `devctl health` after changing intent, journeys, standards applicability, intelligence routing, or backlog sources.
+- Never claim backlog completion from a partial queue. Every declared completion-governed item must have a valid terminal disposition.
 - Run `npm run design:ci:standard` for material rendered changes.
-- Run `npm run design:ci:full` before a V3 release.
+- Run `npm run design:ci:full` before a release.
 - Run the skill validator for each skill before tagging.
 - Keep `VERSION`, `pyproject.toml`, and `design_intelligence/__init__.py` aligned.
 - Automatic repair stops after 3 iterations or at authority, scope, architecture, baseline, threshold, test, backend, or product-behavior boundaries.

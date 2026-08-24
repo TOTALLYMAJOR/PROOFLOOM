@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "observedAt": "2026-08-23T21:40:51-05:00",
+  "taskId": "TASK-ARCHITECTURE-IMPACT-GRAPH",
+  "architectureGraph": {
+    "status": "PASS",
+    "sourceFilesScanned": 84,
+    "nodeCount": 126,
+    "edgeCount": 670,
+    "nodeCounts": {
+      "file": 40,
+      "journey": 2,
+      "owner": 1,
+      "package": 37,
+      "schema": 17,
+      "security-boundary": 2,
+      "test": 27
+    },
+    "graphSha256": "f76ca4de4bc6ec8687d3c55c0415a2cc6e8dec69c4a8a46bc54daf5969f34b07",
+    "truncated": false,
+    "summaryRuntimeSeconds": 1.36
+  },
+  "taskImpact": {
+    "status": "PASS",
+    "impactedNodeCount": 16,
+    "impactedPathCount": 10,
+    "requiredChecks": [
+      "design-full",
+      "unit-governance"
+    ],
+    "authorityRequired": true,
+    "truncated": false
+  },
+  "controlPlane": {
+    "manifest": "PASS",
+    "doctor": "PASS",
+    "intentPlane": "PASS",
+    "architecturePlane": "PASS",
+    "intelligencePlane": "PASS",
+    "backlogCompletion": "COMPLETE",
+    "terminalBacklogItems": 3,
+    "openBacklogItems": 0
+  },
+  "tests": {
+    "status": "PASS",
+    "passed": 111,
+    "failed": 0,
+    "elapsedSeconds": 175.406,
+    "architectureFailureInjectionTests": 5
+  },
+  "visualProof": {
+    "status": "PASS",
+    "viewports": 5,
+    "qualityScore": 100,
+    "driftScore": 0,
+    "criticalAccessibilityViolations": 0,
+    "seriousAccessibilityViolations": 0,
+    "containmentFailures": 0,
+    "domAssertions": "25/25",
+    "contractAssertions": "25/25"
+  },
+  "repairProof": {
+    "status": "PASS",
+    "provenCycles": 3,
+    "baselineManifestUnchanged": true
+  },
+  "governance": {
+    "baselineManifestSha256": "03346893f7b9dff8fdd01de647908fb581af1a943ca258ac428057bca65aeef1",
+    "qualityThresholdsSha256": "d58ebfb2ac7abdc31ac16cf5ad125f67ea6d3e47db442d3c4660d7b5c50f4743",
+    "dependencyVulnerabilities": 0,
+    "v1SkillsValid": 5,
+    "selfAudit": "PASS"
+  },
+  "claimBoundary": "Local static repository, deterministic test, and rendered fixture evidence only. No runtime topology completeness, consuming-repository acceptance, production deployment, push, or merge is claimed."
+}

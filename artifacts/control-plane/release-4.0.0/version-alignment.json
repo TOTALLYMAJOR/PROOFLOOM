@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "expected": "4.0.0",
+  "versions": {
+    "VERSION": "4.0.0",
+    "package.json": "4.0.0",
+    "package-lock.json": "4.0.0",
+    "package-lock.json#packages-root": "4.0.0",
+    "pyproject.toml": "4.0.0",
+    "design_intelligence.__version__": "4.0.0"
+  }
+}

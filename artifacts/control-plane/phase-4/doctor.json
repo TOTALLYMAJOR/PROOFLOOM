@@ -1,0 +1,58 @@
+{
+  "checks": [
+    {
+      "details": [],
+      "id": "manifest",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "task-store",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "verification-runtime",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "design-memory",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "governed-baselines",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "quality-thresholds",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "design-adoption",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "intent-plane",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "architecture-plane",
+      "status": "PASS"
+    },
+    {
+      "details": [],
+      "id": "intelligence-plane",
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "root": "/home/administrator/design-intelligence",
+  "status": "PASS",
+  "warnings": []
+}

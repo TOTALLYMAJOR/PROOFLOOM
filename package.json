@@ -1,6 +1,6 @@
 {
   "name": "design-intelligence-visual-qa",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
   "type": "module",
   "description": "Optional Playwright runtime for Design Intelligence visual QA.",
@@ -8,6 +8,13 @@
     "design:reference:capture": "node scripts/design/capture-reference.mjs",
     "design:qa": "node scripts/design/visual-qa.mjs --scenario tests/design/scenarios/design-department-surface.json --output artifacts/design",
     "design:repair:prove": "node scripts/design/prove-repairs.mjs",
+    "devctl:validate": "python3 -m design_intelligence.devctl_cli validate --root . --format json",
+    "devctl:doctor": "python3 -m design_intelligence.devctl_cli doctor --root . --format json",
+    "devctl:discover": "python3 -m design_intelligence.devctl_cli discover --root . --format json",
+    "devctl:planes": "python3 -m design_intelligence.devctl_cli planes audit --root . --format json",
+    "devctl:architecture": "python3 -m design_intelligence.devctl_cli architecture graph --root . --format json",
+    "devctl:health": "python3 -m design_intelligence.devctl_cli health --root . --format json",
+    "devctl:backlog": "python3 -m design_intelligence.devctl_cli backlog complete --root . --format json",
     "design:ci:quick": "python3 scripts/design/ci.py quick",
     "design:ci:standard": "python3 scripts/design/ci.py standard",
     "design:ci:full": "python3 scripts/design/ci.py full"

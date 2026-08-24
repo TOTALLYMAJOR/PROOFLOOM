@@ -1,0 +1,152 @@
+{
+  "status": "PASS",
+  "checks": {
+    "requiredInfrastructure": {
+      "status": "PASS",
+      "missing": []
+    },
+    "controlPlane": {
+      "status": "PASS",
+      "root": "/home/administrator/design-intelligence",
+      "manifest": "devctl.yaml",
+      "schema": "devctl.schema.json",
+      "authorityCount": 4,
+      "verificationCommandCount": 4,
+      "errors": [],
+      "warnings": []
+    },
+    "v1Skills": {
+      "status": "PASS",
+      "errors": []
+    },
+    "memory": {
+      "status": "PASS",
+      "counts": {
+        "decisions": 4,
+        "outcomes": 2,
+        "exceptions": 0,
+        "debt": 1,
+        "stale": 0
+      },
+      "errors": [],
+      "warnings": [],
+      "stale": []
+    },
+    "baselines": {
+      "status": "PASS",
+      "checked": 5,
+      "errors": []
+    },
+    "baselineReviewRequests": {
+      "status": "PASS",
+      "count": 2,
+      "requests": {
+        "quietpilot-existing-landing.json": "REVIEWABLE",
+        "quotepilot-existing-landing-v2.json": "BLOCKED"
+      },
+      "errors": []
+    },
+    "baselineReviewReceipts": {
+      "status": "PASS",
+      "count": 1,
+      "receipts": {
+        "quotepilot-hold-2026-08-21.json": "DEFER"
+      },
+      "errors": []
+    },
+    "baselineReviewPolicy": {
+      "status": "PASS",
+      "policy": {
+        "schemaVersion": 1,
+        "maxRequestAgeDays": 14,
+        "maxApprovalAgeDays": 7,
+        "maxDeferAgeDays": 30,
+        "requireHumanAuthority": true,
+        "requireBoundVisualAcceptance": true,
+        "requireBoundSemanticAccessibility": true
+      },
+      "errors": []
+    },
+    "baselineReviewLifecycle": {
+      "status": "PASS",
+      "asOf": "2026-08-24T00:43:56.772356Z",
+      "maxRequestAgeDays": 14,
+      "counts": {
+        "REVIEWABLE": 1,
+        "DEFERRED": 1
+      },
+      "requests": [
+        {
+          "requestId": "BR-0ABFCCDDFB7A4A62",
+          "product": "QuietPilot",
+          "scenarioId": "quietpilot-existing-landing",
+          "state": "REVIEWABLE",
+          "path": "artifacts/design/baseline-requests/quietpilot-existing-landing.json"
+        },
+        {
+          "requestId": "BR-9C2D4593B699634F",
+          "product": "QuotePilot",
+          "scenarioId": "quotepilot-existing-landing-v2",
+          "state": "DEFERRED",
+          "path": "artifacts/design/baseline-requests/quotepilot-existing-landing-v2.json"
+        }
+      ],
+      "errors": []
+    },
+    "remoteCI": {
+      "status": "PASS",
+      "errors": []
+    },
+    "thresholds": {
+      "status": "PASS",
+      "errors": []
+    },
+    "componentRegistry": {
+      "status": "PASS",
+      "components": 0,
+      "missing": [],
+      "drifted": [],
+      "stale": []
+    },
+    "designContracts": {
+      "status": "PASS",
+      "errors": []
+    },
+    "designAdoptions": {
+      "status": "PASS",
+      "count": 5,
+      "current": 1,
+      "reports": {
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy/adoption-report.json": "LEGACY_BLOCKED",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v2/adoption-report.json": "HISTORICAL_BLOCKED",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/adoption-report.json": "HISTORICAL_BLOCKED",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/adoption-report.json": "HISTORICAL_BLOCKED",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v5/adoption-report.json": "PASS"
+      },
+      "errors": [],
+      "warnings": [
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy/adoption-report.json: legacy report remains historical evidence and cannot authorize implementation",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v2/adoption-report.json: historical report cannot authorize implementation: source SRC-F35CD6773FD8: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v2/adoption-report.json: historical report cannot authorize implementation: authority AUTH-58E3DF5505D5: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v2/adoption-report.json: historical report cannot authorize implementation: authority AUTH-FD97592712BB: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/adoption-report.json: historical report cannot authorize implementation: source SRC-F35CD6773FD8: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/adoption-report.json: historical report cannot authorize implementation: authority AUTH-58E3DF5505D5: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/adoption-report.json: historical report cannot authorize implementation: authority AUTH-FD97592712BB: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/adoption-report.json: historical report cannot authorize implementation: authority AUTH-58E3DF5505D5: hash mismatch",
+        "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v4/adoption-report.json: historical report cannot authorize implementation: authority AUTH-FD97592712BB: hash mismatch"
+      ]
+    },
+    "repairCycles": {
+      "status": "PASS",
+      "count": 3,
+      "errors": []
+    },
+    "quality": {
+      "status": "PASS",
+      "errors": [],
+      "score": 100
+    }
+  },
+  "failures": [],
+  "proofBoundary": "Local repository, deterministic test, and rendered fixture evidence only; no production product acceptance is claimed."
+}
