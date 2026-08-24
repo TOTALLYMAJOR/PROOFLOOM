@@ -22,6 +22,7 @@
     ],
     "backlog": [
       "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+      "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
       "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
     ],
     "contracts": [
@@ -71,6 +72,7 @@
       "docs/RELEASE-REPORT-3.0.0.md",
       "docs/RELEASE-REPORT-4.0.0.md",
       "docs/RELEASE-REPORT-5.0.0.md",
+      "docs/RELEASE-REPORT-5.0.1.md",
       "package.json",
       "pyproject.toml",
       "tests/fixtures/broken-ia/package.json",
@@ -172,7 +174,8 @@
       ".design/memory/schemas/design-outcome.schema.json",
       ".design/memory/schemas/validation-evidence.schema.json",
       "design_intelligence/data/schemas/design-outcome.schema.json",
-      "design_intelligence/data/schemas/validation-evidence.schema.json"
+      "design_intelligence/data/schemas/validation-evidence.schema.json",
+      "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md"
     ],
     "experiments": [
       ".dev/intent-index.json"
@@ -279,6 +282,7 @@
   "backlog": {
     "activeSources": [
       "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+      "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
       "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
     ],
     "canonicalSources": [

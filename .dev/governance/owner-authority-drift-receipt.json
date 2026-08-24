@@ -1,0 +1,13 @@
+{
+  "kind": "AuthorityDriftRatification",
+  "decision": "ACCEPT_AUTHORITY_DRIFT",
+  "authority": "repository-owner",
+  "approvedBy": "repository owner (direct V5.0.1 release authorization)",
+  "approvedAt": "2026-08-24T02:48:06-05:00",
+  "reason": "Authorize the V5.0.1 patch-version alignment required to package the verified adoption-evidence checkout-relocation correction. No product, baseline, threshold, deployment, or consuming-repository authority is changed.",
+  "paths": [
+    "package.json",
+    "pyproject.toml"
+  ],
+  "authorityStateSha256": "ccb249cb90bd851a2a120618cfb0b05ef03c4e8edd1460f9b929b9123c5baf4a"
+}

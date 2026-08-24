@@ -309,4 +309,4 @@ python3 /mnt/c/Users/Administrator/.codex/skills/.system/skill-creator/scripts/q
 
 ## Release
 
-`VERSION`, `pyproject.toml`, `package.json`, `package-lock.json`, and package exports are aligned at `5.0.0`. The V5 release report is `docs/RELEASE-REPORT-5.0.0.md`.
+`VERSION`, `pyproject.toml`, `package.json`, `package-lock.json`, and package exports are aligned at `5.0.1`. The current patch release report is `docs/RELEASE-REPORT-5.0.1.md`; the V5 capability report remains `docs/RELEASE-REPORT-5.0.0.md`.

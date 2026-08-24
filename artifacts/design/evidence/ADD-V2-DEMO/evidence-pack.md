@@ -1,7 +1,7 @@
 # Evidence Pack
 
 ## Decision summary
-INTEGRATE with ALIGN posture; knowledge strategy ALIGN, runtime strategy KEEP.
+INTEGRATE with CONVERGE posture; knowledge strategy CONVERGE, runtime strategy KEEP.
 
 ## Design contract
 - task: ADD-V2-DEMO

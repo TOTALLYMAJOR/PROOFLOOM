@@ -604,7 +604,7 @@
         "governance"
       ],
       "scope": "repository",
-      "sha256": "d8e22a9e12db95810ca57ee8a1116e2efe96aa2b233e72ed828f55bad259b394"
+      "sha256": "a80cb9010775a2e6116664120ad51f2c07af64f05a9a4789c7731a3a1fc4efa7"
     },
     {
       "authorityLevel": "binding",
@@ -783,6 +783,29 @@
       ],
       "scope": "domain:RELEASE-REPORT-5.0.0.md",
       "sha256": "94dda0845ba29c6e819413fcfb132e52879d1f3f5724164cb36d71f91fd42dde"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/RELEASE-REPORT-5.0.1.md",
+      "roles": [
+        "delivery"
+      ],
+      "scope": "domain:RELEASE-REPORT-5.0.1.md",
+      "sha256": "b68a9cfa6851353fa349004882626015716ef5f40b36977ebe89c3d53e69b768"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
+      "roles": [
+        "backlog",
+        "evidence"
+      ],
+      "scope": "domain:ROADMAP-V6-RUNTIME-OUTCOMES.md",
+      "sha256": "a08f06b82608468d552452e5bcdb22296dcc68de74ada22e6922cbc0b254cc56"
     },
     {
       "authorityLevel": "binding",
@@ -976,7 +999,7 @@
         "delivery"
       ],
       "scope": "repository",
-      "sha256": "c823ba9af5578a8e1aede8b893db999ecf0f18f9e08a8886d6772dbbe213c95e"
+      "sha256": "b97c7676675fc74712a65a3bacc404a3ce82e4e9121f6d370ed45eecd110c957"
     },
     {
       "authorityLevel": "candidate",
@@ -988,7 +1011,7 @@
         "delivery"
       ],
       "scope": "repository",
-      "sha256": "53c15515c544838d6bce490f927d1572ad638fbe5b98a875e49019b49f5ec5e3"
+      "sha256": "36a6990cb2309a0a87c5e98f808cb6e1e5c9233485bcb1877c09c6a5dd43c027"
     },
     {
       "authorityLevel": "candidate",
@@ -1604,11 +1627,11 @@
   "authoritySummary": {
     "adrs": 4,
     "architecture": 12,
-    "backlog": 2,
+    "backlog": 3,
     "contracts": 38,
-    "delivery": 16,
+    "delivery": 17,
     "design": 84,
-    "evidence": 4,
+    "evidence": 5,
     "experiments": 1,
     "governance": 17,
     "instructions": 9,
@@ -1624,6 +1647,7 @@
   "backlogModel": {
     "activeSources": [
       "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+      "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
       "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
     ],
     "canonicalSources": [
