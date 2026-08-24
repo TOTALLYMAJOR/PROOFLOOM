@@ -1,0 +1,55 @@
+{
+  "backlog": {
+    "completion": "COMPLETE",
+    "items": 2,
+    "open": 0,
+    "terminal": 2
+  },
+  "baselineManifest": {
+    "sha256": "03346893f7b9dff8fdd01de647908fb581af1a943ca258ac428057bca65aeef1",
+    "unchanged": true
+  },
+  "command": ["npm", "run", "design:ci:full"],
+  "dependencyAudit": {
+    "vulnerabilities": 0
+  },
+  "exitCode": 0,
+  "generatedAt": "2026-08-24T01:46:33Z",
+  "planes": {
+    "architecture": "PASS",
+    "intelligence": "PASS",
+    "intent": "PASS"
+  },
+  "repositoryArchitecture": {
+    "adrs": 2,
+    "authorities": 3,
+    "boundaryChecks": 2,
+    "contracts": 5,
+    "technologyManifests": 3,
+    "technologyPolicy": "contextual-not-latest"
+  },
+  "quality": {
+    "accessibilityCritical": 0,
+    "accessibilitySerious": 0,
+    "contractAssertionsPassed": 25,
+    "domStateAssertionsPassed": 25,
+    "driftScore": 0,
+    "score": 100,
+    "viewports": 5
+  },
+  "repair": {
+    "baselineManifestUnchanged": true,
+    "cyclesPassed": 3
+  },
+  "schemaVersion": 1,
+  "selfAudit": "PASS",
+  "skills": {
+    "preserved": 5,
+    "validated": 5
+  },
+  "status": "PASS",
+  "tests": {
+    "passed": 105,
+    "total": 105
+  }
+}

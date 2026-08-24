@@ -1,0 +1,359 @@
+{
+  "apiVersion": "devctl.design-intelligence/v2",
+  "kind": "DevelopmentControlPlane",
+  "metadata": {
+    "name": "design-intelligence",
+    "owner": "repository",
+    "phase": "0-5"
+  },
+  "spec": {
+    "authorities": [
+      {
+        "id": "repository-agent-guide",
+        "kind": "instructions",
+        "path": "AGENTS.md",
+        "trust": "repository-governance"
+      },
+      {
+        "id": "architecture",
+        "kind": "architecture",
+        "path": "docs/ARCHITECTURE.md",
+        "trust": "domain-authority"
+      },
+      {
+        "id": "control-plane-intent-architecture-intelligence",
+        "kind": "product-architecture",
+        "path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+        "trust": "domain-authority"
+      },
+      {
+        "id": "control-plane-roles",
+        "kind": "intelligence-roles",
+        "path": "docs/CONTROL-PLANE-ROLES.md",
+        "trust": "domain-authority"
+      },
+      {
+        "id": "architecture-adr-0002-plane-governance-whole-backlog",
+        "kind": "architecture",
+        "path": "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
+        "trust": "domain-authority"
+      },
+      {
+        "id": "architecture-adr-0003-bounded-impact-graph",
+        "kind": "architecture",
+        "path": "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md",
+        "trust": "domain-authority"
+      },
+      {
+        "id": "control-plane-architecture-graph",
+        "kind": "product-architecture",
+        "path": "docs/CONTROL-PLANE-ARCHITECTURE-GRAPH.md",
+        "trust": "domain-authority"
+      },
+      {
+        "id": "design-language",
+        "kind": "design",
+        "path": "docs/design/DESIGN-LANGUAGE.md",
+        "trust": "domain-authority"
+      },
+      {
+        "id": "readme",
+        "kind": "documentation",
+        "path": "README.md",
+        "trust": "domain-authority"
+      }
+    ],
+    "context": {
+      "maxBytes": 192000,
+      "maxFiles": 20,
+      "neverAutoLoad": [
+        ".env*",
+        "**/.env*",
+        "**/*credential*",
+        "**/*secret*",
+        ".git/**",
+        "node_modules/**"
+      ]
+    },
+    "design": {
+      "adoptionReport": "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v9/adoption-report.json",
+      "baselineManifest": ".design/baselines/manifest.json",
+      "enabled": true,
+      "memoryRoot": ".design/memory",
+      "qualityThresholds": ".design/quality/thresholds.json",
+      "triggerPaths": [
+        "app/**",
+        "components/**",
+        "pages/**",
+        "src/**",
+        "styles/**",
+        "tests/fixtures/visual-surface/**"
+      ],
+      "visualScenario": "tests/design/scenarios/design-department-surface.json"
+    },
+    "discovery": {
+      "existingDesignMemory": true,
+      "frontend": "Unknown",
+      "repositoryMaturity": "PARTIAL"
+    },
+    "instructions": {
+      "adapters": [
+        "adapters/codex/AGENTS.md",
+        "adapters/claude/CLAUDE.md"
+      ],
+      "root": "AGENTS.md"
+    },
+    "planes": {
+      "architecture": {
+        "adrGlobs": [
+          "docs/architecture/ADR-*.md"
+        ],
+        "authorityPaths": [
+          "docs/ARCHITECTURE.md",
+          "docs/architecture/ADR-0001-development-control-plane-facade.md",
+          "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
+          "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md"
+        ],
+        "boundaryChecks": [
+          "unit-governance",
+          "design-full"
+        ],
+        "contractPaths": [
+          "devctl.yaml",
+          "package.json",
+          "pyproject.toml",
+          "design_intelligence/data/schemas/task-packet.schema.json",
+          "design_intelligence/data/schemas/architecture-graph.schema.json",
+          "design_intelligence/data/schemas/design-contract.schema.json"
+        ],
+        "enabled": true,
+        "maxReviewAgeDays": 90,
+        "standardsProfile": ".dev/standards-profile.json",
+        "technologyCurrency": {
+          "evidence": [
+            "artifacts/control-plane/phase-4/full-ci-summary.json"
+          ],
+          "manifests": [
+            "package.json",
+            "package-lock.json",
+            "pyproject.toml"
+          ],
+          "policy": "contextual-not-latest",
+          "reviewAfter": "2026-11-21",
+          "reviewedAt": "2026-08-23"
+        },
+        "impactGraph": {
+          "enabled": true,
+          "include": [
+            ".dev/**/*.json",
+            "design_intelligence/**/*.py",
+            "design_intelligence/data/schemas/*.json",
+            "scripts/**/*.py",
+            "tests/**/*.py",
+            "tests/**/*.json",
+            "tests/**/*.mjs",
+            "tests/fixtures/visual-surface/**",
+            "devctl.yaml",
+            "package.json",
+            "pyproject.toml"
+          ],
+          "exclude": [
+            ".git/**",
+            ".venv/**",
+            "node_modules/**",
+            "artifacts/**",
+            "**/__pycache__/**",
+            "**/*.pyc",
+            "**/.env*",
+            "**/*credential*",
+            "**/*secret*"
+          ],
+          "maxSourceFiles": 2000,
+          "maxNodes": 5000,
+          "maxImpactNodes": 300,
+          "maxDepth": 4,
+          "codeowners": [
+            ".github/CODEOWNERS",
+            "CODEOWNERS"
+          ],
+          "ownershipRules": [
+            {
+              "id": "control-plane-maintainers",
+              "paths": [
+                ".dev/**",
+                "design_intelligence/**",
+                "scripts/**",
+                "tests/**",
+                "devctl.yaml",
+                "package.json",
+                "pyproject.toml"
+              ],
+              "owners": [
+                "repository-maintainers"
+              ]
+            }
+          ],
+          "securityRules": [
+            {
+              "id": "authority-and-scope-boundary",
+              "paths": [
+                "design_intelligence/control_plane.py",
+                "design_intelligence/planes.py",
+                "design_intelligence/architecture_graph.py",
+                "devctl.yaml",
+                ".dev/tasks/**"
+              ],
+              "classification": "protected-governance",
+              "authority": "repository owner",
+              "checks": [
+                "unit-governance",
+                "design-full"
+              ]
+            },
+            {
+              "id": "evidence-integrity-boundary",
+              "paths": [
+                "design_intelligence/storage.py",
+                "design_intelligence/baselines.py",
+                "design_intelligence/evidence.py",
+                "design_intelligence/quality.py"
+              ],
+              "classification": "protected-evidence",
+              "authority": "repository owner",
+              "checks": [
+                "unit-governance",
+                "design-full"
+              ]
+            }
+          ],
+          "journeyBindings": [
+            {
+              "journeyId": "JRN-ADOPT-001",
+              "paths": [
+                "design_intelligence/control_plane.py",
+                "design_intelligence/devctl_cli.py",
+                "design_intelligence/planes.py",
+                "design_intelligence/architecture_graph.py",
+                "devctl.yaml"
+              ]
+            },
+            {
+              "journeyId": "JRN-PILOT-001",
+              "paths": [
+                "tests/fixtures/visual-surface/**",
+                "tests/design/scenarios/design-department-surface.json",
+                "tests/test_governance_v3.py"
+              ]
+            }
+          ]
+        }
+      },
+      "intelligence": {
+        "enabled": true,
+        "instructionPaths": [
+          "AGENTS.md",
+          "adapters/codex/AGENTS.md",
+          "adapters/claude/CLAUDE.md"
+        ],
+        "rolePaths": [
+          "docs/CONTROL-PLANE-ROLES.md"
+        ],
+        "routingPolicy": ".dev/model-routing.json",
+        "skillRoots": [
+          "skills"
+        ]
+      },
+      "intent": {
+        "backlog": {
+          "completionPolicy": "all-terminal",
+          "dependencies": {},
+          "sources": [
+            {
+              "includeInCompletion": true,
+              "parser": "task-store",
+              "path": ".dev/tasks",
+              "requireItems": true,
+              "role": "active"
+            }
+          ],
+          "terminalStatuses": [
+            "COMPLETED",
+            "CANCELLED",
+            "DEFERRED_WITH_AUTHORITY"
+          ]
+        },
+        "enabled": true,
+        "index": ".dev/intent-index.json",
+        "journeyRequiredPaths": [
+          "app/**",
+          "components/**",
+          "pages/**",
+          "src/**",
+          "tests/fixtures/visual-surface/**"
+        ],
+        "maxReviewAgeDays": 180
+      }
+    },
+    "tasks": {
+      "root": ".dev/tasks"
+    },
+    "verification": {
+      "commands": {
+        "design-full": [
+          "npm",
+          "run",
+          "design:ci:full"
+        ],
+        "design-quick": [
+          "npm",
+          "run",
+          "design:ci:quick"
+        ],
+        "design-standard": [
+          "npm",
+          "run",
+          "design:ci:standard"
+        ],
+        "unit-governance": [
+          "python3",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "tests",
+          "-p",
+          "test_*.py"
+        ]
+      },
+      "rules": [
+        {
+          "checks": [
+            "unit-governance"
+          ],
+          "id": "python-control-plane",
+          "paths": [
+            "design_intelligence/**",
+            "tests/**",
+            "scripts/**",
+            "devctl.yaml",
+            ".dev/**"
+          ]
+        },
+        {
+          "checks": [
+            "design-standard"
+          ],
+          "id": "rendered-design-surface",
+          "paths": [
+            "app/**",
+            "components/**",
+            "pages/**",
+            "src/**",
+            "styles/**",
+            "tests/fixtures/visual-surface/**"
+          ]
+        }
+      ]
+    }
+  }
+}

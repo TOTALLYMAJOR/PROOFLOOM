@@ -1,0 +1,111 @@
+{
+  "authorityBoundaries": [
+    "architectureBoundaryChange",
+    "majorProductDecision"
+  ],
+  "completionCriteria": [
+    "Intent, Architecture, and Intelligence planes pass deterministic audits.",
+    "Every user-facing requirement has reciprocal journey coverage and existing test evidence.",
+    "Whole-backlog status inventories every declared item and the strict completion gate passes only after this task is terminal.",
+    "Industry standards are versioned, context-dispositioned, evidence-bound, review-expiring, and explicitly non-certifying.",
+    "Capability routing is vendor-neutral and human-gated at protected authority boundaries.",
+    "Read-only QuietPilot discovery writes nothing and surfaces repository-owner readiness gaps.",
+    "The existing five-viewport visual proof, thresholds, baseline hash, and three deterministic repair cycles remain governed and passing."
+  ],
+  "context": {
+    "optional": [
+      "docs/CONTROL-PLANE-PHASE-4.md",
+      "docs/IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASE-4.md",
+      "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md"
+    ],
+    "required": [
+      "AGENTS.md",
+      "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
+    ]
+  },
+  "dependencies": [
+    "TASK-DESIGN-CONTROL-PLANE-PILOT"
+  ],
+  "evidence": [
+    "artifacts/control-plane/phase-4/manifest-validation.json",
+    "artifacts/control-plane/phase-4/context-pack.json",
+    "artifacts/control-plane/phase-4/impact-plan.json",
+    "artifacts/control-plane/phase-4/intelligence-route.json",
+    "artifacts/control-plane/phase-4/plane-audit.json",
+    "artifacts/control-plane/phase-4/backlog-plan.json",
+    "artifacts/control-plane/phase-4/health.json",
+    "artifacts/control-plane/phase-4/visual-audit.json",
+    "artifacts/control-plane/phase-4/doctor.json",
+    "artifacts/control-plane/phase-4/self-audit.json",
+    "artifacts/control-plane/phase-4/full-ci-summary.json",
+    "artifacts/control-plane/phase-4/files-changed.txt"
+  ],
+  "id": "TASK-CONTROL-PLANE-PHASE-4",
+  "intent": {
+    "backlogItems": [
+      "TASK-CONTROL-PLANE-PHASE-4"
+    ],
+    "experiments": [],
+    "journeys": [
+      "JRN-ADOPT-001",
+      "JRN-PILOT-001"
+    ],
+    "requirements": [
+      "REQ-ADOPTION-001",
+      "REQ-JOURNEY-001",
+      "REQ-BACKLOG-001",
+      "REQ-STANDARDS-001",
+      "REQ-ROUTING-001",
+      "REQ-VISUAL-001"
+    ],
+    "successMetrics": [
+      "MET-ADOPTION-001",
+      "MET-JOURNEY-001",
+      "MET-BACKLOG-001",
+      "MET-STANDARDS-001",
+      "MET-ROUTING-001",
+      "MET-VISUAL-001"
+    ]
+  },
+  "nonObjectives": [
+    "Do not mutate QuietPilot, QuotePilot, a production environment, thresholds, or governed baselines.",
+    "Do not create a competing repository authority, product backlog, design memory, component system, or E2E hierarchy.",
+    "Do not execute blocked, staged, security-sensitive, architecture-sensitive, or release-sensitive backlog work without authority.",
+    "Do not claim external certification or consuming-product acceptance."
+  ],
+  "objective": "Implement repository-governed Intent, Architecture, and Intelligence planes with user journeys and whole-backlog completion semantics.",
+  "requiredCapabilities": [
+    "dependency-analysis",
+    "repository-analysis",
+    "standards-assessment",
+    "structured-output",
+    "visual-evidence"
+  ],
+  "risk": "high",
+  "schemaVersion": 2,
+  "scope": {
+    "paths": [
+      ".dev/**",
+      "design_intelligence/control_plane.py",
+      "design_intelligence/devctl_cli.py",
+      "design_intelligence/planes.py",
+      "design_intelligence/data/defaults/**",
+      "design_intelligence/data/schemas/**",
+      "docs/**",
+      "tests/**",
+      "scripts/design/ci.py",
+      "devctl.yaml",
+      "package.json"
+    ]
+  },
+  "status": "COMPLETED",
+  "title": "Control-plane Intent, Architecture, Intelligence, and whole-backlog governance",
+  "verification": {
+    "required": [
+      "unit-governance",
+      "design-full"
+    ]
+  },
+  "workType": "architecture"
+}

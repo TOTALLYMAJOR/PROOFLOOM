@@ -1,0 +1,50 @@
+{
+  "conflicts": [],
+  "evidence": {
+    "accessibilityTooling": {
+      "evidence": [
+        "README.md",
+        "docs/ARCHITECTURE.md",
+        "docs/RELEASE-REPORT-2.0.0.md",
+        "docs/design/DESIGN-QUALITY.md",
+        "package.json",
+        "tests/design/scenarios/design-department-surface.json"
+      ],
+      "note": null,
+      "status": "PRESENT"
+    },
+    "componentSystem": "Unknown",
+    "designDocumentation": {
+      "evidence": [
+        "docs/design/DESIGN-LANGUAGE.md"
+      ],
+      "note": null,
+      "status": "PRESENT"
+    },
+    "designTokens": {
+      "evidence": [],
+      "note": null,
+      "status": "NONE"
+    },
+    "frontend": "Unknown",
+    "styling": "Unknown"
+  },
+  "findings": [
+    {
+      "category": "tokens",
+      "message": "No reusable design-token evidence was detected.",
+      "severity": "P2"
+    },
+    {
+      "category": "components",
+      "message": "No established component system was detected.",
+      "severity": "P2"
+    }
+  ],
+  "requiredActions": [
+    "Define or identify one canonical token authority before adding new visual roles."
+  ],
+  "safeToExtend": false,
+  "score": 70,
+  "status": "NEEDS_ALIGNMENT"
+}

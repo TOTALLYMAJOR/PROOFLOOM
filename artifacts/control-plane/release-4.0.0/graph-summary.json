@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "bounded": true,
+  "limits": {
+    "maxDepth": 4,
+    "maxImpactNodes": 300,
+    "maxNodes": 5000,
+    "maxSourceFiles": 2000
+  },
+  "sourceFilesScanned": 84,
+  "discoveredNodeCount": 126,
+  "nodeCount": 126,
+  "edgeCount": 670,
+  "nodeCounts": {
+    "file": 40,
+    "journey": 2,
+    "owner": 1,
+    "package": 37,
+    "schema": 17,
+    "security-boundary": 2,
+    "test": 27
+  },
+  "graphSha256": "f76ca4de4bc6ec8687d3c55c0415a2cc6e8dec69c4a8a46bc54daf5969f34b07",
+  "truncated": false,
+  "claimBoundary": "Static repository evidence only; the graph does not prove runtime calls, approve boundary changes, or replace repository architecture authorities.",
+  "errors": [],
+  "warnings": []
+}

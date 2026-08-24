@@ -28,6 +28,7 @@ If these are unclear, the problem may not be visual.
 
 ## Required behavior
 
+- Confirm which binding journey and backlog outcome the surface advances. If neither can be identified, return the work to governance convergence instead of inventing a workflow.
 - Diagnose whether the failure is workflow, information hierarchy, IA, or interaction.
 - Make one dominant action obvious.
 - Keep secondary capability discoverable without competing for attention.

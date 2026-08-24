@@ -1,0 +1,95 @@
+{
+  "changedPaths": [
+    "design_intelligence/planes.py",
+    "design_intelligence/control_plane.py",
+    ".dev/intent-index.json",
+    "docs/CONTROL-PLANE-PHASE-4.md"
+  ],
+  "checks": [
+    {
+      "available": true,
+      "command": [
+        "npm",
+        "run",
+        "design:ci:full"
+      ],
+      "id": "design-full",
+      "reasons": [
+        "required by approved task packet"
+      ]
+    },
+    {
+      "available": true,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py"
+      ],
+      "id": "unit-governance",
+      "reasons": [
+        "python-control-plane matched .dev/intent-index.json, design_intelligence/control_plane.py, design_intelligence/planes.py",
+        "required by approved task packet"
+      ]
+    }
+  ],
+  "designAffected": false,
+  "errors": [],
+  "execution": {
+    "performed": false,
+    "reason": "Phase 0-3 produces a deterministic affected-verification plan; command execution remains an explicit CI or operator action."
+  },
+  "intelligenceRoute": {
+    "capabilityClass": "cross-plane-reasoning",
+    "errors": [],
+    "humanApprovalRequired": true,
+    "requiredCapabilities": [
+      "dependency-analysis",
+      "repository-analysis",
+      "standards-assessment",
+      "structured-output",
+      "visual-evidence"
+    ],
+    "risk": "high",
+    "status": "PASS",
+    "taskId": "TASK-CONTROL-PLANE-PHASE-4",
+    "vendorSelected": false,
+    "workType": "architecture"
+  },
+  "intent": {
+    "backlogItems": [
+      "TASK-CONTROL-PLANE-PHASE-4"
+    ],
+    "experiments": [],
+    "journeys": [
+      "JRN-ADOPT-001",
+      "JRN-PILOT-001"
+    ],
+    "requirements": [
+      "REQ-ADOPTION-001",
+      "REQ-JOURNEY-001",
+      "REQ-BACKLOG-001",
+      "REQ-STANDARDS-001",
+      "REQ-ROUTING-001",
+      "REQ-VISUAL-001"
+    ],
+    "successMetrics": [
+      "MET-ADOPTION-001",
+      "MET-JOURNEY-001",
+      "MET-BACKLOG-001",
+      "MET-STANDARDS-001",
+      "MET-ROUTING-001",
+      "MET-VISUAL-001"
+    ]
+  },
+  "matchedRules": [
+    "python-control-plane"
+  ],
+  "status": "PASS",
+  "taskId": "TASK-CONTROL-PLANE-PHASE-4",
+  "taskPath": ".dev/tasks/completed/TASK-CONTROL-PLANE-PHASE-4.json"
+}

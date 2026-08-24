@@ -1,0 +1,40 @@
+{
+  "authority": {
+    "architectureBoundaryChange": "HUMAN_APPROVAL_REQUIRED",
+    "baselineMutation": "HUMAN_APPROVAL_REQUIRED",
+    "majorProductDecision": "HUMAN_APPROVAL_REQUIRED",
+    "productionWrite": "HUMAN_APPROVAL_REQUIRED",
+    "securityPolicyChange": "HUMAN_APPROVAL_REQUIRED"
+  },
+  "capabilityClasses": [
+    {
+      "capabilities": ["repository-analysis", "structured-output"],
+      "id": "bounded-context",
+      "maxRisk": "medium",
+      "priority": 1,
+      "workTypes": ["documentation", "governance", "maintenance"]
+    },
+    {
+      "capabilities": ["dependency-analysis", "repository-analysis", "standards-assessment", "structured-output"],
+      "id": "architecture-reasoning",
+      "maxRisk": "high",
+      "priority": 2,
+      "workTypes": ["architecture", "backend", "governance", "maintenance"]
+    },
+    {
+      "capabilities": ["accessibility-analysis", "repository-analysis", "structured-output", "visual-evidence"],
+      "id": "visual-evidence-analysis",
+      "maxRisk": "high",
+      "priority": 3,
+      "workTypes": ["design", "frontend", "product", "ux"]
+    },
+    {
+      "capabilities": ["dependency-analysis", "repository-analysis", "standards-assessment", "structured-output", "visual-evidence"],
+      "id": "cross-plane-reasoning",
+      "maxRisk": "critical",
+      "priority": 4,
+      "workTypes": ["architecture", "design", "frontend", "governance", "product"]
+    }
+  ],
+  "schemaVersion": 1
+}

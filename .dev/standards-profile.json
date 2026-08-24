@@ -1,0 +1,97 @@
+{
+  "catalogVersion": "2026-08-23",
+  "contexts": ["ai-assisted-development", "distributable-software", "frontend", "software-tooling", "user-experience"],
+  "reviewAfter": "2026-11-21",
+  "reviewedAt": "2026-08-23",
+  "schemaVersion": 1,
+  "standards": [
+    {
+      "applicability": "APPLICABLE",
+      "disposition": "TAILORED",
+      "evidence": ["AGENTS.md", "docs/ARCHITECTURE.md", "tests/test_control_plane.py"],
+      "id": "NIST-SSDF-1.1",
+      "rationale": "Secure-development practices are applied through repository authority, bounded paths, fail-closed validation, and tiered tests; this is not an SSDF conformance claim.",
+      "version": "1.1"
+    },
+    {
+      "applicability": "APPLICABLE",
+      "disposition": "TAILORED",
+      "evidence": ["docs/design/DESIGN-QUALITY.md", "artifacts/design/reports/design-department-surface/qa-report.json"],
+      "id": "WCAG-2.2",
+      "rationale": "WCAG 2.2 AA-oriented automated checks and governed viewport evidence are applied to the bounded surface; this is not an accessibility certification.",
+      "version": "2.2"
+    },
+    {
+      "applicability": "NOT_APPLICABLE",
+      "disposition": "NOT_APPLICABLE",
+      "evidence": [],
+      "id": "OWASP-ASVS-5.0.0",
+      "rationale": "This repository is an offline design-governance package and bounded fixture, not a deployed web application authority.",
+      "version": "5.0.0"
+    },
+    {
+      "applicability": "APPLICABLE",
+      "disposition": "TAILORED",
+      "evidence": ["docs/RELEASE-REPORT-3.0.0.md", "scripts/install"],
+      "id": "SLSA-1.2",
+      "rationale": "Release evidence and reproducible local validation are governed, while hosted provenance levels and external attestation remain outside current proof.",
+      "version": "1.2"
+    },
+    {
+      "applicability": "APPLICABLE",
+      "disposition": "TAILORED",
+      "evidence": ["docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "design_intelligence/self_audit.py"],
+      "id": "NIST-AI-RMF-1.0",
+      "rationale": "AI risk is bounded through evidence, authority, review, and fail-closed routing controls; organizational AI RMF adoption is not claimed.",
+      "version": "1.0"
+    },
+    {
+      "applicability": "APPLICABLE",
+      "disposition": "TAILORED",
+      "evidence": ["docs/design/DESIGN-ADOPTION-GATE.md", "tests/test_adoption_gate.py"],
+      "id": "NIST-AI-600-1",
+      "rationale": "Generative analysis remains advisory, evidence-labeled, bounded, and human-gated at consequential authority boundaries.",
+      "version": "1.0"
+    },
+    {
+      "applicability": "NOT_APPLICABLE",
+      "disposition": "NOT_APPLICABLE",
+      "evidence": [],
+      "id": "NIST-CSF-2.0",
+      "rationale": "Organization-wide cybersecurity governance is owned by the consuming organization, not this repository-local package.",
+      "version": "2.0"
+    },
+    {
+      "applicability": "NOT_APPLICABLE",
+      "disposition": "NOT_APPLICABLE",
+      "evidence": [],
+      "id": "OTEL-SPEC-1.60.0",
+      "rationale": "The package has no deployed observable runtime; generated evidence files are the current audit mechanism.",
+      "version": "1.60.0"
+    },
+    {
+      "applicability": "APPLICABLE",
+      "disposition": "TAILORED",
+      "evidence": [".design/quality/thresholds.json", "design_intelligence/quality.py", "tests/test_governance_v3.py"],
+      "id": "ISO-25010-2023",
+      "rationale": "Quality characteristics are represented through deterministic correctness, accessibility, drift, maintainability, and evidence checks without claiming ISO conformity.",
+      "version": "2023"
+    },
+    {
+      "applicability": "APPLICABLE",
+      "disposition": "TAILORED",
+      "evidence": ["docs/design/UX-MODELS.md", "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md"],
+      "id": "ISO-9241-210-2019",
+      "rationale": "Personas, journeys, starting states, success states, iterative evaluation, and owner review are explicit; no ISO certification is claimed.",
+      "version": "2019"
+    },
+    {
+      "applicability": "NOT_APPLICABLE",
+      "disposition": "NOT_APPLICABLE",
+      "evidence": [],
+      "id": "OPENAPI-3.2.0",
+      "rationale": "No HTTP API contract is owned by this package.",
+      "version": "3.2.0"
+    }
+  ]
+}

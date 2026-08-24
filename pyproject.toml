@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "design-intelligence"
-version = "3.0.0"
+version = "5.0.0"
 description = "Standalone design intelligence package for Codex and Claude."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -14,6 +14,7 @@ dependencies = []
 
 [project.scripts]
 design-intelligence = "design_intelligence.cli:main"
+devctl = "design_intelligence.devctl_cli:main"
 design-intelligence-inspect = "repo_fit.inspect:main"
 design-intelligence-assess = "repo_fit.assess:main"
 

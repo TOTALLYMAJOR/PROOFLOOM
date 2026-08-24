@@ -1,0 +1,712 @@
+{
+  "duplicateAuthorities": [],
+  "root": "/home/administrator/design-intelligence",
+  "sources": [
+    {
+      "authorityClass": "repository-governance",
+      "enforcement": "instructional",
+      "id": "AUTH-58E3DF5505D5",
+      "kind": "agent-governance",
+      "path": "AGENTS.md",
+      "sha256": "a21b7e2bad41bfeecb10dc9a6293bd390aec21943c9de24122e95664aa34f7b9",
+      "statements": [
+        {
+          "line": 3,
+          "status": "scoped",
+          "text": "This repository owns the reusable utility itself. It does not outrank consuming repositories."
+        },
+        {
+          "line": 7,
+          "status": "scoped",
+          "text": "- Design intelligence is the primary mission; repository intelligence is supporting infrastructure."
+        },
+        {
+          "line": 8,
+          "status": "scoped",
+          "text": "- Existing repository authorities outrank package defaults."
+        },
+        {
+          "line": 9,
+          "status": "scoped",
+          "text": "- Read-only by default. Only write artifacts when an explicit output path or installation target is requested."
+        },
+        {
+          "line": 10,
+          "status": "scoped",
+          "text": "- `design-intelligence \"<task>\"` is the canonical front door; preserve its simple current-directory default."
+        },
+        {
+          "line": 11,
+          "status": "scoped",
+          "text": "- A recommended design direction is not approval. Implementation requires explicit direction selection."
+        },
+        {
+          "line": 12,
+          "status": "scoped",
+          "text": "- Supplied references remain `RESEARCH_REQUIRED` until observed patterns and transformations are recorded."
+        },
+        {
+          "line": 13,
+          "status": "scoped",
+          "text": "- Prefer knowledge alignment over runtime migration when it captures most of the value."
+        },
+        {
+          "line": 14,
+          "status": "scoped",
+          "text": "- Do not add a second component system, second token system, second backlog, or second E2E hierarchy."
+        },
+        {
+          "line": 18,
+          "status": "scoped",
+          "text": "- `design_intelligence/`: vendor-neutral core package and CLI"
+        },
+        {
+          "line": 19,
+          "status": "scoped",
+          "text": "- `.design/memory/`: canonical append-oriented decision, outcome, exception, debt, and component records"
+        },
+        {
+          "line": 20,
+          "status": "scoped",
+          "text": "- `.design/quality/`: governed deterministic thresholds and score history"
+        },
+        {
+          "line": 21,
+          "status": "scoped",
+          "text": "- `.design/baselines/`: approval-bound visual baselines; never update silently"
+        },
+        {
+          "line": 22,
+          "status": "scoped",
+          "text": "- `scripts/design/`: Playwright QA, repair proof, and tiered CI orchestration"
+        },
+        {
+          "line": 23,
+          "status": "scoped",
+          "text": "- `tests/design/`: route-specific scenario definitions; do not create a parallel product E2E hierarchy"
+        },
+        {
+          "line": 24,
+          "status": "scoped",
+          "text": "- `artifacts/design/`: contracts and generated evidence packs"
+        },
+        {
+          "line": 25,
+          "status": "scoped",
+          "text": "- `repo_fit/`: V0.1 compatibility wrappers"
+        },
+        {
+          "line": 26,
+          "status": "scoped",
+          "text": "- `skills/`: concise skills plus reference docs"
+        },
+        {
+          "line": 27,
+          "status": "scoped",
+          "text": "- `templates/` and `examples/`: reusable design artifacts and product profiles"
+        },
+        {
+          "line": 28,
+          "status": "scoped",
+          "text": "- `adapters/`: thin Codex and Claude adapter guidance"
+        },
+        {
+          "line": 29,
+          "status": "scoped",
+          "text": "- `docs/`: architecture and release notes"
+        },
+        {
+          "line": 30,
+          "status": "scoped",
+          "text": "- `tests/fixtures/`: bounded proof repositories and manifests"
+        },
+        {
+          "line": 34,
+          "status": "scoped",
+          "text": "- Run `npm run design:ci:quick` for core and governance changes."
+        },
+        {
+          "line": 35,
+          "status": "scoped",
+          "text": "- Run `npm run design:ci:standard` for material rendered changes."
+        },
+        {
+          "line": 36,
+          "status": "scoped",
+          "text": "- Run `npm run design:ci:full` before a V3 release."
+        },
+        {
+          "line": 37,
+          "status": "scoped",
+          "text": "- Run the skill validator for each skill before tagging."
+        },
+        {
+          "line": 38,
+          "status": "scoped",
+          "text": "- Keep `VERSION`, `pyproject.toml`, and `design_intelligence/__init__.py` aligned."
+        },
+        {
+          "line": 39,
+          "status": "scoped",
+          "text": "- Automatic repair stops after 3 iterations or at authority, scope, architecture, baseline, threshold, test, backend, or product-behavior boundaries."
+        }
+      ]
+    },
+    {
+      "authorityClass": "architecture",
+      "enforcement": "documented",
+      "id": "AUTH-FD97592712BB",
+      "kind": "architecture",
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "592a60932a1140baa0064603ecc32b62636397b6e75a1af90fd3b96bf69979b1",
+      "statements": [
+        {
+          "line": 5,
+          "status": "current",
+          "text": "```text"
+        },
+        {
+          "line": 6,
+          "status": "current",
+          "text": "plain-English task -> repository context -> inferred surface mode -> three direction briefs"
+        },
+        {
+          "line": 7,
+          "status": "current",
+          "text": "-> explicit direction selection -> implementation handoff -> rendered proof"
+        },
+        {
+          "line": 8,
+          "status": "current",
+          "text": "```"
+        },
+        {
+          "line": 10,
+          "status": "current",
+          "text": "`design-intelligence \"<task>\"` is read-only and defaults to the current repository. It produces a recommendation but blocks implementation until a direction is explicitly selected. `--save` writes only a generated mission bundle under `artifacts/design/missions/`."
+        },
+        {
+          "line": 12,
+          "status": "current",
+          "text": "The reference ledger is evidence, not authority. A supplied URL or `DESIGN.md` begins as `RESEARCH_REQUIRED`; it cannot become an imported visual direction without observed patterns, product relevance, original transformation, and explicit rejection notes."
+        },
+        {
+          "line": 14,
+          "status": "current",
+          "text": "Reference-backed missions add a fail-closed gate between direction selection and implementation:"
+        },
+        {
+          "line": 16,
+          "status": "current",
+          "text": "```text"
+        },
+        {
+          "line": 17,
+          "status": "current",
+          "text": "site/images -> Playwright or local-byte evidence -> typed semantic adapter"
+        },
+        {
+          "line": 18,
+          "status": "current",
+          "text": "-> repository/backlog/hooks/instructions/design-system/memory reconciliation"
+        },
+        {
+          "line": 19,
+          "status": "current",
+          "text": "-> deterministic adoption report -> existing design contract -> mission handoff"
+        },
+        {
+          "line": 20,
+          "status": "current",
+          "text": "```"
+        },
+        {
+          "line": 22,
+          "status": "current",
+          "text": "The adapter may observe and recommend. It cannot authorize a product capability, override repository authority, lower quality thresholds, mutate a baseline, or select the final adoption decision."
+        },
+        {
+          "line": 26,
+          "status": "current",
+          "text": "```text"
+        },
+        {
+          "line": 27,
+          "status": "current",
+          "text": "request -> relevant memory -> design contract -> implementation -> Playwright render"
+        },
+        {
+          "line": 28,
+          "status": "current",
+          "text": "-> screenshot + DOM/state + axe -> visual review -> design linter"
+        },
+        {
+          "line": 29,
+          "status": "current",
+          "text": "-> deterministic quality gates -> memory outcome"
+        },
+        {
+          "line": 30,
+          "status": "current",
+          "text": "\\-> bounded repair -> rerender (max 3)"
+        },
+        {
+          "line": 31,
+          "status": "current",
+          "text": "```"
+        },
+        {
+          "line": 33,
+          "status": "current",
+          "text": "Model review can classify hierarchy, workflow, visual, responsive, accessibility, component, or drift defects. It cannot modify deterministic scores, lower thresholds, update baselines, or promote its own opinion into institutional law."
+        },
+        {
+          "line": 37,
+          "status": "current",
+          "text": "`design_intelligence/` is the vendor-neutral core package."
+        },
+        {
+          "line": 39,
+          "status": "current",
+          "text": "It owns:"
+        },
+        {
+          "line": 41,
+          "status": "current",
+          "text": "- bounded repository discovery"
+        },
+        {
+          "line": 42,
+          "status": "current",
+          "text": "- scaffold reconciliation"
+        },
+        {
+          "line": 43,
+          "status": "current",
+          "text": "- migration-risk scoring"
+        },
+        {
+          "line": 44,
+          "status": "current",
+          "text": "- context generation"
+        },
+        {
+          "line": 45,
+          "status": "current",
+          "text": "- reference transformation"
+        },
+        {
+          "line": 46,
+          "status": "current",
+          "text": "- deterministic design linting"
+        },
+        {
+          "line": 47,
+          "status": "current",
+          "text": "- visual-review aggregation"
+        },
+        {
+          "line": 48,
+          "status": "current",
+          "text": "- validation and evidence packs"
+        },
+        {
+          "line": 49,
+          "status": "current",
+          "text": "- conservative doctor / repair planning"
+        },
+        {
+          "line": 50,
+          "status": "current",
+          "text": "- scoped institutional memory and provenance"
+        },
+        {
+          "line": 51,
+          "status": "current",
+          "text": "- governed baseline promotion and integrity auditing"
+        },
+        {
+          "line": 52,
+          "status": "current",
+          "text": "- deterministic quality and drift scoring"
+        },
+        {
+          "line": 53,
+          "status": "current",
+          "text": "- exact bounded repair execution"
+        },
+        {
+          "line": 54,
+          "status": "current",
+          "text": "- V2 self-audit"
+        },
+        {
+          "line": 55,
+          "status": "current",
+          "text": "- V3 surface-mode inference, direction briefs, reference ledger, and rendered-proof mission gate"
+        },
+        {
+          "line": 56,
+          "status": "current",
+          "text": "- evidence-bound reference capture and deterministic design adoption/refusal"
+        },
+        {
+          "line": 58,
+          "status": "current",
+          "text": "`repo_fit/` remains as a compatibility layer for V0.1 entry points."
+        },
+        {
+          "line": 62,
+          "status": "current",
+          "text": "Design Intelligence does not become the new repository authority by default."
+        },
+        {
+          "line": 64,
+          "status": "current",
+          "text": "Priority order:"
+        },
+        {
+          "line": 66,
+          "status": "current",
+          "text": "1. current user requirement"
+        },
+        {
+          "line": 67,
+          "status": "current",
+          "text": "2. existing repository governance"
+        },
+        {
+          "line": 68,
+          "status": "current",
+          "text": "3. existing architecture and design authorities"
+        },
+        {
+          "line": 69,
+          "status": "current",
+          "text": "4. existing tokens, components, and implementation patterns"
+        },
+        {
+          "line": 70,
+          "status": "current",
+          "text": "5. Design Intelligence guidance"
+        },
+        {
+          "line": 74,
+          "status": "current",
+          "text": "Every CLI command is read-only unless the user explicitly requests an output path or installation target."
+        },
+        {
+          "line": 76,
+          "status": "current",
+          "text": "Examples:"
+        },
+        {
+          "line": 78,
+          "status": "current",
+          "text": "- `validate --evidence-pack-out ...` writes an evidence artifact"
+        },
+        {
+          "line": 79,
+          "status": "current",
+          "text": "- install scripts copy skills into Codex or Claude skill directories"
+        },
+        {
+          "line": 81,
+          "status": "current",
+          "text": "The utility does not silently mutate consuming repositories."
+        },
+        {
+          "line": 85,
+          "status": "current",
+          "text": "Two migrations are scored separately:"
+        },
+        {
+          "line": 87,
+          "status": "current",
+          "text": "- knowledge migration: docs, decisions, indexes, AGENTS navigation"
+        },
+        {
+          "line": 88,
+          "status": "current",
+          "text": "- runtime migration: components, imports, package boundaries, filesystem structure"
+        },
+        {
+          "line": 90,
+          "status": "current",
+          "text": "The default preference is 80/20 alignment:"
+        },
+        {
+          "line": 92,
+          "status": "current",
+          "text": "- keep runtime structure"
+        },
+        {
+          "line": 93,
+          "status": "current",
+          "text": "- converge duplicate authorities"
+        },
+        {
+          "line": 94,
+          "status": "current",
+          "text": "- add only missing design capability"
+        },
+        {
+          "line": 98,
+          "status": "current",
+          "text": "QuotePilot, QuietPilot, and LeaguePilot are data-backed product profiles."
+        },
+        {
+          "line": 100,
+          "status": "current",
+          "text": "They live outside the reasoning code as package data and human-readable examples so the core remains vendor-neutral."
+        },
+        {
+          "line": 104,
+          "status": "current",
+          "text": "Material design work can produce an evidence pack containing:"
+        },
+        {
+          "line": 106,
+          "status": "current",
+          "text": "- contract"
+        },
+        {
+          "line": 107,
+          "status": "current",
+          "text": "- repo context"
+        },
+        {
+          "line": 108,
+          "status": "current",
+          "text": "- before and after screenshots"
+        },
+        {
+          "line": 109,
+          "status": "current",
+          "text": "- lint and accessibility findings"
+        },
+        {
+          "line": 110,
+          "status": "current",
+          "text": "- visual-review findings"
+        },
+        {
+          "line": 111,
+          "status": "current",
+          "text": "- decision summary"
+        },
+        {
+          "line": 112,
+          "status": "current",
+          "text": "- remaining debt"
+        },
+        {
+          "line": 114,
+          "status": "current",
+          "text": "This is a Git-friendly record, not a second dashboard or backlog."
+        },
+        {
+          "line": 118,
+          "status": "current",
+          "text": "- `.design/memory/*.jsonl` owns append-oriented decisions, outcomes, exceptions, and debt."
+        },
+        {
+          "line": 119,
+          "status": "current",
+          "text": "- `.design/memory/product-rules.json` owns inherited portfolio, archetype, and product rules."
+        },
+        {
+          "line": 120,
+          "status": "current",
+          "text": "- `.design/memory/component-registry.json` is a generated source registry enriched with existing metadata."
+        },
+        {
+          "line": 121,
+          "status": "current",
+          "text": "- `.design/quality/thresholds.json` owns measurable quality gates."
+        },
+        {
+          "line": 122,
+          "status": "current",
+          "text": "- `.design/baselines/manifest.json` owns baseline hashes and approval provenance."
+        },
+        {
+          "line": 123,
+          "status": "current",
+          "text": "- `docs/design/*.md` explains these authorities but is not a second ledger."
+        },
+        {
+          "line": 127,
+          "status": "current",
+          "text": "`repair --apply` performs only an exact text substitution when all of these are true:"
+        },
+        {
+          "line": 129,
+          "status": "current",
+          "text": "- a P0, P1, or clear P2 finding ID exists in supplied evidence"
+        },
+        {
+          "line": 130,
+          "status": "current",
+          "text": "- the target is explicitly allowlisted"
+        },
+        {
+          "line": 131,
+          "status": "current",
+          "text": "- the expected text matches exactly once"
+        },
+        {
+          "line": 132,
+          "status": "current",
+          "text": "- the plan declares `visual-only` authority"
+        }
+      ]
+    },
+    {
+      "authorityClass": "design-intent",
+      "enforcement": "documented",
+      "id": "AUTH-0902FE18351C",
+      "kind": "design-authority",
+      "path": "docs/design/DESIGN-LANGUAGE.md",
+      "sha256": "a4cf54a10827ee2fa87b0607920aded66a39bac4eda002d980eaddcb913757d9",
+      "statements": [
+        {
+          "line": 3,
+          "status": "current",
+          "text": "The canonical operating instructions remain in `skills/design-language/` and its references. Product-specific defaults remain data-backed under `design_intelligence/data/product_profiles/` and `examples/product-profiles/`."
+        },
+        {
+          "line": 5,
+          "status": "current",
+          "text": "V2 does not introduce a second visual system. It adds retrieval and verification around the existing authority order:"
+        },
+        {
+          "line": 7,
+          "status": "current",
+          "text": "1. Product behavior and requirements"
+        },
+        {
+          "line": 8,
+          "status": "current",
+          "text": "2. Repository governance and design documentation"
+        },
+        {
+          "line": 9,
+          "status": "current",
+          "text": "3. Existing tokens and primitives"
+        },
+        {
+          "line": 10,
+          "status": "current",
+          "text": "4. Validated design decisions"
+        },
+        {
+          "line": 11,
+          "status": "current",
+          "text": "5. References and general convention"
+        },
+        {
+          "line": 12,
+          "status": "current",
+          "text": "6. Agent preference"
+        },
+        {
+          "line": 14,
+          "status": "current",
+          "text": "Substantial work must retrieve relevant memory and bind a design contract before implementation."
+        }
+      ]
+    },
+    {
+      "authorityClass": "design-intent",
+      "enforcement": "documented",
+      "id": "AUTH-2D1F685D73B6",
+      "kind": "design-decision",
+      "path": ".design/memory/decisions.jsonl",
+      "sha256": "873abb1bbe4519393f953e1d115ca4657c49e9f8601ae126a5864f9ba9a4066d",
+      "statements": [
+        {
+          "line": 1,
+          "status": "proposed",
+          "text": "{\"affectedComponents\":[\"BaselineGovernance\",\"VisualQaHarness\"],\"alternatives\":[\"silent snapshot update\",\"threshold relaxation\"],\"authorityLevel\":\"product\",\"category\":\"baseline-governance\",\"createdAt\":\"2026-08-20T12:00:00Z\",\"decision\":\"Visual baselines may change only through an explicit approval record linked to an accepted decision and passing validation evidence.\",\"evidence\":[\"user-directive:codex-autonomous-design-department-v2\"],\"id\":\"DL-DI-0001\",\"problem\":\"Visual regressions can be hidden by silently replacing expected images.\",\"product\":\"design-intelligence\",\"reason\":\"An immutable approval trail keeps pixel comparison as evidence instead of a test-avoidance mechanism.\",\"reviewAfter\":\"2026-11-20\",\"revision\":1,\"status\":\"proposed\",\"supersedes\":null,\"validatedAt\":null}"
+        },
+        {
+          "line": 2,
+          "status": "accepted",
+          "text": "{\"affectedComponents\":[\"BaselineGovernance\",\"VisualQaHarness\"],\"alternatives\":[\"silent snapshot update\",\"threshold relaxation\"],\"authorityLevel\":\"product\",\"category\":\"baseline-governance\",\"createdAt\":\"2026-08-20T12:00:00Z\",\"decision\":\"Visual baselines may change only through an explicit approval record linked to an accepted decision and passing validation evidence.\",\"evidence\":[\"user-directive:codex-autonomous-design-department-v2\",\"test:v1-baseline-14-pass\"],\"id\":\"DL-DI-0001\",\"problem\":\"Visual regressions can be hidden by silently replacing expected images.\",\"product\":\"design-intelligence\",\"promotion\":{\"authorizedBy\":\"human:user-directive\",\"outcomeId\":\"DO-DI-0001\",\"validationEvidence\":[\"user-directive:baseline-governance\",\"test:v1-baseline-14-pass\"]},\"reason\":\"An immutable approval trail keeps pixel comparison as evidence instead of a test-avoidance mechanism.\",\"reviewAfter\":\"2026-11-20\",\"revision\":2,\"status\":\"accepted\",\"supersedes\":null,\"validatedAt\":\"2026-08-20T12:05:00Z\"}"
+        },
+        {
+          "line": 3,
+          "status": "proposed",
+          "text": "{\"affectedComponents\":[\"BoundedRepair\",\"DesignLinter\"],\"alternatives\":[\"unbounded autonomous repair\",\"manual-only deterministic corrections\"],\"authorityLevel\":\"product\",\"category\":\"repair\",\"createdAt\":\"2026-08-20T12:00:00Z\",\"decision\":\"Automatic repair is limited to three iterations and only exact deterministic P0, P1, or clear P2 visual corrections within an explicit file allowlist.\",\"evidence\":[\"user-directive:codex-autonomous-design-department-v2\"],\"id\":\"DL-DI-0002\",\"problem\":\"An unconstrained repair loop can cross authority, scope, architecture, or product-behavior boundaries.\",\"product\":\"design-intelligence\",\"reason\":\"Exact evidence-linked substitutions are auditable and stop before semantic judgment is required.\",\"reviewAfter\":\"2026-11-20\",\"revision\":1,\"status\":\"proposed\",\"supersedes\":null,\"validatedAt\":null}"
+        },
+        {
+          "line": 4,
+          "status": "accepted",
+          "text": "{\"affectedComponents\":[\"BoundedRepair\",\"DesignLinter\"],\"alternatives\":[\"unbounded autonomous repair\",\"manual-only deterministic corrections\"],\"authorityLevel\":\"product\",\"category\":\"repair\",\"createdAt\":\"2026-08-20T12:00:00Z\",\"decision\":\"Automatic repair is limited to three iterations and only exact deterministic P0, P1, or clear P2 visual corrections within an explicit file allowlist.\",\"evidence\":[\"user-directive:codex-autonomous-design-department-v2\",\"test:v1-baseline-14-pass\"],\"id\":\"DL-DI-0002\",\"problem\":\"An unconstrained repair loop can cross authority, scope, architecture, or product-behavior boundaries.\",\"product\":\"design-intelligence\",\"promotion\":{\"authorizedBy\":\"human:user-directive\",\"outcomeId\":\"DO-DI-0002\",\"validationEvidence\":[\"user-directive:max-three-iterations\",\"test:v1-baseline-14-pass\"]},\"reason\":\"Exact evidence-linked substitutions are auditable and stop before semantic judgment is required.\",\"reviewAfter\":\"2026-11-20\",\"revision\":2,\"status\":\"accepted\",\"supersedes\":null,\"validatedAt\":\"2026-08-20T12:05:00Z\"}"
+        }
+      ]
+    },
+    {
+      "authorityClass": "product-intent",
+      "enforcement": "documented",
+      "id": "AUTH-502FF5D04A93",
+      "kind": "requirement",
+      "path": "docs/design/products/leaguepilot.md",
+      "sha256": "ab9f4dbd5a8c218ecdda4e6afca8016f8bcb55f03989bcc24fd4ee0f7718eba9",
+      "statements": [
+        {
+          "line": 3,
+          "status": "current",
+          "text": "Canonical profile data: `design_intelligence/data/product_profiles/leaguepilot.json`."
+        },
+        {
+          "line": 5,
+          "status": "current",
+          "text": "Archetype: Community Coordination. Promise: Everyone knows what is next. Prioritize mobile glanceability, role-specific disclosure, and clear what/when/where/action/change communication."
+        }
+      ]
+    },
+    {
+      "authorityClass": "product-intent",
+      "enforcement": "documented",
+      "id": "AUTH-7D0926DED68E",
+      "kind": "requirement",
+      "path": "docs/design/products/quietpilot.md",
+      "sha256": "a34480f6b05309f3a4e98b3c0f58585f5a58fcc64e6eb533d940ff8b41313200",
+      "statements": [
+        {
+          "line": 3,
+          "status": "current",
+          "text": "Canonical profile data: `design_intelligence/data/product_profiles/quietpilot.json`."
+        },
+        {
+          "line": 5,
+          "status": "current",
+          "text": "Archetype: Operational Control System. Promise: Promise -> Prepare -> Deliver. Prioritize state, blockers, dependencies, readiness, ownership, and the next action."
+        }
+      ]
+    },
+    {
+      "authorityClass": "product-intent",
+      "enforcement": "documented",
+      "id": "AUTH-2A47F08212AA",
+      "kind": "requirement",
+      "path": "docs/design/products/quotepilot.md",
+      "sha256": "852ce03f133589c23dc1c6a1a59a49440ac3fe615520bb30f88ee5ae05e018fc",
+      "statements": [
+        {
+          "line": 3,
+          "status": "current",
+          "text": "Canonical profile data: `design_intelligence/data/product_profiles/quotepilot.json`."
+        },
+        {
+          "line": 5,
+          "status": "current",
+          "text": "Archetype: Transactional Commercial. Promise: Build -> Decide -> Book. Prioritize commercial clarity, speed, precision, and calm control without inventing pricing authority."
+        }
+      ]
+    }
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,88 @@
+{
+  "authorityBoundActions": [],
+  "automaticActions": [
+    {
+      "action": "PRESERVE_AND_BIND",
+      "automatic": true,
+      "id": "BIND-DEVELOPMENT-CONTROL-PLANE",
+      "mutatesCanonicalAuthority": false,
+      "reason": "Use the established repository system instead of installing a competing authority.",
+      "target": "development-control-plane"
+    },
+    {
+      "action": "PRESERVE_AND_BIND",
+      "automatic": true,
+      "id": "BIND-AGENT-GOVERNANCE",
+      "mutatesCanonicalAuthority": false,
+      "reason": "Use the established repository system instead of installing a competing authority.",
+      "target": "agent-governance"
+    },
+    {
+      "action": "WRITE_DERIVED_INDEX",
+      "automatic": true,
+      "id": "WRITE-GOVERNANCE-MAP",
+      "mutatesCanonicalAuthority": false,
+      "reason": "Make current authority, scope, lifecycle, conflicts, and journeys retrievable.",
+      "target": ".dev/governance/governance-map.json"
+    },
+    {
+      "action": "WRITE_DERIVED_ADAPTER",
+      "automatic": true,
+      "id": "WRITE-REPOSITORY-ADAPTER",
+      "mutatesCanonicalAuthority": false,
+      "reason": "Bind existing repository structures to the control plane without moving runtime code.",
+      "target": ".dev/governance/repository-adapter.json"
+    },
+    {
+      "action": "BASELINE_CRITICAL_AUTHORITY",
+      "automatic": true,
+      "id": "WRITE-CONVERGENCE-MANIFEST",
+      "mutatesCanonicalAuthority": false,
+      "reason": "Detect later unreviewed changes to vision, instructions, journeys, architecture, and policy.",
+      "target": ".dev/governance/convergence-manifest.json"
+    },
+    {
+      "action": "WRITE_HUMAN_REPORT",
+      "automatic": true,
+      "id": "WRITE-HUMAN-READOUT",
+      "mutatesCanonicalAuthority": false,
+      "reason": "Explain the product journey, governing structure, blockers, and next actions in product language.",
+      "target": ".dev/governance/HUMAN-READOUT.md"
+    },
+    {
+      "action": "WRITE_EXECUTION_PLAN",
+      "automatic": true,
+      "id": "WRITE-REHABILITATION-PLAN",
+      "mutatesCanonicalAuthority": false,
+      "reason": "Turn detected gaps into explicit automatic and authority-bound completion work.",
+      "target": ".dev/governance/rehabilitation-plan.json"
+    },
+    {
+      "action": "WRITE_RATIFICATION_PACKET",
+      "automatic": true,
+      "id": "WRITE-OWNER-RATIFICATION",
+      "mutatesCanonicalAuthority": false,
+      "reason": "Present vision, authority, architecture, and exception decisions that require an owner.",
+      "target": ".dev/governance/OWNER-RATIFICATION.md"
+    }
+  ],
+  "designGate": {
+    "reason": "Repository is design ready; design may proceed through normal design contracts and evidence gates.",
+    "requiredBeforeDesign": [],
+    "status": "READY"
+  },
+  "executionBoundary": "Derived bindings may be applied automatically. Product vision, architecture, security, ownership, release, and canonical backlog decisions require repository authority.",
+  "finalizationReadiness": {
+    "blockingFindings": [],
+    "completionClaimed": false,
+    "existingSystemStrategy": "PRESERVE_AND_BIND",
+    "governance": "COHERENT",
+    "missingCoreRoles": [],
+    "status": "DESIGN_READY",
+    "understanding": "MAPPED"
+  },
+  "generatedBy": "design-intelligence-governance",
+  "root": "/home/administrator/design-intelligence",
+  "schemaVersion": 1,
+  "status": "READY"
+}

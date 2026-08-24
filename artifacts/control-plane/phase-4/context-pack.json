@@ -1,0 +1,143 @@
+{
+  "bounded": true,
+  "errors": [],
+  "limits": {
+    "maxBytes": 192000,
+    "maxFiles": 20
+  },
+  "records": [
+    {
+      "bytes": 2946,
+      "path": "AGENTS.md",
+      "reason": "required by approved task; declared instructions authority",
+      "sha256": "c011143882ec81f5c3490886413c185b314cf23facd576f96017d2c2cec99e05",
+      "trust": "repository-governance",
+      "trustRank": 2
+    },
+    {
+      "bytes": 9109,
+      "path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+      "reason": "required by approved task; linked intent evidence: JRN-ADOPT-001, JRN-PILOT-001, MET-ADOPTION-001, MET-BACKLOG-001, MET-JOURNEY-001, MET-ROUTING-001, MET-STANDARDS-001, MET-VISUAL-001, REQ-ADOPTION-001, REQ-BACKLOG-001, REQ-JOURNEY-001, REQ-ROUTING-001, REQ-STANDARDS-001, REQ-VISUAL-001; declared product-architecture authority",
+      "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e",
+      "trust": "approved-task",
+      "trustRank": 3
+    },
+    {
+      "bytes": 2795,
+      "path": "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
+      "reason": "required by approved task; declared architecture authority",
+      "sha256": "eeee52f324b43c965546c9711057815e10ff25b5c4b50aa10bc107049777a841",
+      "trust": "approved-task",
+      "trustRank": 3
+    },
+    {
+      "bytes": 7335,
+      "path": ".dev/intent-index.json",
+      "reason": "linked intent evidence: intent-index",
+      "sha256": "7ba52a85e49edbb05b8206c2a1628393d6e6cd0ac5fa30625eae3be173ed16cb",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 16759,
+      "path": "README.md",
+      "reason": "declared documentation authority",
+      "sha256": "358715f4e48d00f323dff19b4b2ec4dc8fec851e2534dea55bd574cfb26d903d",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 7698,
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "declared architecture authority",
+      "sha256": "2cc834244306fb49ba9870e53059c0dcd83e9109de13dda49b498453654de56a",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 6660,
+      "path": "docs/CONTROL-PLANE-PHASE-4.md",
+      "reason": "optional task context",
+      "sha256": "0c0ba3b997499a8fe47e092b3f29360bfb2a579001bfb73e03d13b0aaedf65e2",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 1898,
+      "path": "docs/CONTROL-PLANE-ROLES.md",
+      "reason": "declared intelligence-roles authority",
+      "sha256": "05774b065f549d7e61b75df19a2d56302a27b94e809e7a18144de82b9a804f1b",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 3052,
+      "path": "docs/IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASE-4.md",
+      "reason": "optional task context",
+      "sha256": "5751a5e118be71d7715ac31dd91c39a6004248cb4a14b9e870139f32ce0eb2ca",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 9363,
+      "path": "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md",
+      "reason": "optional task context",
+      "sha256": "f21748c0d0504d3da4857183c11811f8308703b97019358e7d6a830675dc4fcd",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 668,
+      "path": "docs/design/DESIGN-LANGUAGE.md",
+      "reason": "declared design authority",
+      "sha256": "a4cf54a10827ee2fa87b0607920aded66a39bac4eda002d980eaddcb913757d9",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 57773,
+      "path": "design_intelligence/control_plane.py",
+      "reason": "matched task scope design_intelligence/control_plane.py",
+      "sha256": "f8443beed086492109b4825546cf6839a0ac158931501f3490e37be9d6ee06c2",
+      "trust": "source-evidence",
+      "trustRank": 6
+    },
+    {
+      "bytes": 11863,
+      "path": "design_intelligence/devctl_cli.py",
+      "reason": "matched task scope design_intelligence/devctl_cli.py",
+      "sha256": "86986a2b0226e73e62ba95dda96df5095bcb4bc3b9a5d71b58a7bb94ff6bbb67",
+      "trust": "source-evidence",
+      "trustRank": 6
+    },
+    {
+      "bytes": 43215,
+      "path": "design_intelligence/planes.py",
+      "reason": "matched task scope design_intelligence/planes.py",
+      "sha256": "251be3328d23317945ea3a75d93221351c706f5d388f62233cd12c16952c1799",
+      "trust": "source-evidence",
+      "trustRank": 6
+    },
+    {
+      "bytes": 1435,
+      "path": "package.json",
+      "reason": "matched task scope package.json",
+      "sha256": "be0ca47156ae9ee40d7656aaad3e8ef7b71e1e078534d4750cf3764c13630ad3",
+      "trust": "source-evidence",
+      "trustRank": 6
+    },
+    {
+      "bytes": 5149,
+      "path": "scripts/design/ci.py",
+      "reason": "matched task scope scripts/design/ci.py",
+      "sha256": "e4b2ca684cda02f818dfff569cdd81ab451e642d8a28e5af4941b2f17f3a46fc",
+      "trust": "source-evidence",
+      "trustRank": 6
+    }
+  ],
+  "selectedBytes": 187718,
+  "selectedFiles": 16,
+  "status": "PASS",
+  "taskId": "TASK-CONTROL-PLANE-PHASE-4",
+  "taskPath": ".dev/tasks/completed/TASK-CONTROL-PLANE-PHASE-4.json"
+}

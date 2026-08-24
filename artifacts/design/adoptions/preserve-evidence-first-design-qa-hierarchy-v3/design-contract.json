@@ -1,0 +1,80 @@
+{
+  "acceptanceCriteria": [
+    "The primary next action is visible without competing with secondary information.",
+    "Validate desktop and mobile intentionally.",
+    "Classify failures by hierarchy, workflow, responsive, accessibility, or drift before changing visuals.",
+    "Rendered evidence verifies Decision-first information hierarchy as ADOPT without authority expansion.",
+    "Rendered evidence verifies Status-near-action evidence summary as ADAPT without authority expansion."
+  ],
+  "accessibilityRequirements": [
+    "Keep controls named and keyboard-operable.",
+    "Validate the rendered desktop and mobile surface."
+  ],
+  "actor": "Primary operator",
+  "authority": "Existing repository and product truth",
+  "blocker": "Ambiguity around what matters now",
+  "change": [
+    "Preserve decision-first hierarchy in Design Intelligence control and evidence surfaces.",
+    "Adapt the status-near-action grouping through the repository's existing contract and evidence-pack formats."
+  ],
+  "decision": "Choose the next best action",
+  "doNotTouch": [
+    "second token system",
+    "second component library",
+    "parallel E2E hierarchy",
+    "replacement repository scaffold",
+    "second decision log when an existing authority already exists",
+    "unsupported product capabilities, protected repository authority, and source identity"
+  ],
+  "goal": "Preserve evidence-first Design QA hierarchy",
+  "informationPriority": {
+    "primary": [
+      "Choose the next best action",
+      "Make the dominant next action explicit"
+    ],
+    "rare": [
+      "Structural migration only when the repository assessment justifies it."
+    ],
+    "secondary": [
+      "Current state is partially known",
+      "Ambiguity around what matters now"
+    ],
+    "supporting": [
+      "Preserve the existing visual language before introducing new tokens or primitives.",
+      "Map product personality to visible consequences rather than adjectives."
+    ]
+  },
+  "introduce": [],
+  "object": "Design QA Control Deck fixture",
+  "preserve": [
+    "existing Playwright hierarchy",
+    "existing repository instruction authority",
+    "existing design decision memory"
+  ],
+  "primaryAction": "Make the dominant next action explicit",
+  "product": "design-intelligence",
+  "relevantDesignDecisions": [
+    "PAT-DD-DECISION-HIERARCHY",
+    "PAT-DD-STATUS-ACTION"
+  ],
+  "responsiveRequirements": [
+    "Validate desktop and mobile intentionally.",
+    "Classify failures by hierarchy, workflow, responsive, accessibility, or drift before changing visuals."
+  ],
+  "reuse": [
+    "accessibility validation",
+    "agent governance",
+    "architecture overview",
+    "design debt",
+    "design decisions",
+    "design language",
+    "specifications",
+    "testing e2e",
+    "visual validation",
+    "existing tokens, components, and runtime authority"
+  ],
+  "schemaVersion": 1,
+  "state": "Current state is partially known",
+  "surface": "Design QA Control Deck fixture",
+  "taskId": "preserve-evidence-first-design-qa-hierarchy"
+}

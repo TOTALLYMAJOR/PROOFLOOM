@@ -13,6 +13,7 @@ Use it when rendered output, screenshots, or a working surface exists.
 
 ## Review rules
 
+- Confirm the rendered surface still advances its governing journey and does not contradict the recovered product model.
 - Validate the rendered result, not only the source code.
 - Prefer existing repository browser tooling, screenshot harnesses, or validation outputs when available.
 - Classify defects by root cause: visual, hierarchy, IA, interaction, workflow, responsive, accessibility, component, or drift.

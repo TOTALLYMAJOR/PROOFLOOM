@@ -1,0 +1,843 @@
+{
+  "affectedPaths": [
+    "design_intelligence/architecture_graph.py",
+    "design_intelligence/cli.py",
+    "design_intelligence/control_plane.py",
+    "design_intelligence/devctl_cli.py",
+    "design_intelligence/self_audit.py",
+    "tests/test_architecture_graph.py",
+    "tests/test_control_plane.py",
+    "tests/test_governance_v3.py",
+    "tests/test_planes.py",
+    "tests/test_self_audit_v2.py"
+  ],
+  "apis": [],
+  "authorityRequired": true,
+  "bounded": true,
+  "changedPaths": [
+    "design_intelligence/architecture_graph.py"
+  ],
+  "claimBoundary": "Impact is a bounded static recommendation. Protected boundary changes still require the declared human authority and successful repository verification.",
+  "edges": [
+    {
+      "evidence": {
+        "path": "design_intelligence/architecture_graph.py"
+      },
+      "source": "file:design_intelligence/architecture_graph.py",
+      "target": "package:npm:design-intelligence-visual-qa",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "design_intelligence/architecture_graph.py"
+      },
+      "source": "file:design_intelligence/architecture_graph.py",
+      "target": "package:python:design-intelligence",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "devctl.yaml"
+      },
+      "source": "file:design_intelligence/architecture_graph.py",
+      "target": "security-boundary:authority-and-scope-boundary",
+      "type": "governed-by"
+    },
+    {
+      "evidence": {
+        "path": "control-plane-maintainers"
+      },
+      "source": "file:design_intelligence/architecture_graph.py",
+      "target": "owner:repository-maintainers",
+      "type": "owned-by"
+    },
+    {
+      "evidence": {
+        "path": "design_intelligence/cli.py"
+      },
+      "source": "file:design_intelligence/cli.py",
+      "target": "package:npm:design-intelligence-visual-qa",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "design_intelligence/cli.py"
+      },
+      "source": "file:design_intelligence/cli.py",
+      "target": "package:python:design-intelligence",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "line": 53,
+        "path": "design_intelligence/cli.py"
+      },
+      "source": "file:design_intelligence/cli.py",
+      "target": "file:design_intelligence/self_audit.py",
+      "type": "imports"
+    },
+    {
+      "evidence": {
+        "path": "control-plane-maintainers"
+      },
+      "source": "file:design_intelligence/cli.py",
+      "target": "owner:repository-maintainers",
+      "type": "owned-by"
+    },
+    {
+      "evidence": {
+        "path": "design_intelligence/control_plane.py"
+      },
+      "source": "file:design_intelligence/control_plane.py",
+      "target": "package:npm:design-intelligence-visual-qa",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "design_intelligence/control_plane.py"
+      },
+      "source": "file:design_intelligence/control_plane.py",
+      "target": "package:python:design-intelligence",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "devctl.yaml"
+      },
+      "source": "file:design_intelligence/control_plane.py",
+      "target": "security-boundary:authority-and-scope-boundary",
+      "type": "governed-by"
+    },
+    {
+      "evidence": {
+        "line": 16,
+        "path": "design_intelligence/control_plane.py"
+      },
+      "source": "file:design_intelligence/control_plane.py",
+      "target": "file:design_intelligence/architecture_graph.py",
+      "type": "imports"
+    },
+    {
+      "evidence": {
+        "path": "control-plane-maintainers"
+      },
+      "source": "file:design_intelligence/control_plane.py",
+      "target": "owner:repository-maintainers",
+      "type": "owned-by"
+    },
+    {
+      "evidence": {
+        "path": "design_intelligence/devctl_cli.py"
+      },
+      "source": "file:design_intelligence/devctl_cli.py",
+      "target": "package:npm:design-intelligence-visual-qa",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "design_intelligence/devctl_cli.py"
+      },
+      "source": "file:design_intelligence/devctl_cli.py",
+      "target": "package:python:design-intelligence",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "line": 10,
+        "path": "design_intelligence/devctl_cli.py"
+      },
+      "source": "file:design_intelligence/devctl_cli.py",
+      "target": "file:design_intelligence/control_plane.py",
+      "type": "imports"
+    },
+    {
+      "evidence": {
+        "path": "control-plane-maintainers"
+      },
+      "source": "file:design_intelligence/devctl_cli.py",
+      "target": "owner:repository-maintainers",
+      "type": "owned-by"
+    },
+    {
+      "evidence": {
+        "path": "design_intelligence/self_audit.py"
+      },
+      "source": "file:design_intelligence/self_audit.py",
+      "target": "package:npm:design-intelligence-visual-qa",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "design_intelligence/self_audit.py"
+      },
+      "source": "file:design_intelligence/self_audit.py",
+      "target": "package:python:design-intelligence",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "line": 10,
+        "path": "design_intelligence/self_audit.py"
+      },
+      "source": "file:design_intelligence/self_audit.py",
+      "target": "file:design_intelligence/control_plane.py",
+      "type": "imports"
+    },
+    {
+      "evidence": {
+        "path": "control-plane-maintainers"
+      },
+      "source": "file:design_intelligence/self_audit.py",
+      "target": "owner:repository-maintainers",
+      "type": "owned-by"
+    },
+    {
+      "evidence": {
+        "path": "devctl.yaml"
+      },
+      "source": "journey:JRN-ADOPT-001",
+      "target": "file:design_intelligence/architecture_graph.py",
+      "type": "implemented-by"
+    },
+    {
+      "evidence": {
+        "path": "devctl.yaml"
+      },
+      "source": "journey:JRN-ADOPT-001",
+      "target": "file:design_intelligence/control_plane.py",
+      "type": "implemented-by"
+    },
+    {
+      "evidence": {
+        "path": "devctl.yaml"
+      },
+      "source": "journey:JRN-ADOPT-001",
+      "target": "file:design_intelligence/devctl_cli.py",
+      "type": "implemented-by"
+    },
+    {
+      "evidence": {
+        "path": ".dev/intent-index.json"
+      },
+      "source": "journey:JRN-ADOPT-001",
+      "target": "test:tests/test_control_plane.py",
+      "type": "verified-by"
+    },
+    {
+      "evidence": {
+        "path": ".dev/intent-index.json"
+      },
+      "source": "journey:JRN-ADOPT-001",
+      "target": "test:tests/test_planes.py",
+      "type": "verified-by"
+    },
+    {
+      "evidence": {
+        "path": "devctl.yaml"
+      },
+      "source": "journey:JRN-PILOT-001",
+      "target": "test:tests/test_governance_v3.py",
+      "type": "implemented-by"
+    },
+    {
+      "evidence": {
+        "path": ".dev/intent-index.json"
+      },
+      "source": "journey:JRN-PILOT-001",
+      "target": "test:tests/test_governance_v3.py",
+      "type": "verified-by"
+    },
+    {
+      "evidence": {
+        "path": "tests/test_architecture_graph.py"
+      },
+      "source": "test:tests/test_architecture_graph.py",
+      "target": "package:npm:design-intelligence-visual-qa",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "tests/test_architecture_graph.py"
+      },
+      "source": "test:tests/test_architecture_graph.py",
+      "target": "package:python:design-intelligence",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "line": 9,
+        "path": "tests/test_architecture_graph.py"
+      },
+      "source": "test:tests/test_architecture_graph.py",
+      "target": "file:design_intelligence/architecture_graph.py",
+      "type": "imports"
+    },
+    {
+      "evidence": {
+        "line": 13,
+        "path": "tests/test_architecture_graph.py"
+      },
+      "source": "test:tests/test_architecture_graph.py",
+      "target": "file:design_intelligence/control_plane.py",
+      "type": "imports"
+    },
+    {
+      "evidence": {
+        "path": "control-plane-maintainers"
+      },
+      "source": "test:tests/test_architecture_graph.py",
+      "target": "owner:repository-maintainers",
+      "type": "owned-by"
+    },
+    {
+      "evidence": {
+        "path": "tests/test_control_plane.py"
+      },
+      "source": "test:tests/test_control_plane.py",
+      "target": "package:npm:design-intelligence-visual-qa",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "tests/test_control_plane.py"
+      },
+      "source": "test:tests/test_control_plane.py",
+      "target": "package:python:design-intelligence",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "line": 12,
+        "path": "tests/test_control_plane.py"
+      },
+      "source": "test:tests/test_control_plane.py",
+      "target": "file:design_intelligence/control_plane.py",
+      "type": "imports"
+    },
+    {
+      "evidence": {
+        "line": 26,
+        "path": "tests/test_control_plane.py"
+      },
+      "source": "test:tests/test_control_plane.py",
+      "target": "file:design_intelligence/devctl_cli.py",
+      "type": "imports"
+    },
+    {
+      "evidence": {
+        "path": "control-plane-maintainers"
+      },
+      "source": "test:tests/test_control_plane.py",
+      "target": "owner:repository-maintainers",
+      "type": "owned-by"
+    },
+    {
+      "evidence": {
+        "path": "tests/test_governance_v3.py"
+      },
+      "source": "test:tests/test_governance_v3.py",
+      "target": "package:npm:design-intelligence-visual-qa",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "tests/test_governance_v3.py"
+      },
+      "source": "test:tests/test_governance_v3.py",
+      "target": "package:python:design-intelligence",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "line": 21,
+        "path": "tests/test_governance_v3.py"
+      },
+      "source": "test:tests/test_governance_v3.py",
+      "target": "file:design_intelligence/self_audit.py",
+      "type": "imports"
+    },
+    {
+      "evidence": {
+        "path": "control-plane-maintainers"
+      },
+      "source": "test:tests/test_governance_v3.py",
+      "target": "owner:repository-maintainers",
+      "type": "owned-by"
+    },
+    {
+      "evidence": {
+        "path": "tests/test_planes.py"
+      },
+      "source": "test:tests/test_planes.py",
+      "target": "package:npm:design-intelligence-visual-qa",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "tests/test_planes.py"
+      },
+      "source": "test:tests/test_planes.py",
+      "target": "package:python:design-intelligence",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "line": 9,
+        "path": "tests/test_planes.py"
+      },
+      "source": "test:tests/test_planes.py",
+      "target": "file:design_intelligence/control_plane.py",
+      "type": "imports"
+    },
+    {
+      "evidence": {
+        "path": "control-plane-maintainers"
+      },
+      "source": "test:tests/test_planes.py",
+      "target": "owner:repository-maintainers",
+      "type": "owned-by"
+    },
+    {
+      "evidence": {
+        "path": "tests/test_self_audit_v2.py"
+      },
+      "source": "test:tests/test_self_audit_v2.py",
+      "target": "package:npm:design-intelligence-visual-qa",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "path": "tests/test_self_audit_v2.py"
+      },
+      "source": "test:tests/test_self_audit_v2.py",
+      "target": "package:python:design-intelligence",
+      "type": "belongs-to-package"
+    },
+    {
+      "evidence": {
+        "line": 6,
+        "path": "tests/test_self_audit_v2.py"
+      },
+      "source": "test:tests/test_self_audit_v2.py",
+      "target": "file:design_intelligence/self_audit.py",
+      "type": "imports"
+    },
+    {
+      "evidence": {
+        "path": "control-plane-maintainers"
+      },
+      "source": "test:tests/test_self_audit_v2.py",
+      "target": "owner:repository-maintainers",
+      "type": "owned-by"
+    }
+  ],
+  "errors": [],
+  "execution": {
+    "performed": false,
+    "reason": "The control plane produces a deterministic affected-verification plan; command execution remains an explicit CI or operator action."
+  },
+  "graphSha256": "f76ca4de4bc6ec8687d3c55c0415a2cc6e8dec69c4a8a46bc54daf5969f34b07",
+  "impactedNodeCount": 16,
+  "impactedNodes": [
+    {
+      "depth": 0,
+      "id": "file:design_intelligence/architecture_graph.py",
+      "label": "design_intelligence/architecture_graph.py",
+      "language": "python",
+      "path": "design_intelligence/architecture_graph.py",
+      "reasons": [
+        "changed path matched design_intelligence/architecture_graph.py"
+      ],
+      "sha256": "79188cdad9628ec45747ed9b9c047727a4a77cae5e1485a19490c804ffaa8655",
+      "type": "file"
+    },
+    {
+      "depth": 3,
+      "id": "file:design_intelligence/cli.py",
+      "label": "design_intelligence/cli.py",
+      "language": "python",
+      "path": "design_intelligence/cli.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/self_audit.py"
+      ],
+      "sha256": "6ea29abb7289f3dc51bb2e61e3192a9d38710bdf1c1cd65c10223806d7a259f7",
+      "type": "file"
+    },
+    {
+      "depth": 1,
+      "id": "file:design_intelligence/control_plane.py",
+      "label": "design_intelligence/control_plane.py",
+      "language": "python",
+      "path": "design_intelligence/control_plane.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/architecture_graph.py"
+      ],
+      "sha256": "e2c38a92417494bdb29aecb5058ae377f43a3ccd82355e68b5aed46ef0a68957",
+      "type": "file"
+    },
+    {
+      "depth": 2,
+      "id": "file:design_intelligence/devctl_cli.py",
+      "label": "design_intelligence/devctl_cli.py",
+      "language": "python",
+      "path": "design_intelligence/devctl_cli.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/control_plane.py"
+      ],
+      "sha256": "79634407072bc4e7a4a61eb94b404cca4879007ced909905ce7c4d4a419ccbdc",
+      "type": "file"
+    },
+    {
+      "depth": 2,
+      "id": "file:design_intelligence/self_audit.py",
+      "label": "design_intelligence/self_audit.py",
+      "language": "python",
+      "path": "design_intelligence/self_audit.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/control_plane.py"
+      ],
+      "sha256": "29f1c1c14be237db189ee34b8ce5293d95c9dbaa5dc04babcea7a6c2a1edd5e1",
+      "type": "file"
+    },
+    {
+      "depth": 1,
+      "id": "journey:JRN-ADOPT-001",
+      "label": "JRN-ADOPT-001",
+      "owner": "consuming repository owner",
+      "reasons": [
+        "intent-binding via implemented-by from design_intelligence/architecture_graph.py",
+        "intent-binding via implemented-by from design_intelligence/control_plane.py",
+        "intent-binding via implemented-by from design_intelligence/devctl_cli.py",
+        "intent-binding via verified-by from tests/test_control_plane.py",
+        "intent-binding via verified-by from tests/test_planes.py"
+      ],
+      "status": "ACTIVE",
+      "type": "journey"
+    },
+    {
+      "depth": 4,
+      "id": "journey:JRN-PILOT-001",
+      "label": "JRN-PILOT-001",
+      "owner": "Design Intelligence maintainer",
+      "reasons": [
+        "intent-binding via implemented-by from tests/test_governance_v3.py",
+        "intent-binding via verified-by from tests/test_governance_v3.py"
+      ],
+      "status": "ACTIVE",
+      "type": "journey"
+    },
+    {
+      "depth": null,
+      "id": "owner:repository-maintainers",
+      "label": "repository-maintainers",
+      "reasons": [
+        "attached architecture context"
+      ],
+      "type": "owner"
+    },
+    {
+      "depth": null,
+      "ecosystem": "npm",
+      "external": false,
+      "id": "package:npm:design-intelligence-visual-qa",
+      "label": "design-intelligence-visual-qa",
+      "manifest": ".",
+      "reasons": [
+        "attached architecture context"
+      ],
+      "type": "package"
+    },
+    {
+      "depth": null,
+      "ecosystem": "python",
+      "external": false,
+      "id": "package:python:design-intelligence",
+      "label": "design-intelligence",
+      "manifest": ".",
+      "reasons": [
+        "attached architecture context"
+      ],
+      "type": "package"
+    },
+    {
+      "authority": "repository owner",
+      "checks": [
+        "design-full",
+        "unit-governance"
+      ],
+      "classification": "protected-governance",
+      "depth": null,
+      "id": "security-boundary:authority-and-scope-boundary",
+      "label": "authority-and-scope-boundary",
+      "reasons": [
+        "attached architecture context"
+      ],
+      "type": "security-boundary"
+    },
+    {
+      "depth": 1,
+      "id": "test:tests/test_architecture_graph.py",
+      "label": "tests/test_architecture_graph.py",
+      "language": "python",
+      "path": "tests/test_architecture_graph.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/architecture_graph.py",
+        "dependent via imports from design_intelligence/control_plane.py"
+      ],
+      "sha256": "148c6feb032d17bb44952293e74939751f497cea368b0fe58bba2bf092ec24a6",
+      "type": "test"
+    },
+    {
+      "depth": 2,
+      "id": "test:tests/test_control_plane.py",
+      "label": "tests/test_control_plane.py",
+      "language": "python",
+      "path": "tests/test_control_plane.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/control_plane.py",
+        "dependent via imports from design_intelligence/devctl_cli.py"
+      ],
+      "sha256": "3c8da322fbafca4d094505d59e47c4f5fec772c5565f94d3154529e49443fad8",
+      "type": "test"
+    },
+    {
+      "depth": 3,
+      "id": "test:tests/test_governance_v3.py",
+      "label": "tests/test_governance_v3.py",
+      "language": "python",
+      "path": "tests/test_governance_v3.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/self_audit.py"
+      ],
+      "sha256": "4ebf1b370d9a2de4e7b9c0a86ce8c64499cf2c9ee87a58132463b665d5b4ef2e",
+      "type": "test"
+    },
+    {
+      "depth": 2,
+      "id": "test:tests/test_planes.py",
+      "label": "tests/test_planes.py",
+      "language": "python",
+      "path": "tests/test_planes.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/control_plane.py"
+      ],
+      "sha256": "90524ffc0d71ae52824d7f6adbfc1f5b8992482ead8c54f8aa6c866f8ab8fe04",
+      "type": "test"
+    },
+    {
+      "depth": 3,
+      "id": "test:tests/test_self_audit_v2.py",
+      "label": "tests/test_self_audit_v2.py",
+      "language": "python",
+      "path": "tests/test_self_audit_v2.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/self_audit.py"
+      ],
+      "sha256": "1156da7d69a0ecfeb15ff56c489993095ad9857c148fa265e67f6ac9da3d527c",
+      "type": "test"
+    }
+  ],
+  "impactedPaths": [
+    "design_intelligence/architecture_graph.py",
+    "design_intelligence/cli.py",
+    "design_intelligence/control_plane.py",
+    "design_intelligence/devctl_cli.py",
+    "design_intelligence/self_audit.py",
+    "tests/test_architecture_graph.py",
+    "tests/test_control_plane.py",
+    "tests/test_governance_v3.py",
+    "tests/test_planes.py",
+    "tests/test_self_audit_v2.py"
+  ],
+  "journeys": [
+    {
+      "depth": 1,
+      "id": "journey:JRN-ADOPT-001",
+      "label": "JRN-ADOPT-001",
+      "owner": "consuming repository owner",
+      "reasons": [
+        "intent-binding via implemented-by from design_intelligence/architecture_graph.py",
+        "intent-binding via implemented-by from design_intelligence/control_plane.py",
+        "intent-binding via implemented-by from design_intelligence/devctl_cli.py",
+        "intent-binding via verified-by from tests/test_control_plane.py",
+        "intent-binding via verified-by from tests/test_planes.py"
+      ],
+      "status": "ACTIVE",
+      "type": "journey"
+    },
+    {
+      "depth": 4,
+      "id": "journey:JRN-PILOT-001",
+      "label": "JRN-PILOT-001",
+      "owner": "Design Intelligence maintainer",
+      "reasons": [
+        "intent-binding via implemented-by from tests/test_governance_v3.py",
+        "intent-binding via verified-by from tests/test_governance_v3.py"
+      ],
+      "status": "ACTIVE",
+      "type": "journey"
+    }
+  ],
+  "limits": {
+    "maxDepth": 4,
+    "maxImpactNodes": 300
+  },
+  "matchedVerificationRules": [
+    "python-control-plane"
+  ],
+  "owners": [
+    {
+      "id": "owner:repository-maintainers",
+      "label": "repository-maintainers",
+      "type": "owner"
+    }
+  ],
+  "packages": [
+    {
+      "ecosystem": "npm",
+      "external": false,
+      "id": "package:npm:design-intelligence-visual-qa",
+      "label": "design-intelligence-visual-qa",
+      "manifest": ".",
+      "type": "package"
+    },
+    {
+      "ecosystem": "python",
+      "external": false,
+      "id": "package:python:design-intelligence",
+      "label": "design-intelligence",
+      "manifest": ".",
+      "type": "package"
+    }
+  ],
+  "requiredChecks": [
+    "design-full",
+    "unit-governance"
+  ],
+  "schemaVersion": 1,
+  "schemas": [],
+  "securityBoundaries": [
+    {
+      "authority": "repository owner",
+      "checks": [
+        "design-full",
+        "unit-governance"
+      ],
+      "classification": "protected-governance",
+      "id": "security-boundary:authority-and-scope-boundary",
+      "label": "authority-and-scope-boundary",
+      "type": "security-boundary"
+    }
+  ],
+  "seeds": [
+    {
+      "nodeId": "file:design_intelligence/architecture_graph.py",
+      "reasons": [
+        "changed path matched design_intelligence/architecture_graph.py"
+      ]
+    }
+  ],
+  "status": "PASS",
+  "taskId": "TASK-ARCHITECTURE-IMPACT-GRAPH",
+  "tests": [
+    {
+      "depth": 1,
+      "id": "test:tests/test_architecture_graph.py",
+      "label": "tests/test_architecture_graph.py",
+      "language": "python",
+      "path": "tests/test_architecture_graph.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/architecture_graph.py",
+        "dependent via imports from design_intelligence/control_plane.py"
+      ],
+      "sha256": "148c6feb032d17bb44952293e74939751f497cea368b0fe58bba2bf092ec24a6",
+      "type": "test"
+    },
+    {
+      "depth": 2,
+      "id": "test:tests/test_control_plane.py",
+      "label": "tests/test_control_plane.py",
+      "language": "python",
+      "path": "tests/test_control_plane.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/control_plane.py",
+        "dependent via imports from design_intelligence/devctl_cli.py"
+      ],
+      "sha256": "3c8da322fbafca4d094505d59e47c4f5fec772c5565f94d3154529e49443fad8",
+      "type": "test"
+    },
+    {
+      "depth": 3,
+      "id": "test:tests/test_governance_v3.py",
+      "label": "tests/test_governance_v3.py",
+      "language": "python",
+      "path": "tests/test_governance_v3.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/self_audit.py"
+      ],
+      "sha256": "4ebf1b370d9a2de4e7b9c0a86ce8c64499cf2c9ee87a58132463b665d5b4ef2e",
+      "type": "test"
+    },
+    {
+      "depth": 2,
+      "id": "test:tests/test_planes.py",
+      "label": "tests/test_planes.py",
+      "language": "python",
+      "path": "tests/test_planes.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/control_plane.py"
+      ],
+      "sha256": "90524ffc0d71ae52824d7f6adbfc1f5b8992482ead8c54f8aa6c866f8ab8fe04",
+      "type": "test"
+    },
+    {
+      "depth": 3,
+      "id": "test:tests/test_self_audit_v2.py",
+      "label": "tests/test_self_audit_v2.py",
+      "language": "python",
+      "path": "tests/test_self_audit_v2.py",
+      "reasons": [
+        "dependent via imports from design_intelligence/self_audit.py"
+      ],
+      "sha256": "1156da7d69a0ecfeb15ff56c489993095ad9857c148fa265e67f6ac9da3d527c",
+      "type": "test"
+    }
+  ],
+  "truncated": false,
+  "unmatchedPaths": [],
+  "verificationChecks": [
+    {
+      "available": true,
+      "command": [
+        "npm",
+        "run",
+        "design:ci:full"
+      ],
+      "id": "design-full",
+      "reasons": [
+        "required by approved task packet",
+        "required by impacted protected architecture boundary"
+      ]
+    },
+    {
+      "available": true,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py"
+      ],
+      "id": "unit-governance",
+      "reasons": [
+        "python-control-plane matched design_intelligence/architecture_graph.py, design_intelligence/cli.py, design_intelligence/control_plane.py, design_intelligence/devctl_cli.py, design_intelligence/self_audit.py, tests/test_architecture_graph.py, tests/test_control_plane.py, tests/test_governance_v3.py, tests/test_planes.py, tests/test_self_audit_v2.py",
+        "required by approved task packet",
+        "required by impacted protected architecture boundary"
+      ]
+    }
+  ],
+  "warnings": []
+}

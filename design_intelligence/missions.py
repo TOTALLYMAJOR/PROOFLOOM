@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 import shlex
+from pathlib import Path
 from typing import Any
 
 
@@ -99,13 +100,21 @@ def build_mission(
     ledger = build_reference_ledger(references or [])
     proof = build_proof_gate(workflow, mode)
     approval_status = "APPROVED" if selected else "PENDING"
-    status = "READY_TO_IMPLEMENT" if selected else "DIRECTION_REVIEW_REQUIRED"
+    adoption_required = bool(ledger["entries"])
+    if selected and adoption_required:
+        status = "REFERENCE_RESEARCH_REQUIRED"
+    else:
+        status = "READY_TO_IMPLEMENT" if selected else "DIRECTION_REVIEW_REQUIRED"
     selection_command = _selection_command(workflow, recommended, mode, ledger)
-    next_action = (
-        f"Implement the approved '{selected['name']}' direction, then satisfy the rendered-proof gate."
-        if selected
-        else f"Review the three directions. To accept the recommendation, run: {selection_command}"
-    )
+    if selected and adoption_required:
+        next_action = (
+            "Run the design adoption gate for every supplied reference, then restart with "
+            "--adoption-report pointing to a replay-audited READY report."
+        )
+    elif selected:
+        next_action = f"Implement the approved '{selected['name']}' direction, then satisfy the rendered-proof gate."
+    else:
+        next_action = f"Review the three directions. To accept the recommendation, run: {selection_command}"
     return {
         "schemaVersion": 1,
         "status": status,
@@ -123,6 +132,15 @@ def build_mission(
             "status": approval_status,
             "rule": "A recommendation is not approval. Implementation starts only after an explicit direction selection.",
         },
+        "adoptionGate": {
+            "required": adoption_required,
+            "status": "REQUIRED" if adoption_required else "NOT_REQUIRED",
+            "reportId": None,
+            "reportPath": None,
+            "errors": [],
+            "rule": "External references require a replay-audited READY adoption report before implementation.",
+        },
+        "implementationReady": status == "READY_TO_IMPLEMENT",
         "referenceLedger": ledger,
         "proofGate": proof,
         "selectionCommand": selection_command,
@@ -190,6 +208,7 @@ def build_reference_ledger(references: list[str]) -> dict[str, Any]:
         entries.append({
             "id": f"REF-{index:03d}",
             "source": source,
+            "kind": _reference_kind(source),
             "status": "RESEARCH_REQUIRED",
             "role": "unassigned",
             "observedPatterns": [],
@@ -244,6 +263,7 @@ def render_mission_text(mission: dict[str, Any]) -> str:
     lines.extend([
         "",
         f"Reference ledger: {mission['referenceLedger']['status']}",
+        f"Adoption gate: {mission['adoptionGate']['status']}",
         f"Rendered proof: {mission['proofGate']['status']}",
         "",
         "Next action:",
@@ -284,8 +304,17 @@ def _selection_command(
     if workflow.get("profile_key"):
         parts.extend(["--profile", workflow["profile_key"]])
     for entry in ledger["entries"]:
-        parts.extend(["--reference", shlex.quote(entry["source"])])
+        flag = "--image" if entry["kind"] == "image" else "--reference"
+        parts.extend([flag, shlex.quote(entry["source"])])
     return " ".join(parts)
+
+
+def _reference_kind(source: str) -> str:
+    if re.match(r"^https?://", source, flags=re.IGNORECASE):
+        return "url"
+    if Path(source).suffix.lower() in {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg"}:
+        return "image"
+    return "file"
 
 
 def _reference_roles(mode: str, index: int) -> list[str]:

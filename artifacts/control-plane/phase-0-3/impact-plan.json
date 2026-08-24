@@ -1,0 +1,55 @@
+{
+  "authority": "plan-only",
+  "changedPaths": [
+    "tests/fixtures/visual-surface/surface.css",
+    "design_intelligence/control_plane.py"
+  ],
+  "checks": [
+    {
+      "available": true,
+      "command": [
+        "npm",
+        "run",
+        "design:ci:standard"
+      ],
+      "id": "design-standard",
+      "reasons": [
+        "rendered-design-surface matched tests/fixtures/visual-surface/surface.css",
+        "required by approved task packet"
+      ]
+    },
+    {
+      "available": true,
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py"
+      ],
+      "id": "unit-governance",
+      "reasons": [
+        "python-control-plane matched design_intelligence/control_plane.py, tests/fixtures/visual-surface/surface.css",
+        "required by approved task packet"
+      ]
+    }
+  ],
+  "commandsExecuted": 0,
+  "designAffected": true,
+  "errors": [],
+  "execution": {
+    "performed": false,
+    "reason": "Phase 0-3 produces a deterministic affected-verification plan; command execution remains an explicit CI or operator action."
+  },
+  "matchedRules": [
+    "python-control-plane",
+    "rendered-design-surface"
+  ],
+  "mode": "affected",
+  "status": "PASS",
+  "taskId": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+  "taskPath": ".dev/tasks/completed/TASK-DESIGN-CONTROL-PLANE-PILOT.json"
+}

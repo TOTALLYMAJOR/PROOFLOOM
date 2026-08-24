@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "release": "5.0.0",
+  "status": "PASS",
+  "branch": "codex/governance-convergence-v5",
+  "validation": {
+    "command": "npm run design:ci:full",
+    "unitTests": 118,
+    "governanceConvergence": "PASS",
+    "authorityDrift": "STABLE",
+    "designGate": "READY",
+    "playwrightViewports": 5,
+    "qualityScore": 100,
+    "criticalAccessibilityFindings": 0,
+    "seriousAccessibilityFindings": 0,
+    "domStateAssertions": "25/25",
+    "contractAssertions": "25/25",
+    "repairCycles": 3,
+    "baselineManifestUnchanged": true,
+    "dependencyVulnerabilities": 0,
+    "skillValidatorsPassed": 5,
+    "selfAudit": "PASS"
+  },
+  "quietPilot": {
+    "mode": "READ_ONLY",
+    "repositoryHead": "de6c34b9159130b23bd828c676ab32fac24a1973",
+    "understanding": "MAPPED",
+    "finalizationReadiness": "GOVERNANCE_CONFLICTED",
+    "designGate": "LOCKED",
+    "journeysFound": 24,
+    "journeyProof": "FRAGMENTED",
+    "backlogItems": 22,
+    "blockingFindings": 6,
+    "repositoryMutations": 0,
+    "evidenceRoot": "/home/administrator/design-intelligence-pilot-reports/quietpilot-v5-20260823"
+  },
+  "claimBoundary": "Local package and bounded fixture evidence only. The QuietPilot pilot is read-only diagnosis; no product finalization, merge, deployment, or customer outcome is claimed."
+}

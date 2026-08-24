@@ -17,6 +17,13 @@ class SelfAuditV2Tests(unittest.TestCase):
         self.assertEqual(report["checks"]["repairCycles"]["count"], 3)
         self.assertEqual(report["checks"]["quality"]["score"], 100)
         self.assertEqual(report["checks"]["baselines"]["checked"], 5)
+        self.assertEqual(report["checks"]["architectureGraph"]["status"], "PASS")
+        self.assertFalse(report["checks"]["architectureGraph"]["truncated"])
+        self.assertEqual(report["checks"]["governanceConvergence"]["status"], "PASS")
+        self.assertEqual(
+            report["checks"]["governanceConvergence"]["authorityDrift"]["status"],
+            "STABLE",
+        )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "sourceEvidence": [
+    {
+      "source": "http://127.0.0.1:8123/",
+      "artifacts": [
+        {
+          "kind": "screenshot",
+          "path": "artifacts/design/references/design-department-surface/reference.png",
+          "sha256": "0944913675ff53f0c28eec91477fa1fc0144ba0cdb011c32d2a1251e478c3f01"
+        },
+        {
+          "kind": "dom-capture",
+          "path": "artifacts/design/references/design-department-surface/page.html",
+          "sha256": "57f8d89ddd0d42adf2cf0c8eeb38a050e0ae66371ef6bd1d9bac01dbcbcbacdd"
+        }
+      ]
+    }
+  ]
+}

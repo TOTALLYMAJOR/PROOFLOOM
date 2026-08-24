@@ -1,0 +1,9 @@
+{
+  "adapter": "design_intelligence.adoption.audit_adoption_report",
+  "checkedAuthorities": 8,
+  "checkedSources": 1,
+  "duplicatedInfrastructure": false,
+  "errors": [],
+  "reportId": "DAR-A2FC03EC5D70902D",
+  "status": "PASS"
+}

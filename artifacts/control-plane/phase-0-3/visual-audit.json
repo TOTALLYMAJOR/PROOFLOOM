@@ -1,0 +1,67 @@
+{
+  "adapter": "design_intelligence.quality.score_quality + design_intelligence.baselines.audit_baselines",
+  "baselines": {
+    "checked": 5,
+    "errors": [],
+    "status": "PASS"
+  },
+  "duplicatedInfrastructure": false,
+  "errors": [],
+  "qaReport": "artifacts/design/reports/design-department-surface/qa-report.json",
+  "qaReportSha256": "a2c83dec5273b6dc322515d4c3998048d19eb583d27ba5ba0a22a3918571ed65",
+  "quality": {
+    "categories": {
+      "accessibility": {
+        "critical": 0,
+        "max": 25,
+        "moderate": 0,
+        "score": 25,
+        "serious": 0
+      },
+      "contract": {
+        "max": 10,
+        "passed": 25,
+        "score": 10,
+        "total": 25
+      },
+      "domState": {
+        "max": 20,
+        "passed": 25,
+        "score": 20,
+        "total": 25
+      },
+      "viewportContainment": {
+        "failures": 0,
+        "max": 25,
+        "score": 25
+      },
+      "visualDrift": {
+        "max": 20,
+        "measured": 5,
+        "passed": 5,
+        "score": 20,
+        "total": 5
+      }
+    },
+    "deterministic_only": true,
+    "drift_score": 0,
+    "mandatory_gates": {
+      "baselineGovernance": true,
+      "contract": true,
+      "criticalAccessibility": true,
+      "repairLimit": true,
+      "seriousAccessibility": true,
+      "viewportContainment": true,
+      "viewportCoverage": true,
+      "visualThreshold": true
+    },
+    "notes": [
+      "The score contains measurable categories only; model visual-review findings are reported separately.",
+      "Automated accessibility passing does not replace manual semantic review."
+    ],
+    "pass_threshold": 90,
+    "score": 100,
+    "status": "PASS"
+  },
+  "status": "PASS"
+}

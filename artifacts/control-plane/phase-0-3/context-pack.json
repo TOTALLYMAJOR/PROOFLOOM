@@ -1,0 +1,87 @@
+{
+  "bounded": true,
+  "errors": [],
+  "limits": {
+    "maxBytes": 192000,
+    "maxFiles": 20
+  },
+  "records": [
+    {
+      "bytes": 2537,
+      "path": "AGENTS.md",
+      "reason": "required by approved task; declared instructions authority",
+      "sha256": "a08b586d3b098927c3ade6b782342c8d1325dcc8ce7ae61c6272a2ce29866755",
+      "trust": "repository-governance",
+      "trustRank": 2
+    },
+    {
+      "bytes": 1497,
+      "path": "tests/design/scenarios/design-department-surface.json",
+      "reason": "required by approved task; matched task scope tests/design/scenarios/design-department-surface.json",
+      "sha256": "d28328f4b34cc9c62d9d9aee6c44da777aa6ae1f20bc39e98f3532cf2230eb1c",
+      "trust": "approved-task",
+      "trustRank": 3
+    },
+    {
+      "bytes": 16143,
+      "path": "README.md",
+      "reason": "declared documentation authority",
+      "sha256": "6c1107d51b3f7a68b1c11e11be319b66e6c1910160a4db1e3e7f0f248ac397da",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 1891,
+      "path": "artifacts/design/briefs/ADD-V2-DEMO.json",
+      "reason": "optional task context",
+      "sha256": "9643f59febf7fa4504962d0f42f5f6c1bb60edf0dbd89504645b9c9001063bd6",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 6836,
+      "path": "docs/ARCHITECTURE.md",
+      "reason": "declared architecture authority",
+      "sha256": "70588829392edf063eb3c9d4b56abfb70d775ba62a75032e22b68c2e51e8f96b",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 9363,
+      "path": "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md",
+      "reason": "optional task context",
+      "sha256": "f21748c0d0504d3da4857183c11811f8308703b97019358e7d6a830675dc4fcd",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 668,
+      "path": "docs/design/DESIGN-LANGUAGE.md",
+      "reason": "declared design authority",
+      "sha256": "a4cf54a10827ee2fa87b0607920aded66a39bac4eda002d980eaddcb913757d9",
+      "trust": "domain-authority",
+      "trustRank": 4
+    },
+    {
+      "bytes": 36003,
+      "path": "design_intelligence/control_plane.py",
+      "reason": "matched task scope design_intelligence/control_plane.py",
+      "sha256": "60c7eb806e1a8f4a36e54dac2f78c634ae9d8043c7cd6f98be51dacf8179a811",
+      "trust": "source-evidence",
+      "trustRank": 6
+    },
+    {
+      "bytes": 8397,
+      "path": "design_intelligence/devctl_cli.py",
+      "reason": "matched task scope design_intelligence/devctl_cli.py",
+      "sha256": "af39b4ffe431b8f2cb710ca105ce6131a801c4b60efa44ed7c8f8d8a981cbc7e",
+      "trust": "source-evidence",
+      "trustRank": 6
+    }
+  ],
+  "selectedBytes": 83335,
+  "selectedFiles": 9,
+  "status": "PASS",
+  "taskId": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+  "taskPath": ".dev/tasks/completed/TASK-DESIGN-CONTROL-PLANE-PILOT.json"
+}

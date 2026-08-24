@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/model-routing.schema.json",
+  "title": "Vendor-Neutral Capability Routing Policy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "capabilityClasses", "authority"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "capabilityClasses": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "priority", "maxRisk", "workTypes", "capabilities"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "priority": {"type": "integer", "minimum": 1},
+          "maxRisk": {"enum": ["low", "medium", "high", "critical"]},
+          "workTypes": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "capabilities": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["majorProductDecision", "architectureBoundaryChange", "securityPolicyChange", "productionWrite", "baselineMutation"],
+      "properties": {
+        "majorProductDecision": {"const": "HUMAN_APPROVAL_REQUIRED"},
+        "architectureBoundaryChange": {"const": "HUMAN_APPROVAL_REQUIRED"},
+        "securityPolicyChange": {"const": "HUMAN_APPROVAL_REQUIRED"},
+        "productionWrite": {"const": "HUMAN_APPROVAL_REQUIRED"},
+        "baselineMutation": {"const": "HUMAN_APPROVAL_REQUIRED"}
+      }
+    }
+  }
+}

@@ -208,6 +208,8 @@ class ProductProfile:
     dominant_questions: list[str]
     design_emphasis: list[str]
     actor_defaults: dict[str, str]
+    requires_institutional_memory: bool = True
+    requires_governance_receipt: bool = False
 
     def to_dict(self) -> dict[str, Any]:
         return _normalize(asdict(self))

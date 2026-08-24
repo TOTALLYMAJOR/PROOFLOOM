@@ -1,0 +1,10 @@
+{
+  "authorityCount": 9,
+  "errors": [],
+  "manifest": "devctl.yaml",
+  "root": "/home/administrator/design-intelligence",
+  "schema": "devctl.schema.json",
+  "status": "PASS",
+  "verificationCommandCount": 4,
+  "warnings": []
+}

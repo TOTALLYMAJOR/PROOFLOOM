@@ -212,9 +212,13 @@ def build_handoff(workflow: dict[str, Any], adapter: str) -> dict[str, Any]:
             if direction["id"] == mission["selectedDirection"]
         )
     direction_instructions = []
-    if selected_direction:
+    if selected_direction and mission and mission.get("implementationReady"):
         direction_instructions.append(
             f"Implement the explicitly selected direction: {selected_direction['name']} - {selected_direction['thesis']}"
+        )
+    elif selected_direction and mission:
+        direction_instructions.append(
+            "Do not edit implementation yet. Reference adoption evidence is incomplete or blocked."
         )
     elif mission:
         direction_instructions.append(
@@ -351,12 +355,16 @@ def build_start_packet(
     adapter: str = "codex",
     mode: str | None = None,
     direction: str | None = None,
+    adoption_report: str | Path | None = None,
+    images: list[str | Path] | None = None,
 ) -> dict[str, Any]:
-    workflow = build_workflow(root, task, profile_name, surface, brief, references)
+    reference_sources = [*(references or []), *(str(image) for image in (images or []))]
+    workflow = build_workflow(root, task, profile_name, surface, brief, reference_sources)
     if not surface:
         workflow["surface"] = task
         workflow["contract"]["surface"] = task
-    mission = build_mission(workflow, references, mode, direction)
+    mission = build_mission(workflow, reference_sources, mode, direction)
+    _apply_adoption_gate(workflow, mission, reference_sources, adoption_report)
     workflow["mission"] = mission
     workflow["next_action"] = mission["nextAction"]
     handoff = build_handoff(workflow, adapter)
@@ -374,6 +382,80 @@ def build_start_packet(
         "summary": render_mission_text(mission),
         "next_action": mission["nextAction"],
     }
+
+
+def _apply_adoption_gate(
+    workflow: dict[str, Any],
+    mission: dict[str, Any],
+    reference_sources: list[str],
+    adoption_report: str | Path | None,
+) -> None:
+    if not reference_sources:
+        return
+    if not adoption_report:
+        return
+
+    from .adoption import audit_adoption_report
+
+    root = Path(workflow["root"]).resolve()
+    report_path = Path(adoption_report)
+    if not report_path.is_absolute():
+        report_path = root / report_path
+    audit = audit_adoption_report(root, report_path)
+    errors = list(audit.get("errors", []))
+    loaded = json.loads(report_path.read_text(encoding="utf-8"))
+    if isinstance(loaded, dict):
+        report = loaded
+    else:
+        report = {}
+        errors.append("adoption report must be an object")
+    report_references = {
+        item.get("location")
+        for item in report.get("sources", [])
+        if isinstance(item, dict)
+    }
+    if report_references != set(reference_sources):
+        errors.append("adoption report sources do not match mission sources")
+    if report.get("task") != workflow["task"]:
+        errors.append("adoption report task does not match mission task")
+    if report.get("status") != "READY" or not report.get("implementationReady"):
+        errors.append("adoption report is not READY for implementation")
+    if not report.get("designContract"):
+        errors.append("adoption report has no design contract")
+
+    gate = mission["adoptionGate"]
+    gate.update({
+        "status": "READY" if not errors else "BLOCKED",
+        "reportId": report.get("id"),
+        "reportPath": str(report_path),
+        "errors": errors,
+        "audit": audit,
+    })
+    if errors:
+        mission["status"] = "ADOPTION_BLOCKED"
+        mission["implementationReady"] = False
+        mission["nextAction"] = "Resolve the adoption report errors; do not edit implementation."
+        return
+
+    workflow["contract"] = report["designContract"]
+    mission["referenceLedger"] = {
+        "status": "ANALYZED",
+        "entries": report.get("sources", []),
+        "decisions": report.get("decisions", []),
+        "rule": "Only ADOPT and ADAPT decisions are present in the authorized design contract.",
+        "authority": "Repository and product truth outrank every reference pattern.",
+    }
+    mission["status"] = (
+        "READY_TO_IMPLEMENT"
+        if mission.get("selectedDirection")
+        else "DIRECTION_REVIEW_REQUIRED"
+    )
+    mission["implementationReady"] = mission["status"] == "READY_TO_IMPLEMENT"
+    mission["nextAction"] = (
+        "Implement only the ADOPT and ADAPT patterns in the audited contract, then satisfy the rendered-proof gate."
+        if mission["implementationReady"]
+        else mission["nextAction"]
+    )
 
 
 def save_start_packet(packet: dict[str, Any], output_root: str | Path | None = None) -> dict[str, str]:
@@ -396,7 +478,7 @@ def save_start_packet(packet: dict[str, Any], output_root: str | Path | None = N
         "referenceLedger": str(ledger_path),
         "handoff": str(handoff_path),
     }
-    if packet["mission"]["selectedDirection"]:
+    if packet["mission"].get("implementationReady"):
         contract_path = base / "design-contract.json"
         create_contract(packet["workflow"]["contract"], contract_path)
         outputs["contract"] = str(contract_path)

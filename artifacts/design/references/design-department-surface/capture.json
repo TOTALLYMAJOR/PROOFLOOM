@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "source": "http://127.0.0.1:8123/",
+  "capturedAt": "2026-08-23T16:38:06.386Z",
+  "finalUrl": "http://127.0.0.1:8123/",
+  "title": "Design QA Control Deck",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "artifacts": [
+    {
+      "kind": "screenshot",
+      "path": "artifacts/design/references/design-department-surface/reference.png",
+      "sha256": "0944913675ff53f0c28eec91477fa1fc0144ba0cdb011c32d2a1251e478c3f01"
+    },
+    {
+      "kind": "dom-capture",
+      "path": "artifacts/design/references/design-department-surface/page.html",
+      "sha256": "57f8d89ddd0d42adf2cf0c8eeb38a050e0ae66371ef6bd1d9bac01dbcbcbacdd"
+    }
+  ],
+  "authority": "Captured bytes are evidence only; a human or model adapter must describe patterns."
+}

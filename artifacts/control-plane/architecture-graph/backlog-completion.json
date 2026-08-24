@@ -1,0 +1,85 @@
+{
+  "completion": "COMPLETE",
+  "completionPolicy": "all-terminal",
+  "errors": [],
+  "historicalItemCount": 0,
+  "itemCount": 3,
+  "items": [
+    {
+      "authority": null,
+      "dependencies": [
+        "TASK-CONTROL-PLANE-PHASE-4"
+      ],
+      "evidence": [
+        "artifacts/control-plane/architecture-graph/graph.json",
+        "artifacts/control-plane/architecture-graph/task-impact.json",
+        "artifacts/control-plane/architecture-graph/manifest-validation.json",
+        "artifacts/control-plane/architecture-graph/doctor.json",
+        "artifacts/control-plane/architecture-graph/health.json",
+        "artifacts/control-plane/architecture-graph/plane-audit.json",
+        "artifacts/control-plane/architecture-graph/self-audit.json",
+        "artifacts/control-plane/architecture-graph/failure-injection-tests.txt",
+        "artifacts/control-plane/architecture-graph/files-changed.txt"
+      ],
+      "id": "TASK-ARCHITECTURE-IMPACT-GRAPH",
+      "includeInCompletion": true,
+      "rationale": null,
+      "source": ".dev/tasks",
+      "sourceRole": "active",
+      "status": "COMPLETED",
+      "title": "Bounded architecture impact graph"
+    },
+    {
+      "authority": null,
+      "dependencies": [
+        "TASK-DESIGN-CONTROL-PLANE-PILOT"
+      ],
+      "evidence": [
+        "artifacts/control-plane/phase-4/manifest-validation.json",
+        "artifacts/control-plane/phase-4/context-pack.json",
+        "artifacts/control-plane/phase-4/impact-plan.json",
+        "artifacts/control-plane/phase-4/intelligence-route.json",
+        "artifacts/control-plane/phase-4/plane-audit.json",
+        "artifacts/control-plane/phase-4/backlog-plan.json",
+        "artifacts/control-plane/phase-4/health.json",
+        "artifacts/control-plane/phase-4/visual-audit.json",
+        "artifacts/control-plane/phase-4/doctor.json",
+        "artifacts/control-plane/phase-4/self-audit.json",
+        "artifacts/control-plane/phase-4/full-ci-summary.json",
+        "artifacts/control-plane/phase-4/files-changed.txt"
+      ],
+      "id": "TASK-CONTROL-PLANE-PHASE-4",
+      "includeInCompletion": true,
+      "rationale": null,
+      "source": ".dev/tasks",
+      "sourceRole": "active",
+      "status": "COMPLETED",
+      "title": "Control-plane Intent, Architecture, Intelligence, and whole-backlog governance"
+    },
+    {
+      "authority": null,
+      "dependencies": [],
+      "evidence": [
+        "artifacts/control-plane/phase-0-3/context-pack.json",
+        "artifacts/control-plane/phase-0-3/impact-plan.json",
+        "artifacts/control-plane/phase-0-3/adoption-audit.json",
+        "artifacts/control-plane/phase-0-3/visual-audit.json",
+        "artifacts/control-plane/phase-0-3/doctor.json",
+        "artifacts/control-plane/phase-0-3/self-audit.json"
+      ],
+      "id": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+      "includeInCompletion": true,
+      "rationale": null,
+      "source": ".dev/tasks",
+      "sourceRole": "active",
+      "status": "COMPLETED",
+      "title": "Design control-plane bounded pilot"
+    }
+  ],
+  "openCount": 0,
+  "sourceCount": 1,
+  "status": "PASS",
+  "terminalCount": 3,
+  "warnings": [],
+  "waves": []
+}

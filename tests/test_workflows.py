@@ -83,6 +83,19 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(packet["mission"]["selectedDirection"], "value-first-proof")
         self.assertIn("explicitly selected direction", packet["prompt"])
 
+    def test_start_packet_keeps_reference_work_blocked_without_adoption_evidence(self) -> None:
+        packet = build_start_packet(
+            str(FIXTURES / "mature-repo"),
+            "Improve the marketing landing page",
+            "quotepilot",
+            references=["https://aura.build"],
+            direction="recommended",
+        )
+        self.assertEqual(packet["status"], "REFERENCE_RESEARCH_REQUIRED")
+        self.assertEqual(packet["mission"]["adoptionGate"]["status"], "REQUIRED")
+        self.assertFalse(packet["mission"]["implementationReady"])
+        self.assertIn("adopt", packet["mission"]["nextAction"])
+
     def test_start_packet_infers_customer_proposal_mode(self) -> None:
         packet = build_start_packet(
             str(FIXTURES / "mature-repo"),
@@ -121,7 +134,6 @@ class WorkflowTests(unittest.TestCase):
                     str(FIXTURES / "mature-repo"),
                     "Improve proposal comparison",
                     "--profile", "quotepilot",
-                    "--reference", "https://aura.build",
                     "--direction", "recommended",
                     "--contract-out", str(contract),
                     "--output", str(handoff),
@@ -134,6 +146,24 @@ class WorkflowTests(unittest.TestCase):
             self.assertTrue(handoff.is_file())
             self.assertEqual(payload["workflow"]["contract"]["taskId"], "improve-proposal-comparison")
             self.assertIn("Style research order", handoff.read_text(encoding="utf-8"))
+
+    def test_cli_start_refuses_reference_contract_without_ready_adoption_report(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            contract = Path(directory) / "contract.json"
+            result = subprocess.run(
+                [
+                    sys.executable, "-m", "design_intelligence.cli", "start",
+                    str(FIXTURES / "mature-repo"),
+                    "Improve proposal comparison",
+                    "--reference", "https://aura.build",
+                    "--direction", "recommended",
+                    "--contract-out", str(contract),
+                ],
+                cwd=ROOT, capture_output=True, text=True,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse(contract.exists())
+            self.assertIn("READY adoption report", result.stderr)
 
     def test_cli_start_refuses_contract_before_direction_selection(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

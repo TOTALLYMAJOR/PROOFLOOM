@@ -1,0 +1,33 @@
+{
+  "backlog": {
+    "completion": "COMPLETE",
+    "items": 2,
+    "open": 0,
+    "terminal": 2,
+    "waves": []
+  },
+  "errors": [],
+  "journeys": {
+    "activeJourneys": 2,
+    "activeRequirements": 6,
+    "journeyTests": 4,
+    "orphanRequirements": []
+  },
+  "planes": {
+    "architecture": "PASS",
+    "intelligence": "PASS",
+    "intent": "PASS"
+  },
+  "root": "/home/administrator/design-intelligence",
+  "routing": {
+    "capabilityClasses": 4,
+    "vendorNeutral": true
+  },
+  "standards": {
+    "catalogVersion": "2026-08-23",
+    "certificationClaimed": false,
+    "reviewAfter": "2026-11-21"
+  },
+  "status": "PASS",
+  "warnings": []
+}

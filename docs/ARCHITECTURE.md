@@ -1,4 +1,4 @@
-# Design Intelligence V3 Architecture
+# Design Intelligence V3 Architecture With Adoption Gate
 
 ## Mission front door
 
@@ -11,6 +11,17 @@ plain-English task -> repository context -> inferred surface mode -> three direc
 
 The reference ledger is evidence, not authority. A supplied URL or `DESIGN.md` begins as `RESEARCH_REQUIRED`; it cannot become an imported visual direction without observed patterns, product relevance, original transformation, and explicit rejection notes.
 
+Reference-backed missions add a fail-closed gate between direction selection and implementation:
+
+```text
+site/images -> Playwright or local-byte evidence -> typed semantic adapter
+            -> repository/backlog/hooks/instructions/design-system/memory reconciliation
+            -> governed human receipt reconciliation -> deterministic adoption report
+            -> existing design contract -> mission handoff
+```
+
+The adapter may observe and recommend. It cannot authorize a product capability, assert absence without bound repository-search evidence, override repository authority, lower quality thresholds, mutate a baseline, or select the final adoption decision. Named product profiles fail closed when institutional memory is unavailable. Supplied human lifecycle receipts are replay-audited and remain authoritative over implementation readiness.
+
 ## Governed cycle
 
 ```text
@@ -21,6 +32,27 @@ request -> relevant memory -> design contract -> implementation -> Playwright re
 ```
 
 Model review can classify hierarchy, workflow, visual, responsive, accessibility, component, or drift defects. It cannot modify deterministic scores, lower thresholds, update baselines, or promote its own opinion into institutional law.
+
+## Development control-plane facade
+
+Phases 0-3 add `devctl` as a repository coordination facade, not another intelligence product:
+
+```text
+devctl.yaml -> task packet -> trust-ranked bounded context -> affected verification plan
+                                                    \-> existing design/adoption/visual auditors
+```
+
+`devctl.yaml` indexes existing instructions, architecture, verification commands, and Design Intelligence authorities. `.dev` stores only the manifest version and task packets. `.design`, existing Playwright scenarios, product backlogs, component systems, and release controls remain canonical. The facade does not execute arbitrary commands in this phase. See `docs/CONTROL-PLANE-PHASES-0-3.md` and ADR-0001.
+
+Phase 4 extends the same facade with three governed projections:
+
+```text
+Intent       -> source-bound vision, personas, requirements, journeys, metrics, experiments
+Architecture -> contextual official-standards versions, applicability, evidence, and expiry
+Intelligence -> instruction/skill inventory and vendor-neutral capability routing
+```
+
+The intent index points to canonical repository documents by path and SHA-256. It does not become canonical product truth. The backlog portfolio inventories every declared completion-governed source and permits `COMPLETE` only when every item has a valid terminal disposition. The standards profile is a dated engineering assessment, never certification. Capability routing cannot cross product, architecture, security, production, or baseline authority boundaries. See `docs/CONTROL-PLANE-PHASE-4.md` and ADR-0002.
 
 ## Core shape
 
@@ -43,12 +75,20 @@ It owns:
 - exact bounded repair execution
 - V2 self-audit
 - V3 surface-mode inference, direction briefs, reference ledger, and rendered-proof mission gate
+- evidence-bound reference capture and deterministic design adoption/refusal
 
 `repo_fit/` remains as a compatibility layer for V0.1 entry points.
 
 ## Authority model
 
 Design Intelligence does not become the new repository authority by default.
+
+Established products use index-only institutional memory. The memory rules summarize
+canonical repository authorities and bind each source by repository-relative path and
+SHA-256; they do not migrate or supersede those authorities. Source drift invalidates
+memory retrieval and blocks adoption until a reviewer reconciles and reindexes the
+changed authority. Memory-only initialization deliberately omits quality thresholds
+and baseline infrastructure so integration cannot create a competing QA system.
 
 Priority order:
 

@@ -1,0 +1,78 @@
+ M AGENTS.md
+ M README.md
+ M adapters/claude/CLAUDE.md
+ M adapters/codex/AGENTS.md
+ M artifacts/design/accessibility/design-department-surface/compact-1024x768.json
+ M artifacts/design/accessibility/design-department-surface/desktop-1280x900.json
+ M artifacts/design/accessibility/design-department-surface/mobile-390x844.json
+ M artifacts/design/accessibility/design-department-surface/tablet-768x1024.json
+ M artifacts/design/accessibility/design-department-surface/wide-desktop-1440x1000.json
+ M artifacts/design/evidence/ADD-V2-DEMO/evidence-pack.md
+ M artifacts/design/reports/design-department-surface/qa-report.json
+ M design_intelligence/self_audit.py
+ M docs/ARCHITECTURE.md
+ M package.json
+ M pyproject.toml
+ M scripts/design/ci.py
+ M scripts/install
+?? .dev/VERSION
+?? .dev/intent-index.json
+?? .dev/model-routing.json
+?? .dev/standards-profile.json
+?? .dev/tasks/active/.gitkeep
+?? .dev/tasks/blocked/.gitkeep
+?? .dev/tasks/completed/.gitkeep
+?? .dev/tasks/completed/TASK-CONTROL-PLANE-PHASE-4.json
+?? .dev/tasks/completed/TASK-DESIGN-CONTROL-PLANE-PILOT.json
+?? artifacts/control-plane/phase-0-3/adoption-audit.json
+?? artifacts/control-plane/phase-0-3/context-pack.json
+?? artifacts/control-plane/phase-0-3/doctor.json
+?? artifacts/control-plane/phase-0-3/impact-plan.json
+?? artifacts/control-plane/phase-0-3/manifest-validation.json
+?? artifacts/control-plane/phase-0-3/self-audit.json
+?? artifacts/control-plane/phase-0-3/visual-audit.json
+?? artifacts/control-plane/phase-4/backlog-plan.json
+?? artifacts/control-plane/phase-4/context-pack.json
+?? artifacts/control-plane/phase-4/doctor.json
+?? artifacts/control-plane/phase-4/files-changed.txt
+?? artifacts/control-plane/phase-4/full-ci-summary.json
+?? artifacts/control-plane/phase-4/health.json
+?? artifacts/control-plane/phase-4/impact-plan.json
+?? artifacts/control-plane/phase-4/intelligence-route.json
+?? artifacts/control-plane/phase-4/manifest-validation.json
+?? artifacts/control-plane/phase-4/plane-audit.json
+?? artifacts/control-plane/phase-4/self-audit.json
+?? artifacts/control-plane/phase-4/visual-audit.json
+?? artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v5/adoption-report.json
+?? artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v5/authority-map.json
+?? artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v5/design-contract.json
+?? artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v5/design-system-health.json
+?? artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v5/reference-analysis.json
+?? artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v6/adoption-report.json
+?? artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v6/authority-map.json
+?? artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v6/design-contract.json
+?? artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v6/design-system-health.json
+?? artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v6/reference-analysis.json
+?? design_intelligence/control_plane.py
+?? design_intelligence/data/defaults/industry-standards.json
+?? design_intelligence/data/schemas/backlog-portfolio.schema.json
+?? design_intelligence/data/schemas/devctl.schema.json
+?? design_intelligence/data/schemas/intent-index.schema.json
+?? design_intelligence/data/schemas/model-routing.schema.json
+?? design_intelligence/data/schemas/standards-profile.schema.json
+?? design_intelligence/data/schemas/task-packet.schema.json
+?? design_intelligence/devctl_cli.py
+?? design_intelligence/planes.py
+?? devctl.yaml
+?? docs/CONTROL-PLANE-GAP-MAP.md
+?? docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md
+?? docs/CONTROL-PLANE-PHASE-4.md
+?? docs/CONTROL-PLANE-PHASES-0-3.md
+?? docs/CONTROL-PLANE-ROLES.md
+?? docs/IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASE-4.md
+?? docs/IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASES-0-3.md
+?? docs/architecture/ADR-0001-development-control-plane-facade.md
+?? docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md
+?? scripts/devctl
+?? tests/test_control_plane.py
+?? tests/test_planes.py

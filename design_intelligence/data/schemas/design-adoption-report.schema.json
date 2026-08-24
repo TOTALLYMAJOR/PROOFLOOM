@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/design-adoption-report.schema.json",
+  "title": "Design Adoption Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion", "id", "task", "profile", "surface", "repositoryRoot", "status",
+    "implementationReady", "sources", "authorities", "designSystemHealth",
+    "memoryRequired", "memoryContext", "governanceConstraints", "analysis",
+    "capabilityClaims", "decisions", "designContract",
+    "errors", "implementationPerformed", "repairPerformed", "baselineMutationPerformed"
+  ],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "id": {"type": "string", "pattern": "^DAR-[A-F0-9]{16}$"},
+    "task": {"type": "string", "minLength": 1},
+    "profile": {"type": ["string", "null"]},
+    "surface": {"type": ["string", "null"]},
+    "repositoryRoot": {"type": "string", "minLength": 1},
+    "status": {
+      "enum": ["RESEARCH_REQUIRED", "REVIEW_REQUIRED", "READY", "DECLINED", "BLOCKED"]
+    },
+    "implementationReady": {"type": "boolean"},
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "location", "status", "evidence"],
+        "properties": {
+          "id": {"type": "string"},
+          "kind": {"enum": ["url", "image"]},
+          "location": {"type": "string"},
+          "status": {"enum": ["RESEARCH_REQUIRED", "ANALYZED"]},
+          "evidence": {"type": "array"}
+        }
+      }
+    },
+    "authorities": {"type": "object"},
+    "designSystemHealth": {"type": "object"},
+    "memoryRequired": {"type": "boolean"},
+    "memoryContext": {"type": "object"},
+    "governanceConstraints": {
+      "type": "object",
+      "required": ["status", "required", "receipts", "errors"],
+      "properties": {
+        "status": {"enum": ["NOT_REQUIRED", "REQUIRED", "PASS", "HELD", "BLOCKED"]},
+        "required": {"type": "boolean"},
+        "receipts": {"type": "array"},
+        "errors": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "analysis": {"type": ["object", "null"]},
+    "capabilityClaims": {"type": "array"},
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["patternId", "decision", "reasons"],
+        "properties": {
+          "patternId": {"type": ["string", "null"]},
+          "decision": {"enum": ["ADOPT", "ADAPT", "DEFER", "DECLINE", "BLOCKED"]},
+          "reasons": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "designContract": {"type": ["object", "null"]},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "implementationPerformed": {"const": false},
+    "repairPerformed": {"const": false},
+    "baselineMutationPerformed": {"const": false}
+  }
+}

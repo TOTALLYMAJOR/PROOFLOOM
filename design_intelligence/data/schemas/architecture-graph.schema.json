@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/architecture-graph.schema.json",
+  "title": "Bounded Architecture Impact Graph",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schemaVersion", "status", "bounded", "nodes", "edges", "truncated", "errors", "warnings"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "status": {"enum": ["PASS", "FAIL", "DISABLED"]},
+    "bounded": {"const": true},
+    "graphSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "label"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "type": {"enum": ["file", "test", "package", "api", "schema", "journey", "owner", "security-boundary"]},
+          "label": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "target", "type", "evidence"],
+        "properties": {
+          "source": {"type": "string", "minLength": 1},
+          "target": {"type": "string", "minLength": 1},
+          "type": {"enum": ["imports", "belongs-to-package", "exposes-api", "calls-api", "uses-schema", "verified-by", "implemented-by", "owned-by", "governed-by"]},
+          "evidence": {"type": "object"}
+        }
+      }
+    },
+    "truncated": {"type": "boolean"},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": "string"}}
+  }
+}

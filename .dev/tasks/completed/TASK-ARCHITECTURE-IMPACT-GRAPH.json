@@ -1,0 +1,93 @@
+{
+  "authorityBoundaries": [
+    "architectureBoundaryChange",
+    "securityBoundaryChange"
+  ],
+  "completionCriteria": [
+    "Static graph discovery covers repository files, packages, imports, APIs, schemas, journeys, tests, security boundaries, and ownership.",
+    "Task impact traversal is deterministic, depth-bounded, node-bounded, repository-relative, and fails closed when truncated.",
+    "Existing path-based verification remains compatible and incorporates graph-derived paths and protected checks.",
+    "CLI graph and impact commands emit governed JSON evidence without executing repository code.",
+    "Failure-injection tests prove dependency direction, ownership, protected boundaries, path safety, and traversal limits.",
+    "The full repository CI, governed visual evidence, baselines, thresholds, V1 skills, and self-audit remain passing."
+  ],
+  "context": {
+    "optional": [
+      "docs/CONTROL-PLANE-PHASE-4.md",
+      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
+    ],
+    "required": [
+      "AGENTS.md",
+      "docs/ARCHITECTURE.md",
+      "devctl.yaml"
+    ]
+  },
+  "dependencies": [
+    "TASK-CONTROL-PLANE-PHASE-4"
+  ],
+  "evidence": [
+    "artifacts/control-plane/architecture-graph/graph.json",
+    "artifacts/control-plane/architecture-graph/task-impact.json",
+    "artifacts/control-plane/architecture-graph/manifest-validation.json",
+    "artifacts/control-plane/architecture-graph/doctor.json",
+    "artifacts/control-plane/architecture-graph/health.json",
+    "artifacts/control-plane/architecture-graph/plane-audit.json",
+    "artifacts/control-plane/architecture-graph/self-audit.json",
+    "artifacts/control-plane/architecture-graph/failure-injection-tests.txt",
+    "artifacts/control-plane/architecture-graph/files-changed.txt"
+  ],
+  "id": "TASK-ARCHITECTURE-IMPACT-GRAPH",
+  "intent": {
+    "backlogItems": [
+      "TASK-ARCHITECTURE-IMPACT-GRAPH"
+    ],
+    "experiments": [],
+    "journeys": [
+      "JRN-ADOPT-001"
+    ],
+    "requirements": [
+      "REQ-ADOPTION-001",
+      "REQ-STANDARDS-001"
+    ],
+    "successMetrics": [
+      "MET-ADOPTION-001",
+      "MET-STANDARDS-001"
+    ]
+  },
+  "nonObjectives": [
+    "Do not replace repository architecture documents, execute discovered code, or claim runtime call coverage.",
+    "Do not auto-approve security, ownership, schema, API, or architecture boundary changes.",
+    "Do not mutate QuietPilot, governed baselines, quality thresholds, or production environments."
+  ],
+  "objective": "Add a deterministic, bounded architecture-impact graph to the repository-native development control plane.",
+  "requiredCapabilities": [
+    "dependency-analysis",
+    "repository-analysis",
+    "structured-output"
+  ],
+  "risk": "high",
+  "schemaVersion": 2,
+  "scope": {
+    "paths": [
+      ".dev/**",
+      "design_intelligence/architecture_graph.py",
+      "design_intelligence/control_plane.py",
+      "design_intelligence/devctl_cli.py",
+      "design_intelligence/data/schemas/**",
+      "docs/architecture/**",
+      "tests/**",
+      "scripts/design/ci.py",
+      "devctl.yaml",
+      "package.json"
+    ]
+  },
+  "status": "COMPLETED",
+  "title": "Bounded architecture impact graph",
+  "verification": {
+    "required": [
+      "unit-governance",
+      "design-full"
+    ]
+  },
+  "workType": "architecture"
+}

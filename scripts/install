@@ -8,8 +8,10 @@ BIN_DESTINATION="${2:-$HOME/.local/bin}"
 "$ROOT_DIR/scripts/install-codex-skills" "$SKILL_DESTINATION"
 mkdir -p "$BIN_DESTINATION"
 ln -sfn "$ROOT_DIR/scripts/design-intelligence" "$BIN_DESTINATION/design-intelligence"
+ln -sfn "$ROOT_DIR/scripts/devctl" "$BIN_DESTINATION/devctl"
 
 printf 'Installed Design Intelligence CLI to %s\n' "$BIN_DESTINATION/design-intelligence"
+printf 'Installed control-plane facade to %s\n' "$BIN_DESTINATION/devctl"
 case ":$PATH:" in
   *":$BIN_DESTINATION:"*) ;;
   *) printf 'Add %s to PATH, then restart the shell.\n' "$BIN_DESTINATION" ;;

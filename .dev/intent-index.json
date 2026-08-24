@@ -1,0 +1,149 @@
+{
+  "constraints": [
+    {
+      "id": "CON-AUTHORITY-001",
+      "lastReviewed": "2026-08-23",
+      "source": {
+        "path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+        "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"
+      },
+      "status": "ACTIVE"
+    }
+  ],
+  "experiments": [],
+  "journeys": [
+    {
+      "id": "JRN-ADOPT-001",
+      "lastReviewed": "2026-08-23",
+      "metrics": ["MET-ADOPTION-001", "MET-JOURNEY-001", "MET-BACKLOG-001", "MET-STANDARDS-001", "MET-ROUTING-001"],
+      "owner": "consuming repository owner",
+      "personas": ["PER-OWNER-001", "PER-TEAM-001"],
+      "requirements": ["REQ-ADOPTION-001", "REQ-JOURNEY-001", "REQ-BACKLOG-001", "REQ-STANDARDS-001", "REQ-ROUTING-001"],
+      "source": {
+        "path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+        "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"
+      },
+      "startingState": "An existing repository has its own authorities and incomplete control-plane bindings.",
+      "status": "ACTIVE",
+      "successState": "One reviewed additive control-plane index reports all governed work without unauthorized mutation.",
+      "tests": ["tests/test_control_plane.py", "tests/test_planes.py"]
+    },
+    {
+      "id": "JRN-PILOT-001",
+      "lastReviewed": "2026-08-23",
+      "metrics": ["MET-VISUAL-001"],
+      "owner": "Design Intelligence maintainer",
+      "personas": ["PER-OWNER-001", "PER-USER-001"],
+      "requirements": ["REQ-VISUAL-001"],
+      "source": {
+        "path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+        "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"
+      },
+      "startingState": "The governed frontend fixture and prior design evidence exist.",
+      "status": "ACTIVE",
+      "successState": "Rendered evidence passes without threshold weakening or baseline mutation.",
+      "tests": ["tests/design/scenarios/design-department-surface.json", "tests/test_governance_v3.py"]
+    }
+  ],
+  "personas": [
+    {
+      "id": "PER-OWNER-001",
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE"
+    },
+    {
+      "id": "PER-TEAM-001",
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE"
+    },
+    {
+      "id": "PER-USER-001",
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE"
+    }
+  ],
+  "principles": [
+    {
+      "id": "PRI-REPOSITORY-AUTHORITY-001",
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE"
+    },
+    {
+      "id": "PRI-EVIDENCE-BOUNDARY-001",
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-ADOPTION-001",
+      "journeys": ["JRN-ADOPT-001"],
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE",
+      "successMetrics": ["MET-ADOPTION-001"]
+    },
+    {
+      "id": "REQ-JOURNEY-001",
+      "journeys": ["JRN-ADOPT-001"],
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE",
+      "successMetrics": ["MET-JOURNEY-001"]
+    },
+    {
+      "id": "REQ-BACKLOG-001",
+      "journeys": ["JRN-ADOPT-001"],
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE",
+      "successMetrics": ["MET-BACKLOG-001"]
+    },
+    {
+      "id": "REQ-STANDARDS-001",
+      "journeys": ["JRN-ADOPT-001"],
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE",
+      "successMetrics": ["MET-STANDARDS-001"]
+    },
+    {
+      "id": "REQ-ROUTING-001",
+      "journeys": ["JRN-ADOPT-001"],
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE",
+      "successMetrics": ["MET-ROUTING-001"]
+    },
+    {
+      "id": "REQ-VISUAL-001",
+      "journeys": ["JRN-PILOT-001"],
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE",
+      "successMetrics": ["MET-VISUAL-001"]
+    }
+  ],
+  "schemaVersion": 1,
+  "successMetrics": [
+    {"id": "MET-ADOPTION-001", "lastReviewed": "2026-08-23", "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"}, "status": "ACTIVE"},
+    {"id": "MET-JOURNEY-001", "lastReviewed": "2026-08-23", "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"}, "status": "ACTIVE"},
+    {"id": "MET-BACKLOG-001", "lastReviewed": "2026-08-23", "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"}, "status": "ACTIVE"},
+    {"id": "MET-STANDARDS-001", "lastReviewed": "2026-08-23", "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"}, "status": "ACTIVE"},
+    {"id": "MET-ROUTING-001", "lastReviewed": "2026-08-23", "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"}, "status": "ACTIVE"},
+    {"id": "MET-VISUAL-001", "lastReviewed": "2026-08-23", "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"}, "status": "ACTIVE"}
+  ],
+  "vision": [
+    {
+      "id": "VIS-CONTROL-PLANE-001",
+      "lastReviewed": "2026-08-23",
+      "source": {"path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md", "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"},
+      "status": "ACTIVE"
+    }
+  ]
+}

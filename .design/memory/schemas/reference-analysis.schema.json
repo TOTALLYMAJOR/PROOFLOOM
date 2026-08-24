@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/reference-analysis.schema.json",
+  "title": "Reference Analysis",
+  "type": "object",
+  "description": "Canonical copy. The package source is design_intelligence/data/schemas/reference-analysis.schema.json."
+}

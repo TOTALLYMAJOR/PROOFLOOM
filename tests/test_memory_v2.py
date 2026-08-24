@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import tempfile
 import unittest
+import hashlib
+import json
 from datetime import date
 from pathlib import Path
 
@@ -123,6 +125,59 @@ class MemoryV2Tests(unittest.TestCase):
     def test_existing_memory_authority_blocks_duplicate_fallback(self) -> None:
         with self.assertRaisesRegex(ValueError, "Existing design-decision authority"):
             initialize_memory(FIXTURES / "mature-repo")
+
+    def test_memory_only_integration_does_not_install_quality_or_baselines(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "README.md").write_text("fixture", encoding="utf-8")
+
+            report = initialize_memory(root, memory_only=True)
+
+            self.assertTrue(report["memoryOnly"])
+            self.assertTrue((root / ".design/memory/product-rules.json").is_file())
+            self.assertFalse((root / ".design/quality").exists())
+            self.assertFalse((root / ".design/baselines").exists())
+
+    def test_index_only_rules_fail_closed_when_source_authority_drifts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            authority = root / "docs/DESIGN_SYSTEM.md"
+            authority.parent.mkdir(parents=True)
+            authority.write_text("# Canonical design system\n", encoding="utf-8")
+            initialize_memory(root, allow_existing_authority=True, memory_only=True)
+            rules = {
+                "schemaVersion": 1,
+                "authorityMode": "index-only",
+                "sourceAuthorities": [{
+                    "path": "docs/DESIGN_SYSTEM.md",
+                    "sha256": hashlib.sha256(authority.read_bytes()).hexdigest(),
+                    "role": "visual-execution",
+                }],
+                "portfolio": [],
+                "archetypes": {},
+                "products": {
+                    "quotepilot": {
+                        "archetype": "transactional-commercial",
+                        "rules": [{
+                            "id": "DL-QP-INDEX-001",
+                            "category": "evidence",
+                            "statement": "Canonical repository design authority outranks memory summaries.",
+                            "protected": True,
+                            "sourceAuthority": "docs/DESIGN_SYSTEM.md",
+                        }],
+                    }
+                },
+            }
+            (root / ".design/memory/product-rules.json").write_text(
+                json.dumps(rules), encoding="utf-8"
+            )
+
+            self.assertEqual(audit_memory(root)["status"], "PASS")
+            authority.write_text("# Changed design system\n", encoding="utf-8")
+            audit = audit_memory(root)
+
+            self.assertEqual(audit["status"], "FAIL")
+            self.assertIn("Source authority hash mismatch", " ".join(audit["errors"]))
 
 
 if __name__ == "__main__":

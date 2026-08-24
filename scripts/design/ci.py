@@ -34,10 +34,25 @@ def main() -> int:
 def quick_commands() -> list[tuple[str, list[str]]]:
     return [
         ("unit and governance tests", [PYTHON, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"]),
+        ("repository governance convergence", [PYTHON, "-m", "design_intelligence.devctl_cli", "govern", "verify", "--root", ".", "--format", "json"]),
+        ("control-plane manifest", [PYTHON, "-m", "design_intelligence.devctl_cli", "validate", "--root", ".", "--format", "json"]),
+        ("control-plane doctor", [PYTHON, "-m", "design_intelligence.devctl_cli", "doctor", "--root", ".", "--format", "json"]),
+        ("control-plane plane audit", [PYTHON, "-m", "design_intelligence.devctl_cli", "planes", "audit", "--root", ".", "--format", "json"]),
+        ("bounded architecture graph", [PYTHON, "-m", "design_intelligence.devctl_cli", "architecture", "graph", "--summary", "--root", ".", "--format", "json"]),
+        ("whole-backlog integrity", [PYTHON, "-m", "design_intelligence.devctl_cli", "backlog", "status", "--root", ".", "--format", "json"]),
+        ("control-plane health", [PYTHON, "-m", "design_intelligence.devctl_cli", "health", "--root", ".", "--format", "json"]),
         ("design contract", [PYTHON, "-m", "design_intelligence.cli", "contract", "validate", "--input", "artifacts/design/briefs/ADD-V2-DEMO.json", "--format", "json"]),
         ("memory integrity", [PYTHON, "-m", "design_intelligence.cli", "memory", "audit", "--root", ".", "--format", "json"]),
         ("baseline integrity", [PYTHON, "-m", "design_intelligence.cli", "baseline", "audit", "--root", ".", "--format", "json"]),
         ("component registry", [PYTHON, "-m", "design_intelligence.cli", "registry", "audit", "--root", ".", "--format", "json"]),
+        (
+            "design adoption integrity",
+            [
+                PYTHON, "-m", "design_intelligence.cli", "adoption-audit", "--root", ".",
+                "--input", "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v9/adoption-report.json",
+                "--format", "json",
+            ],
+        ),
         ("diff whitespace", ["git", "diff", "--check"]),
     ]
 
@@ -69,6 +84,7 @@ def standard_commands() -> list[tuple[str, list[str]]]:
 
 def full_commands() -> list[tuple[str, list[str]]]:
     commands: list[tuple[str, list[str]]] = [
+        ("whole-backlog completion gate", [PYTHON, "-m", "design_intelligence.devctl_cli", "backlog", "complete", "--root", ".", "--format", "json"]),
         ("three rendered repair cycles", ["npm", "run", "design:repair:prove"]),
         ("npm dependency audit", ["npm", "audit", "--audit-level=high"]),
     ]
