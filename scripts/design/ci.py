@@ -38,6 +38,14 @@ def quick_commands() -> list[tuple[str, list[str]]]:
         ("memory integrity", [PYTHON, "-m", "design_intelligence.cli", "memory", "audit", "--root", ".", "--format", "json"]),
         ("baseline integrity", [PYTHON, "-m", "design_intelligence.cli", "baseline", "audit", "--root", ".", "--format", "json"]),
         ("component registry", [PYTHON, "-m", "design_intelligence.cli", "registry", "audit", "--root", ".", "--format", "json"]),
+        (
+            "design adoption integrity",
+            [
+                PYTHON, "-m", "design_intelligence.cli", "adoption-audit", "--root", ".",
+                "--input", "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v3/adoption-report.json",
+                "--format", "json",
+            ],
+        ),
         ("diff whitespace", ["git", "diff", "--check"]),
     ]
 

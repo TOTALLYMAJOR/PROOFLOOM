@@ -1,5 +1,7 @@
 {
   "name": "QuotePilot",
+  "requires_institutional_memory": true,
+  "requires_governance_receipt": true,
   "archetype": "Transactional Commercial",
   "core_promise": "Build -> Decide -> Book",
   "design_psychology": [

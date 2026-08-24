@@ -1,4 +1,4 @@
-# Design Intelligence V3 Architecture
+# Design Intelligence V3 Architecture With Adoption Gate
 
 ## Mission front door
 
@@ -10,6 +10,17 @@ plain-English task -> repository context -> inferred surface mode -> three direc
 `design-intelligence "<task>"` is read-only and defaults to the current repository. It produces a recommendation but blocks implementation until a direction is explicitly selected. `--save` writes only a generated mission bundle under `artifacts/design/missions/`.
 
 The reference ledger is evidence, not authority. A supplied URL or `DESIGN.md` begins as `RESEARCH_REQUIRED`; it cannot become an imported visual direction without observed patterns, product relevance, original transformation, and explicit rejection notes.
+
+Reference-backed missions add a fail-closed gate between direction selection and implementation:
+
+```text
+site/images -> Playwright or local-byte evidence -> typed semantic adapter
+            -> repository/backlog/hooks/instructions/design-system/memory reconciliation
+            -> governed human receipt reconciliation -> deterministic adoption report
+            -> existing design contract -> mission handoff
+```
+
+The adapter may observe and recommend. It cannot authorize a product capability, assert absence without bound repository-search evidence, override repository authority, lower quality thresholds, mutate a baseline, or select the final adoption decision. Named product profiles fail closed when institutional memory is unavailable. Supplied human lifecycle receipts are replay-audited and remain authoritative over implementation readiness.
 
 ## Governed cycle
 
@@ -43,12 +54,20 @@ It owns:
 - exact bounded repair execution
 - V2 self-audit
 - V3 surface-mode inference, direction briefs, reference ledger, and rendered-proof mission gate
+- evidence-bound reference capture and deterministic design adoption/refusal
 
 `repo_fit/` remains as a compatibility layer for V0.1 entry points.
 
 ## Authority model
 
 Design Intelligence does not become the new repository authority by default.
+
+Established products use index-only institutional memory. The memory rules summarize
+canonical repository authorities and bind each source by repository-relative path and
+SHA-256; they do not migrate or supersede those authorities. Source drift invalidates
+memory retrieval and blocks adoption until a reviewer reconciles and reindexes the
+changed authority. Memory-only initialization deliberately omits quality thresholds
+and baseline infrastructure so integration cannot create a competing QA system.
 
 Priority order:
 

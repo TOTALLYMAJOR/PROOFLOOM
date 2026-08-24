@@ -19,6 +19,8 @@ Its job is:
 - Existing repository behavior, governance, and tokens outrank the reference.
 - Reject references that would erase intentional product differentiation.
 - Record source, role, observed pattern, why it works, product relevance, original transformation, and rejected identity elements in the mission reference ledger.
+- Emit `reference-analysis.schema.json` when the adoption CLI is available. Bind URL captures and verified capability claims to repository-relative SHA-256 evidence. Bind `ABSENT` claims to structured repository-search evidence; otherwise mark them `UNRESOLVED`.
+- Treat any analyzer recommendation as advisory. `design-intelligence adopt` owns deterministic `ADOPT`, `ADAPT`, `DEFER`, `DECLINE`, and `BLOCKED` decisions.
 
 ## Output shape
 
@@ -31,6 +33,8 @@ Its job is:
 - conversion reference
 
 One reference does not need to solve every problem.
+
+For sites, use the repository's `design:reference:capture` Playwright adapter when available. Captured bytes are evidence, not proof that a feature belongs in the product.
 
 ## Routing
 

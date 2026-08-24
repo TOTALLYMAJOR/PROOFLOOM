@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "analyzer": {
+    "type": "hybrid",
+    "name": "codex-human-reviewed-visual-observation",
+    "observedAt": "2026-08-23T16:40:00Z",
+    "model": "repository-session-adapter",
+    "version": "1"
+  },
+  "sourceEvidence": [
+    {
+      "source": "http://127.0.0.1:8123/",
+      "artifacts": [
+        {
+          "kind": "screenshot",
+          "path": "artifacts/design/references/design-department-surface/reference.png",
+          "sha256": "0944913675ff53f0c28eec91477fa1fc0144ba0cdb011c32d2a1251e478c3f01"
+        },
+        {
+          "kind": "dom-capture",
+          "path": "artifacts/design/references/design-department-surface/page.html",
+          "sha256": "7a81981ea9753ed2a1e1f67cf10ae473d6b03651ee95e27a3021cef4c9722405"
+        }
+      ]
+    }
+  ],
+  "capabilityClaims": [],
+  "patterns": [
+    {
+      "id": "PAT-DD-DECISION-HIERARCHY",
+      "source": "http://127.0.0.1:8123/",
+      "name": "Decision-first information hierarchy",
+      "category": "layout",
+      "observation": "The governed run, promotion boundary, and primary evidence action appear before supporting implementation detail.",
+      "whyItWorks": "A hurried operator can identify the run state, consequence, and next action without scanning every subsystem.",
+      "productRelevance": "Design Intelligence must keep evidence and authority boundaries legible before exposing operational detail.",
+      "proposedUse": "Preserve decision-first hierarchy in Design Intelligence control and evidence surfaces.",
+      "keywords": ["decision-first hierarchy", "primary evidence action"],
+      "requiredCapabilities": [],
+      "riskFlags": [],
+      "identityElements": [],
+      "implementationImpact": "visual-only",
+      "recommendedDecision": "ADOPT"
+    },
+    {
+      "id": "PAT-DD-STATUS-ACTION",
+      "source": "http://127.0.0.1:8123/",
+      "name": "Status-near-action evidence summary",
+      "category": "layout",
+      "observation": "The evidence receipt keeps contract, viewport, accessibility, and baseline state directly above the inspection action.",
+      "whyItWorks": "The operator sees the consequence and its supporting state in one bounded region before taking action.",
+      "productRelevance": "Generated evidence packs and mission handoffs need compact state summaries without becoming another dashboard.",
+      "proposedUse": "Adapt the status-near-action grouping through the repository's existing contract and evidence-pack formats.",
+      "keywords": ["status-near-action", "evidence summary"],
+      "requiredCapabilities": [],
+      "riskFlags": [],
+      "identityElements": ["fixture typography", "fixture warm grid", "fixture red-green palette"],
+      "implementationImpact": "visual-only",
+      "recommendedDecision": "ADAPT"
+    }
+  ]
+}

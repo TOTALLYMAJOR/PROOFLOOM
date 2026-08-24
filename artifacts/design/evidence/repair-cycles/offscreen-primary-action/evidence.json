@@ -10,8 +10,8 @@
   "changedFiles": [
     "surface.css"
   ],
-  "beforeHash": "f0133ca1083d911ab895cf0d438d8b66604818d02e4690e9527282b6cf6e73ff",
-  "afterHash": "1f6bea136fbff7e959e03900161b766487ccdeee530e5c8ea58011d7790606c6",
+  "beforeHash": "9ce1faddf743430710fea64d3e45db78364e6039f3a859193bb7b1ee51679e07",
+  "afterHash": "a68e98401d54c9e169c87f66587f2fab6f9b676fb496c5ac366c555dc0f62393",
   "beforeScreenshot": "artifacts/design/evidence/repair-cycles/offscreen-primary-action/before.png",
   "afterScreenshot": "artifacts/design/evidence/repair-cycles/offscreen-primary-action/after.png",
   "baselineManifestSha256": "03346893f7b9dff8fdd01de647908fb581af1a943ca258ac428057bca65aeef1",

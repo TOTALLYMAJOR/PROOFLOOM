@@ -10,8 +10,8 @@
   "changedFiles": [
     "surface.css"
   ],
-  "beforeHash": "2bada57b648fd67bc0389cdd621e426f7212a6ca93802ce9e8307f220eb4a537",
-  "afterHash": "1f6bea136fbff7e959e03900161b766487ccdeee530e5c8ea58011d7790606c6",
+  "beforeHash": "5d5bfa688a7738aa2b79dfa13a7bf1a8c2308640617df575786fa96b94c16205",
+  "afterHash": "a68e98401d54c9e169c87f66587f2fab6f9b676fb496c5ac366c555dc0f62393",
   "beforeScreenshot": "artifacts/design/evidence/repair-cycles/overflow/before.png",
   "afterScreenshot": "artifacts/design/evidence/repair-cycles/overflow/after.png",
   "baselineManifestSha256": "03346893f7b9dff8fdd01de647908fb581af1a943ca258ac428057bca65aeef1",

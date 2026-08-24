@@ -44,6 +44,7 @@ DIRECTORY_HINTS = [
     "requirements",
     "roadmap",
     "tasks",
+    "backlog",
     "app",
     "pages",
     "src",
@@ -59,7 +60,14 @@ DIRECTORY_HINTS = [
     "tests",
     "e2e",
     "cypress",
-    ".github/workflows",
+    ".github",
+    ".agents",
+    ".codex",
+    ".claude",
+    ".cursor",
+    ".windsurf",
+    ".husky",
+    ".githooks",
 ]
 
 EXPLICIT_FILES = [
@@ -73,6 +81,9 @@ EXPLICIT_FILES = [
     "PRODUCT_SENSE.md",
     "QUALITY_SCORE.md",
     "SECURITY.md",
+    "BACKLOG.md",
+    "ROADMAP.md",
+    "CONTRIBUTING.md",
     "RELATIONS.md",
     "package.json",
     "pyproject.toml",
@@ -92,6 +103,12 @@ EXPLICIT_FILES = [
     "eslint.config.mjs",
     ".storybook/main.ts",
     ".storybook/main.js",
+    ".github/copilot-instructions.md",
+    ".cursorrules",
+    ".windsurfrules",
+    ".pre-commit-config.yaml",
+    "lefthook.yml",
+    "lefthook.yaml",
 ]
 
 TEXT_EXTENSIONS = {
@@ -133,7 +150,9 @@ DESIGN_KEYWORDS = (
     "global",
     "header",
     "input",
+    "instruction",
     "layout",
+    "hook",
     "modal",
     "nav",
     "page",
@@ -284,7 +303,8 @@ def select_candidate_files(root: Path) -> list[Path]:
 
 
 def _looks_relevant(path: Path, base: Path) -> bool:
-    if path.suffix.lower() not in TEXT_EXTENSIONS:
+    extensionless_hook = base.name in {".husky", ".githooks"} and not path.suffix
+    if path.suffix.lower() not in TEXT_EXTENSIONS and not extensionless_hook:
         return False
     if path.stat().st_size > MAX_BYTES:
         return False
@@ -292,7 +312,10 @@ def _looks_relevant(path: Path, base: Path) -> bool:
         relative = str(path.relative_to(base)).lower()
     except ValueError:
         relative = path.name.lower()
-    if base.name in {"docs", "design", "architecture", "product", "specs", "requirements", "roadmap"}:
+    if base.name in {
+        "docs", "design", "architecture", "product", "specs", "requirements", "roadmap",
+        ".agents", ".codex", ".claude", ".cursor", ".windsurf", ".husky", ".githooks",
+    }:
         return True
     return any(keyword in relative for keyword in DESIGN_KEYWORDS)
 
@@ -317,11 +340,25 @@ def _collect_capabilities(
     for path in candidate_files:
         relative = str(path.relative_to(root))
         lowered = relative.lower()
+        normalized_lowered = lowered.replace("_", "-")
         text = contents[path].lower()
         name = path.name.lower()
 
         if path.name in {"AGENTS.md", "CLAUDE.md"}:
             capabilities["agent_governance"].append(relative)
+
+        if (
+            "copilot-instructions" in lowered
+            or lowered.startswith((".agents/", ".codex/", ".claude/", ".cursor/", ".windsurf/"))
+            or name in {".cursorrules", ".windsurfrules"}
+        ):
+            capabilities["custom_instructions"].append(relative)
+
+        if (
+            lowered.startswith((".husky/", ".githooks/"))
+            or name in {".pre-commit-config.yaml", "lefthook.yml", "lefthook.yaml"}
+        ):
+            capabilities["hooks"].append(relative)
 
         if (
             "architecture" in lowered
@@ -336,9 +373,13 @@ def _collect_capabilities(
             else:
                 capabilities["architecture_decisions"].append(relative)
 
-        if any(token in lowered for token in ("design-system", "design-language")):
+        if any(token in normalized_lowered for token in ("design-system", "design-language")):
             if path.suffix.lower() in {".md", ".mdx"} or "tailwind.config" in name or path.suffix == ".css":
                 capabilities["design_language"].append(relative)
+        if "design-principles" in normalized_lowered and path.suffix.lower() in {".md", ".mdx"}:
+            capabilities["design_principles"].append(relative)
+        if "design-contract" in normalized_lowered and path.suffix.lower() in {".md", ".mdx"}:
+            capabilities["design_contracts"].append(relative)
 
         if any(token in lowered for token in ("debt", "design-debt")) and "design-intelligence: derived-view" not in text:
             if "design" in lowered or "ui" in lowered:
@@ -553,9 +594,13 @@ def _build_capability_map(capabilities: dict[str, list[str]]) -> dict[str, Capab
     map_items: dict[str, CapabilityAuthority] = {}
     tracked = {
         "agent_governance",
+        "custom_instructions",
+        "hooks",
         "architecture_overview",
         "architecture_decisions",
         "design_language",
+        "design_principles",
+        "design_contracts",
         "design_decisions",
         "design_debt",
         "technical_debt",

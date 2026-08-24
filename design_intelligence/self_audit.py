@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from .adoption import audit_adoption_report
 from .baselines import audit_baseline_review_request, audit_baselines
 from .contracts import load_and_validate_contract
 from .memory import audit_memory
@@ -49,6 +50,16 @@ REQUIRED_V3_MISSION_PATHS = (
     "docs/RELEASE-REPORT-3.0.0.md",
 )
 
+REQUIRED_V4_ADOPTION_PATHS = (
+    ".design/memory/schemas/reference-analysis.schema.json",
+    ".design/memory/schemas/design-adoption-report.schema.json",
+    "design_intelligence/data/schemas/reference-analysis.schema.json",
+    "design_intelligence/data/schemas/design-adoption-report.schema.json",
+    "design_intelligence/adoption.py",
+    "scripts/design/capture-reference.mjs",
+    "docs/design/DESIGN-ADOPTION-GATE.md",
+)
+
 V1_SKILLS = (
     "design-language",
     "ux-architect",
@@ -61,7 +72,12 @@ V1_SKILLS = (
 def run_self_audit(repository_root: str | Path) -> dict[str, Any]:
     root = Path(repository_root).resolve()
     checks: dict[str, dict[str, Any]] = {}
-    required_paths = REQUIRED_V2_PATHS + REQUIRED_V3_SLICE0_PATHS + REQUIRED_V3_MISSION_PATHS
+    required_paths = (
+        REQUIRED_V2_PATHS
+        + REQUIRED_V3_SLICE0_PATHS
+        + REQUIRED_V3_MISSION_PATHS
+        + REQUIRED_V4_ADOPTION_PATHS
+    )
     missing = [path for path in required_paths if not (root / path).exists()]
     checks["requiredInfrastructure"] = {"status": "PASS" if not missing else "FAIL", "missing": missing}
 
@@ -163,6 +179,67 @@ def run_self_audit(repository_root: str | Path) -> dict[str, Any]:
     if not contract_paths:
         contract_errors.append("No design contract evidence found")
     checks["designContracts"] = {"status": "PASS" if not contract_errors else "FAIL", "errors": contract_errors}
+
+    adoption_paths = sorted(
+        (root / "artifacts/design/adoptions").glob("*/adoption-report.json")
+    ) if (root / "artifacts/design/adoptions").exists() else []
+    adoption_errors: list[str] = []
+    adoption_warnings: list[str] = []
+    adoption_statuses: dict[str, str | None] = {}
+    governed_adoptions: list[tuple[str, tuple[Any, Any, Any], dict[str, Any]]] = []
+    current_adoption_reports = 0
+    for path in adoption_paths:
+        relative = path.relative_to(root).as_posix()
+        try:
+            result = audit_adoption_report(root, path)
+        except (OSError, TypeError, ValueError, json.JSONDecodeError) as error:
+            adoption_statuses[relative] = None
+            adoption_errors.append(f"{relative}: {error}")
+        else:
+            loaded = json.loads(path.read_text(encoding="utf-8"))
+            legacy = isinstance(loaded, dict) and (
+                "memoryRequired" not in loaded or "governanceConstraints" not in loaded
+            )
+            if legacy:
+                adoption_statuses[relative] = "LEGACY_BLOCKED"
+                adoption_warnings.append(
+                    f"{relative}: legacy report remains historical evidence and cannot authorize implementation"
+                )
+            else:
+                scope = (loaded.get("task"), loaded.get("profile"), loaded.get("surface"))
+                governed_adoptions.append((relative, scope, result))
+    current_scopes = {
+        scope
+        for _, scope, result in governed_adoptions
+        if result.get("status") == "PASS"
+    }
+    for relative, scope, result in governed_adoptions:
+        if result.get("status") == "PASS":
+            adoption_statuses[relative] = "PASS"
+            current_adoption_reports += 1
+        elif scope in current_scopes:
+            adoption_statuses[relative] = "HISTORICAL_BLOCKED"
+            adoption_warnings.extend(
+                f"{relative}: historical report cannot authorize implementation: {error}"
+                for error in result.get("errors", [])
+            )
+        else:
+            adoption_statuses[relative] = result.get("status")
+            adoption_errors.extend(
+                f"{relative}: {error}" for error in result.get("errors", [])
+            )
+    if not adoption_paths:
+        adoption_errors.append("No governed design adoption report evidence found")
+    elif current_adoption_reports == 0:
+        adoption_errors.append("No current governed design adoption report passed replay audit")
+    checks["designAdoptions"] = {
+        "status": "PASS" if not adoption_errors else "FAIL",
+        "count": len(adoption_paths),
+        "current": current_adoption_reports,
+        "reports": adoption_statuses,
+        "errors": adoption_errors,
+        "warnings": adoption_warnings,
+    }
 
     repair_evidence = sorted((root / "artifacts/design/evidence/repair-cycles").glob("*/evidence.json")) if (root / "artifacts/design/evidence/repair-cycles").exists() else []
     valid_cycles = 0

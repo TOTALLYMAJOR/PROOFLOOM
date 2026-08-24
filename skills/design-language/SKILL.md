@@ -36,6 +36,7 @@ Do not solve structural UX defects with cosmetic changes.
 
 - For material design work in a repository with the CLI installed, run `design-intelligence "<plain-English task>"` as the default front door.
 - Treat inferred surface mode and the recommended direction as proposals. Do not edit implementation until the user explicitly selects a direction.
+- When a material design task uses external sites or images, require a replay-audited `READY` design adoption report in addition to direction selection. Product-profile memory and supplied human governance receipts must also pass. Do not implement `DEFER`, `DECLINE`, `BLOCKED`, or governance-held patterns.
 - Run `repo_fit` before substantial redesign, design-system work, or repository-wide UI changes.
 - Preserve current runtime structure unless a higher-authority instruction explicitly calls for migration.
 - Distinguish visual defects from hierarchy, information architecture, interaction, workflow, responsive, accessibility, component-system, or drift problems.
@@ -78,5 +79,6 @@ Do not solve structural UX defects with cosmetic changes.
 
 - Use `ux-architect` when the problem is task or information organization.
 - Use `reference-intelligence` only when an external reference is genuinely useful.
+- Route reference observations through `design-intelligence adopt`; the analyzer does not own the adoption decision.
 - Use `design-linter` when deterministic token, component, layout, or accessibility drift should be checked.
 - Use `visual-review` after implementation or when a screenshot or render is available.

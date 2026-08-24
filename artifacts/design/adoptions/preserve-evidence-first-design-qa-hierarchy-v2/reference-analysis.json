@@ -1,0 +1,72 @@
+{
+  "analyzer": {
+    "model": "repository-session-adapter",
+    "name": "codex-human-reviewed-visual-observation",
+    "observedAt": "2026-08-23T16:40:00Z",
+    "type": "hybrid",
+    "version": "1"
+  },
+  "capabilityClaims": [],
+  "patterns": [
+    {
+      "category": "layout",
+      "id": "PAT-DD-DECISION-HIERARCHY",
+      "identityElements": [],
+      "implementationImpact": "visual-only",
+      "keywords": [
+        "decision-first hierarchy",
+        "primary evidence action"
+      ],
+      "name": "Decision-first information hierarchy",
+      "observation": "The governed run, promotion boundary, and primary evidence action appear before supporting implementation detail.",
+      "productRelevance": "Design Intelligence must keep evidence and authority boundaries legible before exposing operational detail.",
+      "proposedUse": "Preserve decision-first hierarchy in Design Intelligence control and evidence surfaces.",
+      "recommendedDecision": "ADOPT",
+      "requiredCapabilities": [],
+      "riskFlags": [],
+      "source": "http://127.0.0.1:8123/",
+      "whyItWorks": "A hurried operator can identify the run state, consequence, and next action without scanning every subsystem."
+    },
+    {
+      "category": "layout",
+      "id": "PAT-DD-STATUS-ACTION",
+      "identityElements": [
+        "fixture typography",
+        "fixture warm grid",
+        "fixture red-green palette"
+      ],
+      "implementationImpact": "visual-only",
+      "keywords": [
+        "status-near-action",
+        "evidence summary"
+      ],
+      "name": "Status-near-action evidence summary",
+      "observation": "The evidence receipt keeps contract, viewport, accessibility, and baseline state directly above the inspection action.",
+      "productRelevance": "Generated evidence packs and mission handoffs need compact state summaries without becoming another dashboard.",
+      "proposedUse": "Adapt the status-near-action grouping through the repository's existing contract and evidence-pack formats.",
+      "recommendedDecision": "ADAPT",
+      "requiredCapabilities": [],
+      "riskFlags": [],
+      "source": "http://127.0.0.1:8123/",
+      "whyItWorks": "The operator sees the consequence and its supporting state in one bounded region before taking action."
+    }
+  ],
+  "schemaVersion": 1,
+  "sourceEvidence": [
+    {
+      "artifacts": [
+        {
+          "kind": "screenshot",
+          "path": "artifacts/design/references/design-department-surface/reference.png",
+          "sha256": "0944913675ff53f0c28eec91477fa1fc0144ba0cdb011c32d2a1251e478c3f01"
+        },
+        {
+          "kind": "dom-capture",
+          "path": "artifacts/design/references/design-department-surface/page.html",
+          "sha256": "7a81981ea9753ed2a1e1f67cf10ae473d6b03651ee95e27a3021cef4c9722405"
+        }
+      ],
+      "source": "http://127.0.0.1:8123/"
+    }
+  ]
+}

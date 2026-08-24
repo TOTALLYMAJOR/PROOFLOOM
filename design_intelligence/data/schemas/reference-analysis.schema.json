@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/reference-analysis.schema.json",
+  "title": "Reference Analysis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "analyzer", "capabilityClaims", "patterns"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "analyzer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "name", "observedAt"],
+      "properties": {
+        "type": {"enum": ["human", "model", "hybrid"]},
+        "name": {"type": "string", "minLength": 1},
+        "observedAt": {"type": "string", "format": "date-time"},
+        "model": {"type": "string"},
+        "version": {"type": "string"}
+      }
+    },
+    "sourceEvidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "artifacts"],
+        "properties": {
+          "source": {"type": "string", "minLength": 1},
+          "artifacts": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256"],
+              "properties": {
+                "kind": {"type": "string"},
+                "path": {"type": "string", "minLength": 1},
+                "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "capabilityClaims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["capability", "status", "evidence"],
+        "properties": {
+          "capability": {"type": "string", "minLength": 1},
+          "status": {"enum": ["VERIFIED", "ABSENT", "UNRESOLVED"]},
+          "evidenceMethod": {"enum": ["repository-search"]},
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256"],
+              "properties": {
+                "path": {"type": "string", "minLength": 1},
+                "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+              }
+            }
+          }
+        }
+      }
+    },
+    "patterns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "source", "name", "category", "observation", "whyItWorks",
+          "productRelevance", "proposedUse", "keywords", "requiredCapabilities",
+          "riskFlags", "identityElements", "implementationImpact"
+        ],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "source": {"type": "string", "minLength": 1},
+          "name": {"type": "string", "minLength": 1},
+          "category": {
+            "enum": [
+              "accessibility", "component", "content", "conversion", "feature",
+              "interaction", "layout", "mobile", "motion", "navigation",
+              "responsive", "typography", "visual", "workflow"
+            ]
+          },
+          "observation": {"type": "string", "minLength": 1},
+          "whyItWorks": {"type": "string", "minLength": 1},
+          "productRelevance": {"type": "string", "minLength": 1},
+          "proposedUse": {"type": "string", "minLength": 1},
+          "keywords": {"type": "array", "items": {"type": "string"}},
+          "requiredCapabilities": {"type": "array", "items": {"type": "string"}},
+          "riskFlags": {"type": "array", "items": {"type": "string"}},
+          "identityElements": {"type": "array", "items": {"type": "string"}},
+          "memoryDecisionIds": {"type": "array", "items": {"type": "string"}},
+          "implementationImpact": {
+            "enum": ["visual-only", "component", "workflow", "backend", "architecture"]
+          },
+          "recommendedDecision": {
+            "enum": ["ADOPT", "ADAPT", "DEFER", "DECLINE", "BLOCKED"],
+            "description": "Advisory only. The deterministic adoption engine ignores this field."
+          }
+        }
+      }
+    }
+  }
+}

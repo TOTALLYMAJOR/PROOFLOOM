@@ -8,7 +8,7 @@ from typing import Any
 
 from .models import AuthorityLevel, DecisionStatus, MemoryContext, OutcomeResult
 from .repository import inspect_repository
-from .storage import append_jsonl, atomic_write_json, read_json, read_jsonl
+from .storage import append_jsonl, atomic_write_json, ensure_within, read_json, read_jsonl, sha256_file
 
 
 MEMORY_FILES = {
@@ -35,7 +35,11 @@ def memory_root(repository_root: str | Path) -> Path:
     return Path(repository_root).resolve() / ".design" / "memory"
 
 
-def initialize_memory(repository_root: str | Path, allow_existing_authority: bool = False) -> dict[str, Any]:
+def initialize_memory(
+    repository_root: str | Path,
+    allow_existing_authority: bool = False,
+    memory_only: bool = False,
+) -> dict[str, Any]:
     root = Path(repository_root).resolve()
     destination = memory_root(root)
     snapshot = inspect_repository(root)
@@ -77,36 +81,40 @@ def initialize_memory(repository_root: str | Path, allow_existing_authority: boo
         "baseline-review-receipt.schema.json",
         "repair-plan.schema.json",
         "validation-evidence.schema.json",
+        "reference-analysis.schema.json",
+        "design-adoption-report.schema.json",
     ):
         schema_path = schema_root / schema_name
         if not schema_path.exists():
             atomic_write_json(schema_path, json.loads(schema_source.joinpath(schema_name).read_text(encoding="utf-8")))
-    quality_root = root / ".design/quality"
-    quality_root.mkdir(parents=True, exist_ok=True)
-    thresholds_path = quality_root / "thresholds.json"
-    if not thresholds_path.exists():
-        thresholds = files("design_intelligence").joinpath("data/defaults/quality-thresholds.json")
-        atomic_write_json(thresholds_path, json.loads(thresholds.read_text(encoding="utf-8")))
-    history_path = quality_root / "history.jsonl"
-    if not history_path.exists():
-        history_path.touch()
-    baseline_manifest = root / ".design/baselines/manifest.json"
-    if not baseline_manifest.exists():
-        atomic_write_json(baseline_manifest, {"schemaVersion": 1, "scenarios": {}})
-    review_policy_path = root / ".design/baselines/review-policy.json"
-    if not review_policy_path.exists():
-        review_policy = files("design_intelligence").joinpath(
-            "data/defaults/baseline-review-policy.json"
-        )
-        atomic_write_json(
-            review_policy_path,
-            json.loads(review_policy.read_text(encoding="utf-8")),
-        )
+    if not memory_only:
+        quality_root = root / ".design/quality"
+        quality_root.mkdir(parents=True, exist_ok=True)
+        thresholds_path = quality_root / "thresholds.json"
+        if not thresholds_path.exists():
+            thresholds = files("design_intelligence").joinpath("data/defaults/quality-thresholds.json")
+            atomic_write_json(thresholds_path, json.loads(thresholds.read_text(encoding="utf-8")))
+        history_path = quality_root / "history.jsonl"
+        if not history_path.exists():
+            history_path.touch()
+        baseline_manifest = root / ".design/baselines/manifest.json"
+        if not baseline_manifest.exists():
+            atomic_write_json(baseline_manifest, {"schemaVersion": 1, "scenarios": {}})
+        review_policy_path = root / ".design/baselines/review-policy.json"
+        if not review_policy_path.exists():
+            review_policy = files("design_intelligence").joinpath(
+                "data/defaults/baseline-review-policy.json"
+            )
+            atomic_write_json(
+                review_policy_path,
+                json.loads(review_policy.read_text(encoding="utf-8")),
+            )
     return {
         "status": "READY",
         "root": str(destination),
         "files": sorted(str(path.relative_to(root)) for path in destination.iterdir()),
         "integratedExistingAuthority": bool(competing),
+        "memoryOnly": memory_only,
     }
 
 
@@ -328,9 +336,12 @@ def find_stale_records(repository_root: str | Path, as_of: date | None = None) -
 
 
 def audit_memory(repository_root: str | Path, as_of: date | None = None) -> dict[str, Any]:
-    root = memory_root(repository_root)
+    repository = Path(repository_root).resolve()
+    root = memory_root(repository)
     errors: list[str] = []
     warnings: list[str] = []
+    rules = read_json(root / MEMORY_FILES["rules"], {}) or {}
+    errors.extend(_audit_source_authorities(repository, rules))
     decisions = read_jsonl(root / MEMORY_FILES["decisions"])
     outcomes = read_jsonl(root / MEMORY_FILES["outcomes"])
     exceptions = read_jsonl(root / MEMORY_FILES["exceptions"])
@@ -363,6 +374,72 @@ def audit_memory(repository_root: str | Path, as_of: date | None = None) -> dict
         "warnings": warnings,
         "stale": stale,
     }
+
+
+def _audit_source_authorities(repository_root: Path, rules: dict[str, Any]) -> list[str]:
+    mode = rules.get("authorityMode")
+    sources = rules.get("sourceAuthorities", [])
+    if mode is None and not sources:
+        return []
+
+    errors: list[str] = []
+    if mode != "index-only":
+        errors.append("product-rules authorityMode must be index-only when sourceAuthorities are declared")
+    if not isinstance(sources, list) or not sources:
+        return [*errors, "index-only product rules require sourceAuthorities"]
+
+    indexed_paths: set[str] = set()
+    for index, source in enumerate(sources):
+        label = f"sourceAuthorities[{index}]"
+        if not isinstance(source, dict):
+            errors.append(f"{label} must be an object")
+            continue
+        relative = source.get("path")
+        expected = source.get("sha256")
+        if not relative or not expected or not source.get("role"):
+            errors.append(f"{label} requires path, sha256, and role")
+            continue
+        relative = Path(str(relative)).as_posix()
+        if relative.startswith(".design/memory/"):
+            errors.append(f"{label} cannot make memory its own source authority: {relative}")
+            continue
+        if relative in indexed_paths:
+            errors.append(f"Duplicate source authority path: {relative}")
+            continue
+        indexed_paths.add(relative)
+        if not isinstance(expected, str) or len(expected) != 64 or any(
+            character not in "0123456789abcdef" for character in expected
+        ):
+            errors.append(f"{label}.sha256 must be a lowercase SHA-256 digest")
+            continue
+        try:
+            path = ensure_within(repository_root, relative)
+        except ValueError as error:
+            errors.append(f"{label}: {error}")
+            continue
+        if not path.is_file():
+            errors.append(f"Source authority is missing: {relative}")
+        elif sha256_file(path) != expected:
+            errors.append(f"Source authority hash mismatch: {relative}")
+
+    if mode == "index-only":
+        for rule in _iter_rules(rules):
+            source = rule.get("sourceAuthority")
+            if not source:
+                errors.append(f"Indexed rule {rule.get('id', '<unknown>')} requires sourceAuthority")
+            elif source not in indexed_paths:
+                errors.append(
+                    f"Indexed rule {rule.get('id', '<unknown>')} references an unbound authority: {source}"
+                )
+    return errors
+
+
+def _iter_rules(rules: dict[str, Any]):
+    yield from rules.get("portfolio", [])
+    for values in rules.get("archetypes", {}).values():
+        yield from values
+    for product in rules.get("products", {}).values():
+        yield from product.get("rules", [])
 
 
 def _resolve_rules(rules: dict[str, Any], product: str | None, archetype: str | None) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
