@@ -21,6 +21,14 @@ MEMORY_FILES = {
 }
 
 PROTECTED_CATEGORIES = {"accessibility", "safety", "semantic-correctness", "product-requirement"}
+DECISION_CLASSES = {
+    DecisionStatus.ACCEPTED.value: "binding",
+    DecisionStatus.PROPOSED.value: "advisory",
+    DecisionStatus.EXPERIMENTAL.value: "advisory",
+    DecisionStatus.SUPERSEDED.value: "historical",
+    DecisionStatus.DEPRECATED.value: "historical",
+    DecisionStatus.REJECTED.value: "historical",
+}
 AUTHORITY_ORDER = {
     AuthorityLevel.PORTFOLIO.value: 0,
     AuthorityLevel.ARCHETYPE.value: 1,
@@ -77,6 +85,7 @@ def initialize_memory(
         "design-decision.schema.json",
         "design-exception.schema.json",
         "design-outcome.schema.json",
+        "design-memory-preflight.schema.json",
         "baseline-review-request.schema.json",
         "baseline-review-receipt.schema.json",
         "repair-plan.schema.json",
@@ -169,6 +178,7 @@ def validate_decision(
     decision: dict[str, Any],
     existing: list[dict[str, Any]] | None = None,
     outcomes: list[dict[str, Any]] | None = None,
+    enforce_lifecycle: bool = True,
 ) -> list[str]:
     required = (
         "id", "status", "authorityLevel", "decision", "problem", "evidence", "alternatives",
@@ -201,13 +211,36 @@ def validate_decision(
             errors.append("Accepted decisions require promotion.validationEvidence")
         if not promotion.get("outcomeId"):
             errors.append("Accepted decisions require promotion.outcomeId")
-        elif outcomes is not None and not any(item.get("id") == promotion["outcomeId"] for item in outcomes):
-            errors.append(f"Promotion outcome not found: {promotion['outcomeId']}")
+        elif outcomes is not None:
+            promotion_outcome = next(
+                (item for item in outcomes if item.get("id") == promotion["outcomeId"]),
+                None,
+            )
+            if promotion_outcome is None:
+                errors.append(f"Promotion outcome not found: {promotion['outcomeId']}")
+            else:
+                if promotion_outcome.get("decisionId") != decision.get("id"):
+                    errors.append("Promotion outcome must belong to the promoted decision")
+                if promotion_outcome.get("result") != OutcomeResult.ACCEPTED.value:
+                    errors.append("Promotion outcome must be accepted")
         if level in {AuthorityLevel.PORTFOLIO, AuthorityLevel.ARCHETYPE, AuthorityLevel.PRODUCT}:
             if authorized_by == "quality-gate" or authorized_by.startswith("agent") or not authorized_by:
                 errors.append("Portfolio, archetype, and product law promotion requires explicit human authority")
         elif not authorized_by:
             errors.append("Accepted local decisions require promotion.authorizedBy")
+    supersedes = decision.get("supersedes")
+    proposes_supersession = decision.get("proposesSupersession")
+    if enforce_lifecycle:
+        if supersedes == decision.get("id") or proposes_supersession == decision.get("id"):
+            errors.append("A decision cannot supersede itself")
+        if status in {DecisionStatus.PROPOSED, DecisionStatus.EXPERIMENTAL, DecisionStatus.REJECTED} and supersedes:
+            errors.append("Proposed, experimental, and rejected decisions cannot declare supersedes")
+        if status not in {DecisionStatus.PROPOSED, DecisionStatus.EXPERIMENTAL} and proposes_supersession:
+            errors.append("Only proposed or experimental decisions may declare proposesSupersession")
+        if status == DecisionStatus.SUPERSEDED and not decision.get("supersededBy"):
+            errors.append("Superseded decisions require supersededBy")
+        if status != DecisionStatus.SUPERSEDED and decision.get("supersededBy"):
+            errors.append("Only superseded decisions may declare supersededBy")
     if decision.get("category") in PROTECTED_CATEGORIES and decision.get("overrides"):
         errors.append("Protected categories cannot override broader rules")
     if existing is not None:
@@ -216,6 +249,19 @@ def validate_decision(
             expected = max(int(item.get("revision", 1)) for item in prior) + 1
             if int(decision.get("revision", expected)) != expected:
                 errors.append(f"Revision for {decision.get('id')} must be {expected}")
+        latest = {item.get("id"): item for item in _latest_decision_revisions(existing)}
+        if enforce_lifecycle:
+            target_id = supersedes or proposes_supersession
+            if target_id and target_id not in latest:
+                errors.append(f"Supersession target not found: {target_id}")
+            if status == DecisionStatus.SUPERSEDED:
+                successor = latest.get(decision.get("supersededBy"))
+                if successor is None:
+                    errors.append(f"Superseding decision not found: {decision.get('supersededBy')}")
+                elif successor.get("status") != DecisionStatus.ACCEPTED.value:
+                    errors.append("Superseding decision must be accepted")
+                elif successor.get("supersedes") != decision.get("id"):
+                    errors.append("supersededBy must reference a decision that supersedes this decision")
     return errors
 
 
@@ -264,7 +310,11 @@ def retrieve_context(
     resolved_archetype = archetype or _product_archetype(rules, product)
     inherited, conflicts = _resolve_rules(rules, product, resolved_archetype)
     decisions = _latest_decision_revisions(read_jsonl(root / MEMORY_FILES["decisions"]))
-    relevant_decisions = [item for item in decisions if _matches_scope(item, product, resolved_archetype, surface, component)]
+    relevant_decisions = [
+        {**item, "memoryClass": DECISION_CLASSES.get(item.get("status"), "unknown")}
+        for item in decisions
+        if _matches_scope(item, product, resolved_archetype, surface, component)
+    ]
     relevant_decisions.sort(key=lambda item: (AUTHORITY_ORDER.get(item.get("authorityLevel", "portfolio"), 0), item.get("createdAt", "")))
     exceptions = [
         item
@@ -299,6 +349,9 @@ def retrieve_context(
     selected_outcomes, budget = _take(outcomes, budget)
     selected_debt, budget = _take(debt, budget)
     selected_stale, _ = _take(stale, budget)
+    binding_decisions = [item for item in selected_decisions if item["memoryClass"] == "binding"]
+    advisory_decisions = [item for item in selected_decisions if item["memoryClass"] == "advisory"]
+    historical_decisions = [item for item in selected_decisions if item["memoryClass"] == "historical"]
     return MemoryContext(
         product=product,
         archetype=resolved_archetype,
@@ -306,6 +359,9 @@ def retrieve_context(
         component=component,
         inherited_rules=inherited,
         decisions=selected_decisions,
+        binding_decisions=binding_decisions,
+        advisory_decisions=advisory_decisions,
+        historical_decisions=historical_decisions,
         active_exceptions=selected_exceptions,
         rejected_outcomes=selected_outcomes,
         unresolved_debt=selected_debt,
@@ -340,6 +396,17 @@ def audit_memory(repository_root: str | Path, as_of: date | None = None) -> dict
     root = memory_root(repository)
     errors: list[str] = []
     warnings: list[str] = []
+    required_files = (
+        MEMORY_FILES["decisions"],
+        MEMORY_FILES["outcomes"],
+        MEMORY_FILES["exceptions"],
+        MEMORY_FILES["debt"],
+    )
+    errors.extend(
+        f"Required design-memory file is missing: .design/memory/{filename}"
+        for filename in required_files
+        if not (root / filename).is_file()
+    )
     rules = read_json(root / MEMORY_FILES["rules"], {}) or {}
     errors.extend(_audit_source_authorities(repository, rules))
     decisions = read_jsonl(root / MEMORY_FILES["decisions"])
@@ -352,7 +419,11 @@ def audit_memory(repository_root: str | Path, as_of: date | None = None) -> dict
             errors.append(f"Duplicate outcome id: {item.get('id')}")
         seen_outcomes.add(item.get("id"))
     for item in decisions:
-        errors.extend(f"{item.get('id', '<unknown>')}: {error}" for error in validate_decision(item, None, outcomes))
+        errors.extend(
+            f"{item.get('id', '<unknown>')}: {error}"
+            for error in validate_decision(item, None, outcomes, enforce_lifecycle=False)
+        )
+    errors.extend(_audit_decision_lifecycle(decisions, outcomes))
     for item in exceptions:
         errors.extend(f"{item.get('id', '<unknown>')}: {error}" for error in validate_exception(item))
     stale = find_stale_records(repository_root, as_of)
@@ -374,6 +445,176 @@ def audit_memory(repository_root: str | Path, as_of: date | None = None) -> dict
         "warnings": warnings,
         "stale": stale,
     }
+
+
+def preflight_memory(
+    repository_root: str | Path,
+    product: str | None = None,
+    archetype: str | None = None,
+    surface: str | None = None,
+    component: str | None = None,
+    max_records: int = 40,
+    as_of: date | None = None,
+) -> dict[str, Any]:
+    audit = audit_memory(repository_root, as_of=as_of)
+    context = retrieve_context(
+        repository_root,
+        product=product,
+        archetype=archetype,
+        surface=surface,
+        component=component,
+        max_records=max_records,
+        as_of=as_of,
+    )
+    blockers = list(audit["errors"])
+    blockers.extend(
+        f"Scoped rule conflict: {json.dumps(conflict, sort_keys=True)}"
+        for conflict in context.conflicts
+    )
+    blockers = list(dict.fromkeys(blockers))
+    warnings = list(audit["warnings"])
+    warning_groups = (
+        (context.advisory_decisions, "advisory decision(s) are non-binding and require explicit review"),
+        (context.active_exceptions, "active exception(s) affect this scope"),
+        (context.rejected_outcomes, "rejected outcome(s) affect this scope"),
+        (context.unresolved_debt, "unresolved design-debt record(s) affect this scope"),
+        (context.stale_records, "stale record(s) affect this scope"),
+    )
+    for records, message in warning_groups:
+        if records:
+            warnings.append(f"{len(records)} {message}")
+    if context.bounded:
+        warnings.append(
+            f"Scoped context was bounded at {max(1, min(max_records, 100))} of {context.total_available} records"
+        )
+    warnings = list(dict.fromkeys(warnings))
+
+    status = "BLOCK" if blockers else "WARN" if warnings else "ALLOW"
+    return {
+        "status": status,
+        "scope": {
+            "product": context.product,
+            "archetype": context.archetype,
+            "surface": context.surface,
+            "component": context.component,
+        },
+        "bindingDecisions": context.binding_decisions,
+        "advisoryDecisions": context.advisory_decisions,
+        "historicalDecisions": context.historical_decisions,
+        "inheritedRules": context.inherited_rules,
+        "activeExceptions": context.active_exceptions,
+        "rejectedOutcomes": context.rejected_outcomes,
+        "unresolvedDebt": context.unresolved_debt,
+        "staleRecords": context.stale_records,
+        "bounded": context.bounded,
+        "totalAvailable": context.total_available,
+        "blockers": blockers,
+        "warnings": warnings,
+        "audit": audit,
+    }
+
+
+def _audit_decision_lifecycle(
+    decisions: list[dict[str, Any]],
+    outcomes: list[dict[str, Any]],
+) -> list[str]:
+    errors: list[str] = []
+    revisions_by_id: dict[str, list[int]] = {}
+    for item in decisions:
+        decision_id = item.get("id")
+        if not decision_id:
+            continue
+        try:
+            revision = int(item.get("revision", 1))
+        except (TypeError, ValueError):
+            errors.append(f"{decision_id}: revision must be an integer")
+            continue
+        revisions_by_id.setdefault(decision_id, []).append(revision)
+    for decision_id, revisions in revisions_by_id.items():
+        ordered = sorted(revisions)
+        if len(ordered) != len(set(ordered)):
+            errors.append(f"{decision_id}: duplicate decision revision detected")
+        expected = list(range(1, max(ordered, default=0) + 1))
+        if ordered != expected:
+            errors.append(f"{decision_id}: revisions must be contiguous from 1")
+
+    latest = {item.get("id"): item for item in _latest_decision_revisions(decisions) if item.get("id")}
+    latest_outcomes: dict[str, dict[str, Any]] = {}
+    for outcome in outcomes:
+        decision_id = outcome.get("decisionId")
+        if decision_id:
+            latest_outcomes[decision_id] = outcome
+
+    for decision_id, decision in latest.items():
+        status = decision.get("status")
+        supersedes = decision.get("supersedes")
+        proposed_target = decision.get("proposesSupersession")
+        superseded_by = decision.get("supersededBy")
+        if supersedes == decision_id or proposed_target == decision_id:
+            errors.append(f"{decision_id}: decision cannot supersede itself")
+        if status in {DecisionStatus.PROPOSED.value, DecisionStatus.EXPERIMENTAL.value, DecisionStatus.REJECTED.value} and supersedes:
+            errors.append(f"{decision_id}: non-binding decision cannot supersede {supersedes}")
+        if status not in {DecisionStatus.PROPOSED.value, DecisionStatus.EXPERIMENTAL.value} and proposed_target:
+            errors.append(f"{decision_id}: only advisory decisions may propose supersession")
+        if proposed_target and proposed_target not in latest:
+            errors.append(f"{decision_id}: proposed supersession target not found: {proposed_target}")
+        if status == DecisionStatus.ACCEPTED.value and supersedes:
+            target = latest.get(supersedes)
+            if target is None:
+                errors.append(f"{decision_id}: supersession target not found: {supersedes}")
+            elif target.get("status") != DecisionStatus.SUPERSEDED.value:
+                errors.append(f"{decision_id}: supersession target {supersedes} is not superseded")
+            elif target.get("supersededBy") != decision_id:
+                errors.append(f"{decision_id}: supersession target {supersedes} does not point back to this decision")
+        if status == DecisionStatus.SUPERSEDED.value:
+            successor_id = superseded_by
+            successor = latest.get(successor_id)
+            if successor is None:
+                errors.append(f"{decision_id}: superseding decision not found: {successor_id}")
+            elif successor.get("status") != DecisionStatus.ACCEPTED.value:
+                errors.append(f"{decision_id}: superseding decision {successor_id} is not accepted")
+            elif successor.get("supersedes") != decision_id:
+                errors.append(f"{decision_id}: superseding decision {successor_id} does not point back to this decision")
+        elif superseded_by:
+            errors.append(f"{decision_id}: only superseded decisions may declare supersededBy")
+        latest_outcome = latest_outcomes.get(decision_id)
+        if (
+            status == DecisionStatus.ACCEPTED.value
+            and latest_outcome
+            and latest_outcome.get("result") == OutcomeResult.REJECTED.value
+        ):
+            errors.append(
+                f"{decision_id}: accepted decision has a later rejected outcome; append a deprecated, rejected, or superseded revision"
+            )
+
+    errors.extend(_audit_supersession_cycles(latest))
+    return errors
+
+
+def _audit_supersession_cycles(latest: dict[str, dict[str, Any]]) -> list[str]:
+    graph = {
+        decision_id: decision.get("supersedes")
+        for decision_id, decision in latest.items()
+        if decision.get("supersedes")
+    }
+    errors: list[str] = []
+    completed: set[str] = set()
+    for start in sorted(graph):
+        if start in completed:
+            continue
+        path: list[str] = []
+        positions: dict[str, int] = {}
+        current: str | None = start
+        while current in graph and current not in completed:
+            if current in positions:
+                cycle = path[positions[current]:] + [current]
+                errors.append("Supersession cycle detected: " + " -> ".join(cycle))
+                break
+            positions[current] = len(path)
+            path.append(current)
+            current = graph[current]
+        completed.update(path)
+    return errors
 
 
 def _audit_source_authorities(repository_root: Path, rules: dict[str, Any]) -> list[str]:
@@ -471,7 +712,7 @@ def _matches_scope(
     pairs = (("product", product), ("archetype", archetype), ("surface", surface), ("component", component))
     for key, requested in pairs:
         scoped = item.get(key)
-        if scoped and (not requested or str(scoped).lower() != str(requested).lower()):
+        if scoped and requested and str(scoped).lower() != str(requested).lower():
             return False
     return True
 
@@ -480,14 +721,21 @@ def _latest_decision_revisions(records: list[dict[str, Any]]) -> list[dict[str, 
     latest: dict[str, dict[str, Any]] = {}
     for record in records:
         current = latest.get(record.get("id"))
-        if current is None or int(record.get("revision", 1)) > int(current.get("revision", 1)):
+        if current is None or _revision_number(record) > _revision_number(current):
             latest[record.get("id")] = record
     return list(latest.values())
 
 
 def _next_revision(records: list[dict[str, Any]], decision_id: str) -> int:
-    revisions = [int(item.get("revision", 1)) for item in records if item.get("id") == decision_id]
+    revisions = [_revision_number(item) for item in records if item.get("id") == decision_id]
     return max(revisions, default=0) + 1
+
+
+def _revision_number(record: dict[str, Any]) -> int:
+    try:
+        return int(record.get("revision", 1))
+    except (TypeError, ValueError):
+        return 0
 
 
 def _product_archetype(rules: dict[str, Any], product: str | None) -> str | None:

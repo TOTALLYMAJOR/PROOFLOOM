@@ -3,7 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -42,6 +42,7 @@ from .memory import (
     audit_memory,
     find_stale_records,
     initialize_memory,
+    preflight_memory,
     retrieve_context,
 )
 from .missions import SURFACE_MODES
@@ -200,6 +201,13 @@ def main(argv: list[str] | None = None) -> int:
     memory_context.add_argument("--surface")
     memory_context.add_argument("--component")
     memory_context.add_argument("--max-records", type=int, default=40)
+    memory_preflight = _add_root_format_parser(memory_subparsers, "preflight")
+    memory_preflight.add_argument("--product")
+    memory_preflight.add_argument("--archetype")
+    memory_preflight.add_argument("--surface")
+    memory_preflight.add_argument("--component")
+    memory_preflight.add_argument("--max-records", type=int, default=40)
+    memory_preflight.add_argument("--as-of", help="Evaluate freshness as of YYYY-MM-DD.")
     for command in ("add-decision", "add-outcome", "add-exception", "add-debt"):
         memory_write = _add_root_format_parser(memory_subparsers, command)
         memory_write.add_argument("--input", required=True)
@@ -485,6 +493,16 @@ def _dispatch(args: argparse.Namespace) -> int:
                 component=args.component,
                 max_records=args.max_records,
             ).to_dict()
+        elif args.memory_command == "preflight":
+            report = preflight_memory(
+                root,
+                product=args.product,
+                archetype=args.archetype,
+                surface=args.surface,
+                component=args.component,
+                max_records=args.max_records,
+                as_of=_parse_date(args.as_of),
+            )
         elif args.memory_command == "add-decision":
             report = append_decision(root, _load_json_required(args.input))
         elif args.memory_command == "add-outcome":
@@ -498,7 +516,11 @@ def _dispatch(args: argparse.Namespace) -> int:
         else:
             report = {"status": "PASS", "stale": find_stale_records(root)}
         _emit(report, _simple_text("DESIGN MEMORY", report), args.format)
-        return 1 if args.memory_command == "audit" and report.get("status") != "PASS" else 0
+        if args.memory_command == "audit":
+            return 0 if report.get("status") == "PASS" else 1
+        if args.memory_command == "preflight":
+            return 1 if report.get("status") == "BLOCK" else 0
+        return 0
     if args.command == "contract":
         if args.contract_command == "create":
             report = create_contract(_load_json_required(args.input), args.output)
@@ -655,6 +677,12 @@ def _parse_as_of(value: str | None) -> datetime | None:
     if parsed.tzinfo is None:
         raise ValueError("--as-of must include a timezone")
     return parsed
+
+
+def _parse_date(value: str | None) -> date | None:
+    if not value:
+        return None
+    return date.fromisoformat(value)
 
 
 if __name__ == "__main__":

@@ -392,6 +392,9 @@ class MemoryContext:
     component: str | None
     inherited_rules: list[dict[str, Any]]
     decisions: list[dict[str, Any]]
+    binding_decisions: list[dict[str, Any]]
+    advisory_decisions: list[dict[str, Any]]
+    historical_decisions: list[dict[str, Any]]
     active_exceptions: list[dict[str, Any]]
     rejected_outcomes: list[dict[str, Any]]
     unresolved_debt: list[dict[str, Any]]

@@ -15,6 +15,7 @@ from design_intelligence.memory import (
     audit_memory,
     find_stale_records,
     initialize_memory,
+    preflight_memory,
     retrieve_context,
 )
 
@@ -40,7 +41,47 @@ def proposed_decision(decision_id: str = "DL-TEST-001") -> dict:
     }
 
 
+def accept_surface_decision(root: Path, decision_id: str) -> dict:
+    proposal = proposed_decision(decision_id)
+    append_decision(root, proposal)
+    outcome_id = decision_id.replace("DL-", "DO-", 1)
+    append_outcome(root, {
+        "id": outcome_id,
+        "decisionId": decision_id,
+        "result": "accepted",
+        "reason": "Rendered checks passed.",
+        "evidence": ["qa:pass"],
+        "lesson": "The scoped rule held.",
+        "product": "quotepilot",
+        "surface": "Quote Workspace",
+        "recordedAt": "2026-08-20T13:00:00Z",
+    })
+    accepted = {
+        **proposal,
+        "status": "accepted",
+        "revision": 2,
+        "promotion": {
+            "authorizedBy": "quality-gate",
+            "outcomeId": outcome_id,
+            "validationEvidence": ["qa:pass"],
+        },
+    }
+    append_decision(root, accepted)
+    return accepted
+
+
 class MemoryV2Tests(unittest.TestCase):
+    def test_preflight_blocks_when_memory_is_not_initialized(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "README.md").write_text("fixture", encoding="utf-8")
+
+            preflight = preflight_memory(root, product="quietpilot")
+
+            self.assertEqual(preflight["status"], "BLOCK")
+            self.assertEqual(len(preflight["blockers"]), 4)
+            self.assertIn("decisions.jsonl", " ".join(preflight["blockers"]))
+
     def test_promotion_requires_outcome_and_supports_bounded_context(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -82,6 +123,9 @@ class MemoryV2Tests(unittest.TestCase):
             context = retrieve_context(root, product="quotepilot", surface="Quote Workspace", max_records=2, as_of=date(2026, 8, 20))
 
             self.assertEqual(context.decisions[0]["status"], "accepted")
+            self.assertEqual(context.decisions[0]["memoryClass"], "binding")
+            self.assertEqual([item["id"] for item in context.binding_decisions], ["DL-TEST-001"])
+            self.assertEqual(context.advisory_decisions, [])
             self.assertTrue(context.bounded)
             self.assertTrue(any(item["id"] == "DL-PORT-001" for item in context.inherited_rules))
             self.assertGreaterEqual(len(find_stale_records(root, date(2026, 8, 20))), 2)
@@ -178,6 +222,173 @@ class MemoryV2Tests(unittest.TestCase):
 
             self.assertEqual(audit["status"], "FAIL")
             self.assertIn("Source authority hash mismatch", " ".join(audit["errors"]))
+
+    def test_experimental_decision_cannot_claim_supersession(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "README.md").write_text("fixture", encoding="utf-8")
+            initialize_memory(root)
+            accept_surface_decision(root, "DL-TEST-BASE")
+            experimental = {
+                **proposed_decision("DL-TEST-CANDIDATE"),
+                "status": "experimental",
+                "supersedes": "DL-TEST-BASE",
+            }
+
+            with self.assertRaisesRegex(ValueError, "cannot declare supersedes"):
+                append_decision(root, experimental)
+
+    def test_corrected_latest_revision_rehabilitates_historical_lifecycle_error(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "README.md").write_text("fixture", encoding="utf-8")
+            initialize_memory(root)
+            accept_surface_decision(root, "DL-TEST-BASE")
+            invalid = {
+                **proposed_decision("DL-TEST-CANDIDATE"),
+                "status": "experimental",
+                "revision": 1,
+                "supersedes": "DL-TEST-BASE",
+            }
+            decisions_path = root / ".design/memory/decisions.jsonl"
+            with decisions_path.open("a", encoding="utf-8") as stream:
+                stream.write(json.dumps(invalid) + "\n")
+
+            self.assertEqual(audit_memory(root)["status"], "FAIL")
+
+            corrected = {
+                **invalid,
+                "revision": 2,
+                "supersedes": None,
+                "proposesSupersession": "DL-TEST-BASE",
+            }
+            append_decision(root, corrected)
+            preflight = preflight_memory(
+                root,
+                product="quotepilot",
+                surface="Quote Workspace",
+                as_of=date(2026, 8, 20),
+            )
+
+            self.assertEqual(preflight["status"], "WARN")
+            self.assertEqual(preflight["audit"]["status"], "PASS")
+            self.assertEqual(preflight["advisoryDecisions"][0]["revision"], 2)
+
+    def test_rejected_outcome_blocks_accepted_law_until_lifecycle_revision(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "README.md").write_text("fixture", encoding="utf-8")
+            initialize_memory(root)
+            accepted = accept_surface_decision(root, "DL-TEST-LIFECYCLE")
+            append_outcome(root, {
+                "id": "DO-TEST-LIFECYCLE-REJECTED",
+                "decisionId": "DL-TEST-LIFECYCLE",
+                "result": "rejected",
+                "reason": "The later rendered outcome failed.",
+                "evidence": ["qa:regression"],
+                "lesson": "The law must be retired or replaced.",
+                "product": "quotepilot",
+                "surface": "Quote Workspace",
+                "recordedAt": "2026-08-21T13:00:00Z",
+            })
+
+            blocked = preflight_memory(
+                root,
+                product="quotepilot",
+                surface="Quote Workspace",
+                as_of=date(2026, 8, 21),
+            )
+            self.assertEqual(blocked["status"], "BLOCK")
+            self.assertIn("later rejected outcome", " ".join(blocked["blockers"]))
+
+            append_decision(root, {
+                **accepted,
+                "revision": 3,
+                "status": "deprecated",
+                "lifecycleReason": "A later rejected outcome invalidated the binding law.",
+            })
+            warning = preflight_memory(
+                root,
+                product="quotepilot",
+                surface="Quote Workspace",
+                as_of=date(2026, 8, 21),
+            )
+
+            self.assertEqual(warning["status"], "WARN")
+            self.assertEqual(warning["bindingDecisions"], [])
+            self.assertEqual(warning["historicalDecisions"][0]["status"], "deprecated")
+
+    def test_accepted_supersession_requires_bidirectional_lifecycle_pair(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "README.md").write_text("fixture", encoding="utf-8")
+            initialize_memory(root)
+            original = accept_surface_decision(root, "DL-TEST-ORIGINAL")
+            candidate = {
+                **proposed_decision("DL-TEST-SUCCESSOR"),
+                "proposesSupersession": "DL-TEST-ORIGINAL",
+            }
+            append_decision(root, candidate)
+            append_outcome(root, {
+                "id": "DO-TEST-SUCCESSOR",
+                "decisionId": "DL-TEST-SUCCESSOR",
+                "result": "accepted",
+                "reason": "The replacement passed rendered checks.",
+                "evidence": ["qa:replacement-pass"],
+                "lesson": "Replace the original law explicitly.",
+                "recordedAt": "2026-08-21T13:00:00Z",
+            })
+            successor = {
+                **candidate,
+                "revision": 2,
+                "status": "accepted",
+                "supersedes": "DL-TEST-ORIGINAL",
+                "promotion": {
+                    "authorizedBy": "quality-gate",
+                    "outcomeId": "DO-TEST-SUCCESSOR",
+                    "validationEvidence": ["qa:replacement-pass"],
+                },
+            }
+            successor.pop("proposesSupersession")
+            append_decision(root, successor)
+
+            self.assertEqual(audit_memory(root)["status"], "FAIL")
+
+            append_decision(root, {
+                **original,
+                "revision": 3,
+                "status": "superseded",
+                "supersededBy": "DL-TEST-SUCCESSOR",
+            })
+            audit = audit_memory(root)
+            context = retrieve_context(root, product="quotepilot", surface="Quote Workspace")
+
+            self.assertEqual(audit["status"], "PASS")
+            self.assertEqual([item["id"] for item in context.binding_decisions], ["DL-TEST-SUCCESSOR"])
+            self.assertEqual([item["id"] for item in context.historical_decisions], ["DL-TEST-ORIGINAL"])
+
+    def test_audit_detects_manual_supersession_cycle(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "README.md").write_text("fixture", encoding="utf-8")
+            initialize_memory(root)
+            records = []
+            for decision_id, target in (("DL-TEST-A", "DL-TEST-B"), ("DL-TEST-B", "DL-TEST-A")):
+                records.append({
+                    **proposed_decision(decision_id),
+                    "revision": 1,
+                    "status": "deprecated",
+                    "supersedes": target,
+                })
+            (root / ".design/memory/decisions.jsonl").write_text(
+                "".join(json.dumps(record) + "\n" for record in records),
+                encoding="utf-8",
+            )
+
+            audit = audit_memory(root)
+
+            self.assertEqual(audit["status"], "FAIL")
+            self.assertIn("Supersession cycle detected", " ".join(audit["errors"]))
 
 
 if __name__ == "__main__":
