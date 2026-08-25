@@ -471,7 +471,7 @@
         "design"
       ],
       "scope": "repository",
-      "sha256": "5b652a27ecb2b69c104951059f8cc099920c85f985df610f1a49c946430318b5"
+      "sha256": "90032a9493b724a1ca2ceae4f52490284974c329a0b3332f3fdacc68ecc8fc70"
     },
     {
       "authorityLevel": "candidate",
@@ -484,6 +484,18 @@
       ],
       "scope": "repository",
       "sha256": "56f6224337027c0a6bf6e7e508b7e8825cc75c2e0110b19cf9c2937b0532b9cd"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/design-memory-preflight.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "2ad1cbd07b05cdc28bca26d1a7f577db0dbd4c1903f1ad3aaa01f6f68d73c6dc"
     },
     {
       "authorityLevel": "candidate",
@@ -684,6 +696,17 @@
       ],
       "scope": "domain:CONTROL-PLANE-ROLES.md",
       "sha256": "05774b065f549d7e61b75df19a2d56302a27b94e809e7a18144de82b9a804f1b"
+    },
+    {
+      "authorityLevel": "binding",
+      "declaresAuthority": true,
+      "lifecycle": "candidate",
+      "path": "docs/DESIGN-MEMORY-PREFLIGHT.md",
+      "roles": [
+        "design"
+      ],
+      "scope": "domain:DESIGN-MEMORY-PREFLIGHT.md",
+      "sha256": "bf72629a68aa4d2bbfcf9f7af7064e6e3835c29d6290c22fa688b95fa4a33e72"
     },
     {
       "authorityLevel": "candidate",
@@ -1628,9 +1651,9 @@
     "adrs": 4,
     "architecture": 12,
     "backlog": 3,
-    "contracts": 38,
+    "contracts": 39,
     "delivery": 17,
-    "design": 84,
+    "design": 86,
     "evidence": 5,
     "experiments": 1,
     "governance": 17,
@@ -1672,9 +1695,11 @@
   },
   "claimBoundary": "The audit reconstructs repository governance from tracked evidence. It does not ratify product vision, resolve human decisions, or claim implementation completion.",
   "designGate": {
-    "reason": "Repository is design ready; design may proceed through normal design contracts and evidence gates.",
-    "requiredBeforeDesign": [],
-    "status": "READY"
+    "reason": "1 blocking governance or understanding problem(s) must be resolved before design adoption.",
+    "requiredBeforeDesign": [
+      "CRITICAL-AUTHORITY-DRIFT"
+    ],
+    "status": "LOCKED"
   },
   "equivalentSystems": [
     {
@@ -1701,21 +1726,36 @@
     }
   ],
   "finalizationReadiness": {
-    "blockingFindings": [],
+    "blockingFindings": [
+      "CRITICAL-AUTHORITY-DRIFT"
+    ],
     "completionClaimed": false,
     "existingSystemStrategy": "PRESERVE_AND_BIND",
-    "governance": "COHERENT",
+    "governance": "CONFLICTED",
     "missingCoreRoles": [],
-    "status": "DESIGN_READY",
+    "status": "GOVERNANCE_CONFLICTED",
     "understanding": "MAPPED"
   },
   "findingCounts": {
     "P0": 0,
-    "P1": 0,
+    "P1": 1,
     "P2": 0,
     "P3": 0
   },
-  "findings": [],
+  "findings": [
+    {
+      "authority": "repository-owner",
+      "category": "vision",
+      "id": "CRITICAL-AUTHORITY-DRIFT",
+      "message": "Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.",
+      "paths": [
+        "design_intelligence/data/schemas/design-decision.schema.json"
+      ],
+      "requiredAction": "REVIEW_AND_RATIFY_AUTHORITY_CHANGE",
+      "severity": "P1",
+      "title": "Critical governing authority changed"
+    }
+  ],
   "generatedBy": "design-intelligence-governance",
   "implementationRoots": [
     {
@@ -1767,10 +1807,10 @@
       "tests/test_planes.py"
     ]
   },
-  "root": "/home/administrator/design-intelligence",
+  "root": "/home/administrator/design-memory-preflight/design-intelligence",
   "schemaVersion": 1,
   "scriptDamage": [],
-  "status": "READY",
+  "status": "REVIEW_REQUIRED",
   "trackingMode": "git-tracked",
   "untrackedAuthorityCandidates": []
 }

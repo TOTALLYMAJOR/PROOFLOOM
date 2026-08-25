@@ -302,6 +302,7 @@ def retrieve_context(
     component: str | None = None,
     max_records: int = 40,
     as_of: date | None = None,
+    include_descendants: bool = False,
 ) -> MemoryContext:
     root = memory_root(repository_root)
     max_records = max(1, min(max_records, 100))
@@ -313,13 +314,27 @@ def retrieve_context(
     relevant_decisions = [
         {**item, "memoryClass": DECISION_CLASSES.get(item.get("status"), "unknown")}
         for item in decisions
-        if _matches_scope(item, product, resolved_archetype, surface, component)
+        if _matches_scope(
+            item,
+            product,
+            resolved_archetype,
+            surface,
+            component,
+            include_descendants=include_descendants,
+        )
     ]
     relevant_decisions.sort(key=lambda item: (AUTHORITY_ORDER.get(item.get("authorityLevel", "portfolio"), 0), item.get("createdAt", "")))
     exceptions = [
         item
         for item in read_jsonl(root / MEMORY_FILES["exceptions"])
-        if _matches_scope(item.get("scope", {}), product, resolved_archetype, surface, component)
+        if _matches_scope(
+            item.get("scope", {}),
+            product,
+            resolved_archetype,
+            surface,
+            component,
+            include_descendants=include_descendants,
+        )
         and item.get("status") == "active"
         and _date_on_or_after(item.get("expiresAt"), today)
     ]
@@ -334,12 +349,28 @@ def retrieve_context(
     outcomes = [
         item
         for item in read_jsonl(root / MEMORY_FILES["outcomes"])
-        if item.get("result") == "rejected" and _matches_scope(item, product, resolved_archetype, surface, component)
+        if item.get("result") == "rejected"
+        and _matches_scope(
+            item,
+            product,
+            resolved_archetype,
+            surface,
+            component,
+            include_descendants=include_descendants,
+        )
     ]
     debt = [
         item
         for item in read_jsonl(root / MEMORY_FILES["debt"])
-        if item.get("status") == "open" and _matches_scope(item.get("scope", {}), product, resolved_archetype, surface, component)
+        if item.get("status") == "open"
+        and _matches_scope(
+            item.get("scope", {}),
+            product,
+            resolved_archetype,
+            surface,
+            component,
+            include_descendants=include_descendants,
+        )
     ]
     stale = find_stale_records(repository_root, as_of=today)
     total = len(relevant_decisions) + len(active_exceptions) + len(outcomes) + len(debt) + len(stale)
@@ -429,7 +460,12 @@ def audit_memory(repository_root: str | Path, as_of: date | None = None) -> dict
     stale = find_stale_records(repository_root, as_of)
     if stale:
         warnings.append(f"{len(stale)} stale or expired record(s) require review")
-    context = retrieve_context(repository_root, max_records=100, as_of=as_of)
+    context = retrieve_context(
+        repository_root,
+        max_records=100,
+        as_of=as_of,
+        include_descendants=True,
+    )
     if context.conflicts:
         errors.append(f"{len(context.conflicts)} protected-rule conflict(s) detected")
     return {
@@ -465,6 +501,7 @@ def preflight_memory(
         component=component,
         max_records=max_records,
         as_of=as_of,
+        include_descendants=True,
     )
     blockers = list(audit["errors"])
     blockers.extend(
@@ -708,12 +745,17 @@ def _matches_scope(
     archetype: str | None,
     surface: str | None,
     component: str | None,
+    *,
+    include_descendants: bool = False,
 ) -> bool:
     pairs = (("product", product), ("archetype", archetype), ("surface", surface), ("component", component))
     for key, requested in pairs:
         scoped = item.get(key)
-        if scoped and requested and str(scoped).lower() != str(requested).lower():
-            return False
+        if scoped:
+            if requested and str(scoped).lower() != str(requested).lower():
+                return False
+            if not requested and not include_descendants:
+                return False
     return True
 
 
