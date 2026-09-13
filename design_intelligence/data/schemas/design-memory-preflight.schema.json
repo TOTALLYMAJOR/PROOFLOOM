@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/design-memory-preflight.schema.json",
+  "title": "Design Memory Preflight",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status", "scope", "bindingDecisions", "advisoryDecisions", "historicalDecisions",
+    "inheritedRules", "activeExceptions", "rejectedOutcomes", "unresolvedDebt",
+    "staleRecords", "bounded", "totalAvailable", "blockers", "warnings", "audit"
+  ],
+  "properties": {
+    "status": {"enum": ["ALLOW", "WARN", "BLOCK"]},
+    "scope": {"type": "object"},
+    "bindingDecisions": {"type": "array", "items": {"type": "object"}},
+    "advisoryDecisions": {"type": "array", "items": {"type": "object"}},
+    "historicalDecisions": {"type": "array", "items": {"type": "object"}},
+    "inheritedRules": {"type": "array", "items": {"type": "object"}},
+    "activeExceptions": {"type": "array", "items": {"type": "object"}},
+    "rejectedOutcomes": {"type": "array", "items": {"type": "object"}},
+    "unresolvedDebt": {"type": "array", "items": {"type": "object"}},
+    "staleRecords": {"type": "array", "items": {"type": "object"}},
+    "bounded": {"type": "boolean"},
+    "totalAvailable": {"type": "integer", "minimum": 0},
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "warnings": {"type": "array", "items": {"type": "string"}},
+    "audit": {"type": "object"}
+  }
+}

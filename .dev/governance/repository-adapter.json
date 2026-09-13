@@ -44,6 +44,7 @@
       "design_intelligence/data/schemas/design-contract.schema.json",
       "design_intelligence/data/schemas/design-decision.schema.json",
       "design_intelligence/data/schemas/design-exception.schema.json",
+      "design_intelligence/data/schemas/design-memory-preflight.schema.json",
       "design_intelligence/data/schemas/design-outcome.schema.json",
       "design_intelligence/data/schemas/devctl.schema.json",
       "design_intelligence/data/schemas/intent-index.schema.json",
@@ -118,6 +119,7 @@
       "design_intelligence/data/schemas/design-contract.schema.json",
       "design_intelligence/data/schemas/design-decision.schema.json",
       "design_intelligence/data/schemas/design-exception.schema.json",
+      "design_intelligence/data/schemas/design-memory-preflight.schema.json",
       "design_intelligence/data/schemas/design-outcome.schema.json",
       "design_intelligence/data/schemas/devctl.schema.json",
       "design_intelligence/data/schemas/intent-index.schema.json",
@@ -127,6 +129,7 @@
       "design_intelligence/data/schemas/standards-profile.schema.json",
       "design_intelligence/data/schemas/task-packet.schema.json",
       "design_intelligence/data/schemas/validation-evidence.schema.json",
+      "docs/DESIGN-MEMORY-PREFLIGHT.md",
       "docs/IMPLEMENTATION-REPORT-DESIGN-ADOPTION-GATE.md",
       "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V2.md",
       "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md",
@@ -307,9 +310,11 @@
   },
   "canonicalAuthorityModified": false,
   "designGate": {
-    "reason": "Repository is design ready; design may proceed through normal design contracts and evidence gates.",
-    "requiredBeforeDesign": [],
-    "status": "READY"
+    "reason": "1 blocking governance or understanding problem(s) must be resolved before design adoption.",
+    "requiredBeforeDesign": [
+      "CRITICAL-AUTHORITY-DRIFT"
+    ],
+    "status": "LOCKED"
   },
   "equivalentSystems": [
     {

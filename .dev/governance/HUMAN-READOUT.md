@@ -4,9 +4,9 @@
 ## Direct Answer
 
 - Product understanding: **MAPPED**
-- Governance condition: **COHERENT**
-- Finalization readiness: **DESIGN_READY**
-- Design work: **READY**
+- Governance condition: **CONFLICTED**
+- Finalization readiness: **GOVERNANCE_CONFLICTED**
+- Design work: **LOCKED**
 - User journey: **DEFINED**
 - Journey verification: **LINKED**
 
@@ -15,9 +15,9 @@
 - Adrs: 4 tracked sources
 - Architecture: 12 tracked sources
 - Backlog: 3 tracked sources
-- Contracts: 38 tracked sources
+- Contracts: 39 tracked sources
 - Delivery: 17 tracked sources
-- Design: 84 tracked sources
+- Design: 86 tracked sources
 - Evidence: 5 tracked sources
 - Experiments: 1 tracked source
 - Governance: 17 tracked sources
@@ -48,7 +48,7 @@ Source: `.dev/intent-index.json`
 
 ## Blocking Problems
 
-- No blocking deterministic governance problem was detected.
+- **P1 Critical governing authority changed**: Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review. (`design_intelligence/data/schemas/design-decision.schema.json`)
 
 ## What The Tool Will Do
 
