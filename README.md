@@ -6,6 +6,8 @@ The governing objective is:
 
 > Product intent -> repository evidence -> design reasoning -> implementation constraints -> rendered validation -> design learning.
 
+See the [feature matrix](docs/FEATURE_MATRIX.md) for the implementation status, primary interface, automated evidence, and proof boundary of every capability. `IMPLEMENTED` means repository source and automated proof exist; it does not imply adoption, deployment, or production outcomes in a consuming repository.
+
 ## Rehabilitate mature repositories before design
 
 For a repository that has accumulated product drift, conflicting instructions, incomplete journeys, or years of partial backlog work, start here:
@@ -128,7 +130,7 @@ V1 remains intact:
 - `adapters/codex` and `adapters/claude`: thin adapter guidance, not a competing governance layer
 - `templates/` and `examples/product-profiles/`: reusable design artifacts and archetype examples
 
-Agentic development extensions add five read-only decision and learning capabilities:
+Agentic development extensions add five evidence-analysis capabilities:
 
 - source-verified, phase-bounded authority capsules
 - UX state graphs that detect missing negative, reachability, dead-end, and recovery coverage
@@ -136,7 +138,14 @@ Agentic development extensions add five read-only decision and learning capabili
 - contract-equivalent design-arena evaluation for isolated AgentFlow variants
 - release-bound product-outcome and agent-effectiveness assessment with human-ratified memory candidates
 
-These extensions analyze supplied evidence only. They do not execute AgentFlow, select a design direction, modify tests, promote memory, deploy, or claim production outcomes. See `docs/AGENTIC-DEVELOPMENT.md` and the status-qualified `docs/FEATURE_MATRIX.md`.
+The durable learning and rendered-evidence paths add:
+
+- hash-bound, expiring human outcome-ratification receipts
+- append-only promotion into the existing design-outcome ledger
+- human-authorized retirement through preserved `deprecated` decision revisions
+- isolated Chromium, Firefox, and WebKit evidence with browser-scoped baselines
+
+The analysis commands do not execute AgentFlow, select a design direction, modify tests, deploy, or claim production outcomes. Outcome promotion and retirement are explicit lifecycle commands that mutate only the existing canonical memory ledgers. Cross-browser execution proves only the declared local or CI browser evidence. See [Agentic Development Extensions](docs/AGENTIC-DEVELOPMENT.md) and the status-qualified [Feature Matrix](docs/FEATURE_MATRIX.md).
 
 V3 baseline governance adds hash-bound review requests, append-only human decision receipts, protected review windows, stale/superseded lifecycle evaluation, and non-mutating promotion preflight. Requests and receipts never mutate a baseline or authorize repair by themselves. See `docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md`.
 
@@ -316,7 +325,7 @@ Both scripts accept an optional destination path.
 
 ## Architecture
 
-See [docs/ARCHITECTURE.md](/home/administrator/design-intelligence/docs/ARCHITECTURE.md).
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 Key design decisions:
 
