@@ -230,7 +230,7 @@
         "journeys"
       ],
       "scope": "repository",
-      "sha256": "40bd663a3bd648ffe3210764a638b411a64939f2de1aacc940b109fbfdd161cf"
+      "sha256": "2c9d78a26a9474406fb913612a11a65926850d9fd473adabda08de19bd113571"
     },
     {
       "lifecycle": "candidate",
@@ -1456,7 +1456,7 @@
     }
   ],
   "criticalAuthorityCount": 148,
-  "criticalAuthoritySha256": "bc6857152cdeeaddb51038c4d8cea7c1e0e9bcf568b17f96da703b5a8be567f5",
+  "criticalAuthoritySha256": "65a8f7b7d217aa026f4fa1943e7cdf75f6d87888e6e0e094eb7b7d8e5249973b",
   "designGateAtCreation": {
     "reason": "1 blocking governance or understanding problem(s) must be resolved before design adoption.",
     "requiredBeforeDesign": [
@@ -1466,17 +1466,17 @@
   },
   "generatedBy": "design-intelligence-governance",
   "lastAuthorityDriftRatification": {
-    "approvedAt": "2026-09-13T15:11:25-05:00",
+    "approvedAt": "2026-09-13T15:20:48-05:00",
     "approvedBy": "repository-owner",
     "authority": "repository-owner",
-    "authorityStateSha256": "d0db102e8b0086e5fbfd40d5421b9735a2a09f861d8dada37ad1c51798eb3d37",
+    "authorityStateSha256": "9ffec00e2d47800261688225dcb4f9df3147899c5dd383e88a32f47d1b2e0619",
     "decision": "ACCEPT_AUTHORITY_DRIFT",
     "kind": "AuthorityDriftRatification",
     "paths": [
-      "devctl.yaml"
+      ".github/workflows/design-ci.yml"
     ],
-    "reason": "The repository owner authorized completion of the ratified agentic release; rebind the active adoption-evidence pointer to the new append-only replay-audited report for that authority state.",
-    "receiptPath": ".dev/governance/owner-adoption-authority-drift-receipt-agentic-release.json"
+    "reason": "Complete the ratified cross-browser CI authority by installing its declared Node dependencies before the quick policy gate runs.",
+    "receiptPath": ".dev/governance/owner-authority-drift-receipt-quick-ci-dependencies.json"
   },
   "ratificationClaimed": true,
   "repository": "design-intelligence",

@@ -1,0 +1,12 @@
+{
+  "kind": "AuthorityDriftRatification",
+  "decision": "ACCEPT_AUTHORITY_DRIFT",
+  "authority": "repository-owner",
+  "approvedBy": "repository-owner",
+  "approvedAt": "2026-09-13T15:20:48-05:00",
+  "reason": "Complete the ratified cross-browser CI authority by installing its declared Node dependencies before the quick policy gate runs.",
+  "paths": [
+    ".github/workflows/design-ci.yml"
+  ],
+  "authorityStateSha256": "9ffec00e2d47800261688225dcb4f9df3147899c5dd383e88a32f47d1b2e0619"
+}

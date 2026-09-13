@@ -8,7 +8,7 @@
       "mutatesCanonicalAuthority": true,
       "reason": "Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.",
       "target": [
-        "devctl.yaml"
+        ".github/workflows/design-ci.yml"
       ]
     }
   ],

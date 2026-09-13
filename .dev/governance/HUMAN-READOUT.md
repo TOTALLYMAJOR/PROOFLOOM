@@ -48,7 +48,7 @@ Source: `.dev/intent-index.json`
 
 ## Blocking Problems
 
-- **P1 Critical governing authority changed**: Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review. (`devctl.yaml`)
+- **P1 Critical governing authority changed**: Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review. (`.github/workflows/design-ci.yml`)
 
 ## What The Tool Will Do
 

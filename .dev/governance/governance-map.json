@@ -274,7 +274,7 @@
         "journeys"
       ],
       "scope": "repository",
-      "sha256": "40bd663a3bd648ffe3210764a638b411a64939f2de1aacc940b109fbfdd161cf"
+      "sha256": "2c9d78a26a9474406fb913612a11a65926850d9fd473adabda08de19bd113571"
     },
     {
       "authorityLevel": "binding",
@@ -1896,7 +1896,7 @@
       "id": "CRITICAL-AUTHORITY-DRIFT",
       "message": "Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.",
       "paths": [
-        "devctl.yaml"
+        ".github/workflows/design-ci.yml"
       ],
       "requiredAction": "REVIEW_AND_RATIFY_AUTHORITY_CHANGE",
       "severity": "P1",
