@@ -169,7 +169,7 @@ class ControlPlaneTests(unittest.TestCase):
     def test_existing_design_and_visual_evidence_are_delegated_and_audited(self) -> None:
         adoption = audit_design_adoption(
             ROOT,
-            "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v11/adoption-report.json",
+            "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v12/adoption-report.json",
         )
         visual = audit_visual_evidence(
             ROOT,

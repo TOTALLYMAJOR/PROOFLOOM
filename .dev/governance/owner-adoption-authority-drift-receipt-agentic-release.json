@@ -1,0 +1,12 @@
+{
+  "kind": "AuthorityDriftRatification",
+  "decision": "ACCEPT_AUTHORITY_DRIFT",
+  "authority": "repository-owner",
+  "approvedBy": "repository-owner",
+  "approvedAt": "2026-09-13T15:11:25-05:00",
+  "reason": "The repository owner authorized completion of the ratified agentic release; rebind the active adoption-evidence pointer to the new append-only replay-audited report for that authority state.",
+  "paths": [
+    "devctl.yaml"
+  ],
+  "authorityStateSha256": "d0db102e8b0086e5fbfd40d5421b9735a2a09f861d8dada37ad1c51798eb3d37"
+}

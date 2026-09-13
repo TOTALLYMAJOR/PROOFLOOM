@@ -13,14 +13,14 @@
 ## What Governs This Repository
 
 - Adrs: 4 tracked sources
-- Architecture: 12 tracked sources
+- Architecture: 13 tracked sources
 - Backlog: 3 tracked sources
-- Contracts: 38 tracked sources
+- Contracts: 48 tracked sources
 - Delivery: 17 tracked sources
-- Design: 84 tracked sources
-- Evidence: 5 tracked sources
+- Design: 96 tracked sources
+- Evidence: 8 tracked sources
 - Experiments: 1 tracked source
-- Governance: 17 tracked sources
+- Governance: 19 tracked sources
 - Instructions: 9 tracked sources
 - Journeys: 5 tracked sources
 - Metrics: 1 tracked source
@@ -28,7 +28,7 @@
 - Principles: 2 tracked sources
 - Requirements: 1 tracked source
 - Skills: 5 tracked sources
-- Tests: 30 tracked sources
+- Tests: 31 tracked sources
 - Vision: 2 tracked sources
 
 ## Existing Systems To Preserve
@@ -48,7 +48,7 @@ Source: `.dev/intent-index.json`
 
 ## Blocking Problems
 
-- **P1 Critical governing authority changed**: Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review. (`design_intelligence/data/schemas/design-decision.schema.json`)
+- **P1 Critical governing authority changed**: Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review. (`devctl.yaml`)
 
 ## What The Tool Will Do
 
