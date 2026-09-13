@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "id": "neutral-product-claim-boundaries",
+  "title": "Neutral Product Claim Boundaries",
+  "status": "active",
+  "authority": {
+    "owner": "repository owner",
+    "source": "docs/claim-boundaries.md",
+    "lastReviewed": "2026-08-27"
+  },
+  "claimFamilies": [
+    {
+      "id": "workflow-state",
+      "title": "Workflow State Claims",
+      "description": "Reusable state claims for a product workflow.",
+      "claims": [
+        {
+          "id": "request-captured",
+          "claim": "A user request has been captured for review.",
+          "requiredEvidence": [
+            {
+              "kind": "runtime-state",
+              "description": "Persisted request record exists with tenant or workspace context.",
+              "sourceId": "request-record"
+            },
+            {
+              "kind": "test-evidence",
+              "description": "Focused route or service test covers request creation.",
+              "sourcePath": "tests/request-capture.test.ts"
+            }
+          ],
+          "allowedWording": ["Request captured", "Review pending"],
+          "forbiddenWording": ["Approved", "Paid", "Production ready"],
+          "affectedSurfaces": ["/requests", "operator dashboard", "release report"],
+          "visibility": ["operator", "admin"],
+          "requiredGuards": [
+            {
+              "kind": "test",
+              "description": "Request capture guard passes before release wording changes.",
+              "command": "npm test -- request-capture"
+            }
+          ],
+          "fallbackWording": ["Request proof unavailable", "Review state unknown"],
+          "riskIfViolated": "A captured request could be mistaken for an approved or fulfilled workflow state."
+        }
+      ]
+    },
+    {
+      "id": "production-readiness",
+      "title": "Production Readiness Claims",
+      "claims": [
+        {
+          "id": "production-ready",
+          "claim": "The product is ready for production use.",
+          "requiredEvidence": [
+            {
+              "kind": "deployment-evidence",
+              "description": "Production deployment route smoke has passed.",
+              "sourceId": "production-smoke"
+            },
+            {
+              "kind": "provider-evidence",
+              "description": "External provider callbacks and webhooks have been verified.",
+              "sourceId": "provider-proof"
+            },
+            {
+              "kind": "human-approval",
+              "description": "Repository owner accepted the production readiness report.",
+              "sourcePath": "docs/release-readiness.md"
+            }
+          ],
+          "allowedWording": ["Production readiness accepted", "Launch proof complete"],
+          "forbiddenWording": ["Live", "Ready", "Complete"],
+          "affectedSurfaces": ["release report", "status dashboard"],
+          "visibility": ["admin", "developer", "internal"],
+          "requiredGuards": [
+            {
+              "kind": "script",
+              "description": "Release readiness gate passes.",
+              "command": "npm run release:readiness"
+            }
+          ],
+          "fallbackWording": ["Production proof pending", "Provider proof missing"],
+          "riskIfViolated": "Local validation could be misreported as production readiness."
+        }
+      ]
+    }
+  ],
+  "statefulSurfaceContracts": [
+    {
+      "surface": "operator dashboard",
+      "stage": "workflow-state",
+      "knownTruth": ["request record", "review status"],
+      "missingOrBlocked": ["approval evidence", "fulfillment evidence"],
+      "proofBoundary": "Captured requests are review inputs only.",
+      "nextActionOwner": "operator",
+      "nextAction": "Open the request and review missing evidence.",
+      "forbiddenInference": "Do not imply approval, payment, fulfillment, or production readiness from capture alone.",
+      "claimRefs": ["workflow-state.request-captured"]
+    }
+  ]
+}

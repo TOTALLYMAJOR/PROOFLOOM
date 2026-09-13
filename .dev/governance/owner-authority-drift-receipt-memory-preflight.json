@@ -1,0 +1,12 @@
+{
+  "kind": "AuthorityDriftRatification",
+  "decision": "ACCEPT_AUTHORITY_DRIFT",
+  "authority": "repository-owner",
+  "approvedBy": "repository-owner",
+  "approvedAt": "2026-08-24T21:36:34-05:00",
+  "reason": "The repository owner explicitly selected option B to build reusable design-memory preflight and lifecycle enforcement before QuietPilot integration.",
+  "paths": [
+    "design_intelligence/data/schemas/design-decision.schema.json"
+  ],
+  "authorityStateSha256": "dec93dc2736d3e66c178788737cbe507c9ca2bf756a15b62dc5b40066ff593aa"
+}

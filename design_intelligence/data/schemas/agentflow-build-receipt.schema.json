@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/agentflow-build-receipt/1.0.0",
+  "title": "AgentFlow Build Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "kind", "handoff", "build", "tasks", "evidence", "proofBoundary", "generatedAt"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "kind": { "const": "agentflow/build-receipt" },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "sha256"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      }
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "baseCommit"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["planning", "ready", "running", "paused", "interrupted", "completed", "failed", "cancelled"] },
+        "baseCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "integrationCommit": { "type": ["string", "null"], "pattern": "^[0-9a-f]{40}$" }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "status", "changedFiles", "validation"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "status": { "type": "string", "minLength": 1 },
+          "resultCommit": { "type": ["string", "null"] },
+          "integrationCommit": { "type": ["string", "null"] },
+          "changedFiles": { "type": "array", "items": { "type": "string" } },
+          "validation": { "type": "array", "items": { "type": "object" } }
+        }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["events", "artifacts", "approvals"],
+      "properties": {
+        "events": { "type": "array", "items": { "type": "object" } },
+        "artifacts": { "type": "array", "items": { "type": "object" } },
+        "approvals": { "type": "array", "items": { "type": "object" } }
+      }
+    },
+    "proofBoundary": { "type": "string", "minLength": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" }
+  }
+}

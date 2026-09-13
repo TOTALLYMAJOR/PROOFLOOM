@@ -14,6 +14,7 @@ This repository owns the reusable utility itself. It does not outrank consuming 
 - A recommended design direction is not approval. Implementation requires explicit direction selection.
 - Supplied references remain `RESEARCH_REQUIRED` until observed patterns and transformations are recorded.
 - Prefer knowledge alignment over runtime migration when it captures most of the value.
+- Use claim-boundary registries for state, readiness, AI-authority, production, customer-access, and release claims; do not upgrade local evidence into stronger outcomes.
 - Do not add a second component system, second token system, second backlog, or second E2E hierarchy.
 
 ## Map

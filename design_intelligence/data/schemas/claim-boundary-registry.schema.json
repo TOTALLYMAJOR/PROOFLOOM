@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/claim-boundary-registry.schema.json",
+  "title": "Claim Boundary Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "title",
+    "status",
+    "authority",
+    "claimFamilies",
+    "statefulSurfaceContracts"
+  ],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "title": {"type": "string", "minLength": 1},
+    "status": {"enum": ["draft", "active", "superseded"]},
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner", "source", "lastReviewed"],
+      "properties": {
+        "owner": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "lastReviewed": {"type": "string", "format": "date"}
+      }
+    },
+    "claimFamilies": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "title", "claims"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+          "title": {"type": "string", "minLength": 1},
+          "description": {"type": "string"},
+          "claims": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"$ref": "#/$defs/claimBoundary"}
+          }
+        }
+      }
+    },
+    "statefulSurfaceContracts": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/statefulSurfaceContract"}
+    }
+  },
+  "$defs": {
+    "claimBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "claim",
+        "requiredEvidence",
+        "allowedWording",
+        "forbiddenWording",
+        "affectedSurfaces",
+        "visibility",
+        "requiredGuards",
+        "riskIfViolated"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "claim": {"type": "string", "minLength": 1},
+        "requiredEvidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/evidenceRequirement"}
+        },
+        "allowedWording": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "forbiddenWording": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "affectedSurfaces": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "visibility": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"enum": ["public", "customer", "operator", "admin", "developer", "internal"]}
+        },
+        "requiredGuards": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/guardRequirement"}
+        },
+        "fallbackWording": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "riskIfViolated": {"type": "string", "minLength": 1}
+      }
+    },
+    "evidenceRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "description"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "repository-source",
+            "runtime-state",
+            "provider-evidence",
+            "human-approval",
+            "generated-artifact",
+            "test-evidence",
+            "deployment-evidence",
+            "customer-evidence"
+          ]
+        },
+        "description": {"type": "string", "minLength": 1},
+        "sourcePath": {"type": "string", "minLength": 1},
+        "sourceId": {"type": "string", "minLength": 1}
+      }
+    },
+    "guardRequirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "description"],
+      "properties": {
+        "kind": {"enum": ["test", "script", "policy", "review", "runtime-check"]},
+        "description": {"type": "string", "minLength": 1},
+        "command": {"type": "string", "minLength": 1},
+        "sourcePath": {"type": "string", "minLength": 1}
+      }
+    },
+    "statefulSurfaceContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "surface",
+        "stage",
+        "knownTruth",
+        "missingOrBlocked",
+        "proofBoundary",
+        "nextActionOwner",
+        "nextAction",
+        "forbiddenInference"
+      ],
+      "properties": {
+        "surface": {"type": "string", "minLength": 1},
+        "stage": {"type": "string", "minLength": 1},
+        "knownTruth": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "missingOrBlocked": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "proofBoundary": {"type": "string", "minLength": 1},
+        "nextActionOwner": {"type": "string", "minLength": 1},
+        "nextAction": {"type": "string", "minLength": 1},
+        "forbiddenInference": {"type": "string", "minLength": 1},
+        "claimRefs": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

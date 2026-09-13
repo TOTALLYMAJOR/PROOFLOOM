@@ -303,13 +303,16 @@
     "items": [],
     "itemsMissingOutcome": [],
     "itemsWithoutJourneyStage": [],
+    "shadowedRecords": [],
     "status": "MAPPED"
   },
   "canonicalAuthorityModified": false,
   "designGate": {
-    "reason": "Repository is design ready; design may proceed through normal design contracts and evidence gates.",
-    "requiredBeforeDesign": [],
-    "status": "READY"
+    "reason": "1 blocking governance or understanding problem(s) must be resolved before design adoption.",
+    "requiredBeforeDesign": [
+      "CRITICAL-AUTHORITY-DRIFT"
+    ],
+    "status": "LOCKED"
   },
   "equivalentSystems": [
     {

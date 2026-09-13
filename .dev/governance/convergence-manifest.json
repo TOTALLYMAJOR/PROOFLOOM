@@ -343,7 +343,7 @@
         "design"
       ],
       "scope": "repository",
-      "sha256": "e37b99aa45be4654ba1c6079643d9eb3e4ef98403e3f75d8fde6a0b8b0c9fd82"
+      "sha256": "b8a3e9ab9365e4ea5fec1e61606cdb78b76b353731cba401fe5f578a898d1a03"
     },
     {
       "lifecycle": "candidate",
@@ -393,7 +393,7 @@
         "design"
       ],
       "scope": "repository",
-      "sha256": "5b652a27ecb2b69c104951059f8cc099920c85f985df610f1a49c946430318b5"
+      "sha256": "90032a9493b724a1ca2ceae4f52490284974c329a0b3332f3fdacc68ecc8fc70"
     },
     {
       "lifecycle": "candidate",
@@ -424,7 +424,7 @@
         "design"
       ],
       "scope": "repository",
-      "sha256": "97aba79ec27c9bfdad90c993a338a9d181540be60993c973a209f1a32531f199"
+      "sha256": "c6fdf6d7064f453bbc9eb172770d8dd686af1587594de6959639a5aa540c861b"
     },
     {
       "lifecycle": "candidate",
@@ -1324,15 +1324,29 @@
     }
   ],
   "criticalAuthorityCount": 135,
-  "criticalAuthoritySha256": "01f1f4a284a11a1a61ea4e60e5cef3396b93a485f196fc18af413448f9ceeef1",
+  "criticalAuthoritySha256": "573887436c647be412f830ae88f6665e7846b44f8e41e7acc708ae44fd2c3ec8",
   "designGateAtCreation": {
-    "reason": "Repository is design ready; design may proceed through normal design contracts and evidence gates.",
-    "requiredBeforeDesign": [],
-    "status": "READY"
+    "reason": "1 blocking governance or understanding problem(s) must be resolved before design adoption.",
+    "requiredBeforeDesign": [
+      "CRITICAL-AUTHORITY-DRIFT"
+    ],
+    "status": "LOCKED"
   },
   "generatedBy": "design-intelligence-governance",
-  "lastAuthorityDriftRatification": null,
-  "ratificationClaimed": false,
+  "lastAuthorityDriftRatification": {
+    "approvedAt": "2026-08-24T21:36:34-05:00",
+    "approvedBy": "repository-owner",
+    "authority": "repository-owner",
+    "authorityStateSha256": "dec93dc2736d3e66c178788737cbe507c9ca2bf756a15b62dc5b40066ff593aa",
+    "decision": "ACCEPT_AUTHORITY_DRIFT",
+    "kind": "AuthorityDriftRatification",
+    "paths": [
+      "design_intelligence/data/schemas/design-decision.schema.json"
+    ],
+    "reason": "The repository owner explicitly selected option B to build reusable design-memory preflight and lifecycle enforcement before QuietPilot integration.",
+    "receiptPath": ".dev/governance/owner-authority-drift-receipt-memory-preflight.json"
+  },
+  "ratificationClaimed": true,
   "repository": "design-intelligence",
   "schemaVersion": 1
 }

@@ -144,6 +144,55 @@ class AdoptionGateTests(unittest.TestCase):
             self.assertFalse(report["implementationReady"])
             self.assertIsNone(report["designContract"])
 
+    def test_product_profile_reuses_existing_repository_decision_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._write_healthy_repository(root)
+            decision = root / "docs/design/decisions.md"
+            decision.parent.mkdir(parents=True, exist_ok=True)
+            decision.write_text(
+                "# Design decisions\nCommercial spine surfaces include `blocked because` explanations.\n",
+                encoding="utf-8",
+            )
+            image = root / "reference.png"
+            image.write_bytes(
+                b"\x89PNG\r\n\x1a\n" + b"\x00\x00\x00\rIHDR" + struct.pack(">II", 900, 600)
+            )
+            analysis = self._analysis_for({
+                "id": "PAT-EXTERNAL-MEMORY",
+                "source": "reference.png",
+                "name": "Commercial spine hierarchy",
+                "category": "layout",
+                "observation": "The commercial spine remains visible beside the current decision.",
+                "whyItWorks": "It preserves journey context.",
+                "productRelevance": "QuietPilot coordinates work across the commercial spine.",
+                "proposedUse": "Preserve commercial spine context.",
+                "keywords": ["commercial spine"],
+                "requiredCapabilities": [],
+                "riskFlags": [],
+                "identityElements": [],
+                "implementationImpact": "visual-only",
+            })
+
+            report = evaluate_adoption(
+                root,
+                "Preserve the commercial spine hierarchy",
+                images=["reference.png"],
+                analysis=analysis,
+                profile_name="quietpilot",
+                surface="Operations Deck",
+            )
+
+            self.assertEqual(report["status"], "READY")
+            self.assertTrue(report["implementationReady"])
+            self.assertEqual(report["memoryContext"]["status"], "AVAILABLE")
+            self.assertEqual(
+                report["memoryContext"]["adapter"],
+                "existing-repository-authority",
+            )
+            self.assertEqual(report["memoryContext"]["total_available"], 1)
+            self.assertFalse((root / ".design").exists())
+
     def test_authority_discovery_distinguishes_backlog_hooks_and_custom_instructions(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -195,6 +244,29 @@ class AdoptionGateTests(unittest.TestCase):
                 "docs/DESIGN_PRINCIPLES.md",
                 "docs/DESIGN-CONTRACT.md",
             }.issubset(authority_paths))
+            self.assertEqual(health["status"], "HEALTHY")
+            self.assertEqual(health["evidence"]["designDocumentation"]["status"], "PRESENT")
+            self.assertNotIn("design_language", health["conflicts"])
+
+    def test_complementary_files_under_one_design_system_root_are_not_competing(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            files = {
+                "package.json": '{"dependencies":{"react":"1.0.0"},"devDependencies":{"axe-core":"1.0.0"}}',
+                "components/ui/Button.tsx": "export const Button = () => null;",
+                "docs/atlas/10-design-system/accessibility.md": "# Accessibility\nMeet the governed target.\n",
+                "docs/atlas/10-design-system/design-principles.md": "# Principles\nKeep state explicit.\n",
+                "docs/atlas/10-design-system/patterns.md": "# Patterns\nUse one primary action.\n",
+                "docs/atlas/10-design-system/tokens.md": "# Tokens\nUse the canonical token roles.\n",
+                "styles/globals.css": ":root { --space-2: 8px; } .x { gap: var(--space-2); }",
+            }
+            for relative, content in files.items():
+                path = root / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content, encoding="utf-8")
+
+            health = audit_design_system_health(root)
+
             self.assertEqual(health["status"], "HEALTHY")
             self.assertEqual(health["evidence"]["designDocumentation"]["status"], "PRESENT")
             self.assertNotIn("design_language", health["conflicts"])
@@ -357,6 +429,67 @@ class AdoptionGateTests(unittest.TestCase):
             self.assertEqual(decision["decision"], "BLOCKED")
             self.assertIn("BACKLOG.md", " ".join(decision["reasons"]))
             self.assertFalse(report["implementationReady"])
+
+    def test_declined_risky_pattern_does_not_block_safe_patterns_from_same_reference(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self._write_healthy_repository(root)
+            (root / "BACKLOG.md").write_text(
+                "# Accepted\n- [status: accepted] Do not add synthetic readiness scores.\n",
+                encoding="utf-8",
+            )
+            image = root / "reference.png"
+            image.write_bytes(
+                b"\x89PNG\r\n\x1a\n" + b"\x00\x00\x00\rIHDR" + struct.pack(">II", 1200, 800)
+            )
+            analysis = self._analysis_for_patterns([
+                {
+                    "id": "PAT-SAFE-HIERARCHY",
+                    "source": "reference.png",
+                    "name": "Evidence hierarchy",
+                    "category": "layout",
+                    "observation": "Evidence appears before supporting detail.",
+                    "whyItWorks": "It makes the next safe action clear.",
+                    "productRelevance": "The operator needs source-backed state.",
+                    "proposedUse": "Preserve evidence-first hierarchy.",
+                    "keywords": ["evidence hierarchy"],
+                    "requiredCapabilities": [],
+                    "riskFlags": [],
+                    "identityElements": [],
+                    "implementationImpact": "visual-only",
+                },
+                {
+                    "id": "PAT-RISKY-SCORE",
+                    "source": "reference.png",
+                    "name": "Synthetic readiness score",
+                    "category": "feature",
+                    "observation": "A synthetic score presents readiness as one number.",
+                    "whyItWorks": "It scans quickly.",
+                    "productRelevance": "The score would conceal source evidence.",
+                    "proposedUse": "Add a synthetic readiness score.",
+                    "keywords": ["synthetic readiness score"],
+                    "requiredCapabilities": [],
+                    "riskFlags": ["false-authoritative-state"],
+                    "identityElements": [],
+                    "implementationImpact": "workflow",
+                },
+            ])
+
+            report = evaluate_adoption(
+                root,
+                "Evaluate mixed reference patterns",
+                images=["reference.png"],
+                analysis=analysis,
+            )
+
+            decisions = {item["patternId"]: item["decision"] for item in report["decisions"]}
+            self.assertEqual(decisions["PAT-SAFE-HIERARCHY"], "ADOPT")
+            self.assertEqual(decisions["PAT-RISKY-SCORE"], "DECLINE")
+            self.assertEqual(report["status"], "READY")
+            self.assertEqual(
+                report["designContract"]["relevantDesignDecisions"],
+                ["PAT-SAFE-HIERARCHY"],
+            )
 
     def test_healthy_repository_can_adopt_and_adapt_safe_patterns(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

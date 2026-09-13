@@ -124,6 +124,99 @@ class PlaneGovernanceTests(unittest.TestCase):
             self.assertTrue(any("requires evidence" in error for error in report["errors"]))
             self.assertTrue(any("requires authority and rationale" in error for error in report["errors"]))
 
+    def test_markdown_source_precedence_ignores_pointer_duplicates_not_real_conflicts(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "backlog-now.md").write_text(
+                "### WORK-001: Active item\nStatus: active\n#### WORK-001 Delivery Map\n",
+                encoding="utf-8",
+            )
+            (root / "backlog-next.md").write_text(
+                "### WORK-001: Active pointer\nStatus: active\n### WORK-002: Staged item\nStatus: planned\n",
+                encoding="utf-8",
+            )
+            config = {
+                "completionPolicy": "all-terminal",
+                "sources": [
+                    {
+                        "path": "backlog-now.md",
+                        "role": "active",
+                        "parser": "markdown-headings",
+                        "includeInCompletion": True,
+                        "headingLevels": [3],
+                    },
+                    {
+                        "path": "backlog-next.md",
+                        "role": "staged",
+                        "parser": "markdown-headings",
+                        "includeInCompletion": True,
+                        "headingLevels": [3],
+                        "shadowedBy": "backlog-now.md",
+                    },
+                ],
+                "terminalStatuses": ["COMPLETED", "CANCELLED", "DEFERRED_WITH_AUTHORITY"],
+                "dependencies": {},
+            }
+
+            report = audit_backlog(root, config)
+
+            self.assertEqual(report["status"], "PASS", report)
+            self.assertEqual(report["itemCount"], 2)
+            self.assertEqual([item["id"] for item in report["items"]], ["WORK-001", "WORK-002"])
+            self.assertEqual(report["shadowedRecords"], [
+                {
+                    "id": "WORK-001",
+                    "source": "backlog-next.md",
+                    "shadowedBy": "backlog-now.md",
+                }
+            ])
+
+    def test_markdown_recently_closed_items_require_and_preserve_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "evidence.md").write_text("# Proof\n", encoding="utf-8")
+            (root / "backlog.md").write_text(
+                "#### Recently Closed\n"
+                "### WORK-001: Verified work\n"
+                "- Closed in current source by `evidence.md`.\n",
+                encoding="utf-8",
+            )
+            config = self._backlog_config("backlog.md")
+            config["sources"][0].update({
+                "parser": "markdown-headings",
+                "headingLevels": [3],
+            })
+
+            report = audit_backlog(root, config)
+
+            self.assertEqual(report["status"], "PASS", report)
+            self.assertEqual(report["completion"], "COMPLETE")
+            self.assertEqual(report["items"][0]["status"], "COMPLETED")
+            self.assertEqual(report["items"][0]["evidence"], ["evidence.md"])
+
+    def test_manifest_dependencies_augment_markdown_backlog_items(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "backlog.md").write_text(
+                "### WORK-001: Foundation\nStatus: active\n"
+                "### WORK-002: Dependent work\nStatus: active\n",
+                encoding="utf-8",
+            )
+            config = self._backlog_config("backlog.md")
+            config["sources"][0].update({
+                "parser": "markdown-headings",
+                "headingLevels": [3],
+            })
+            config["dependencies"] = {"WORK-002": ["WORK-001"]}
+
+            report = audit_backlog(root, config)
+
+            self.assertEqual(report["status"], "PASS", report)
+            records = {item["id"]: item for item in report["items"]}
+            self.assertEqual(records["WORK-002"]["dependencies"], ["WORK-001"])
+            self.assertEqual(report["waves"][0]["ready"], ["WORK-001"])
+            self.assertEqual(report["waves"][1]["ready"], ["WORK-002"])
+
     def test_missing_dependency_and_cycle_fail_closed(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

@@ -510,7 +510,7 @@ def audit_backlog(repository_root: str | Path, config: dict[str, Any]) -> dict[s
             errors.append(f"Backlog source does not exist: {path}")
             continue
         try:
-            parsed = _parse_backlog_source(root, target, parser)
+            parsed = _parse_backlog_source(root, target, parser, source)
         except (OSError, ValueError, json.JSONDecodeError) as error:
             errors.append(f"Unable to parse backlog source {path}: {error}")
             continue
@@ -525,6 +525,35 @@ def audit_backlog(repository_root: str | Path, config: dict[str, Any]) -> dict[s
                 "includeInCompletion": bool(include),
             })
             items.append(item)
+
+    configured_source_paths = {
+        source.get("path") for source in sources if isinstance(source, dict)
+    }
+    source_items: dict[str, set[str]] = defaultdict(set)
+    for item in items:
+        if item.get("id"):
+            source_items[item["source"]].add(item["id"])
+    source_config = {
+        source.get("path"): source for source in sources if isinstance(source, dict)
+    }
+    shadowed_records: list[dict[str, str]] = []
+    filtered_items: list[dict[str, Any]] = []
+    for item in items:
+        shadowed_by = source_config.get(item["source"], {}).get("shadowedBy")
+        if shadowed_by:
+            if shadowed_by not in configured_source_paths:
+                errors.append(
+                    f"Backlog source shadowedBy is not declared: {item['source']} -> {shadowed_by}"
+                )
+            elif item.get("id") in source_items.get(shadowed_by, set()):
+                shadowed_records.append({
+                    "id": item["id"],
+                    "source": item["source"],
+                    "shadowedBy": shadowed_by,
+                })
+                continue
+        filtered_items.append(item)
+    items = filtered_items
 
     active_items = [item for item in items if item["includeInCompletion"]]
     by_id: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -564,8 +593,20 @@ def audit_backlog(repository_root: str | Path, config: dict[str, Any]) -> dict[s
         identifier = item.get("id")
         if not identifier:
             continue
-        declared = item.get("dependencies", config_dependencies.get(identifier, []))
-        dependencies[identifier] = _string_list(declared, f"backlog {identifier}.dependencies", errors)
+        item_dependencies = _string_list(
+            item.get("dependencies", []),
+            f"backlog {identifier}.dependencies",
+            errors,
+        )
+        configured_dependencies = _string_list(
+            config_dependencies.get(identifier, []),
+            f"backlog {identifier}.configuredDependencies",
+            errors,
+        )
+        dependencies[identifier] = list(
+            dict.fromkeys(item_dependencies + configured_dependencies)
+        )
+        item["dependencies"] = dependencies[identifier]
         for dependency in dependencies[identifier]:
             if dependency not in by_id:
                 errors.append(f"Backlog dependency is not inventoried: {identifier} -> {dependency}")
@@ -592,6 +633,10 @@ def audit_backlog(repository_root: str | Path, config: dict[str, Any]) -> dict[s
             _public_backlog_item(item)
             for item in sorted(active_items, key=lambda item: item.get("id", ""))
         ],
+        "shadowedRecords": sorted(
+            shadowed_records,
+            key=lambda item: (item["id"], item["source"]),
+        ),
         "waves": waves,
         "errors": errors,
         "warnings": warnings,
@@ -686,7 +731,12 @@ def intent_context_paths(
     ]
 
 
-def _parse_backlog_source(root: Path, target: Path, parser: Any) -> list[dict[str, Any]]:
+def _parse_backlog_source(
+    root: Path,
+    target: Path,
+    parser: Any,
+    options: dict[str, Any] | None = None,
+) -> list[dict[str, Any]]:
     if parser == "task-store":
         if not target.is_dir():
             raise ValueError("task-store parser requires a directory")
@@ -720,7 +770,14 @@ def _parse_backlog_source(root: Path, target: Path, parser: Any) -> list[dict[st
     if parser == "markdown-checkboxes":
         return _parse_markdown_checkboxes(text)
     if parser == "markdown-headings":
-        return _parse_markdown_headings(text)
+        heading_levels = (options or {}).get("headingLevels")
+        if heading_levels is not None and (
+            not isinstance(heading_levels, list)
+            or not heading_levels
+            or not all(isinstance(level, int) and 1 <= level <= 6 for level in heading_levels)
+        ):
+            raise ValueError("markdown headingLevels must contain integers from 1 through 6")
+        return _parse_markdown_headings(text, heading_levels=heading_levels)
     if parser == "json-items":
         payload = json.loads(text)
         values = payload.get("items") if isinstance(payload, dict) else payload
@@ -751,43 +808,75 @@ def _parse_markdown_checkboxes(text: str) -> list[dict[str, Any]]:
     return records
 
 
-def _parse_markdown_headings(text: str) -> list[dict[str, Any]]:
+def _parse_markdown_headings(
+    text: str,
+    *,
+    heading_levels: list[int] | None = None,
+) -> list[dict[str, Any]]:
     identifier = r"([A-Z][A-Za-z0-9]+(?:-[A-Za-z0-9]+)+)"
-    heading = re.compile(rf"^#{{1,6}}\s+(?:[^A-Z0-9\n]+\s*)?{identifier}\b\s*[:\-]?\s*(.*)$")
+    levels = sorted(set(heading_levels or range(1, 7)))
+    heading_prefix = "(?:" + "|".join(f"#{{{level}}}" for level in levels) + ")"
+    heading = re.compile(
+        rf"^{heading_prefix}\s+(?:[^A-Z0-9\n]+\s*)?{identifier}\b\s*[:\-]?\s*(.*)$"
+    )
     table_row = re.compile(rf"^\|\s*`?{identifier}`?\s*\|\s*(.*)$")
+    section_heading = re.compile(r"^#{1,6}\s+(.+?)\s*$")
     status_line = re.compile(
         r"^\s*(?:[-*]\s*)?\*{0,2}(Status|Classification)\*{0,2}\s*:\s*(.+)$",
         re.I,
     )
+    evidence_path = re.compile(
+        r"`([^`]+\.(?:md|mdx|json|yaml|yml|ts|tsx|js|mjs|cjs|sql))`",
+        re.I,
+    )
     records: list[dict[str, Any]] = []
     current: dict[str, Any] | None = None
+    current_section = ""
+
+    def finish_current() -> None:
+        nonlocal current
+        if not current:
+            return
+        section = str(current.pop("_section", "")).lower()
+        if any(token in section for token in ("recently closed", "archived", "verification evidence")):
+            current["status"] = "COMPLETED"
+        current["evidence"] = list(dict.fromkeys(current.pop("_evidence", [])))
+        records.append(current)
+        current = None
+
     for line in text.splitlines():
         match = heading.match(line)
         table_match = table_row.match(line)
         if match:
-            if current:
-                records.append(current)
+            finish_current()
             current = {
                 "id": match.group(1),
                 "title": match.group(2).strip() or match.group(1),
                 "status": "ACTIVE",
                 "dependencies": [],
-                "evidence": [],
+                "_evidence": [],
+                "_section": current_section,
+                "evidenceMustExist": True,
             }
             continue
         if table_match:
-            if current:
-                records.append(current)
+            finish_current()
             remainder = table_match.group(2).split("|", 1)[0].strip()
             current = {
                 "id": table_match.group(1),
                 "title": remainder or table_match.group(1),
                 "status": "ACTIVE",
                 "dependencies": [],
-                "evidence": [],
+                "_evidence": [],
+                "_section": current_section,
+                "evidenceMustExist": True,
             }
-            records.append(current)
-            current = None
+            finish_current()
+            continue
+        section_match = section_heading.match(line)
+        if section_match:
+            finish_current()
+            current_section = section_match.group(1).strip()
             continue
         if current:
             match = status_line.match(line)
@@ -795,8 +884,10 @@ def _parse_markdown_headings(text: str) -> list[dict[str, Any]]:
                 classified = _normalize_backlog_status(match.group(2))
                 if classified in BACKLOG_STATUSES:
                     current["status"] = classified
-    if current:
-        records.append(current)
+            if re.match(r"^\s*[-*]\s+Closed\b", line, re.I):
+                current["status"] = "COMPLETED"
+            current["_evidence"].extend(evidence_path.findall(line))
+    finish_current()
     return records
 
 
@@ -806,6 +897,8 @@ def _normalize_backlog_status(value: str) -> str:
         return "BLOCKED"
     if "deferred" in normalized:
         return "STAGED"
+    if "archive" in normalized or "closed" in normalized:
+        return "COMPLETED"
     if normalized.startswith("staged") or normalized.startswith("planned"):
         return "STAGED"
     if normalized.startswith("cancelled") or normalized.startswith("canceled"):

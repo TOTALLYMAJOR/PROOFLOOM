@@ -205,6 +205,22 @@ design-intelligence repair --root /path/to/repo --plan repair-plan.json --eviden
 design-intelligence self-audit --root /path/to/repo
 ```
 
+For a mature repository, use the repository-finalization front door after the
+governance map has been reviewed:
+
+```bash
+devctl program status --root /path/to/repo
+devctl program plan --root /path/to/repo
+devctl program complete --root /path/to/repo
+```
+
+`status` explains the governing model, user journey, architecture and
+intelligence readiness, design gate, and whole backlog in product language.
+`plan` exposes dependency-ordered waves without executing repository commands.
+`complete` fails unless every control gate passes and every completion-governed
+item has evidence-backed terminal status. See
+`docs/REPOSITORY-FINALIZATION-PROGRAM.md`.
+
 All commands remain read-only unless an explicit output path, registry `--write`, baseline review `request`, baseline `promote`, or repair `--apply` is supplied. A baseline review request writes only its declared request file.
 
 The quoted task is the simplest front door. It defaults to the current repository and is equivalent to `start "<task>"`. The older `start /path/to/repo "<task>"` form remains compatible. Startup returns repository context, surface mode, direction briefs, reference ledger, proof gate, and an agent handoff. It writes only with `--save`, `--save-to`, `--contract-out`, or `--output`.

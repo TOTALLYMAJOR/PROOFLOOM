@@ -4,6 +4,7 @@ import ast
 import fnmatch
 import hashlib
 import json
+import os
 import re
 import tomllib
 from collections import deque
@@ -340,13 +341,20 @@ def _source_files(root: Path, config: dict[str, Any], errors: list[str]) -> list
     exclude = config.get("exclude", DEFAULT_EXCLUDE)
     max_files = config.get("maxSourceFiles", 2000)
     matches: list[str] = []
-    for path in sorted(root.rglob("*")):
-        if not path.is_file():
-            continue
-        relative = path.relative_to(root).as_posix()
-        if _matches(relative, exclude) or not _matches(relative, include):
-            continue
-        matches.append(relative)
+    for current_root, directories, filenames in os.walk(root, topdown=True):
+        current = Path(current_root)
+        directories[:] = sorted(
+            directory
+            for directory in directories
+            if not _matches((current / directory).relative_to(root).as_posix(), exclude)
+        )
+        for filename in sorted(filenames):
+            path = current / filename
+            relative = path.relative_to(root).as_posix()
+            if _matches(relative, exclude) or not _matches(relative, include):
+                continue
+            matches.append(relative)
+    matches.sort()
     if len(matches) > max_files:
         errors.append(
             f"Architecture graph matched {len(matches)} files, exceeding maxSourceFiles={max_files}"
@@ -362,17 +370,23 @@ def _add_repository_packages(
     edges: dict[tuple[str, str, str], dict[str, Any]],
 ) -> None:
     manifests: list[tuple[Path, str, str]] = []
-    for package_path in sorted(root.rglob("package.json")):
-        relative = package_path.relative_to(root).as_posix()
-        if _matches(relative, DEFAULT_EXCLUDE):
+    package_roots = {root}
+    for relative in candidates:
+        parent = (root / relative).parent
+        while parent != root and root in parent.parents:
+            package_roots.add(parent)
+            parent = parent.parent
+    for package_root in sorted(package_roots):
+        package_path = package_root / "package.json"
+        if not package_path.is_file():
             continue
         package = read_json(package_path, {}) or {}
         name = package.get("name") if isinstance(package, dict) else None
         if isinstance(name, str) and name:
             manifests.append((package_path.parent, "npm", name))
-    for pyproject_path in sorted(root.rglob("pyproject.toml")):
-        relative = pyproject_path.relative_to(root).as_posix()
-        if _matches(relative, DEFAULT_EXCLUDE):
+    for package_root in sorted(package_roots):
+        pyproject_path = package_root / "pyproject.toml"
+        if not pyproject_path.is_file():
             continue
         try:
             payload = tomllib.loads(pyproject_path.read_text(encoding="utf-8"))
@@ -820,6 +834,8 @@ def _matches(path: str, patterns: Iterable[str]) -> bool:
     normalized = path.replace("\\", "/").lstrip("./")
     for pattern in patterns:
         normalized_pattern = str(pattern).replace("\\", "/").lstrip("./")
+        if normalized == normalized_pattern:
+            return True
         variants = {normalized_pattern}
         reduced = normalized_pattern
         while "/**/" in reduced:

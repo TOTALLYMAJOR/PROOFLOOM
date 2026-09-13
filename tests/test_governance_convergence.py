@@ -64,6 +64,41 @@ class GovernanceConvergenceTests(unittest.TestCase):
             self.assertEqual(audit["designGate"]["status"], "LOCKED")
             self.assertEqual(audit["finalizationReadiness"]["status"], "GOVERNANCE_CONFLICTED")
 
+    def test_existing_e2e_wrapper_is_linked_without_filename_keywords(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._mature_repository(Path(temporary), create_e2e=False)
+            self._write(root / "scripts/run-product-smoke.mjs", "// executable journey wrapper\n")
+            package = json.loads((root / "package.json").read_text(encoding="utf-8"))
+            package["scripts"]["test:e2e:product"] = "node scripts/run-product-smoke.mjs"
+            (root / "package.json").write_text(json.dumps(package), encoding="utf-8")
+
+            audit = audit_governance(root)
+
+            self.assertEqual(audit["journeyModel"]["proofStatus"], "LINKED", audit)
+
+    def test_backlog_projection_prefers_active_items_and_keeps_unique_table_records(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._mature_repository(Path(temporary))
+            self._write(
+                root / "docs/backlog-next.md",
+                "# Next\n\n"
+                "### WORK-001: Staged pointer\n\n- Classification: planned\n\n"
+                "| Item | Verification outcome |\n"
+                "| --- | --- |\n"
+                "| WORK-002 | Complete the staged customer proof |\n",
+            )
+
+            audit = audit_governance(root)
+
+            backlog = audit["backlogModel"]
+            self.assertEqual(backlog["itemCount"], 2, backlog)
+            self.assertEqual({item["id"] for item in backlog["items"]}, {"WORK-001", "WORK-002"})
+            self.assertEqual(backlog["shadowedRecords"], [{
+                "id": "WORK-001",
+                "source": "docs/backlog-next.md",
+                "shadowedBy": "docs/backlog-now.md",
+            }])
+
     def test_apply_writes_only_derived_bindings_and_detects_later_vision_drift(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = self._mature_repository(Path(temporary))

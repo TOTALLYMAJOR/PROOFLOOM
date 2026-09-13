@@ -19,6 +19,7 @@ from .control_plane import (
     evaluate_design_adoption,
     initialize_control_plane,
     inspect_design,
+    program_status,
     run_control_plane_doctor,
     route_task_by_id,
     task_context,
@@ -59,6 +60,15 @@ def _build_parser() -> argparse.ArgumentParser:
     _common(subparsers.add_parser("validate", help="Validate devctl.yaml and declared authorities."))
     _common(subparsers.add_parser("doctor", help="Audit control-plane and delegated design authorities."))
     _common(subparsers.add_parser("health", help="Report intent, journey, backlog, standards, and routing health."))
+
+    program = subparsers.add_parser(
+        "program",
+        help="Join governance, journeys, architecture, design, backlog, and evidence into one finalization program.",
+    )
+    program_subparsers = program.add_subparsers(dest="program_command", required=True)
+    _common(program_subparsers.add_parser("status", help="Explain the current whole-program state."))
+    _common(program_subparsers.add_parser("plan", help="Show the authority-safe whole-backlog program."))
+    _common(program_subparsers.add_parser("complete", help="Fail unless every governed item and control gate is complete."))
 
     govern = subparsers.add_parser(
         "govern",
@@ -180,6 +190,38 @@ def _dispatch(args: argparse.Namespace) -> int:
     if args.command == "health":
         report = control_plane_health(root)
         return _finish(report, args, "CONTROL PLANE HEALTH", success={"PASS", "WARN"})
+    if args.command == "program":
+        report = program_status(root)
+        observed_status = report.get("status")
+        if args.program_command == "plan":
+            report = {
+                **report,
+                "mode": "whole-program",
+                "commandsExecuted": 0,
+            }
+        elif args.program_command == "complete" and report.get("status") != "COMPLETE":
+            report = {
+                **report,
+                "status": "BLOCKED",
+                "completionClaimed": False,
+                "errors": report.get("errors", [])
+                + ["Program completion requires every configured control gate and governed backlog item to pass."],
+            }
+            report["humanSummary"] = report["humanSummary"].replace(
+                f"Program status: **{observed_status}**",
+                "Program status: **BLOCKED**",
+                1,
+            )
+        return _finish(
+            report,
+            args,
+            "REPOSITORY FINALIZATION PROGRAM",
+            success=(
+                {"COMPLETE", "IN_PROGRESS", "BLOCKED"}
+                if args.program_command in {"status", "plan"}
+                else {"COMPLETE"}
+            ),
+        )
     if args.command == "govern":
         if args.govern_command == "audit":
             report = audit_governance(root)
@@ -340,6 +382,7 @@ def _command_name(args: argparse.Namespace) -> str:
         getattr(args, field, None)
         for field in (
             "planes_command",
+            "program_command",
             "govern_command",
             "backlog_command",
             "intelligence_command",
