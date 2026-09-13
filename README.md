@@ -1,5 +1,11 @@
 # Design Intelligence with Repository Rehabilitation and Design Governance
 
+<p align="center">
+  <img src="artifacts/design/brand/design-intelligence-brand-concept-v2.png" alt="Proofloom — Design that can show its work" width="960">
+</p>
+
+Proofloom is the visual mark for Design Intelligence. The repository, package, and CLI retain the `design-intelligence` name.
+
 Design Intelligence is a production-grade, vendor-neutral utility for repository-aware design work. Its core mission is design intelligence: understand product intent, preserve existing design truth, reason about UX and design-system change, validate rendered outcomes, and record evidence without turning into a second application scaffold.
 
 The governing objective is:
