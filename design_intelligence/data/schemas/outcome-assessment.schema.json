@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/outcome-assessment.schema.json",
+  "title": "Outcome Assessment",
+  "type": "object",
+  "required": ["schemaVersion", "kind", "status", "contractId", "journeyId", "observationWindow", "outcomeStatus", "successSignals", "counterSignals", "agentEffectiveness", "memoryCandidate", "memoryMutationPerformed", "claimBoundary"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "kind": {"const": "design-intelligence/outcome-assessment"},
+    "status": {"enum": ["PASS", "BLOCKED"]},
+    "contractId": {"type": "string", "minLength": 1},
+    "journeyId": {"type": "string", "minLength": 1},
+    "outcomeStatus": {"enum": ["NOT_READY", "COUNTER_SIGNAL", "SUCCESS", "INCONCLUSIVE"]},
+    "successSignals": {"type": "array", "minItems": 1},
+    "counterSignals": {"type": "array"},
+    "agentEffectiveness": {"type": "object"},
+    "memoryCandidate": {
+      "type": "object",
+      "required": ["eligible", "ratificationStatus", "contractId", "journeyId", "decisionId", "outcomeStatus", "reason", "lesson", "sourceEvidence"],
+      "properties": {
+        "eligible": {"type": "boolean"},
+        "ratificationStatus": {"const": "HUMAN_REQUIRED"},
+        "decisionId": {"type": ["string", "null"]},
+        "reason": {"type": "string", "minLength": 1},
+        "lesson": {"type": "string", "minLength": 1},
+        "sourceEvidence": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "memoryMutationPerformed": {"const": false},
+    "claimBoundary": {"type": "string", "minLength": 1}
+  }
+}

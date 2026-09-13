@@ -782,7 +782,7 @@ def _extract_journeys(root: Path, records: list[dict[str, Any]]) -> dict[str, An
         if item["script"].lower().startswith("test:e2e")
         and ":install" not in item["script"].lower()
         and item["targetsExist"]
-        and any(re.search(r"(?:e2e|spec|test)\.", target, re.I) for target in item["targets"])
+        and bool(item["targets"])
     ]
     status = "DEFINED" if binding else "PARTIAL" if journeys else "MISSING"
     if status == "MISSING":
@@ -1074,14 +1074,25 @@ def _backlog_summary(
     )
     items: list[dict[str, Any]] = []
     for record in records:
-        if record["lifecycle"] == "historical" or not record["path"].endswith((".md", ".mdx")):
+        if record["lifecycle"] in {"historical", "evidence"} or not record["path"].endswith((".md", ".mdx")):
             continue
         role = "staged" if "next" in Path(record["path"]).stem.lower() else "active"
         items.extend(_parse_markdown_backlog(root / record["path"], record["path"], role, primary_stages))
     unique: dict[tuple[str, str], dict[str, Any]] = {}
     for item in items:
         unique[(item["source"], item["id"])] = item
-    items = sorted(unique.values(), key=lambda item: (item["sourceRole"] != "active", item["id"]))
+    preferred: dict[str, dict[str, Any]] = {}
+    shadowed: list[dict[str, str]] = []
+    for item in sorted(unique.values(), key=lambda item: (item["sourceRole"] != "active", item["id"])):
+        if item["id"] in preferred:
+            shadowed.append({
+                "id": item["id"],
+                "source": item["source"],
+                "shadowedBy": preferred[item["id"]]["source"],
+            })
+            continue
+        preferred[item["id"]] = item
+    items = sorted(preferred.values(), key=lambda item: (item["sourceRole"] != "active", item["id"]))
     counts = {
         status: sum(item["executionStatus"] == status for item in items)
         for status in ("ACTIVE", "PARTIAL", "BLOCKED", "STAGED", "DEFERRED", "COMPLETED")
@@ -1105,6 +1116,7 @@ def _backlog_summary(
         "itemCount": len(items),
         "counts": counts,
         "items": items,
+        "shadowedRecords": sorted(shadowed, key=lambda item: (item["id"], item["source"])),
         "itemsMissingOutcome": missing_outcome,
         "itemsWithoutJourneyStage": unmapped,
         "completion": (
@@ -1179,6 +1191,42 @@ def _parse_markdown_backlog(
             "hasSuccessSignal": bool(re.search(r"^-\s+Success signal:\s*\S", body, re.MULTILINE | re.IGNORECASE)),
             "hasEvidenceBoundary": bool(re.search(r"^-\s+Evidence or assumption:\s*\S", body, re.MULTILINE | re.IGNORECASE)),
             "journeyStages": mapped_stages,
+        })
+    if Path(source).name.lower() not in {"backlog.md", "backlog-now.md", "backlog-next.md"}:
+        return items
+    heading_ids = {item["id"] for item in items}
+    table_rows = re.finditer(
+        r"^\|\s*`?([A-Za-z][A-Za-z0-9-]*-\d+[A-Za-z]?)`?\s*\|\s*(.+?)\s*\|",
+        text,
+        re.MULTILINE,
+    )
+    for match in table_rows:
+        identifier = match.group(1)
+        if identifier in heading_ids:
+            continue
+        prior = text[:match.start()]
+        section_matches = list(re.finditer(r"^(?:##|####)\s+(.+?)\s*$", prior, re.MULTILINE))
+        section = section_matches[-1].group(1).strip() if section_matches else ""
+        if "active gate pointer" in section.lower():
+            continue
+        title = re.sub(r"`([^`]+)`", r"\1", match.group(2)).strip()
+        body_lower = title.lower()
+        items.append({
+            "id": identifier,
+            "title": title,
+            "source": source,
+            "sourceRole": role,
+            "section": section,
+            "executionStatus": "STAGED" if role == "staged" else "ACTIVE",
+            "statusEvidence": "Table backlog record",
+            "hasOutcome": False,
+            "hasSuccessSignal": False,
+            "hasEvidenceBoundary": False,
+            "journeyStages": [
+                stage
+                for stage in journey_stages
+                if re.search(rf"\b{re.escape(stage.lower())}\b", body_lower)
+            ],
         })
     return items
 

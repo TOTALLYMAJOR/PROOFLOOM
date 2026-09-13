@@ -1,0 +1,14 @@
+{
+  "kind": "AuthorityDriftRatification",
+  "decision": "ACCEPT_AUTHORITY_DRIFT",
+  "authority": "repository-owner",
+  "approvedBy": "repository-owner",
+  "approvedAt": "2026-09-13T15:08:49-05:00",
+  "reason": "The repository owner explicitly ratified the Design Intelligence agentic release authority changes for the claim-boundary rule and governed cross-browser CI entry points.",
+  "paths": [
+    ".github/workflows/design-ci.yml",
+    "AGENTS.md",
+    "package.json"
+  ],
+  "authorityStateSha256": "9f6f13a231c93ed660fa425f3b5d1492eca6f226d58f8a4d13b4466242171433"
+}

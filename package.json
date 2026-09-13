@@ -7,6 +7,8 @@
   "scripts": {
     "design:reference:capture": "node scripts/design/capture-reference.mjs",
     "design:qa": "node scripts/design/visual-qa.mjs --scenario tests/design/scenarios/design-department-surface.json --output artifacts/design",
+    "design:qa:cross-browser": "node scripts/design/visual-qa.mjs --scenario tests/design/scenarios/design-department-surface.json --browser all --output artifacts/design/cross-browser",
+    "design:qa:cross-browser:policy": "node scripts/design/verify-cross-browser-policy.mjs",
     "design:repair:prove": "node scripts/design/prove-repairs.mjs",
     "devctl:validate": "python3 -m design_intelligence.devctl_cli validate --root . --format json",
     "devctl:doctor": "python3 -m design_intelligence.devctl_cli doctor --root . --format json",

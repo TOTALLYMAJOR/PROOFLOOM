@@ -8,7 +8,7 @@
       "mutatesCanonicalAuthority": true,
       "reason": "Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.",
       "target": [
-        "design_intelligence/data/schemas/design-decision.schema.json"
+        ".github/workflows/design-ci.yml"
       ]
     }
   ],
@@ -98,7 +98,7 @@
     "understanding": "MAPPED"
   },
   "generatedBy": "design-intelligence-governance",
-  "root": "/home/administrator/design-memory-preflight/design-intelligence",
+  "root": "/home/administrator/projects_new/design-intelligence",
   "schemaVersion": 1,
   "status": "REVIEW_REQUIRED"
 }

@@ -85,6 +85,7 @@ def initialize_memory(
         "design-decision.schema.json",
         "design-exception.schema.json",
         "design-outcome.schema.json",
+        "outcome-ratification-receipt.schema.json",
         "design-memory-preflight.schema.json",
         "baseline-review-request.schema.json",
         "baseline-review-receipt.schema.json",

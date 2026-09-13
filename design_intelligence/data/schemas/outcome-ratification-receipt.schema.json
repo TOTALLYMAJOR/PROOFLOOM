@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/outcome-ratification-receipt.schema.json",
+  "title": "Outcome Ratification Receipt",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schemaVersion", "kind", "id", "assessmentEvidence", "contractId", "decisionId", "decision", "authorizedBy", "reason", "decidedAt", "validUntil", "memoryMutationPerformed"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "kind": {"const": "design-intelligence/outcome-ratification-receipt"},
+    "id": {"type": "string", "pattern": "^DOR-[A-F0-9]{20}$"},
+    "assessmentEvidence": {"type": "object", "required": ["path", "sha256"]},
+    "contractId": {"type": "string", "minLength": 1},
+    "decisionId": {"type": "string", "pattern": "^DL-"},
+    "decision": {"enum": ["PROMOTE", "REJECT"]},
+    "authorizedBy": {"type": "string", "pattern": "^human:.+"},
+    "reason": {"type": "string", "minLength": 1},
+    "decidedAt": {"type": "string", "format": "date-time"},
+    "validUntil": {"type": "string", "format": "date-time"},
+    "outcomeId": {"type": ["string", "null"]},
+    "lesson": {"type": "string", "minLength": 1},
+    "memoryMutationPerformed": {"const": false}
+  }
+}

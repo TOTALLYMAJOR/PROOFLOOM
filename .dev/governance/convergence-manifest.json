@@ -230,7 +230,7 @@
         "journeys"
       ],
       "scope": "repository",
-      "sha256": "85fd589b4103fd29382be1e858daa7fd1e668bf022c37d03b0afedd89d7c5620"
+      "sha256": "2c9d78a26a9474406fb913612a11a65926850d9fd473adabda08de19bd113571"
     },
     {
       "lifecycle": "candidate",
@@ -239,7 +239,7 @@
         "instructions"
       ],
       "scope": "repository",
-      "sha256": "df70418171ae6d9bb3fbca4f93dc88f8315b2728f8e3573eb67c8f456d282deb"
+      "sha256": "ae523210803a237dacec6572e942b3215301548f1418284edcb90ae431b53eef"
     },
     {
       "lifecycle": "candidate",
@@ -325,6 +325,16 @@
     },
     {
       "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/agentflow-build-receipt.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "589a7adf913a8e06d90fc551f9e8c8aea3d31250c9569156f5a274bd0b69cd7b"
+    },
+    {
+      "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/architecture-graph.schema.json",
       "roles": [
         "architecture",
@@ -336,6 +346,17 @@
     },
     {
       "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/authority-capsule.schema.json",
+      "roles": [
+        "contracts",
+        "design",
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "c6b2fc0d3c042e33e7fa176ad501cfa2195e3edef2a7167c0e0498f809fb5fbe"
+    },
+    {
+      "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/backlog-portfolio.schema.json",
       "roles": [
         "backlog",
@@ -343,7 +364,7 @@
         "design"
       ],
       "scope": "repository",
-      "sha256": "e37b99aa45be4654ba1c6079643d9eb3e4ef98403e3f75d8fde6a0b8b0c9fd82"
+      "sha256": "b8a3e9ab9365e4ea5fec1e61606cdb78b76b353731cba401fe5f578a898d1a03"
     },
     {
       "lifecycle": "candidate",
@@ -367,6 +388,26 @@
     },
     {
       "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/claim-boundary-registry.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "938e4493820b91d0a050eded285777ca1fd6f378709de90f8a95792f7e41af98"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/counterfactual-report.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "f69c56bab1f3581da9741ac9c5475fcadfa5fc7f5b8bf2e5900652052035baa8"
+    },
+    {
+      "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/design-adoption-report.schema.json",
       "roles": [
         "contracts",
@@ -374,6 +415,16 @@
       ],
       "scope": "repository",
       "sha256": "96a9ad9ce7240bae20de34f1409fd64a9fa24290cd07a4513e1c0e7f847867f1"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/design-arena-report.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "a07d7c1262cf22e87e6d6ed36a8a6d115c16fdfda7cc314793e3a3ad32591963"
     },
     {
       "lifecycle": "candidate",
@@ -434,7 +485,18 @@
         "design"
       ],
       "scope": "repository",
-      "sha256": "97aba79ec27c9bfdad90c993a338a9d181540be60993c973a209f1a32531f199"
+      "sha256": "c6fdf6d7064f453bbc9eb172770d8dd686af1587594de6959639a5aa540c861b"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/governed-task-handoff.schema.json",
+      "roles": [
+        "contracts",
+        "design",
+        "evidence"
+      ],
+      "scope": "repository",
+      "sha256": "a50574a76c5cbfd59553a97dcc17448343f60126fafe73d3f528cad4ff684c19"
     },
     {
       "lifecycle": "candidate",
@@ -455,6 +517,28 @@
       ],
       "scope": "repository",
       "sha256": "589c1e3d863c160e1b6ad0b57c5326faa456d29e2dd764873a27c1cdd8abd2bc"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/outcome-assessment.schema.json",
+      "roles": [
+        "contracts",
+        "design",
+        "evidence"
+      ],
+      "scope": "repository",
+      "sha256": "09b428e602a5aa1005a4deba848a66c022a9bb7436a92d4f1161f6447c1d9fee"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/outcome-ratification-receipt.schema.json",
+      "roles": [
+        "contracts",
+        "design",
+        "evidence"
+      ],
+      "scope": "repository",
+      "sha256": "8900f6751a31d3f4e15ad2b69540ec515ac0d27a923c1171215b0061ad4973c6"
     },
     {
       "lifecycle": "candidate",
@@ -498,6 +582,16 @@
     },
     {
       "lifecycle": "candidate",
+      "path": "design_intelligence/data/schemas/ux-state-graph.schema.json",
+      "roles": [
+        "contracts",
+        "design"
+      ],
+      "scope": "repository",
+      "sha256": "7adbe6705d776510213b327bdf37c17e04895b9bc9a04498b746c4c9bcc4c99b"
+    },
+    {
+      "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/validation-evidence.schema.json",
       "roles": [
         "contracts",
@@ -514,7 +608,7 @@
         "governance"
       ],
       "scope": "repository",
-      "sha256": "a80cb9010775a2e6116664120ad51f2c07af64f05a9a4789c7731a3a1fc4efa7"
+      "sha256": "494729c3d725f79f6bc8baaab1af023efa89f0b0642a6ff6375c5a5e457851cf"
     },
     {
       "lifecycle": "candidate",
@@ -616,6 +710,15 @@
       ],
       "scope": "domain:IMPLEMENTATION-REPORT-DESIGN-ADOPTION-GATE.md",
       "sha256": "4f7ae8ffd32be7966e2fda1aacea6e250703164723f01bc65a31c75e9c0ad4b8"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": "docs/QUIETPILOT-ARCHITECTURE-ADOPTION-REPORT.md",
+      "roles": [
+        "architecture"
+      ],
+      "scope": "domain:QUIETPILOT-ARCHITECTURE-ADOPTION-REPORT.md",
+      "sha256": "5d1672dd298e226785b3c39149ddc3db5fa18090f18b2db3acd9447ae456e41b"
     },
     {
       "lifecycle": "candidate",
@@ -839,7 +942,7 @@
         "delivery"
       ],
       "scope": "repository",
-      "sha256": "b97c7676675fc74712a65a3bacc404a3ce82e4e9121f6d370ed45eecd110c957"
+      "sha256": "aa2f68394a2f6f8442559f515ac22d6289dea33c5c9abe08b3e960dcaec3412f"
     },
     {
       "lifecycle": "candidate",
@@ -850,6 +953,16 @@
       ],
       "scope": "repository",
       "sha256": "36a6990cb2309a0a87c5e98f808cb6e1e5c9233485bcb1877c09c6a5dd43c027"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": "scripts/design/verify-cross-browser-policy.mjs",
+      "roles": [
+        "design",
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "8c7c4f96b2450de03c26f2edc32bc6499851d43197c9df5ee822c6a7be912957"
     },
     {
       "lifecycle": "candidate",
@@ -1342,8 +1455,8 @@
       "sha256": "c12279d7c584959bbf43d66e3d795184f9cb622ad1ec54fb49f9d850dcb72156"
     }
   ],
-  "criticalAuthorityCount": 137,
-  "criticalAuthoritySha256": "662ec32a0abde8c8b15ae5c70ac2a3188bcbd1a5a941c48400414269c6e491f4",
+  "criticalAuthorityCount": 148,
+  "criticalAuthoritySha256": "65a8f7b7d217aa026f4fa1943e7cdf75f6d87888e6e0e094eb7b7d8e5249973b",
   "designGateAtCreation": {
     "reason": "1 blocking governance or understanding problem(s) must be resolved before design adoption.",
     "requiredBeforeDesign": [
@@ -1353,17 +1466,17 @@
   },
   "generatedBy": "design-intelligence-governance",
   "lastAuthorityDriftRatification": {
-    "approvedAt": "2026-08-24T21:36:34-05:00",
+    "approvedAt": "2026-09-13T15:20:48-05:00",
     "approvedBy": "repository-owner",
     "authority": "repository-owner",
-    "authorityStateSha256": "f236ef257fee24d84cc8516aeb1ebe1ee8b44d6384ca670c399dfb61853e06f6",
+    "authorityStateSha256": "9ffec00e2d47800261688225dcb4f9df3147899c5dd383e88a32f47d1b2e0619",
     "decision": "ACCEPT_AUTHORITY_DRIFT",
     "kind": "AuthorityDriftRatification",
     "paths": [
-      "design_intelligence/data/schemas/design-decision.schema.json"
+      ".github/workflows/design-ci.yml"
     ],
-    "reason": "The repository owner explicitly selected option B to build reusable design-memory preflight and lifecycle enforcement before QuietPilot integration.",
-    "receiptPath": ".dev/governance/owner-authority-drift-receipt-memory-preflight.json"
+    "reason": "Complete the ratified cross-browser CI authority by installing its declared Node dependencies before the quick policy gate runs.",
+    "receiptPath": ".dev/governance/owner-authority-drift-receipt-quick-ci-dependencies.json"
   },
   "ratificationClaimed": true,
   "repository": "design-intelligence",

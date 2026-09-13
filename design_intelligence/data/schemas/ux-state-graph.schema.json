@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/ux-state-graph.schema.json",
+  "title": "UX State Graph",
+  "type": "object",
+  "required": ["schemaVersion", "kind", "status", "journeyId", "states", "transitions", "coverage", "gaps", "proposedScenarios", "mutationPerformed", "claimBoundary"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "kind": {"const": "design-intelligence/ux-state-graph"},
+    "status": {"enum": ["PASS", "REVIEW_REQUIRED"]},
+    "journeyId": {"type": "string", "minLength": 1},
+    "states": {"type": "array"},
+    "transitions": {"type": "array"},
+    "coverage": {
+      "type": "object",
+      "required": ["successReachable", "reachableStateIds", "unreachableStateIds", "missingStateKinds", "deadEndStateIds", "unrecoverableStateIds"]
+    },
+    "gaps": {"type": "array"},
+    "proposedScenarios": {"type": "array"},
+    "mutationPerformed": {"const": false},
+    "claimBoundary": {"type": "string", "minLength": 1}
+  }
+}

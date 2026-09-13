@@ -34,6 +34,7 @@ def main() -> int:
 def quick_commands() -> list[tuple[str, list[str]]]:
     return [
         ("unit and governance tests", [PYTHON, "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"]),
+        ("cross-browser baseline isolation policy", ["npm", "run", "design:qa:cross-browser:policy"]),
         ("repository governance convergence", [PYTHON, "-m", "design_intelligence.devctl_cli", "govern", "verify", "--root", ".", "--format", "json"]),
         ("control-plane manifest", [PYTHON, "-m", "design_intelligence.devctl_cli", "validate", "--root", ".", "--format", "json"]),
         ("control-plane doctor", [PYTHON, "-m", "design_intelligence.devctl_cli", "doctor", "--root", ".", "--format", "json"]),
@@ -49,7 +50,7 @@ def quick_commands() -> list[tuple[str, list[str]]]:
             "design adoption integrity",
             [
                 PYTHON, "-m", "design_intelligence.cli", "adoption-audit", "--root", ".",
-                "--input", "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v11/adoption-report.json",
+                "--input", "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v12/adoption-report.json",
                 "--format", "json",
             ],
         ),
@@ -60,6 +61,7 @@ def quick_commands() -> list[tuple[str, list[str]]]:
 def standard_commands() -> list[tuple[str, list[str]]]:
     return [
         ("governed Playwright QA", ["npm", "run", "design:qa"]),
+        ("cross-browser governed evidence", ["npm", "run", "design:qa:cross-browser"]),
         (
             "deterministic quality score",
             [PYTHON, "-m", "design_intelligence.cli", "quality", "--input", "artifacts/design/reports/design-department-surface/qa-report.json", "--thresholds", ".design/quality/thresholds.json", "--format", "json"],

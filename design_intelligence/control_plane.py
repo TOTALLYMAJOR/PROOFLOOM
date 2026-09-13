@@ -17,7 +17,11 @@ from .adoption import (
 from .architecture_graph import analyze_architecture_impact, build_architecture_graph
 from .baselines import audit_baselines
 from .memory import audit_memory
-from .governance import audit_governance, governance_design_preflight
+from .governance import (
+    audit_governance,
+    governance_design_preflight,
+    verify_governance_convergence,
+)
 from .planes import (
     audit_backlog,
     audit_planes,
@@ -197,14 +201,40 @@ def validate_control_plane(repository_root: str | Path) -> dict[str, Any]:
 
     design = spec.get("design") if isinstance(spec.get("design"), dict) else {}
     if design.get("enabled"):
-        for key in ("memoryRoot", "qualityThresholds", "baselineManifest", "visualScenario"):
-            value = design.get(key)
-            if not isinstance(value, str):
-                errors.append(f"spec.design.{key} is required when design integration is enabled")
-                continue
-            target = _safe_path(root, value, f"spec.design.{key}", errors)
-            if target and not target.exists():
-                errors.append(f"spec.design.{key} does not exist: {value}")
+        design_mode = design.get("mode", "package-native")
+        if design_mode == "package-native":
+            for key in ("memoryRoot", "qualityThresholds", "baselineManifest", "visualScenario"):
+                value = design.get(key)
+                if not isinstance(value, str):
+                    errors.append(f"spec.design.{key} is required when design integration is enabled")
+                    continue
+                target = _safe_path(root, value, f"spec.design.{key}", errors)
+                if target and not target.exists():
+                    errors.append(f"spec.design.{key} does not exist: {value}")
+        elif design_mode == "repository-native":
+            for field in ("authorityPaths", "memoryPaths"):
+                values = design.get(field)
+                if not isinstance(values, list) or not values:
+                    errors.append(f"spec.design.{field} is required in repository-native mode")
+                    continue
+                for index, value in enumerate(values):
+                    _validate_file_reference(
+                        root,
+                        value,
+                        f"spec.design.{field}[{index}]",
+                        errors,
+                    )
+            checks = design.get("verificationChecks")
+            if not isinstance(checks, list) or not checks:
+                errors.append("spec.design.verificationChecks is required in repository-native mode")
+            else:
+                for check in checks:
+                    if check not in commands:
+                        errors.append(
+                            f"spec.design.verificationChecks references unknown check: {check}"
+                        )
+        else:
+            errors.append(f"spec.design.mode is invalid: {design_mode}")
         adoption_report = design.get("adoptionReport")
         if adoption_report:
             _validate_file_reference(root, adoption_report, "spec.design.adoptionReport", errors)
@@ -650,6 +680,434 @@ def control_plane_health(repository_root: str | Path) -> dict[str, Any]:
     }
 
 
+def program_status(repository_root: str | Path) -> dict[str, Any]:
+    """Join repository governance and every configured plane into one truthful program state."""
+    root = Path(repository_root).resolve()
+    governance = audit_governance(root)
+    manifest_path = root / MANIFEST_NAME
+    if not manifest_path.is_file():
+        report = {
+            "schemaVersion": 1,
+            "status": "BLOCKED",
+            "root": str(root),
+            "manifestConfigured": False,
+            "completionClaimed": False,
+            "governance": _program_governance_summary(governance),
+            "userJourney": _program_journey_summary(governance),
+            "backlog": _program_governance_backlog(governance),
+            "phases": _program_unconfigured_phases(),
+            "nextAction": {
+                "kind": "adoption-review",
+                "command": "devctl init --dry-run",
+                "reason": "Review detected authorities before installing the additive repository adapter.",
+            },
+            "claimBoundary": (
+                "The program reports repository evidence and stop conditions. It does not execute "
+                "product work, approve authority decisions, or claim completion without terminal evidence."
+            ),
+        }
+        report["humanSummary"] = _render_program_readout(report)
+        return report
+
+    validation = validate_control_plane(root)
+    if validation["status"] != "PASS":
+        report = {
+            "schemaVersion": 1,
+            "status": "BLOCKED",
+            "root": str(root),
+            "manifestConfigured": True,
+            "completionClaimed": False,
+            "governance": _program_governance_summary(governance),
+            "userJourney": _program_journey_summary(governance),
+            "backlog": _program_governance_backlog(governance),
+            "phases": [
+                _program_phase("governance", "Governance and authority convergence", "BLOCKED"),
+                *_program_unconfigured_phases()[1:],
+            ],
+            "validation": validation,
+            "nextAction": {
+                "kind": "manifest-repair",
+                "command": "devctl validate",
+                "reason": validation["errors"][0] if validation.get("errors") else "Repair devctl.yaml.",
+            },
+            "claimBoundary": "A malformed adapter blocks every downstream program phase.",
+        }
+        report["humanSummary"] = _render_program_readout(report)
+        return report
+
+    manifest = load_manifest(root)
+    convergence = verify_governance_convergence(root)
+    planes = audit_planes(root, manifest)
+    graph = build_architecture_graph(root, manifest)
+    design_preflight = governance_design_preflight(root)
+    design_config = manifest.get("spec", {}).get("design", {})
+    backlog = planes.get("intent", {}).get("backlog", {})
+    commands = manifest.get("spec", {}).get("verification", {}).get("commands", {})
+
+    governance_ready = convergence.get("status") == "PASS"
+    intent_ready = planes.get("intent", {}).get("status") in {"PASS", "WARN"}
+    architecture_ready = planes.get("architecture", {}).get("status") in {"PASS", "WARN"}
+    intelligence_ready = planes.get("intelligence", {}).get("status") in {"PASS", "WARN"}
+    graph_ready = graph.get("status") in {"PASS", "DISABLED"}
+    design_ready = design_preflight.get("status") == "PASS" and bool(design_config.get("enabled"))
+    backlog_valid = backlog.get("status") == "PASS"
+    backlog_complete = backlog_valid and backlog.get("completion") == "COMPLETE"
+    all_control_gates_ready = all(
+        (
+            governance_ready,
+            intent_ready,
+            architecture_ready,
+            intelligence_ready,
+            graph_ready,
+            design_ready,
+            backlog_valid,
+            bool(commands),
+        )
+    )
+    if all_control_gates_ready and backlog_complete:
+        status = "COMPLETE"
+    elif all_control_gates_ready:
+        status = "IN_PROGRESS"
+    else:
+        status = "BLOCKED"
+
+    execution_status = (
+        "PASS"
+        if backlog_complete
+        else "READY"
+        if all_control_gates_ready
+        else "BLOCKED"
+    )
+    phases = [
+        _program_phase(
+            "governance",
+            "Governance and authority convergence",
+            "PASS" if governance_ready else "BLOCKED",
+        ),
+        _program_phase(
+            "intent",
+            "Vision, personas, requirements, journeys, outcomes, and whole backlog",
+            planes.get("intent", {}).get("status", "BLOCKED"),
+        ),
+        _program_phase(
+            "architecture-intelligence",
+            "Architecture currency, impact boundaries, instructions, skills, and routing",
+            "PASS"
+            if architecture_ready and intelligence_ready and graph_ready
+            else "BLOCKED",
+        ),
+        _program_phase(
+            "design",
+            "Repository design authority, adoption contract, rendered QA, and bounded repair",
+            "PASS" if design_ready else "BLOCKED",
+        ),
+        _program_phase(
+            "execution",
+            "Dependency-ordered backlog implementation with authority stops",
+            execution_status,
+        ),
+        _program_phase(
+            "evidence-delivery-learning",
+            "Affected verification, release evidence, outcomes, memory, debt, and drift",
+            "PASS" if commands else "BLOCKED",
+        ),
+    ]
+    report = {
+        "schemaVersion": 1,
+        "status": status,
+        "root": str(root),
+        "manifestConfigured": True,
+        "completionClaimed": status == "COMPLETE",
+        "governance": {
+            **_program_governance_summary(governance),
+            "convergence": convergence.get("status"),
+            "authorityDrift": convergence.get("authorityDrift", {}).get("status"),
+        },
+        "userJourney": _program_journey_summary(governance),
+        "backlog": {
+            "completionPolicy": backlog.get("completionPolicy", "all-terminal"),
+            "completion": backlog.get("completion", "UNKNOWN"),
+            "items": backlog.get("itemCount", 0),
+            "open": backlog.get("openCount", 0),
+            "terminal": backlog.get("terminalCount", 0),
+            "waves": backlog.get("waves", []),
+            "records": backlog.get("items", []),
+            "errors": backlog.get("errors", []),
+        },
+        "architecture": {
+            "status": planes.get("architecture", {}).get("status"),
+            "graphStatus": graph.get("status"),
+            "nodes": graph.get("nodeCount", 0),
+            "edges": graph.get("edgeCount", 0),
+            "sha256": graph.get("graphSha256"),
+            "truncated": graph.get("truncated", False),
+        },
+        "intelligence": {
+            "status": planes.get("intelligence", {}).get("status"),
+            "vendorNeutral": planes.get("intelligence", {}).get("vendorNeutral", False),
+            "capabilityClasses": planes.get("intelligence", {}).get("capabilityClassCount", 0),
+        },
+        "design": {
+            "status": "READY" if design_ready else "LOCKED",
+            "configured": bool(design_config.get("enabled")),
+            "mode": design_config.get("mode", "package-native"),
+            "authorityPaths": design_config.get("authorityPaths", []),
+            "memoryPaths": design_config.get("memoryPaths", []),
+            "verificationChecks": design_config.get("verificationChecks", []),
+            "gate": design_preflight.get("designGate", {}),
+            "existingInfrastructurePreserved": True,
+        },
+        "verification": {
+            "status": "READY" if commands else "BLOCKED",
+            "commandCount": len(commands),
+            "commandsExecuted": 0,
+        },
+        "phases": phases,
+        "nextAction": _program_next_action(
+            status=status,
+            convergence=convergence,
+            planes=planes,
+            backlog=backlog,
+            design_ready=design_ready,
+        ),
+        "errors": list(
+            dict.fromkeys(
+                convergence.get("errors", [])
+                + planes.get("intent", {}).get("errors", [])
+                + planes.get("architecture", {}).get("errors", [])
+                + planes.get("intelligence", {}).get("errors", [])
+                + graph.get("errors", [])
+            )
+        ),
+        "claimBoundary": (
+            "COMPLETE means every declared completion-governed backlog item has an evidence-backed "
+            "terminal disposition and every configured control gate passes. It is not deployment, "
+            "production acceptance, or measured customer outcome proof."
+        ),
+    }
+    report["humanSummary"] = _render_program_readout(report)
+    return report
+
+
+def _program_phase(identifier: str, name: str, status: str) -> dict[str, str]:
+    return {"id": identifier, "name": name, "status": status}
+
+
+def _program_unconfigured_phases() -> list[dict[str, str]]:
+    return [
+        _program_phase("governance", "Governance and authority convergence", "REVIEW_REQUIRED"),
+        _program_phase("intent", "Vision, personas, requirements, journeys, outcomes, and whole backlog", "BLOCKED"),
+        _program_phase("architecture-intelligence", "Architecture, instructions, skills, and routing", "BLOCKED"),
+        _program_phase("design", "Design adoption and rendered verification", "BLOCKED"),
+        _program_phase("execution", "Dependency-ordered backlog implementation", "BLOCKED"),
+        _program_phase("evidence-delivery-learning", "Evidence, delivery, outcomes, memory, and drift", "BLOCKED"),
+    ]
+
+
+def _program_governance_summary(governance: dict[str, Any]) -> dict[str, Any]:
+    readiness = governance.get("finalizationReadiness", {})
+    blocking_ids = readiness.get("blockingFindings", [])
+    findings = {
+        item.get("id"): item
+        for item in governance.get("findings", [])
+        if isinstance(item, dict) and item.get("id")
+    }
+    return {
+        "status": readiness.get("status", governance.get("status", "UNKNOWN")),
+        "understanding": readiness.get("understanding", "UNKNOWN"),
+        "condition": readiness.get("governance", "UNKNOWN"),
+        "blockingFindings": blocking_ids,
+        "blockingFindingDetails": [
+            {
+                "id": identifier,
+                "title": findings.get(identifier, {}).get("title", identifier),
+                "message": findings.get(identifier, {}).get("message", "Repository owner review is required."),
+                "requiredAction": findings.get(identifier, {}).get("requiredAction"),
+                "paths": findings.get(identifier, {}).get("paths", []),
+            }
+            for identifier in blocking_ids
+        ],
+        "designGate": governance.get("designGate", {}).get("status", "LOCKED"),
+    }
+
+
+def _program_journey_summary(governance: dict[str, Any]) -> dict[str, Any]:
+    journey = governance.get("journeyModel", {})
+    return {
+        "status": journey.get("status", "MISSING"),
+        "proofStatus": journey.get("proofStatus", "MISSING"),
+        "count": len(journey.get("journeys", [])),
+        "journeys": [
+            {"title": item.get("title"), "source": item.get("source")}
+            for item in journey.get("journeys", [])
+        ],
+    }
+
+
+def _program_governance_backlog(governance: dict[str, Any]) -> dict[str, Any]:
+    backlog = governance.get("backlogModel", {})
+    counts = backlog.get("counts", {})
+    terminal = counts.get("COMPLETED", 0) + counts.get("DEFERRED", 0)
+    return {
+        "completionPolicy": "all-terminal",
+        "completion": backlog.get("completion", "UNKNOWN"),
+        "items": backlog.get("itemCount", 0),
+        "open": max(0, backlog.get("itemCount", 0) - terminal),
+        "terminal": terminal,
+        "records": backlog.get("items", []),
+        "itemsMissingOutcome": backlog.get("itemsMissingOutcome", []),
+        "itemsWithoutJourneyStage": backlog.get("itemsWithoutJourneyStage", []),
+    }
+
+
+def _program_next_action(
+    *,
+    status: str,
+    convergence: dict[str, Any],
+    planes: dict[str, Any],
+    backlog: dict[str, Any],
+    design_ready: bool,
+) -> dict[str, str]:
+    if convergence.get("status") != "PASS":
+        return {
+            "kind": "governance-convergence",
+            "command": "devctl govern verify",
+            "reason": (convergence.get("errors") or ["Repository governance is not converged."])[0],
+        }
+    for plane in ("intent", "architecture", "intelligence"):
+        result = planes.get(plane, {})
+        if result.get("status") == "FAIL":
+            return {
+                "kind": f"{plane}-repair",
+                "command": "devctl planes audit",
+                "reason": (result.get("errors") or [f"{plane.title()} plane is not ready."])[0],
+            }
+    if not design_ready:
+        return {
+            "kind": "design-governance",
+            "command": "devctl design inspect",
+            "reason": "Design remains locked until its repository authority and evidence integration are configured.",
+        }
+    if status == "COMPLETE":
+        return {
+            "kind": "outcome-review",
+            "command": "devctl program complete",
+            "reason": "Delivery gates pass; separately evaluate release and customer outcomes.",
+        }
+    ready = [identifier for wave in backlog.get("waves", []) for identifier in wave.get("ready", [])]
+    if ready:
+        return {
+            "kind": "backlog-wave",
+            "command": "devctl backlog plan",
+            "reason": f"Execute the next authority-safe wave: {', '.join(ready)}.",
+        }
+    return {
+        "kind": "backlog-reconciliation",
+        "command": "devctl backlog status",
+        "reason": "No backlog item is currently authority-safe and dependency-ready.",
+    }
+
+
+def _render_program_readout(report: dict[str, Any]) -> str:
+    backlog = report.get("backlog", {})
+    journey = report.get("userJourney", {})
+    phases = report.get("phases", [])
+    governance = report.get("governance", {})
+    records = {
+        item.get("id"): item
+        for item in backlog.get("records", [])
+        if isinstance(item, dict) and item.get("id")
+    }
+
+    def describe(identifier: str) -> str:
+        title = records.get(identifier, {}).get("title")
+        return f"{identifier}: {title}" if title else identifier
+
+    lines = [
+        "# Repository Finalization Program",
+        "",
+        "## Direct Answer",
+        "",
+        f"- Program status: **{report.get('status')}**",
+        f"- Product understanding: **{report.get('governance', {}).get('understanding', 'UNKNOWN')}**",
+        f"- User journey: **{journey.get('status', 'MISSING')}**",
+        f"- Journey proof: **{journey.get('proofStatus', 'MISSING')}**",
+        f"- Whole backlog: **{backlog.get('completion', 'UNKNOWN')}**",
+        f"- Completion claimed: **{'YES' if report.get('completionClaimed') else 'NO'}**",
+        "",
+        "## User Journey",
+        "",
+    ]
+    journeys = journey.get("journeys", [])
+    if journeys:
+        lines.extend(
+            f"- {item.get('title') or 'Unnamed journey'} (`{item.get('source')}`)"
+            for item in journeys[:8]
+        )
+        if len(journeys) > 8:
+            lines.append(f"- {len(journeys) - 8} additional governed journey records are mapped in the JSON report.")
+    else:
+        lines.append("- No governed journey is bound yet.")
+    lines.extend(
+        [
+            "",
+            "## Governance Stops",
+            "",
+            *(
+                f"- **{finding.get('title')}**: {finding.get('message')} ({finding.get('id')})"
+                for finding in governance.get("blockingFindingDetails", [])
+            ),
+        ]
+    )
+    if not governance.get("blockingFindingDetails"):
+        lines.append("- No blocking governance finding is currently reported.")
+    lines.extend(
+        [
+            "",
+            "## Program Phases",
+            "",
+            *(f"- {phase['name']}: **{phase['status']}**" for phase in phases),
+            "",
+            "## Whole Backlog",
+            "",
+            f"- Governed items: {backlog.get('items', 0)}",
+            f"- Open: {backlog.get('open', 0)}",
+            f"- Terminal: {backlog.get('terminal', 0)}",
+            "- Completion requires every governed item to be terminal with required evidence or authority.",
+            "",
+            "## Execution Waves",
+            "",
+        ]
+    )
+    waves = backlog.get("waves", [])
+    if not waves:
+        lines.append("- No open execution wave is currently available.")
+    for wave in waves:
+        lines.append(f"### Wave {wave.get('wave')}")
+        for field, label in (
+            ("ready", "Ready to implement"),
+            ("blocked", "Blocked by authority or external evidence"),
+            ("staged", "Staged"),
+            ("waitingOnDependencies", "Waiting on dependencies"),
+        ):
+            identifiers = wave.get(field, [])
+            value = "; ".join(describe(identifier) for identifier in identifiers) if identifiers else "none"
+            lines.append(f"- {label}: {value}")
+        lines.append("")
+    lines.extend(
+        [
+            "",
+            "## Next Action",
+            "",
+            f"- `{report.get('nextAction', {}).get('command', 'none')}`",
+            f"- {report.get('nextAction', {}).get('reason', 'No next action available.')}",
+            "",
+            report.get("claimBoundary", ""),
+        ]
+    )
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def create_task(repository_root: str | Path, packet: dict[str, Any]) -> dict[str, Any]:
     root = Path(repository_root).resolve()
     manifest = load_manifest(root)
@@ -1031,6 +1489,20 @@ def visual_plan(repository_root: str | Path, task_id: str) -> dict[str, Any]:
     manifest = load_manifest(root)
     impact = analyze_impact(root, task_id)
     design = manifest["spec"].get("design", {})
+    if design.get("mode") == "repository-native":
+        return {
+            "status": impact["status"],
+            "taskId": task_id,
+            "adapter": "repository-native-verification",
+            "scenario": None,
+            "verificationChecks": design.get("verificationChecks", []),
+            "authorityPaths": design.get("authorityPaths", []),
+            "impact": impact,
+            "execution": {
+                "performed": False,
+                "boundary": "The facade delegates rendering and visual evidence to the repository-owned checks.",
+            },
+        }
     scenario = design.get("visualScenario")
     return {
         "status": impact["status"],

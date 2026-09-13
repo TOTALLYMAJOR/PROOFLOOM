@@ -825,18 +825,18 @@ def _decide_pattern(
     authority_conflicts = _blocking_authority_conflicts(pattern, authorities)
     memory_attention = _memory_attention(pattern, memory_context)
     impact = pattern.get("implementationImpact")
-    if authority_conflicts:
-        decision = "BLOCKED"
-        reasons.append(
-            "Conflicts with repository authority: "
-            + ", ".join(item["location"] for item in authority_conflicts)
-        )
-    elif missing:
+    if missing:
         decision = "DECLINE"
         reasons.append("Required product capability is absent: " + ", ".join(missing))
     elif protected_risks:
         decision = "DECLINE"
         reasons.append("Protected product risk would be introduced: " + ", ".join(protected_risks))
+    elif authority_conflicts:
+        decision = "BLOCKED"
+        reasons.append(
+            "Conflicts with repository authority: "
+            + ", ".join(item["location"] for item in authority_conflicts)
+        )
     elif impact in {"backend", "architecture"}:
         decision = "BLOCKED"
         reasons.append(f"Reference adoption cannot authorize {impact} change")
@@ -928,7 +928,7 @@ def _blocking_authority_conflicts(
     terms.discard("")
     conflicts: list[dict[str, Any]] = []
     negative_markers = (
-        "do not", "must not", "never", "cannot", "prohibit", "reject", "blocked",
+        "do not", "must not", "never", "cannot", "prohibit", "reject",
     )
     authoritative_statuses = {
         "accepted", "approved", "blocked", "current", "enforced", "scoped",
@@ -938,7 +938,8 @@ def _blocking_authority_conflicts(
             normalized = _normalize_text(statement.get("text", ""))
             if statement.get("status") not in authoritative_statuses:
                 continue
-            if not any(marker in normalized for marker in negative_markers):
+            is_explicit_block = statement.get("status") == "blocked"
+            if not is_explicit_block and not any(marker in normalized for marker in negative_markers):
                 continue
             if not any(term in normalized for term in terms):
                 continue
@@ -958,6 +959,14 @@ def _retrieve_memory_context(
 ) -> dict[str, Any]:
     max_records = 20
     if not (root / ".design/memory/product-rules.json").is_file():
+        external_context = _retrieve_repository_memory_context(
+            root,
+            product,
+            surface,
+            max_records,
+        )
+        if external_context is not None:
+            return external_context
         return {
             "status": "NOT_CONFIGURED",
             "product": product,
@@ -985,6 +994,70 @@ def _retrieve_memory_context(
         "maxRecords": max_records,
         "audit": audit,
         **context,
+    }
+
+
+def _retrieve_repository_memory_context(
+    root: Path,
+    product: str | None,
+    surface: str | None,
+    max_records: int,
+) -> dict[str, Any] | None:
+    snapshot = inspect_repository(root)
+    authority_paths = snapshot.institutional_design_memory.authority_paths
+    if not authority_paths:
+        return None
+
+    errors: list[str] = []
+    records: list[dict[str, Any]] = []
+    for relative in authority_paths:
+        path = root / relative
+        if not path.is_file():
+            errors.append(f"repository memory authority missing: {relative}")
+            continue
+        digest = sha256_file(path)
+        records.append({
+            "id": f"RMA-{hashlib.sha256(relative.encode('utf-8')).hexdigest()[:12].upper()}",
+            "status": "indexed",
+            "authorityLevel": "repository",
+            "decision": "Read the existing repository decision authority before changing this scope.",
+            "sourceAuthority": relative,
+            "sha256": digest,
+        })
+
+    total = len(records)
+    selected = records[:max_records]
+    status = "INVALID" if errors else "AVAILABLE"
+    return {
+        "status": status,
+        "adapter": "existing-repository-authority",
+        "product": product,
+        "surface": surface,
+        "maxRecords": max_records,
+        "inherited_rules": [],
+        "decisions": selected,
+        "active_exceptions": [],
+        "rejected_outcomes": [],
+        "unresolved_debt": [],
+        "stale_records": [],
+        "conflicts": [],
+        "bounded": total > max_records,
+        "total_available": total,
+        "audit": {
+            "status": "FAIL" if errors else "PASS",
+            "counts": {
+                "decisions": total,
+                "outcomes": 0,
+                "exceptions": 0,
+                "debt": 0,
+                "stale": 0,
+            },
+            "errors": errors,
+            "warnings": [
+                "Existing repository decision authorities are indexed read-only; typed outcome, exception, debt, and freshness records remain unavailable."
+            ],
+            "stale": [],
+        },
     }
 
 
@@ -1148,9 +1221,12 @@ def _statement_status(text: str, kind: str) -> str:
     if explicit:
         return explicit.group(1).lower()
     lowered = text.lower()
-    for status in ("accepted", "approved", "blocked", "deferred", "rejected", "cancelled"):
-        if re.search(rf"\b{status}\b", lowered):
-            return status
+    explicit_prefix = re.match(
+        r"^[\s>*-]*(?:status\s*[:=]\s*)?`?(accepted|approved|blocked|deferred|rejected|cancelled)`?(?:\s*[:;,.|-]|\s*$)",
+        lowered,
+    )
+    if explicit_prefix:
+        return explicit_prefix.group(1)
     if re.match(r"^-\s*\[x\]", lowered):
         return "completed"
     if re.match(r"^-\s*\[\s\]", lowered):

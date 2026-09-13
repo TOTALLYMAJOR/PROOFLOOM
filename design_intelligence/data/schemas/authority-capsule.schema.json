@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/authority-capsule.schema.json",
+  "title": "Authority Capsule",
+  "type": "object",
+  "required": ["schemaVersion", "kind", "status", "taskId", "phase", "asOf", "claims", "implementationAuthorized", "claimBoundary"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "kind": {"const": "design-intelligence/authority-capsule"},
+    "status": {"enum": ["READY", "REVIEW_REQUIRED", "BLOCKED"]},
+    "taskId": {"type": "string", "minLength": 1},
+    "phase": {"type": "string", "minLength": 1},
+    "asOf": {"type": "string", "format": "date-time"},
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "statement", "classification", "authorityRank", "priority", "stale"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "statement": {"type": "string", "minLength": 1},
+          "classification": {"enum": ["ESTABLISHED", "INFERRED", "CONTESTED", "UNKNOWN"]},
+          "authorityRank": {"type": "integer", "minimum": 1},
+          "priority": {"type": "integer"},
+          "stale": {"type": "boolean"}
+        }
+      }
+    },
+    "implementationAuthorized": {"const": false},
+    "claimBoundary": {"type": "string", "minLength": 1}
+  }
+}

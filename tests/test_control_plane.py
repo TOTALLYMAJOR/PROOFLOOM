@@ -18,6 +18,7 @@ from design_intelligence.control_plane import (
     initialize_control_plane,
     load_manifest,
     manifest_schema,
+    program_status,
     run_control_plane_doctor,
     task_context,
     task_packet_schema,
@@ -82,6 +83,33 @@ class ControlPlaneTests(unittest.TestCase):
             self.assertEqual(report["status"], "FAIL")
             self.assertTrue(any("does not exist" in error for error in report["errors"]))
 
+    def test_repository_native_design_binding_reuses_existing_authorities(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._initialized_repo(Path(temporary))
+            (root / "docs").mkdir()
+            (root / "docs/design-system.md").write_text("# Existing design system\n", encoding="utf-8")
+            (root / "docs/design-decisions.md").write_text("# Existing decisions\n", encoding="utf-8")
+            manifest = load_manifest(root)
+            manifest["spec"]["design"] = {
+                "enabled": True,
+                "mode": "repository-native",
+                "authorityPaths": ["docs/design-system.md"],
+                "memoryPaths": ["docs/design-decisions.md"],
+                "verificationChecks": ["unit-governance"],
+                "triggerPaths": ["src/**"],
+            }
+            atomic_write_json(root / "devctl.yaml", manifest)
+
+            report = validate_control_plane(root)
+
+            self.assertEqual(report["status"], "PASS", report)
+            self.assertFalse((root / ".design").exists())
+
+            (root / "docs/design-system.md").unlink()
+            failed = validate_control_plane(root)
+            self.assertEqual(failed["status"], "FAIL")
+            self.assertTrue(any("authorityPaths" in error for error in failed["errors"]))
+
     def test_task_context_is_trust_ranked_bounded_and_denies_secret_context(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = self._initialized_repo(Path(temporary))
@@ -141,7 +169,7 @@ class ControlPlaneTests(unittest.TestCase):
     def test_existing_design_and_visual_evidence_are_delegated_and_audited(self) -> None:
         adoption = audit_design_adoption(
             ROOT,
-            "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v11/adoption-report.json",
+            "artifacts/design/adoptions/preserve-evidence-first-design-qa-hierarchy-v12/adoption-report.json",
         )
         visual = audit_visual_evidence(
             ROOT,
@@ -187,6 +215,47 @@ class ControlPlaneTests(unittest.TestCase):
         self.assertEqual(graph_summary["status"], "PASS")
         self.assertNotIn("nodes", graph_summary)
         self.assertNotIn("edges", graph_summary)
+
+    def test_program_status_joins_all_planes_and_requires_whole_backlog_completion(self) -> None:
+        report = program_status(ROOT)
+
+        self.assertIn(report["status"], {"BLOCKED", "COMPLETE"}, report)
+        self.assertEqual(report["completionClaimed"], report["status"] == "COMPLETE")
+        self.assertEqual(report["backlog"]["completionPolicy"], "all-terminal")
+        self.assertEqual(report["backlog"]["open"], 0)
+        self.assertEqual([phase["id"] for phase in report["phases"]], [
+            "governance",
+            "intent",
+            "architecture-intelligence",
+            "design",
+            "execution",
+            "evidence-delivery-learning",
+        ])
+        self.assertIn("User Journey", report["humanSummary"])
+        self.assertIn("Governance Stops", report["humanSummary"])
+        self.assertIn("Execution Waves", report["humanSummary"])
+        self.assertIn("blockingFindingDetails", report["governance"])
+
+    def test_program_status_fails_closed_before_repository_adoption(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "AGENTS.md").write_text("# Existing authority\n", encoding="utf-8")
+            (root / "README.md").write_text("# Product\n", encoding="utf-8")
+
+            report = program_status(root)
+
+            self.assertEqual(report["status"], "BLOCKED")
+            self.assertFalse(report["manifestConfigured"])
+            self.assertFalse(report["completionClaimed"])
+            self.assertEqual(report["nextAction"]["command"], "devctl init --dry-run")
+
+    def test_program_cli_emits_human_readout(self) -> None:
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            exit_code = devctl_main(["program", "status", "--root", str(ROOT)])
+
+        self.assertEqual(exit_code, 0)
+        self.assertIn("Repository Finalization Program", output.getvalue())
 
     def _initialized_repo(self, root: Path) -> Path:
         (root / "AGENTS.md").write_text("# Authority\n", encoding="utf-8")

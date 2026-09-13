@@ -45,6 +45,7 @@ DIRECTORY_HINTS = [
     "roadmap",
     "tasks",
     "backlog",
+    "apps",
     "app",
     "pages",
     "src",
@@ -185,10 +186,15 @@ def inspect_repository(root: str | Path) -> RepositorySnapshot:
     root_path = Path(root).resolve()
     candidate_files = select_candidate_files(root_path)
     contents = {path: _read_text(path) for path in candidate_files}
-    package_info = _load_package_info(root_path / "package.json")
-    dependencies = set(package_info.get("dependencies", {})) | set(
-        package_info.get("devDependencies", {})
-    )
+    package_infos = [
+        _load_package_info(path) for path in candidate_files if path.name == "package.json"
+    ]
+    dependencies = {
+        dependency
+        for package_info in package_infos
+        for key in ("dependencies", "devDependencies")
+        for dependency in package_info.get(key, {})
+    }
 
     capability_authorities = _collect_capabilities(root_path, candidate_files, contents)
     if (root_path / ".design/memory/decisions.jsonl").is_file():
@@ -208,7 +214,7 @@ def inspect_repository(root: str | Path) -> RepositorySnapshot:
     }
     frontend = _detect_frontend(dependencies, candidate_files)
     styling = _detect_styling(dependencies, candidate_files, contents)
-    component_system = _detect_component_system(root_path, dependencies)
+    component_system = _detect_component_system(root_path, dependencies, candidate_files)
     design_tokens = _detect_design_tokens(contents, candidate_files)
     typography = _detect_typography(contents)
     design_documentation = _signal_for_capability(capability_authorities, "design_language")
@@ -278,6 +284,12 @@ def select_candidate_files(root: Path) -> list[Path]:
             selected.append(path)
             seen.add(path)
 
+    root_package_info = _load_package_info(root / "package.json")
+    for path in _workspace_package_manifests(root, root_package_info):
+        if path not in seen:
+            selected.append(path)
+            seen.add(path)
+
     for directory_hint in DIRECTORY_HINTS:
         base = root / directory_hint
         if not base.exists():
@@ -333,6 +345,24 @@ def _load_package_info(path: Path) -> dict:
         return {}
 
 
+def _workspace_package_manifests(root: Path, package_info: dict) -> list[Path]:
+    workspaces = package_info.get("workspaces", [])
+    if isinstance(workspaces, dict):
+        workspaces = workspaces.get("packages", [])
+    if not isinstance(workspaces, list):
+        return []
+
+    manifests: set[Path] = set()
+    for pattern in workspaces:
+        if not isinstance(pattern, str):
+            continue
+        for candidate in root.glob(pattern):
+            manifest = candidate / "package.json" if candidate.is_dir() else candidate
+            if manifest.is_file() and manifest.name == "package.json":
+                manifests.add(manifest)
+    return sorted(manifests)
+
+
 def _collect_capabilities(
     root: Path, candidate_files: list[Path], contents: dict[Path, str]
 ) -> dict[str, list[str]]:
@@ -354,13 +384,16 @@ def _collect_capabilities(
         ):
             capabilities["custom_instructions"].append(relative)
 
+        if lowered.startswith((".agents/", ".codex/", ".claude/", ".cursor/", ".windsurf/")):
+            continue
+
         if (
             lowered.startswith((".husky/", ".githooks/"))
             or name in {".pre-commit-config.yaml", "lefthook.yml", "lefthook.yaml"}
         ):
             capabilities["hooks"].append(relative)
 
-        if (
+        if path.suffix.lower() in {".md", ".mdx"} and (
             "architecture" in lowered
             or path.name in {"ARCHITECTURE.md", "FRONTEND.md"}
             or lowered.startswith("docs/architecture")
@@ -480,7 +513,9 @@ def _detect_styling(
     return "Unknown"
 
 
-def _detect_component_system(root: Path, dependencies: set[str]) -> str:
+def _detect_component_system(
+    root: Path, dependencies: set[str], candidate_files: list[Path]
+) -> str:
     independent_dirs = [
         folder
         for folder in ("components", "components2", "ui", "shared-ui", "design-system", "src/components")
@@ -498,6 +533,8 @@ def _detect_component_system(root: Path, dependencies: set[str]) -> str:
     if len(independent_dirs) >= 2:
         return "Competing local UI systems"
     if (root / "components").exists() or (root / "src/components").exists():
+        return "Local components"
+    if any("components" in path.relative_to(root).parts[:-1] for path in candidate_files):
         return "Local components"
     return "Unknown"
 
@@ -615,6 +652,7 @@ def _build_capability_map(capabilities: dict[str, list[str]]) -> dict[str, Capab
     }
     for capability in sorted(tracked):
         authorities = capabilities.get(capability, [])
+        authority_roots = _logical_authority_roots(capability, authorities)
         if not authorities:
             map_items[capability] = CapabilityAuthority(
                 capability=capability,
@@ -624,7 +662,7 @@ def _build_capability_map(capabilities: dict[str, list[str]]) -> dict[str, Capab
                 note="No authority detected.",
             )
             continue
-        if capability in DUPLICATE_CAPABILITIES and len(authorities) > 1:
+        if capability in DUPLICATE_CAPABILITIES and len(authority_roots) > 1:
             strategy = Recommendation.MIGRATE
             status = Presence.PARTIAL
             note = "Multiple candidate authorities detected; converge before adding more."
@@ -647,7 +685,8 @@ def _detect_semantic_duplicates(
 ) -> list[DuplicateAuthority]:
     duplicates: list[DuplicateAuthority] = []
     for capability, item in capability_map.items():
-        if capability in DUPLICATE_CAPABILITIES and len(item.authorities) > 1:
+        authority_roots = _logical_authority_roots(capability, item.authorities)
+        if capability in DUPLICATE_CAPABILITIES and len(authority_roots) > 1:
             severity = Severity.P1 if capability in {"agent_governance", "design_language"} else Severity.P2
             duplicates.append(
                 DuplicateAuthority(
@@ -675,9 +714,30 @@ def _signal_for_capability(
     evidence = capability_map.get(capability, [])
     if not evidence:
         return CapabilitySignal(status=Presence.NONE, evidence=[])
-    status = Presence.PARTIAL if len(evidence) > 1 else Presence.PRESENT
-    note = "Multiple authorities detected." if len(evidence) > 1 else None
+    authority_roots = _logical_authority_roots(capability, evidence)
+    status = Presence.PARTIAL if len(authority_roots) > 1 else Presence.PRESENT
+    note = "Multiple authorities detected." if len(authority_roots) > 1 else None
     return CapabilitySignal(status=status, evidence=evidence, note=note)
+
+
+def _logical_authority_roots(capability: str, authorities: list[str]) -> list[str]:
+    if capability != "design_language":
+        return sorted(set(authorities))
+
+    roots: set[str] = set()
+    for authority in authorities:
+        path = Path(authority)
+        parts = path.parts
+        root = authority
+        for index, part in enumerate(parts[:-1]):
+            normalized = part.lower().replace("_", "-")
+            if normalized in {"design-system", "design-language"} or normalized.endswith(
+                ("-design-system", "-design-language")
+            ):
+                root = Path(*parts[: index + 1]).as_posix()
+                break
+        roots.add(root)
+    return sorted(roots)
 
 
 def _signal_from_evidence(evidence: list[str], note: str) -> CapabilitySignal:

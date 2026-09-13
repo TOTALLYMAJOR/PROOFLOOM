@@ -1,10 +1,18 @@
 # Design Intelligence with Repository Rehabilitation and Design Governance
 
+<p align="center">
+  <img src="artifacts/design/brand/design-intelligence-brand-concept-v2.png" alt="Proofloom — Design that can show its work" width="960">
+</p>
+
+Proofloom is the visual mark for Design Intelligence. The repository, package, and CLI retain the `design-intelligence` name.
+
 Design Intelligence is a production-grade, vendor-neutral utility for repository-aware design work. Its core mission is design intelligence: understand product intent, preserve existing design truth, reason about UX and design-system change, validate rendered outcomes, and record evidence without turning into a second application scaffold.
 
 The governing objective is:
 
 > Product intent -> repository evidence -> design reasoning -> implementation constraints -> rendered validation -> design learning.
+
+See the [feature matrix](docs/FEATURE_MATRIX.md) for the implementation status, primary interface, automated evidence, and proof boundary of every capability. `IMPLEMENTED` means repository source and automated proof exist; it does not imply adoption, deployment, or production outcomes in a consuming repository.
 
 ## Rehabilitate mature repositories before design
 
@@ -128,6 +136,23 @@ V1 remains intact:
 - `adapters/codex` and `adapters/claude`: thin adapter guidance, not a competing governance layer
 - `templates/` and `examples/product-profiles/`: reusable design artifacts and archetype examples
 
+Agentic development extensions add five evidence-analysis capabilities:
+
+- source-verified, phase-bounded authority capsules
+- UX state graphs that detect missing negative, reachability, dead-end, and recovery coverage
+- falsifiable counterfactual comparison with protected-boundary gates
+- contract-equivalent design-arena evaluation for isolated AgentFlow variants
+- release-bound product-outcome and agent-effectiveness assessment with human-ratified memory candidates
+
+The durable learning and rendered-evidence paths add:
+
+- hash-bound, expiring human outcome-ratification receipts
+- append-only promotion into the existing design-outcome ledger
+- human-authorized retirement through preserved `deprecated` decision revisions
+- isolated Chromium, Firefox, and WebKit evidence with browser-scoped baselines
+
+The analysis commands do not execute AgentFlow, select a design direction, modify tests, deploy, or claim production outcomes. Outcome promotion and retirement are explicit lifecycle commands that mutate only the existing canonical memory ledgers. Cross-browser execution proves only the declared local or CI browser evidence. See [Agentic Development Extensions](docs/AGENTIC-DEVELOPMENT.md) and the status-qualified [Feature Matrix](docs/FEATURE_MATRIX.md).
+
 V3 baseline governance adds hash-bound review requests, append-only human decision receipts, protected review windows, stale/superseded lifecycle evaluation, and non-mutating promotion preflight. Requests and receipts never mutate a baseline or authorize repair by themselves. See `docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md`.
 
 ## Non-goals
@@ -203,9 +228,34 @@ design-intelligence baseline audit --root /path/to/repo
 design-intelligence quality --input artifacts/design/reports/surface/qa-report.json --thresholds .design/quality/thresholds.json
 design-intelligence repair --root /path/to/repo --plan repair-plan.json --evidence qa-report.json --iteration 1 --apply
 design-intelligence self-audit --root /path/to/repo
+design-intelligence agentic capsule --root /path/to/repo --input work/authority-capsule-input.json --output work/authority-capsule.json
+design-intelligence agentic state-graph --input work/journey-state-input.json --output work/journey-state-report.json
+design-intelligence agentic simulate --input work/counterfactual-input.json --output work/counterfactual-report.json
+design-intelligence agentic arena --input work/design-arena-input.json --output work/design-arena-report.json
+design-intelligence agentic outcome --input work/outcome-input.json --output work/outcome-assessment.json
+design-intelligence agentic outcome-ratify --root /path/to/repo --assessment work/outcome-assessment.json --decision work/human-outcome-decision.json --output work/outcome-ratification.json
+design-intelligence agentic outcome-ratification-audit --root /path/to/repo --input work/outcome-ratification.json
+design-intelligence agentic outcome-promote --root /path/to/repo --receipt work/outcome-ratification.json
+design-intelligence agentic outcome-retire --root /path/to/repo --input work/human-retirement-decision.json
 ```
 
-All commands remain read-only unless an explicit output path, registry `--write`, baseline review `request`, baseline `promote`, or repair `--apply` is supplied. A baseline review request writes only its declared request file.
+For a mature repository, use the repository-finalization front door after the
+governance map has been reviewed:
+
+```bash
+devctl program status --root /path/to/repo
+devctl program plan --root /path/to/repo
+devctl program complete --root /path/to/repo
+```
+
+`status` explains the governing model, user journey, architecture and
+intelligence readiness, design gate, and whole backlog in product language.
+`plan` exposes dependency-ordered waves without executing repository commands.
+`complete` fails unless every control gate passes and every completion-governed
+item has evidence-backed terminal status. See
+`docs/REPOSITORY-FINALIZATION-PROGRAM.md`.
+
+All commands remain read-only unless an explicit output path, registry `--write`, baseline review `request`, baseline `promote`, outcome ratification/promotion/retirement, or repair `--apply` is supplied. Outcome promotion and retirement append only to the existing canonical memory ledgers; they never replace history. A baseline review request writes only its declared request file.
 
 The quoted task is the simplest front door. It defaults to the current repository and is equivalent to `start "<task>"`. The older `start /path/to/repo "<task>"` form remains compatible. Startup returns repository context, surface mode, direction briefs, reference ledger, proof gate, and an agent handoff. It writes only with `--save`, `--save-to`, `--contract-out`, or `--output`.
 
@@ -229,17 +279,18 @@ Install the optional pinned browser runtime:
 
 ```bash
 npm install
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 ```
 
 Run the governed fixture proof:
 
 ```bash
 npm run design:qa
+npm run design:qa:cross-browser
 npm run design:repair:prove
 ```
 
-The reusable scenario format is demonstrated in `tests/design/scenarios/design-department-surface.json`. A consuming repository can provide `baseURL` for its existing server or `staticRoot` for a bounded static surface. The harness never starts arbitrary scenario shell commands.
+The reusable scenario format is demonstrated in `tests/design/scenarios/design-department-surface.json`. A consuming repository can provide `baseURL` for its existing server or `staticRoot` for a bounded static surface. The harness never starts arbitrary scenario shell commands. Cross-browser reports isolate artifacts by engine. Existing manifest `viewports` are treated as Chromium baselines only; Firefox and WebKit require separately approved `browsers.<engine>.viewports` entries, and otherwise produce structural evidence with visual comparison marked `NOT_RUN`.
 
 ## CI tiers
 
@@ -250,7 +301,7 @@ npm run design:ci:full
 ```
 
 - `quick`: unit/governance tests, repository convergence, contracts, memory, baselines, registry, and diff hygiene
-- `standard`: quick plus five-viewport Playwright QA, deterministic scoring, and integrated evidence pack
+- `standard`: quick plus five-viewport Chromium scoring, isolated Chromium/Firefox/WebKit evidence, and an integrated evidence pack
 - `full`: standard plus three rendered repair cycles, dependency audit, five skill validators, and self-audit
 
 Legacy compatibility entry points still exist:
@@ -280,7 +331,7 @@ Both scripts accept an optional destination path.
 
 ## Architecture
 
-See [docs/ARCHITECTURE.md](/home/administrator/design-intelligence/docs/ARCHITECTURE.md).
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 Key design decisions:
 

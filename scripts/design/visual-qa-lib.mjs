@@ -6,7 +6,7 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import AxeBuilder from "@axe-core/playwright";
-import { chromium } from "@playwright/test";
+import { chromium, firefox, webkit } from "@playwright/test";
 import pixelmatch from "pixelmatch";
 import { PNG } from "pngjs";
 
@@ -20,6 +20,36 @@ const CONTENT_TYPES = {
   ".svg": "image/svg+xml",
 };
 
+const BROWSER_TYPES = { chromium, firefox, webkit };
+const SUPPORTED_BROWSERS = Object.freeze(Object.keys(BROWSER_TYPES));
+
+
+export function normalizeBrowserPolicy(scenario, requestedBrowsers = []) {
+  const declared = scenario.browserPolicy || {};
+  const required = requestedBrowsers.length
+    ? requestedBrowsers
+    : (declared.required || ["chromium"]);
+  const browsers = [...new Set(required.flatMap((item) => item === "all" ? SUPPORTED_BROWSERS : String(item).split(",")).map((item) => item.trim()).filter(Boolean))];
+  const unsupported = browsers.filter((item) => !SUPPORTED_BROWSERS.includes(item));
+  if (unsupported.length) throw new Error(`Unsupported browser(s): ${unsupported.join(", ")}`);
+  if (!browsers.length) throw new Error("At least one browser is required");
+  const baselineBrowser = declared.baselineBrowser || "chromium";
+  if (!SUPPORTED_BROWSERS.includes(baselineBrowser)) throw new Error(`Unsupported baseline browser: ${baselineBrowser}`);
+  return { browsers, baselineBrowser };
+}
+
+
+export function resolveBaselineEntry(baselineManifest, scenarioId, browserName, viewportId, baselineBrowser = "chromium") {
+  const scenarioEntry = baselineManifest.scenarios?.[scenarioId];
+  const browserEntry = scenarioEntry?.browsers?.[browserName]?.viewports?.[viewportId];
+  if (browserEntry) return { entry: browserEntry, source: "browser-scoped" };
+  if (browserName === baselineBrowser) {
+    const legacyEntry = scenarioEntry?.viewports?.[viewportId];
+    if (legacyEntry) return { entry: legacyEntry, source: "legacy-baseline-browser" };
+  }
+  return { entry: null, source: "none" };
+}
+
 
 export async function runScenario({
   scenarioPath,
@@ -28,6 +58,8 @@ export async function runScenario({
   outputRoot,
   allowMissingBaseline = false,
   baseURL: suppliedBaseURL,
+  browserName = "chromium",
+  browserScopedArtifacts = false,
 }) {
   const root = path.resolve(repositoryRoot);
   const source = path.resolve(sourceRoot);
@@ -48,12 +80,15 @@ export async function runScenario({
     throw new Error("Scenario requires baseURL or staticRoot");
   }
 
-  const browser = await chromium.launch({ headless: true });
+  const policy = normalizeBrowserPolicy(scenario, [browserName]);
+  const selectedBrowser = policy.browsers[0];
+  let browser;
   const viewportResults = [];
   const findings = [];
   const currentScreenshots = [];
   const baselineScreenshots = [];
   try {
+    browser = await BROWSER_TYPES[selectedBrowser].launch({ headless: true });
     for (const viewport of scenario.viewports) {
       const result = await inspectViewport({
         browser,
@@ -65,6 +100,9 @@ export async function runScenario({
         baselineManifest,
         thresholds,
         allowMissingBaseline,
+        browserName: selectedBrowser,
+        baselineBrowser: policy.baselineBrowser,
+        browserScopedArtifacts,
       });
       viewportResults.push(result.summary);
       findings.push(...result.findings);
@@ -72,7 +110,7 @@ export async function runScenario({
       if (result.baselineScreenshot) baselineScreenshots.push(result.baselineScreenshot);
     }
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
     if (server) await server.close();
   }
 
@@ -84,7 +122,7 @@ export async function runScenario({
     scenario: scenario.id,
     surface: scenario.surface,
     route: scenario.route,
-    browser: "chromium",
+    browser: selectedBrowser,
     generatedAt,
     commitSha: gitSha(source),
     sourceRevision: {
@@ -98,9 +136,9 @@ export async function runScenario({
     viewports: viewportResults,
     totals,
     findings,
-    evidenceBoundary: "Deterministic browser, DOM, accessibility, and pixel evidence. Manual semantic and model visual review remain separate.",
+    evidenceBoundary: "Browser-explicit deterministic DOM, accessibility, containment, contract, and browser-scoped pixel evidence. Manual semantic and model visual review remain separate.",
   };
-  const reportDirectory = path.join(output, "reports", scenario.id);
+  const reportDirectory = path.join(output, "reports", scenario.id, ...(browserScopedArtifacts ? [selectedBrowser] : []));
   await fs.mkdir(reportDirectory, { recursive: true });
   const reportPath = path.join(reportDirectory, "qa-report.json");
   await writeJson(reportPath, report);
@@ -131,6 +169,62 @@ export async function runScenario({
 }
 
 
+export async function runCrossBrowserScenario(options) {
+  const root = path.resolve(options.repositoryRoot || process.cwd());
+  const scenario = await readJson(path.resolve(root, options.scenarioPath));
+  const policy = normalizeBrowserPolicy(scenario, options.browsers || []);
+  const results = [];
+  for (const browserName of policy.browsers) {
+    try {
+      results.push(await runScenario({
+        ...options,
+        browserName,
+        browserScopedArtifacts: true,
+        allowMissingBaseline: browserName !== policy.baselineBrowser || options.allowMissingBaseline,
+      }));
+    } catch (error) {
+      results.push({
+        report: {
+          browser: browserName,
+          status: "BLOCKED",
+          totals: null,
+          viewports: [],
+          blocker: error.message,
+        },
+        reportPath: null,
+      });
+    }
+  }
+  const reports = results.map((item) => item.report);
+  const status = reports.some((item) => item.status === "BLOCKED") ? "BLOCKED" : reports.some((item) => item.status === "FAIL") ? "FAIL" : reports.some((item) => item.status === "WARN") ? "WARN" : "PASS";
+  const aggregate = {
+    schemaVersion: 1,
+    kind: "design-intelligence/cross-browser-evidence",
+    scenario: scenario.id,
+    generatedAt: new Date().toISOString(),
+    status,
+    requiredBrowsers: policy.browsers,
+    baselineBrowser: policy.baselineBrowser,
+    browsers: reports.map((report, index) => ({
+      browser: report.browser,
+      status: report.status,
+      totals: report.totals,
+      reportPath: results[index].reportPath ? relative(root, results[index].reportPath) : null,
+      governedVisualViewports: report.viewports.filter((item) => item.visual.governed).length,
+      structuralViewports: report.viewports.length,
+      blocker: report.blocker || null,
+    })),
+    allRequiredBrowsersExecuted: reports.length === policy.browsers.length && reports.every((report) => report.status !== "BLOCKED"),
+    baselineIsolation: "Legacy baselines apply only to baselineBrowser; other engines require separately approved browser-scoped entries.",
+    evidenceBoundary: "Cross-browser execution is local browser evidence, not hosted availability, customer acceptance, or production outcome proof.",
+  };
+  const output = path.resolve(root, options.outputRoot || scenario.artifactRoot || "artifacts/design");
+  const aggregatePath = path.join(output, "reports", scenario.id, "cross-browser-report.json");
+  await writeJson(aggregatePath, aggregate);
+  return { report: aggregate, reportPath: aggregatePath, browserResults: results };
+}
+
+
 async function inspectViewport({
   browser,
   root,
@@ -141,6 +235,9 @@ async function inspectViewport({
   baselineManifest,
   thresholds,
   allowMissingBaseline,
+  browserName,
+  baselineBrowser,
+  browserScopedArtifacts,
 }) {
   const context = await browser.newContext({
     viewport: { width: viewport.width, height: viewport.height },
@@ -159,7 +256,8 @@ async function inspectViewport({
   });
   await runInteractions(page, scenario.interactions || []);
 
-  const artifactBase = path.join(output, "screenshots", scenario.id, viewport.id);
+  const browserSegments = browserScopedArtifacts ? [browserName] : [];
+  const artifactBase = path.join(output, "screenshots", scenario.id, ...browserSegments, viewport.id);
   const currentScreenshot = path.join(artifactBase, "current.png");
   const fullScreenshot = path.join(artifactBase, "full.png");
   await fs.mkdir(artifactBase, { recursive: true });
@@ -168,8 +266,8 @@ async function inspectViewport({
 
   const dom = await captureDom(page, scenario);
   const axe = await new AxeBuilder({ page }).analyze();
-  const domPath = path.join(output, "DOM", scenario.id, `${viewport.id}.json`);
-  const axePath = path.join(output, "accessibility", scenario.id, `${viewport.id}.json`);
+  const domPath = path.join(output, "DOM", scenario.id, ...browserSegments, `${viewport.id}.json`);
+  const axePath = path.join(output, "accessibility", scenario.id, ...browserSegments, `${viewport.id}.json`);
   await writeJson(domPath, dom);
   await writeJson(axePath, axe);
 
@@ -182,6 +280,9 @@ async function inspectViewport({
     baselineManifest,
     thresholds,
     allowMissingBaseline,
+    browserName,
+    baselineBrowser,
+    browserScopedArtifacts,
   });
   const findings = buildFindings({ scenario, viewport, dom, axe, visual, allowMissingBaseline });
   const impactLevels = axe.violations.flatMap((item) => item.nodes.map(() => item.impact || "minor"));
@@ -267,10 +368,17 @@ async function captureDom(page, scenario) {
 }
 
 
-async function compareBaseline({ root, output, scenario, viewport, currentScreenshot, baselineManifest, thresholds, allowMissingBaseline }) {
-  const entry = baselineManifest.scenarios?.[scenario.id]?.viewports?.[viewport.id];
+async function compareBaseline({ root, output, scenario, viewport, currentScreenshot, baselineManifest, thresholds, allowMissingBaseline, browserName, baselineBrowser, browserScopedArtifacts }) {
+  const resolved = resolveBaselineEntry(baselineManifest, scenario.id, browserName, viewport.id, baselineBrowser);
+  const entry = resolved.entry;
   if (!entry) {
-    return { status: allowMissingBaseline ? "NOT_RUN" : "FAIL", governed: false, diffRatio: null, reason: "No governed baseline entry" };
+    return {
+      status: allowMissingBaseline ? "NOT_RUN" : "FAIL",
+      governed: false,
+      diffRatio: null,
+      reason: `No governed ${browserName} baseline entry`,
+      baselineSource: resolved.source,
+    };
   }
   const baselinePath = path.resolve(root, entry.path);
   try {
@@ -289,7 +397,7 @@ async function compareBaseline({ root, output, scenario, viewport, currentScreen
       includeAA: false,
     });
     const diffRatio = changed / (baseline.width * baseline.height);
-    const diffPath = path.join(output, "diffs", scenario.id, viewport.id, "diff.png");
+    const diffPath = path.join(output, "diffs", scenario.id, ...(browserScopedArtifacts ? [browserName] : []), viewport.id, "diff.png");
     await fs.mkdir(path.dirname(diffPath), { recursive: true });
     await fs.writeFile(diffPath, PNG.sync.write(diff));
     return {
@@ -299,6 +407,7 @@ async function compareBaseline({ root, output, scenario, viewport, currentScreen
       maxDiffRatio: thresholds.maxPixelDiffRatio,
       baselinePath: entry.path,
       baselineSha256: actualHash,
+      baselineSource: resolved.source,
       diffPath: relative(root, diffPath),
     };
   } catch (error) {

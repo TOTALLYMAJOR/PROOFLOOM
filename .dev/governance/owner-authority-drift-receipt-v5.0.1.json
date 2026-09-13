@@ -1,0 +1,13 @@
+{
+  "kind": "AuthorityDriftRatification",
+  "decision": "ACCEPT_AUTHORITY_DRIFT",
+  "authority": "repository-owner",
+  "approvedBy": "repository-owner",
+  "approvedAt": "2026-08-24T10:36:58-05:00",
+  "reason": "Accept the reviewed V5.0.1 schema extensions for repository-native design bindings and governed backlog source precedence.",
+  "paths": [
+    "design_intelligence/data/schemas/backlog-portfolio.schema.json",
+    "design_intelligence/data/schemas/devctl.schema.json"
+  ],
+  "authorityStateSha256": "0ac2732fb4fda79b9b327b75a5f4dab01635382919fa216b464bc999b2e0dce9"
+}
