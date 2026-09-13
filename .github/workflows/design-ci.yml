@@ -45,7 +45,7 @@ jobs:
           node-version: "22"
           cache: npm
       - run: npm ci
-      - run: npx --no-install playwright install --with-deps chromium
+      - run: npx --no-install playwright install --with-deps chromium firefox webkit
       - run: npm run design:ci:standard
       - name: Upload governed QA evidence
         if: always()
@@ -59,6 +59,7 @@ jobs:
             artifacts/design/DOM/design-department-surface/
             artifacts/design/accessibility/design-department-surface/
             artifacts/design/evidence/ADD-V2-DEMO/
+            artifacts/design/cross-browser/
             .design/quality/latest-score.json
           if-no-files-found: warn
           retention-days: 14
@@ -78,7 +79,7 @@ jobs:
           node-version: "22"
           cache: npm
       - run: npm ci
-      - run: npx --no-install playwright install --with-deps chromium
+      - run: npx --no-install playwright install --with-deps chromium firefox webkit
       - run: npm run design:ci:full
       - name: Upload full design evidence
         if: always()

@@ -128,6 +128,16 @@ V1 remains intact:
 - `adapters/codex` and `adapters/claude`: thin adapter guidance, not a competing governance layer
 - `templates/` and `examples/product-profiles/`: reusable design artifacts and archetype examples
 
+Agentic development extensions add five read-only decision and learning capabilities:
+
+- source-verified, phase-bounded authority capsules
+- UX state graphs that detect missing negative, reachability, dead-end, and recovery coverage
+- falsifiable counterfactual comparison with protected-boundary gates
+- contract-equivalent design-arena evaluation for isolated AgentFlow variants
+- release-bound product-outcome and agent-effectiveness assessment with human-ratified memory candidates
+
+These extensions analyze supplied evidence only. They do not execute AgentFlow, select a design direction, modify tests, promote memory, deploy, or claim production outcomes. See `docs/AGENTIC-DEVELOPMENT.md` and the status-qualified `docs/FEATURE_MATRIX.md`.
+
 V3 baseline governance adds hash-bound review requests, append-only human decision receipts, protected review windows, stale/superseded lifecycle evaluation, and non-mutating promotion preflight. Requests and receipts never mutate a baseline or authorize repair by themselves. See `docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md`.
 
 ## Non-goals
@@ -203,6 +213,15 @@ design-intelligence baseline audit --root /path/to/repo
 design-intelligence quality --input artifacts/design/reports/surface/qa-report.json --thresholds .design/quality/thresholds.json
 design-intelligence repair --root /path/to/repo --plan repair-plan.json --evidence qa-report.json --iteration 1 --apply
 design-intelligence self-audit --root /path/to/repo
+design-intelligence agentic capsule --root /path/to/repo --input work/authority-capsule-input.json --output work/authority-capsule.json
+design-intelligence agentic state-graph --input work/journey-state-input.json --output work/journey-state-report.json
+design-intelligence agentic simulate --input work/counterfactual-input.json --output work/counterfactual-report.json
+design-intelligence agentic arena --input work/design-arena-input.json --output work/design-arena-report.json
+design-intelligence agentic outcome --input work/outcome-input.json --output work/outcome-assessment.json
+design-intelligence agentic outcome-ratify --root /path/to/repo --assessment work/outcome-assessment.json --decision work/human-outcome-decision.json --output work/outcome-ratification.json
+design-intelligence agentic outcome-ratification-audit --root /path/to/repo --input work/outcome-ratification.json
+design-intelligence agentic outcome-promote --root /path/to/repo --receipt work/outcome-ratification.json
+design-intelligence agentic outcome-retire --root /path/to/repo --input work/human-retirement-decision.json
 ```
 
 For a mature repository, use the repository-finalization front door after the
@@ -221,7 +240,7 @@ intelligence readiness, design gate, and whole backlog in product language.
 item has evidence-backed terminal status. See
 `docs/REPOSITORY-FINALIZATION-PROGRAM.md`.
 
-All commands remain read-only unless an explicit output path, registry `--write`, baseline review `request`, baseline `promote`, or repair `--apply` is supplied. A baseline review request writes only its declared request file.
+All commands remain read-only unless an explicit output path, registry `--write`, baseline review `request`, baseline `promote`, outcome ratification/promotion/retirement, or repair `--apply` is supplied. Outcome promotion and retirement append only to the existing canonical memory ledgers; they never replace history. A baseline review request writes only its declared request file.
 
 The quoted task is the simplest front door. It defaults to the current repository and is equivalent to `start "<task>"`. The older `start /path/to/repo "<task>"` form remains compatible. Startup returns repository context, surface mode, direction briefs, reference ledger, proof gate, and an agent handoff. It writes only with `--save`, `--save-to`, `--contract-out`, or `--output`.
 
@@ -245,17 +264,18 @@ Install the optional pinned browser runtime:
 
 ```bash
 npm install
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 ```
 
 Run the governed fixture proof:
 
 ```bash
 npm run design:qa
+npm run design:qa:cross-browser
 npm run design:repair:prove
 ```
 
-The reusable scenario format is demonstrated in `tests/design/scenarios/design-department-surface.json`. A consuming repository can provide `baseURL` for its existing server or `staticRoot` for a bounded static surface. The harness never starts arbitrary scenario shell commands.
+The reusable scenario format is demonstrated in `tests/design/scenarios/design-department-surface.json`. A consuming repository can provide `baseURL` for its existing server or `staticRoot` for a bounded static surface. The harness never starts arbitrary scenario shell commands. Cross-browser reports isolate artifacts by engine. Existing manifest `viewports` are treated as Chromium baselines only; Firefox and WebKit require separately approved `browsers.<engine>.viewports` entries, and otherwise produce structural evidence with visual comparison marked `NOT_RUN`.
 
 ## CI tiers
 
@@ -266,7 +286,7 @@ npm run design:ci:full
 ```
 
 - `quick`: unit/governance tests, repository convergence, contracts, memory, baselines, registry, and diff hygiene
-- `standard`: quick plus five-viewport Playwright QA, deterministic scoring, and integrated evidence pack
+- `standard`: quick plus five-viewport Chromium scoring, isolated Chromium/Firefox/WebKit evidence, and an integrated evidence pack
 - `full`: standard plus three rendered repair cycles, dependency audit, five skill validators, and self-audit
 
 Legacy compatibility entry points still exist:

@@ -104,6 +104,22 @@ REQUIRED_V5_GOVERNANCE_PATHS = (
     ".dev/governance/OWNER-RATIFICATION.md",
 )
 
+REQUIRED_AGENTIC_PATHS = (
+    "design_intelligence/agentic.py",
+    "design_intelligence/data/schemas/authority-capsule.schema.json",
+    "design_intelligence/data/schemas/ux-state-graph.schema.json",
+    "design_intelligence/data/schemas/counterfactual-report.schema.json",
+    "design_intelligence/data/schemas/design-arena-report.schema.json",
+    "design_intelligence/data/schemas/outcome-assessment.schema.json",
+    "design_intelligence/data/schemas/outcome-ratification-receipt.schema.json",
+    "design_intelligence/outcome_lifecycle.py",
+    "scripts/design/verify-cross-browser-policy.mjs",
+    "tests/test_agentic_capabilities.py",
+    "tests/test_outcome_lifecycle.py",
+    "docs/AGENTIC-DEVELOPMENT.md",
+    "docs/FEATURE_MATRIX.md",
+)
+
 V1_SKILLS = (
     "design-language",
     "ux-architect",
@@ -123,6 +139,7 @@ def run_self_audit(repository_root: str | Path) -> dict[str, Any]:
         + REQUIRED_V4_ADOPTION_PATHS
         + REQUIRED_CONTROL_PLANE_PATHS
         + REQUIRED_V5_GOVERNANCE_PATHS
+        + REQUIRED_AGENTIC_PATHS
     )
     missing = [path for path in required_paths if not (root / path).exists()]
     checks["requiredInfrastructure"] = {"status": "PASS" if not missing else "FAIL", "missing": missing}

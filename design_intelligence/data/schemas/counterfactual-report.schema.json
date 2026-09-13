@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/counterfactual-report.schema.json",
+  "title": "Counterfactual Design Report",
+  "type": "object",
+  "required": ["schemaVersion", "kind", "status", "proposalId", "alternatives", "humanSelectionRequired", "implementationAuthorized", "claimBoundary"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "kind": {"const": "design-intelligence/counterfactual-report"},
+    "status": {"enum": ["READY_FOR_HUMAN_SELECTION", "BLOCKED"]},
+    "proposalId": {"type": "string", "minLength": 1},
+    "alternatives": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "effects", "decisionScore", "eligibleForSelection"]
+      }
+    },
+    "recommendedAlternativeId": {"type": ["string", "null"]},
+    "humanSelectionRequired": {"const": true},
+    "implementationAuthorized": {"const": false},
+    "claimBoundary": {"type": "string", "minLength": 1}
+  }
+}

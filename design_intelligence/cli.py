@@ -20,6 +20,13 @@ from .agentflow_contracts import (
     load_governed_handoff,
     write_governed_handoff,
 )
+from .agentic import (
+    analyze_ux_state_graph,
+    assess_outcome,
+    build_authority_capsule,
+    evaluate_design_arena,
+    simulate_counterfactual,
+)
 from .baselines import (
     audit_baseline_review_request,
     audit_baselines,
@@ -51,6 +58,12 @@ from .memory import (
     retrieve_context,
 )
 from .missions import SURFACE_MODES
+from .outcome_lifecycle import (
+    audit_outcome_ratification_receipt,
+    create_outcome_ratification_receipt,
+    promote_outcome_from_receipt,
+    retire_promoted_decision,
+)
 from .quality import load_thresholds, score_quality, write_quality_report
 from .references import analyze_references, render_reference_text
 from .registry import audit_component_registry, build_component_registry, write_component_registry
@@ -64,6 +77,7 @@ from .review_lifecycle import (
 from .repository import inspect_repository, render_snapshot_text
 from .reviewing import render_review_text, review_manifest
 from .self_audit import run_self_audit
+from .storage import atomic_write_json
 from .validation import render_validation_text, validate_repository
 from .workflows import (
     build_handoff,
@@ -79,7 +93,7 @@ from .workflows import (
 COMMANDS = {
     "inspect", "assess", "context", "lint", "refactor-risk", "review", "validate", "doctor",
     "reference", "start", "work", "handoff", "memory", "contract", "registry", "quality",
-    "baseline", "repair", "self-audit", "adopt", "adoption-audit", "govern", "agentflow",
+    "baseline", "repair", "self-audit", "adopt", "adoption-audit", "govern", "agentflow", "agentic",
 }
 
 
@@ -244,6 +258,33 @@ def main(argv: list[str] | None = None) -> int:
     agentflow_receipt.add_argument("--handoff", required=True, help="Exact governed handoff JSON.")
     agentflow_receipt.add_argument("--format", choices=("json", "text"), default="text")
 
+    agentic_parser = subparsers.add_parser("agentic")
+    agentic_subparsers = agentic_parser.add_subparsers(dest="agentic_command", required=True)
+    agentic_capsule = _add_agentic_input_parser(agentic_subparsers, "capsule")
+    agentic_capsule.add_argument("--root", default=".", help="Repository root used to verify authority sources.")
+    agentic_capsule.add_argument("--phase", help="Override the input's agent phase.")
+    agentic_capsule.add_argument("--max-claims", type=int, help="Override the bounded claim count (1-100).")
+    agentic_capsule.add_argument("--as-of", help="Evaluate source freshness at an ISO-8601 datetime.")
+    _add_agentic_input_parser(agentic_subparsers, "state-graph")
+    _add_agentic_input_parser(agentic_subparsers, "simulate")
+    _add_agentic_input_parser(agentic_subparsers, "arena")
+    agentic_outcome = _add_agentic_input_parser(agentic_subparsers, "outcome")
+    agentic_outcome.add_argument("--as-of", help="Evaluate the observation window at an ISO-8601 datetime.")
+    agentic_ratify = _add_root_format_parser(agentic_subparsers, "outcome-ratify")
+    agentic_ratify.add_argument("--assessment", required=True, help="Exact outcome assessment JSON.")
+    agentic_ratify.add_argument("--decision", required=True, help="Human ratification decision JSON.")
+    agentic_ratify.add_argument("--output", required=True, help="Append-only receipt path.")
+    agentic_ratify.add_argument("--as-of", help="Ratification time as an ISO-8601 datetime.")
+    agentic_ratification_audit = _add_root_format_parser(agentic_subparsers, "outcome-ratification-audit")
+    agentic_ratification_audit.add_argument("--input", required=True, help="Outcome ratification receipt JSON.")
+    agentic_ratification_audit.add_argument("--as-of", help="Audit time as an ISO-8601 datetime.")
+    agentic_promote = _add_root_format_parser(agentic_subparsers, "outcome-promote")
+    agentic_promote.add_argument("--receipt", required=True, help="Passing human ratification receipt JSON.")
+    agentic_promote.add_argument("--as-of", help="Promotion time as an ISO-8601 datetime.")
+    agentic_retire = _add_root_format_parser(agentic_subparsers, "outcome-retire")
+    agentic_retire.add_argument("--input", required=True, help="Human retirement decision JSON.")
+    agentic_retire.add_argument("--as-of", help="Retirement time as an ISO-8601 datetime.")
+
     registry_parser = subparsers.add_parser("registry")
     registry_subparsers = registry_parser.add_subparsers(dest="registry_command", required=True)
     registry_scan = _add_root_format_parser(registry_subparsers, "scan")
@@ -306,6 +347,14 @@ def _add_root_format_parser(subparsers, name: str):
     sub = subparsers.add_parser(name)
     sub.add_argument("root_positional", nargs="?", default=None, help="Optional repository root.")
     sub.add_argument("--root", default=".", help="Repository root to inspect.")
+    sub.add_argument("--format", choices=("json", "text"), default="text")
+    return sub
+
+
+def _add_agentic_input_parser(subparsers, name: str):
+    sub = subparsers.add_parser(name)
+    sub.add_argument("--input", required=True, help="Capability input JSON.")
+    sub.add_argument("--output", help="Optional explicit JSON output path.")
     sub.add_argument("--format", choices=("json", "text"), default="text")
     return sub
 
@@ -565,6 +614,56 @@ def _dispatch(args: argparse.Namespace) -> int:
             report = audit_agentflow_build_receipt(args.input, handoff_path=args.handoff)
         _emit(report, _simple_text("AGENTFLOW CONTRACT", report), args.format)
         return 0 if report["status"] == "PASS" else 1
+    if args.command == "agentic":
+        if args.agentic_command == "capsule":
+            payload = _load_json_required(args.input)
+            report = build_authority_capsule(
+                args.root,
+                payload,
+                phase=args.phase,
+                max_claims=args.max_claims,
+                as_of=_parse_as_of(args.as_of),
+            )
+            title = "AUTHORITY CAPSULE"
+        elif args.agentic_command == "state-graph":
+            report = analyze_ux_state_graph(_load_json_required(args.input))
+            title = "UX STATE GRAPH"
+        elif args.agentic_command == "simulate":
+            report = simulate_counterfactual(_load_json_required(args.input))
+            title = "COUNTERFACTUAL DESIGN SIMULATION"
+        elif args.agentic_command == "arena":
+            report = evaluate_design_arena(_load_json_required(args.input))
+            title = "GOVERNED DESIGN ARENA"
+        elif args.agentic_command == "outcome":
+            report = assess_outcome(_load_json_required(args.input), as_of=_parse_as_of(args.as_of))
+            title = "OUTCOME ASSESSMENT"
+        elif args.agentic_command == "outcome-ratify":
+            report = create_outcome_ratification_receipt(
+                _root_arg(args),
+                args.assessment,
+                _load_json_required(args.decision),
+                args.output,
+                decided_at=_parse_as_of(args.as_of),
+            )
+            title = "OUTCOME RATIFICATION"
+        elif args.agentic_command == "outcome-ratification-audit":
+            report = audit_outcome_ratification_receipt(_root_arg(args), args.input, as_of=_parse_as_of(args.as_of))
+            title = "OUTCOME RATIFICATION AUDIT"
+        elif args.agentic_command == "outcome-promote":
+            report = promote_outcome_from_receipt(_root_arg(args), args.receipt, as_of=_parse_as_of(args.as_of))
+            title = "OUTCOME MEMORY PROMOTION"
+        else:
+            report = retire_promoted_decision(
+                _root_arg(args),
+                _load_json_required(args.input),
+                retired_at=_parse_as_of(args.as_of),
+            )
+            title = "OUTCOME MEMORY RETIREMENT"
+        if getattr(args, "output", None) and args.agentic_command in {"capsule", "state-graph", "simulate", "arena", "outcome"}:
+            atomic_write_json(args.output, report)
+            report = {**report, "output": str(Path(args.output).resolve())}
+        _emit(report, _simple_text(title, report), args.format)
+        return 1 if report.get("status") in {"BLOCKED", "FAIL"} else 0
     if args.command == "registry":
         root = _root_arg(args)
         if args.registry_command == "scan":

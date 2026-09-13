@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://design-intelligence.local/schemas/design-arena-report.schema.json",
+  "title": "Governed Design Arena Report",
+  "type": "object",
+  "required": ["schemaVersion", "kind", "status", "arenaId", "contractHash", "validationPlanHash", "minimumIndependentReviews", "variants", "humanSelectionRequired", "executionPerformed", "implementationAuthorized", "claimBoundary"],
+  "properties": {
+    "schemaVersion": {"const": "1.0.0"},
+    "kind": {"const": "design-intelligence/design-arena-report"},
+    "status": {"enum": ["READY_FOR_HUMAN_SELECTION", "BLOCKED"]},
+    "arenaId": {"type": "string", "minLength": 1},
+    "contractHash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "validationPlanHash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "minimumIndependentReviews": {"type": "integer", "minimum": 1},
+    "variants": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["variantId", "blindLabel", "eligible", "score", "reviews", "dissent", "gates"]
+      }
+    },
+    "leaderVariantId": {"type": ["string", "null"]},
+    "humanSelectionRequired": {"const": true},
+    "executionPerformed": {"const": false},
+    "implementationAuthorized": {"const": false},
+    "claimBoundary": {"type": "string", "minLength": 1}
+  }
+}
