@@ -1,0 +1,12 @@
+{
+  "kind": "AuthorityDriftRatification",
+  "decision": "ACCEPT_AUTHORITY_DRIFT",
+  "authority": "repository-owner",
+  "approvedBy": "CodeDripped",
+  "approvedAt": "2026-09-14T00:34:26-05:00",
+  "reason": "Accept the approved Proofloom AI backlog assembly workflow scenario and its governed rendered-proof assertions.",
+  "paths": [
+    "tests/design/scenarios/operator-shell.json"
+  ],
+  "authorityStateSha256": "7e0cf73ab329027fdf62e3eee09a525b4288daaff3fa400fdeeec0ae67a01454"
+}

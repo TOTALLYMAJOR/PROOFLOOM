@@ -4,6 +4,11 @@ const state = {
   active: null,
   repository: null,
   events: [],
+  backlog: {
+    prompt: "",
+    validatedDraft: null,
+    saved: false,
+  },
 };
 
 const elements = {
@@ -30,15 +35,34 @@ const elements = {
   nextAction: document.querySelector("#next-action"),
   eventList: document.querySelector("#event-list"),
   toast: document.querySelector("#toast"),
+  backlogWorkspace: document.querySelector("#backlog-workspace"),
+  backlogState: document.querySelector("#backlog-state"),
+  aiBrief: document.querySelector("#ai-brief-output"),
+  copyBrief: document.querySelector("#copy-brief"),
+  downloadBrief: document.querySelector("#download-brief"),
+  proposalDraft: document.querySelector("#proposal-draft"),
+  validateProposal: document.querySelector("#validate-proposal"),
+  validationMessage: document.querySelector("#validation-message"),
+  proposalOutputPath: document.querySelector("#proposal-output-path"),
+  confirmProposalSave: document.querySelector("#confirm-proposal-save"),
+  saveProposal: document.querySelector("#save-proposal"),
 };
 
 elements.form.addEventListener("submit", runActiveWorkflow);
 elements.form.addEventListener("reset", () => {
   window.setTimeout(() => {
     elements.resultPanel.hidden = true;
+    resetBacklogWorkspace();
     addEvent("Inputs cleared", "Ready for a new bounded operation.", "current");
   }, 0);
 });
+elements.copyBrief.addEventListener("click", copyAiBrief);
+elements.downloadBrief.addEventListener("click", downloadAiBrief);
+elements.validateProposal.addEventListener("click", validateProposal);
+elements.saveProposal.addEventListener("click", saveProposal);
+elements.proposalDraft.addEventListener("input", invalidateProposalValidation);
+elements.proposalOutputPath.addEventListener("input", updateSaveAvailability);
+elements.confirmProposalSave.addEventListener("change", updateSaveAvailability);
 
 initialize();
 
@@ -120,10 +144,12 @@ function selectWorkflow(id) {
   elements.proofBoundary.textContent = workflow.proofBoundary;
   elements.taskRequirement.textContent = workflow.requiresTask ? "required" : "optional";
   elements.reformatField.hidden = workflow.id !== "reformat";
+  elements.backlogWorkspace.hidden = workflow.id !== "build-backlog";
   elements.runButton.querySelector("span:first-child").textContent = workflow.buttonLabel;
   text("#truth-writes", workflow.writes ? "Declared output" : "None");
   text("#truth-authority", workflow.authority);
   elements.resultPanel.hidden = true;
+  if (workflow.id === "build-backlog") resetBacklogWorkspace();
   addEvent("Workflow selected", workflow.label, "current");
 }
 
@@ -143,22 +169,14 @@ async function runActiveWorkflow(event) {
     surface: elements.surface.value.trim(),
     profile: elements.profile.value,
   };
+  if (workflow.id === "build-backlog") inputs.phase = "assemble";
   setRunning(true);
   addEvent("Preflight running", `Checking ${workflow.authority.toLowerCase()}.`, "current");
 
   try {
-    const response = await fetch("/api/run", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        "X-Proofloom-Token": state.token,
-      },
-      body: JSON.stringify({ workflowId: workflow.id, inputs }),
-    });
-    const payload = await response.json();
-    if (!response.ok) throw new Error(payload.error || `Operation returned ${response.status}`);
+    const payload = await requestWorkflow(workflow.id, inputs);
     renderResult(payload);
+    if (workflow.id === "build-backlog") receiveBacklogResult(payload);
     addEvent("Evidence returned", `${workflow.label} · ${payload.status}`, "complete");
     addEvent("Review required", payload.nextAction, "current");
   } catch (error) {
@@ -169,12 +187,195 @@ async function runActiveWorkflow(event) {
   }
 }
 
+async function requestWorkflow(workflowId, inputs) {
+  const response = await fetch("/api/run", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-Proofloom-Token": state.token,
+    },
+    body: JSON.stringify({ workflowId, inputs }),
+  });
+  const payload = await response.json();
+  if (!response.ok) throw new Error(payload.error || `Operation returned ${response.status}`);
+  return payload;
+}
+
+function backlogInputs(phase) {
+  return {
+    task: elements.task.value.trim(),
+    surface: elements.surface.value.trim(),
+    profile: elements.profile.value,
+    phase,
+    proposal: elements.proposalDraft.value,
+  };
+}
+
+function receiveBacklogResult(payload) {
+  const phase = payload.report?.phase;
+  if (phase === "assemble") {
+    state.backlog.prompt = payload.report.brief?.aiInstruction || "";
+    elements.aiBrief.value = state.backlog.prompt;
+    elements.copyBrief.disabled = !state.backlog.prompt;
+    elements.downloadBrief.disabled = !state.backlog.prompt;
+    elements.backlogState.textContent = "Brief ready";
+    setBacklogStep("draft");
+    elements.aiBrief.scrollIntoView({ behavior: "smooth", block: "center" });
+  } else if (phase === "validate") {
+    const validation = payload.report.validation;
+    const valid = validation?.status === "VALID";
+    state.backlog.validatedDraft = valid ? elements.proposalDraft.value : null;
+    elements.validationMessage.textContent = valid
+      ? `${validation.taskCount} proposed task${validation.taskCount === 1 ? "" : "s"} passed deterministic checks.`
+      : `${validation.errors?.length || 1} validation finding${validation.errors?.length === 1 ? "" : "s"}; inspect the result and revise the draft.`;
+    elements.validationMessage.className = valid ? "is-valid" : "is-invalid";
+    elements.backlogState.textContent = valid ? "Draft valid" : "Revision required";
+    setBacklogStep(valid ? "save" : "validate");
+    updateSaveAvailability();
+  } else if (phase === "save") {
+    state.backlog.saved = true;
+    elements.backlogState.textContent = "Saved for review";
+    elements.validationMessage.textContent = `Saved ${payload.report.savedProposal.path}.`;
+    elements.validationMessage.className = "is-valid";
+    setBacklogStep("complete");
+    updateSaveAvailability();
+  }
+}
+
+async function copyAiBrief() {
+  if (!state.backlog.prompt) return;
+  try {
+    await navigator.clipboard.writeText(state.backlog.prompt);
+    showToast("AI instruction copied.");
+  } catch (_error) {
+    elements.aiBrief.focus();
+    elements.aiBrief.select();
+    showToast("Select and copy the highlighted instruction.");
+  }
+}
+
+function downloadAiBrief() {
+  if (!state.backlog.prompt) return;
+  const blob = new Blob([state.backlog.prompt], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "proofloom-backlog-assembly-brief.txt";
+  document.body.append(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+  showToast("AI instruction downloaded.");
+}
+
+async function validateProposal() {
+  if (!elements.task.value.trim()) {
+    elements.task.focus();
+    showToast("Keep the backlog objective in the task field.");
+    return;
+  }
+  if (!elements.proposalDraft.value.trim()) {
+    elements.proposalDraft.focus();
+    showToast("Paste the AI proposal JSON before validation.");
+    return;
+  }
+  elements.validateProposal.disabled = true;
+  elements.validationMessage.textContent = "Checking structure, dependencies, ownership, commands, and evidence…";
+  try {
+    const payload = await requestWorkflow("build-backlog", backlogInputs("validate"));
+    renderResult(payload);
+    receiveBacklogResult(payload);
+    addEvent("Proposal checked", payload.nextAction, payload.status === "VALID" ? "complete" : "current");
+  } catch (error) {
+    showToast(error.message);
+    addEvent("Validation blocked", error.message, "current");
+  } finally {
+    elements.validateProposal.disabled = false;
+  }
+}
+
+async function saveProposal() {
+  if (!canSaveProposal()) return;
+  elements.saveProposal.disabled = true;
+  try {
+    const inputs = {
+      ...backlogInputs("save"),
+      outputPath: elements.proposalOutputPath.value.trim(),
+      confirmSave: true,
+    };
+    const payload = await requestWorkflow("build-backlog", inputs);
+    renderResult(payload);
+    receiveBacklogResult(payload);
+    text("#truth-writes", "Proposal saved");
+    addEvent("Proposal saved", payload.report.savedProposal.path, "complete");
+    addEvent("Human adoption required", payload.nextAction, "current");
+  } catch (error) {
+    showToast(error.message);
+    addEvent("Save blocked", error.message, "current");
+    updateSaveAvailability();
+  }
+}
+
+function invalidateProposalValidation() {
+  if (state.backlog.validatedDraft !== null) {
+    state.backlog.validatedDraft = null;
+    state.backlog.saved = false;
+    elements.validationMessage.textContent = "Draft changed; validate it again before saving.";
+    elements.validationMessage.className = "";
+    elements.backlogState.textContent = "Validation required";
+    setBacklogStep("validate");
+  } else if (elements.proposalDraft.value.trim()) {
+    setBacklogStep("validate");
+  }
+  updateSaveAvailability();
+}
+
+function canSaveProposal() {
+  return Boolean(
+    !state.backlog.saved &&
+      state.backlog.validatedDraft === elements.proposalDraft.value &&
+      elements.proposalOutputPath.value.trim() &&
+      elements.confirmProposalSave.checked,
+  );
+}
+
+function updateSaveAvailability() {
+  elements.saveProposal.disabled = !canSaveProposal();
+}
+
+function resetBacklogWorkspace() {
+  state.backlog = { prompt: "", validatedDraft: null, saved: false };
+  elements.aiBrief.value = "";
+  elements.proposalDraft.value = "";
+  elements.copyBrief.disabled = true;
+  elements.downloadBrief.disabled = true;
+  elements.confirmProposalSave.checked = false;
+  elements.validationMessage.textContent = "No draft has been validated.";
+  elements.validationMessage.className = "";
+  elements.backlogState.textContent = "Awaiting brief";
+  text("#truth-writes", "None");
+  setBacklogStep("brief");
+  updateSaveAvailability();
+}
+
+function setBacklogStep(activeStep) {
+  const order = ["brief", "draft", "validate", "save"];
+  const activeIndex = activeStep === "complete" ? order.length : order.indexOf(activeStep);
+  document.querySelectorAll("[data-backlog-step]").forEach((item) => {
+    const index = order.indexOf(item.dataset.backlogStep);
+    item.classList.toggle("is-complete", index < activeIndex);
+    item.classList.toggle("is-current", index === activeIndex);
+  });
+}
+
 function renderResult(payload) {
   elements.resultPanel.hidden = false;
   elements.resultTitle.textContent = resultTitle(payload.status);
   elements.resultStatus.textContent = payload.status.replaceAll("_", " ");
   elements.resultStatus.className = `result-status ${statusClass(payload.status)}`;
   elements.nextAction.textContent = payload.nextAction;
+  text("#truth-writes", payload.execution?.writes ? "Proposal saved" : "None");
   elements.resultJson.textContent = JSON.stringify(payload, null, 2);
   elements.resultHighlights.replaceChildren();
   highlights(payload).forEach(([label, value]) => {
@@ -210,7 +411,13 @@ function highlights(payload) {
     return [["Status", report.status], ["Design gate", report.designGate?.status], ["Findings", report.findings?.length ?? 0]];
   }
   if (payload.workflow.id === "build-backlog") {
-    return [["Status", report.status], ["Stages", report.proposalStages?.length], ["Execution", "Not performed"]];
+    if (report.phase === "assemble") {
+      return [["Status", report.status], ["Sources", report.brief?.authoritySources?.length], ["Execution", "Not performed"]];
+    }
+    if (report.phase === "validate") {
+      return [["Status", report.status], ["Tasks", report.validation?.taskCount], ["Findings", report.validation?.errors?.length]];
+    }
+    return [["Status", report.status], ["Tasks", report.savedProposal?.taskCount], ["Canonical", "No"]];
   }
   return [["Status", report.status], ["Browsers", report.browsers?.length], ["Viewports", report.viewports?.length]];
 }
@@ -259,7 +466,7 @@ function resultTitle(status) {
 
 function statusClass(status) {
   const normalized = String(status).toUpperCase();
-  if (["PASS", "READY", "ALLOW", "COMPLETE", "READY_TO_PLAN"].includes(normalized)) return "is-ready";
+  if (["PASS", "READY", "ALLOW", "COMPLETE", "READY_TO_PLAN", "AI_BRIEF_READY", "VALID", "SAVED_FOR_REVIEW"].includes(normalized)) return "is-ready";
   if (["BLOCKED", "FAIL", "GOVERNANCE_REQUIRED"].includes(normalized)) return "is-blocked";
   return "is-review";
 }

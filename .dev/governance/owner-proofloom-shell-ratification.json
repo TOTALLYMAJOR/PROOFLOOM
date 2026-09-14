@@ -1,0 +1,13 @@
+{
+  "kind": "AuthorityDriftRatification",
+  "decision": "ACCEPT_AUTHORITY_DRIFT",
+  "authority": "repository-owner",
+  "approvedBy": "CodeDripped",
+  "approvedAt": "2026-09-14T00:21:16-05:00",
+  "reason": "Accept the Proofloom Operator Shell package metadata and packaged static-asset integration.",
+  "paths": [
+    "package.json",
+    "pyproject.toml"
+  ],
+  "authorityStateSha256": "1c38f583273a099dc495198a6ce4f93f83da9a4e04899890a881a3281ed49a63"
+}

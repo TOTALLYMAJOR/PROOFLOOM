@@ -11,7 +11,7 @@ Current design gate: **LOCKED**
 ### RESOLVE-CRITICAL-AUTHORITY-DRIFT
 - Required action: **REVIEW_AND_RATIFY_AUTHORITY_CHANGE**
 - Why: Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.
-- Evidence: `.github/workflows/design-ci.yml`
+- Evidence: `tests/design/scenarios/operator-shell.json`
 - Decision authority: repository-owner
 - Decision: PENDING
 

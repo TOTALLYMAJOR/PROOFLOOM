@@ -8,7 +8,7 @@
       "mutatesCanonicalAuthority": true,
       "reason": "Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.",
       "target": [
-        ".github/workflows/design-ci.yml"
+        "tests/design/scenarios/operator-shell.json"
       ]
     }
   ],

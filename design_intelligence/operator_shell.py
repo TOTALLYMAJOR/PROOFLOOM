@@ -13,6 +13,12 @@ from typing import Any
 from urllib.parse import urlparse
 
 from . import __version__
+from .backlog_assembly import (
+    DEFAULT_OUTPUT_PATH,
+    assemble_backlog_brief,
+    save_backlog_proposal,
+    validate_backlog_proposal,
+)
 from .context import build_context
 from .control_plane import load_manifest, program_status
 from .governance import audit_governance, governance_design_preflight
@@ -85,14 +91,14 @@ WORKFLOWS: tuple[dict[str, Any], ...] = (
     {
         "id": "build-backlog",
         "label": "Build proposed backlog",
-        "eyebrow": "AgentFlow handoff",
-        "description": "Prepare the repository evidence and review boundary for dependency-aware backlog generation.",
+        "eyebrow": "Governed AI assembly",
+        "description": "Give an AI a repository-bound brief, validate its dependency-aware draft, and explicitly save a non-canonical proposal.",
         "actionClass": "propose",
-        "buttonLabel": "Prepare backlog proposal",
+        "buttonLabel": "Assemble AI brief",
         "requiresTask": True,
         "writes": False,
-        "authority": "Human review, then AgentFlow",
-        "proofBoundary": "The shell does not create or execute a canonical backlog; AgentFlow remains execution authority.",
+        "authority": "Repository truth, then human review",
+        "proofBoundary": "A saved proposal is not the canonical backlog and does not authorize AgentFlow execution.",
     },
     {
         "id": "visual-qa",
@@ -109,7 +115,7 @@ WORKFLOWS: tuple[dict[str, Any], ...] = (
 )
 
 WORKFLOW_BY_ID = {item["id"]: item for item in WORKFLOWS}
-MAX_REQUEST_BYTES = 64 * 1024
+MAX_REQUEST_BYTES = 512 * 1024
 STATIC_ROOT = files("design_intelligence").joinpath("operator_shell_static")
 STATIC_FILES = {
     "/": ("index.html", "text/html; charset=utf-8"),
@@ -222,21 +228,52 @@ def run_workflow(
             }
         next_action = "Select and approve a direction before requesting implementation."
     elif workflow_id == "build-backlog":
-        current = _program_status_or_governance(root)
-        report = {
-            "status": "REVIEW_REQUIRED",
-            "objective": task,
-            "currentProgram": current,
-            "proposalStages": [
-                "Inspect repository authorities, journeys, code, tests, TODOs, and existing backlog sources.",
-                "Draft a dependency-aware backlog with ownership, acceptance criteria, and validation.",
-                "Publish coverage, exclusions, unresolved questions, and the completion boundary.",
-                "Stop for human review and commit on a clean baseline.",
-                "Permit AgentFlow planning only after the reviewed backlog is committed.",
-            ],
-            "execution": {"performed": False, "authority": "AgentFlow"},
-        }
-        next_action = "Review repository readiness, then create the governed AgentFlow handoff."
+        phase = _clean_text(values.get("phase"), maximum=20) or "assemble"
+        if phase == "assemble":
+            brief = assemble_backlog_brief(root, task, surface=surface)
+            report = {
+                "status": brief["status"],
+                "phase": phase,
+                "brief": brief,
+                "currentProgram": _program_status_or_governance(root),
+                "execution": {"performed": False, "authority": "AgentFlow"},
+            }
+            next_action = brief["nextAction"]
+        elif phase == "validate":
+            validation = validate_backlog_proposal(
+                root,
+                values.get("proposal", ""),
+                expected_objective=task,
+            )
+            report = {
+                "status": validation["status"],
+                "phase": phase,
+                "validation": validation,
+                "execution": {"performed": False, "authority": "AgentFlow"},
+            }
+            next_action = (
+                "Resolve every validation finding, or confirm the output path and explicitly save the reviewed proposal."
+                if validation["status"] == "VALID"
+                else "Return the validation findings to the AI, then validate the corrected JSON draft."
+            )
+        elif phase == "save":
+            if values.get("confirmSave") is not True:
+                raise ValueError("Explicit save confirmation is required")
+            saved = save_backlog_proposal(
+                root,
+                values.get("proposal", ""),
+                _clean_text(values.get("outputPath"), maximum=500) or DEFAULT_OUTPUT_PATH,
+                expected_objective=task,
+            )
+            report = {
+                "status": saved["status"],
+                "phase": phase,
+                "savedProposal": saved,
+                "execution": {"performed": False, "authority": "AgentFlow"},
+            }
+            next_action = saved["nextAction"]
+        else:
+            raise ValueError("build-backlog phase must be assemble, validate, or save")
     else:
         report = {
             "status": "READY_TO_PLAN",
@@ -255,6 +292,7 @@ def run_workflow(
         }
         next_action = "Start the shell on port 8787, then run the declared operator-shell QA command."
 
+    write_performed = workflow_id == "build-backlog" and report.get("phase") == "save"
     return {
         "runId": f"run-{secrets.token_hex(6)}",
         "observedAt": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
@@ -264,7 +302,7 @@ def run_workflow(
         "execution": {
             "performed": False,
             "authority": workflow["authority"],
-            "writes": workflow["writes"],
+            "writes": write_performed,
         },
         "proofBoundary": workflow["proofBoundary"],
         "report": report,
@@ -340,7 +378,7 @@ class OperatorShellHandler(BaseHTTPRequestHandler):
         raw_length = self.headers.get("Content-Length", "0")
         length = int(raw_length)
         if length <= 0 or length > MAX_REQUEST_BYTES:
-            raise ValueError("Request body must be between 1 byte and 64 KiB")
+            raise ValueError("Request body must be between 1 byte and 512 KiB")
         value = json.loads(self.rfile.read(length))
         if not isinstance(value, dict):
             raise ValueError("Request body must be a JSON object")

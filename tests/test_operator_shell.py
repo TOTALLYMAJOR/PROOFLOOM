@@ -17,6 +17,38 @@ from design_intelligence.operator_shell import (
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def valid_proposal() -> dict[str, object]:
+    return {
+        "schemaVersion": 1,
+        "kind": "proofloom/backlog-proposal",
+        "proposalStatus": "REVIEW_REQUIRED",
+        "objective": "Build the release backlog",
+        "coverage": {
+            "sourcesReviewed": [
+                {"path": "README.md", "role": "product context", "finding": "Defines the supported workflow."}
+            ],
+            "journeys": ["Operator reviews proposed work"],
+            "capabilities": ["Backlog assembly"],
+            "exclusions": [],
+            "unresolvedQuestions": [],
+            "completionBoundary": "Local proposal coverage only.",
+        },
+        "tasks": [
+            {
+                "id": "DI-001",
+                "title": "Implement the bounded change",
+                "description": "Add the governed workflow without a second backlog.",
+                "status": "PROPOSED",
+                "dependsOn": [],
+                "ownership": ["design_intelligence/example.py"],
+                "acceptanceCriteria": ["The workflow is covered by an automated test."],
+                "validation": ["python3 -m unittest tests.test_example"],
+                "evidenceRequired": ["Passing focused test output"],
+            }
+        ],
+    }
+
+
 class OperatorShellTests(unittest.TestCase):
     def test_catalog_exposes_only_governed_workflows(self) -> None:
         workflows = workflow_catalog()
@@ -36,13 +68,33 @@ class OperatorShellTests(unittest.TestCase):
         self.assertEqual({workflow["actionClass"] for workflow in workflows}, {"inspect", "propose", "execute"})
         self.assertTrue(all(workflow["writes"] is False for workflow in workflows))
 
-    def test_backlog_builder_stops_at_review_boundary(self) -> None:
+    def test_backlog_builder_assembles_ai_brief_at_review_boundary(self) -> None:
         result = run_workflow(ROOT, "build-backlog", {"task": "Build the release backlog"})
 
-        self.assertEqual(result["status"], "REVIEW_REQUIRED")
+        self.assertEqual(result["status"], "AI_BRIEF_READY")
         self.assertFalse(result["execution"]["performed"])
         self.assertFalse(result["execution"]["writes"])
         self.assertEqual(result["report"]["execution"]["authority"], "AgentFlow")
+        self.assertIn("Return exactly one JSON object", result["report"]["brief"]["aiInstruction"])
+
+    def test_backlog_builder_validates_without_writing(self) -> None:
+        result = run_workflow(
+            ROOT,
+            "build-backlog",
+            {"task": "Build the release backlog", "phase": "validate", "proposal": valid_proposal()},
+        )
+
+        self.assertEqual(result["status"], "VALID")
+        self.assertFalse(result["execution"]["writes"])
+        self.assertEqual(result["report"]["validation"]["taskCount"], 1)
+
+    def test_backlog_builder_requires_explicit_save_confirmation(self) -> None:
+        with self.assertRaisesRegex(ValueError, "Explicit save confirmation"):
+            run_workflow(
+                ROOT,
+                "build-backlog",
+                {"task": "Build the release backlog", "phase": "save", "proposal": valid_proposal()},
+            )
 
     def test_unknown_workflow_is_rejected(self) -> None:
         with self.assertRaisesRegex(ValueError, "Unknown workflow"):

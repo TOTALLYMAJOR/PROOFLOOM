@@ -11,11 +11,14 @@
   "baselineManifest": ".design/baselines/manifest.json",
   "thresholds": ".design/quality/thresholds.json",
   "interactions": [
-    {"action": "click", "selector": "[data-workflow='governance-audit']"}
+    {"action": "fill", "selector": "#task-input", "value": "Assemble the repository completion backlog"},
+    {"action": "click", "selector": "[data-workflow='build-backlog']"}
   ],
   "contractAssertions": [
     {"id": "launchpad-title", "type": "text", "selector": "h1", "includes": "Choose the work."},
-    {"id": "governance-selected", "type": "text", "selector": "#operation-title", "includes": "Governance audit"},
+    {"id": "backlog-selected", "type": "text", "selector": "#operation-title", "includes": "Build proposed backlog"},
+    {"id": "assembly-workspace-visible", "type": "visible", "selector": "#backlog-workspace"},
+    {"id": "validation-action-visible", "type": "visible", "selector": "#validate-proposal"},
     {"id": "primary-action-visible", "type": "visible", "selector": "[data-qa-primary]"},
     {"id": "workflow-catalog-visible", "type": "visible", "selector": "#workflow-list"},
     {"id": "evidence-rail-visible", "type": "visible", "selector": "#evidence-title"}

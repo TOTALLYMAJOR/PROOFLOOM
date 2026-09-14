@@ -1145,7 +1145,7 @@
         "delivery"
       ],
       "scope": "repository",
-      "sha256": "aa2f68394a2f6f8442559f515ac22d6289dea33c5c9abe08b3e960dcaec3412f"
+      "sha256": "8b9becf318c02eea09157e145fa902111f8e0aa62964b86143df189fbcd3107a"
     },
     {
       "authorityLevel": "candidate",
@@ -1157,7 +1157,7 @@
         "delivery"
       ],
       "scope": "repository",
-      "sha256": "36a6990cb2309a0a87c5e98f808cb6e1e5c9233485bcb1877c09c6a5dd43c027"
+      "sha256": "5d923129028048e08f8bda78f0263276ec98c2e1da75f8b78f9889b31b3343b1"
     },
     {
       "authorityLevel": "candidate",
@@ -1431,6 +1431,18 @@
       ],
       "scope": "repository",
       "sha256": "d28328f4b34cc9c62d9d9aee6c44da777aa6ae1f20bc39e98f3532cf2230eb1c"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "tests/design/scenarios/operator-shell.json",
+      "roles": [
+        "design",
+        "tests"
+      ],
+      "scope": "repository",
+      "sha256": "6c102d5c35335dafa06b149099f14941f95d4a4a919c97e36c924cefc1d5ec3a"
     },
     {
       "authorityLevel": "candidate",
@@ -1799,7 +1811,7 @@
     "backlog": 3,
     "contracts": 48,
     "delivery": 17,
-    "design": 96,
+    "design": 97,
     "evidence": 8,
     "experiments": 1,
     "governance": 19,
@@ -1810,7 +1822,7 @@
     "principles": 2,
     "requirements": 1,
     "skills": 5,
-    "tests": 31,
+    "tests": 32,
     "vision": 2
   },
   "backlogModel": {
@@ -1896,7 +1908,7 @@
       "id": "CRITICAL-AUTHORITY-DRIFT",
       "message": "Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.",
       "paths": [
-        ".github/workflows/design-ci.yml"
+        "tests/design/scenarios/operator-shell.json"
       ],
       "requiredAction": "REVIEW_AND_RATIFY_AUTHORITY_CHANGE",
       "severity": "P1",

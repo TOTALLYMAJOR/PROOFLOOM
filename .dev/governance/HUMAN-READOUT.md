@@ -17,7 +17,7 @@
 - Backlog: 3 tracked sources
 - Contracts: 48 tracked sources
 - Delivery: 17 tracked sources
-- Design: 96 tracked sources
+- Design: 97 tracked sources
 - Evidence: 8 tracked sources
 - Experiments: 1 tracked source
 - Governance: 19 tracked sources
@@ -28,7 +28,7 @@
 - Principles: 2 tracked sources
 - Requirements: 1 tracked source
 - Skills: 5 tracked sources
-- Tests: 31 tracked sources
+- Tests: 32 tracked sources
 - Vision: 2 tracked sources
 
 ## Existing Systems To Preserve
@@ -48,7 +48,7 @@ Source: `.dev/intent-index.json`
 
 ## Blocking Problems
 
-- **P1 Critical governing authority changed**: Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review. (`.github/workflows/design-ci.yml`)
+- **P1 Critical governing authority changed**: Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review. (`tests/design/scenarios/operator-shell.json`)
 
 ## What The Tool Will Do
 

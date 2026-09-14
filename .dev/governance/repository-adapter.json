@@ -182,6 +182,7 @@
       "templates/DESIGN-DECISION.md",
       "templates/PRODUCT-DESIGN-PROFILE.md",
       "tests/design/scenarios/design-department-surface.json",
+      "tests/design/scenarios/operator-shell.json",
       "tests/fixtures/broken-ia/docs/design-system.md",
       "tests/fixtures/conflicted-frontend/docs/design/DESIGN-LANGUAGE.md",
       "tests/fixtures/conflicted-frontend/docs/product/design-system.md",
@@ -273,6 +274,7 @@
     "tests": [
       ".design/quality/latest-score.json",
       "tests/design/scenarios/design-department-surface.json",
+      "tests/design/scenarios/operator-shell.json",
       "tests/fixtures/broken-ia/AGENTS.md",
       "tests/fixtures/broken-ia/docs/design-system.md",
       "tests/fixtures/broken-ia/package.json",

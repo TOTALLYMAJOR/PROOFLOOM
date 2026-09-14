@@ -59,11 +59,13 @@ Prefer a guided interface? Start the Proofloom Operator Shell from the repositor
 design-intelligence shell --root /path/to/repository --port 8787 --open
 ```
 
-The loopback-only Launchpad provides governed starting points for reformatting, governance audit, design audit, UX audit, backlog health, proposed backlog preparation, and visual QA. It binds the repository branch, revision, dirty state, governance gate, action class, and proof boundary into the interface. The service accepts only these allowlisted workflows: it is not an arbitrary terminal, does not silently write a backlog, and does not take execution authority from AgentFlow.
+The loopback-only Launchpad provides governed starting points for reformatting, governance audit, design audit, UX audit, backlog health, AI-assisted backlog assembly, and visual QA. It binds the repository branch, revision, dirty state, governance gate, action class, and proof boundary into the interface. The service accepts only these allowlisted workflows: it is not an arbitrary terminal and does not take execution authority from AgentFlow.
+
+`Build proposed backlog` now runs a complete review loop. Proofloom inventories and hashes bounded repository authorities, generates a repository-capable AI instruction and strict proposal shape, accepts the AI's JSON draft, and checks source coverage, dependency cycles, ownership overlap, acceptance criteria, validation safety, and evidence requirements. A proposal can be written only after it passes validation and the operator confirms an in-repository `.json` path. The saved file remains `REVIEW_REQUIRED`: it is neither the canonical backlog nor permission for AgentFlow to execute.
 
 <p align="center">
-  <img src="artifacts/design/operator-shell/README-desktop.png" alt="Proofloom Operator Shell on desktop showing the governance audit workflow and repository evidence rail" width="720">
-  <img src="artifacts/design/operator-shell/README-mobile.png" alt="Proofloom Operator Shell responsive mobile workflow" width="220">
+  <img src="artifacts/design/operator-shell/README-desktop.png" alt="Proofloom Operator Shell on desktop showing governed AI backlog assembly and the repository evidence rail" width="720">
+  <img src="artifacts/design/operator-shell/README-mobile.png" alt="Proofloom Operator Shell responsive backlog assembly workflow" width="220">
 </p>
 
 The screenshots are local rendered evidence from the governed 1440 px and 390 px scenarios. They do not imply deployment or a production release.

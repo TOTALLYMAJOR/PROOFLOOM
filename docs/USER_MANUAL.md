@@ -50,6 +50,7 @@ npx playwright install chromium firefox webkit
 | Goal | Start here | Result |
 |---|---|---|
 | Choose from standard operations in a local interface | `design-intelligence shell --root <repo> --open` | Proofloom Launchpad bound to the repository and its current evidence |
+| Assemble a complete proposed backlog with AI | Operator Shell → Build proposed backlog | Repository-bound AI brief, validated JSON draft, and optional non-canonical proposal file |
 | Explore a design task | `design-intelligence "<task>"` | Read-only repository inspection and three direction briefs |
 | Save an approved direction | `design-intelligence "<task>" --direction recommended --save` | Mission bundle under `artifacts/design/missions/` |
 | Stabilize a mature repository | `design-intelligence govern audit --root <repo>` | Authority and readiness diagnosis before design |
@@ -78,7 +79,19 @@ Action classes have distinct meanings:
 - `propose` prepares a direction or governed handoff for review;
 - `execute` names an explicit local evidence action but does not run it implicitly.
 
-The shell listens only on `127.0.0.1` or `localhost`, uses a same-session token for operations, and exposes no free-form command field. It does not create a canonical backlog or execute AgentFlow. The Build proposed backlog option stages the evidence and review boundary; a reviewed, committed handoff is still required before AgentFlow planning or execution.
+The shell listens only on `127.0.0.1` or `localhost`, uses a same-session token for operations, and exposes no free-form command field. It does not create a canonical backlog or execute AgentFlow.
+
+### Assemble a proposed backlog with AI
+
+1. Choose **Build proposed backlog**, describe the product-completion objective, and select **Assemble AI brief**.
+2. Copy or download the generated instruction. Give it to an AI that can read the bound repository, such as the coding agent already open in that checkout.
+3. Paste the AI's single JSON proposal into the shell and select **Validate proposal**.
+4. Resolve every reported source, schema, dependency, ownership, validation-command, or evidence gap. Editing the draft invalidates the prior check.
+5. Choose an unused repository-relative `.json` path, acknowledge the proposal boundary, and select **Save reviewed proposal**.
+
+The assembled brief binds the objective, repository root, branch, revision, dirty state, governance gate, bounded authority paths, and source hashes. The validator requires explicit journey and capability coverage, exclusions, unresolved questions, a completion boundary, proposed-only task status, acyclic dependencies, non-overlapping file ownership, observable acceptance criteria, argv-safe validation commands, and terminal evidence requirements.
+
+Saving is deliberately narrow: it refuses paths outside the repository, non-JSON files, invalid drafts, missing confirmation, and existing destinations. A saved proposal remains non-canonical and `REVIEW_REQUIRED`. A repository owner must still review and adopt it through the project's existing backlog authority. AgentFlow can be handed the adopted work later; Proofloom does not silently plan or execute it.
 
 ## 1. Start a design mission
 
