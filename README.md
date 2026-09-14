@@ -1,10 +1,6 @@
-# This product has been renamed #
-## PROOFLOOM
-
-# Design Intelligence with Repository Rehabilitation and Design Governance
-
+# PROOFLOOM
 <p align="center">
-  <img src="artifacts/design/brand/design-intelligence-brand-concept-v2.png" alt="Proofloom — Design that can show its work" width="960">
+<img width="1536" height="1024" alt="design-intelligence-brand-concept" src="https://github.com/user-attachments/assets/b0bf6fe4-3e17-4d02-a894-d2b1d8dda1c4" />
 </p>
 
 Proofloom is the visual mark for Design Intelligence. The repository, package, and CLI retain the `design-intelligence` name.
