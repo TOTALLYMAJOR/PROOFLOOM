@@ -26,4 +26,8 @@ design_intelligence = [
   "data/product_profiles/*.json",
   "data/schemas/*.json",
   "data/defaults/*.json",
+  "operator_shell_static/*.html",
+  "operator_shell_static/*.css",
+  "operator_shell_static/*.js",
+  "operator_shell_static/*.svg",
 ]

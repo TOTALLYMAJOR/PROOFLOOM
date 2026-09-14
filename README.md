@@ -8,6 +8,8 @@ Proofloom is the visual mark for Design Intelligence. The repository, package, a
 
 Design Intelligence is a production-grade, vendor-neutral utility for repository-aware design work. Its core mission is design intelligence: understand product intent, preserve existing design truth, reason about UX and design-system change, validate rendered outcomes, and record evidence without turning into a second application scaffold.
 
+New here? Start with the [User Manual](docs/USER_MANUAL.md) for installation, task-based workflows, rendered QA, AgentFlow handoffs, agentic outcome learning, troubleshooting, and proof boundaries.
+
 The governing objective is:
 
 > Product intent -> repository evidence -> design reasoning -> implementation constraints -> rendered validation -> design learning.
@@ -51,6 +53,21 @@ devctl visual audit --root /path/to/repo --input artifacts/design/reports/exampl
 Start with `devctl init --dry-run --root /path/to/repo`, review the detected authorities, scripts, backlog sources, and readiness gaps, then use `devctl init` for the additive manifest and task-store directories. Initialization does not invent product intent, approve standards applicability, create design memory, create a competing backlog, or add an E2E hierarchy. Repository owners must bind reviewed intent, journey, standards, and capability-routing files before all planes can pass. See `docs/CONTROL-PLANE-PHASE-4.md`.
 
 ## The easy path
+
+Prefer a guided interface? Start the Proofloom Operator Shell from the repository you want to inspect:
+
+```bash
+design-intelligence shell --root /path/to/repository --port 8787 --open
+```
+
+The loopback-only Launchpad provides governed starting points for reformatting, governance audit, design audit, UX audit, backlog health, proposed backlog preparation, and visual QA. It binds the repository branch, revision, dirty state, governance gate, action class, and proof boundary into the interface. The service accepts only these allowlisted workflows: it is not an arbitrary terminal, does not silently write a backlog, and does not take execution authority from AgentFlow.
+
+<p align="center">
+  <img src="artifacts/design/operator-shell/README-desktop.png" alt="Proofloom Operator Shell on desktop showing the governance audit workflow and repository evidence rail" width="720">
+  <img src="artifacts/design/operator-shell/README-mobile.png" alt="Proofloom Operator Shell responsive mobile workflow" width="220">
+</p>
+
+The screenshots are local rendered evidence from the governed 1440 px and 390 px scenarios. They do not imply deployment or a production release.
 
 From the repository you want to improve:
 
@@ -195,6 +212,7 @@ This creates a lightweight CLI link at `~/.local/bin/design-intelligence`; it do
 Core commands:
 
 ```bash
+design-intelligence shell --root /path/to/repo --open
 design-intelligence "Improve proposal comparison"
 design-intelligence "Improve proposal comparison" --direction recommended --save
 design-intelligence start /path/to/repo "Improve proposal comparison" --profile quotepilot --reference https://aura.build

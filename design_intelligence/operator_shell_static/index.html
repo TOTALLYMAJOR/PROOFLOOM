@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Proofloom Operator Shell</title>
+    <link rel="icon" href="/proofloom-mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace">Skip to active workflow</a>
+
+    <header class="masthead">
+      <a class="identity" href="/" aria-label="Proofloom operator shell home">
+        <img src="/proofloom-mark.svg" alt="" width="42" height="42">
+        <span>
+          <strong>Proofloom</strong>
+          <small>Design that can show its work</small>
+        </span>
+      </a>
+
+      <div class="repository-strip" aria-label="Bound repository status">
+        <span class="repo-name" id="repo-name">Loading repository…</span>
+        <span class="repo-detail" id="repo-branch">—</span>
+        <span class="status-pill" id="repo-dirty">Checking</span>
+        <span class="gate-pill" id="repo-gate">Gate —</span>
+      </div>
+    </header>
+
+    <main class="shell" id="workspace">
+      <nav class="launchpad" aria-labelledby="launchpad-title">
+        <div class="section-intro">
+          <p class="kicker">Standard operations</p>
+          <h1 id="launchpad-title">Choose the work.</h1>
+          <p>Start with a governed workflow. The shell exposes only the action permitted by its current state.</p>
+        </div>
+        <div class="workflow-list" id="workflow-list" aria-label="Available workflows"></div>
+        <div class="boundary-stamp">
+          <span class="boundary-mark" aria-hidden="true"></span>
+          <p><strong>Local control surface</strong><br>No arbitrary terminal execution.</p>
+        </div>
+      </nav>
+
+      <section class="operation" aria-labelledby="operation-title">
+        <div class="operation-header">
+          <div>
+            <p class="kicker" id="operation-eyebrow">Design proposal</p>
+            <h2 id="operation-title">Reformat surface</h2>
+          </div>
+          <span class="action-class" id="action-class">Propose</span>
+        </div>
+
+        <p class="operation-description" id="operation-description">
+          Shape a bounded visual, hierarchy, responsive, workflow, or component-conformity mission.
+        </p>
+
+        <form class="operator-form" id="operator-form">
+          <label class="field field-wide" for="task-input">
+            <span>Task or focus <em id="task-requirement">required</em></span>
+            <textarea id="task-input" name="task" rows="3" maxlength="500" placeholder="Improve the proposal comparison flow without changing commercial behavior."></textarea>
+          </label>
+
+          <div class="field-grid">
+            <label class="field" for="surface-input">
+              <span>Surface <em>optional</em></span>
+              <input id="surface-input" name="surface" maxlength="200" placeholder="Proposal workspace">
+            </label>
+
+            <label class="field" for="profile-input">
+              <span>Product profile <em>optional</em></span>
+              <select id="profile-input" name="profile">
+                <option value="">Repository default</option>
+                <option value="quotepilot">QuotePilot</option>
+                <option value="quietpilot">QuietPilot</option>
+                <option value="leaguepilot">LeaguePilot</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="field field-wide" id="reformat-field" for="reformat-scope">
+            <span>Reformat boundary</span>
+            <select id="reformat-scope" name="reformatScope">
+              <option value="information hierarchy">Information hierarchy</option>
+              <option value="visual formatting">Visual formatting only</option>
+              <option value="responsive repair">Responsive repair</option>
+              <option value="workflow restructuring">Workflow restructuring</option>
+              <option value="component conformity">Component-system conformity</option>
+            </select>
+          </label>
+
+          <div class="authority-note">
+            <span aria-hidden="true">↳</span>
+            <p><strong id="authority-label">Human direction selection</strong><br><span id="proof-boundary">A direction proposal does not authorize implementation.</span></p>
+          </div>
+
+          <div class="form-actions">
+            <button class="secondary-action" type="reset">Clear</button>
+            <button class="primary-action" id="run-button" type="submit" data-qa-primary>
+              <span>Generate directions</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </form>
+
+        <section class="result-panel" id="result-panel" aria-labelledby="result-title" hidden>
+          <div class="result-heading">
+            <div>
+              <p class="kicker">Operation result</p>
+              <h3 id="result-title">Evidence ready</h3>
+            </div>
+            <span class="result-status" id="result-status">Ready</span>
+          </div>
+          <div class="result-highlights" id="result-highlights"></div>
+          <div class="next-action-block">
+            <span>Next safe action</span>
+            <p id="next-action">Review the evidence.</p>
+          </div>
+          <details class="raw-evidence">
+            <summary>Inspect full evidence payload</summary>
+            <pre id="result-json"></pre>
+          </details>
+        </section>
+      </section>
+
+      <aside class="evidence-rail" aria-labelledby="evidence-title">
+        <div class="rail-heading">
+          <p class="kicker">Session evidence</p>
+          <h2 id="evidence-title">Know what is true.</h2>
+        </div>
+
+        <dl class="truth-list">
+          <div>
+            <dt>Repository</dt>
+            <dd id="truth-root">Binding…</dd>
+          </div>
+          <div>
+            <dt>Source revision</dt>
+            <dd id="truth-commit">—</dd>
+          </div>
+          <div>
+            <dt>Writes</dt>
+            <dd id="truth-writes">None</dd>
+          </div>
+          <div>
+            <dt>Execution authority</dt>
+            <dd id="truth-authority">Human direction selection</dd>
+          </div>
+        </dl>
+
+        <div class="session-progress" aria-labelledby="progress-title">
+          <h3 id="progress-title">Current run</h3>
+          <ol id="event-list" aria-live="polite">
+            <li class="is-current"><span></span><p><strong>Connecting</strong><small>Binding the repository and workflow catalog.</small></p></li>
+          </ol>
+        </div>
+
+        <p class="rail-boundary" id="global-boundary">
+          Read-only inspection runs locally. Proposals require review. Implementation remains AgentFlow-owned.
+        </p>
+      </aside>
+    </main>
+
+    <footer class="footer">
+      <span>Proofloom operator shell</span>
+      <span id="shell-version">Design Intelligence</span>
+      <span>Loopback only · evidence before claims</span>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
