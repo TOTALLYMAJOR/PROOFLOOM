@@ -27,6 +27,7 @@
 | DI-AGT-003 | Counterfactual design comparison | `IMPLEMENTED` | `agentic simulate` | Falsifiable evidence scoring; protected boundaries and human selection fail closed. |
 | DI-AGT-004 | Governed design arena evaluation | `FOUNDATION` | `agentic arena` | Deterministic comparison is implemented; AgentFlow execution and a consuming-repository pilot remain external. |
 | DI-AGT-005 | Dual-loop outcome assessment | `FOUNDATION` | `agentic outcome` | Contract evaluation is implemented; runtime adapters and human-ratified product pilot remain open. |
+| DI-OPS-001 | Proofloom Launchpad and governed operator shell | `IMPLEMENTED` | `design-intelligence shell` | Loopback-only, allowlisted, read-only or proposal workflows; AgentFlow remains execution authority. |
 | DI-V6-001 | Read-only runtime evidence adapters | `PROPOSED` | V6 roadmap | Must reuse existing analytics, error, support, accessibility, and release evidence. |
 | DI-V6-002 | Governed outcome-to-memory promotion | `IMPLEMENTED` | `agentic outcome-ratify`, `outcome-promote`, `outcome-retire` | Hash-bound, expiring human receipts append to the existing outcome ledger; retirement adds a deprecated decision revision and preserves history. |
 | DI-V6-003 | Cross-browser governed evidence | `IMPLEMENTED` | `npm run design:qa:cross-browser` | Chromium, Firefox, and WebKit run isolated evidence paths; legacy Chromium baselines never apply to another engine. |

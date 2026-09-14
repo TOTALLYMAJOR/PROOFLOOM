@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Proofloom mark</title>
+  <rect width="64" height="64" rx="15" fill="#f6f0e3"/>
+  <path d="M10 10h18v8H18v10h-8V10Zm26 0h18v18h-8V18H36v-8ZM10 36h8v10h10v8H10V36Zm36 0h8v18H36v-8h10V36Z" fill="#155948"/>
+  <path d="m14 30 11 11 25-27 6 6-31 33L8 36l6-6Z" fill="#d6412f"/>
+</svg>

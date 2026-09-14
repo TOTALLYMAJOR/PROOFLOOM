@@ -93,7 +93,7 @@ from .workflows import (
 COMMANDS = {
     "inspect", "assess", "context", "lint", "refactor-risk", "review", "validate", "doctor",
     "reference", "start", "work", "handoff", "memory", "contract", "registry", "quality",
-    "baseline", "repair", "self-audit", "adopt", "adoption-audit", "govern", "agentflow", "agentic",
+    "baseline", "repair", "self-audit", "adopt", "adoption-audit", "govern", "agentflow", "agentic", "shell",
 }
 
 
@@ -101,6 +101,12 @@ def main(argv: list[str] | None = None) -> int:
     normalized_argv = _normalize_argv(list(sys.argv[1:] if argv is None else argv))
     parser = argparse.ArgumentParser(prog="design-intelligence")
     subparsers = parser.add_subparsers(dest="command", required=True)
+
+    shell_parser = subparsers.add_parser("shell", help="Start the loopback-only Proofloom operator shell.")
+    shell_parser.add_argument("--root", default=".", help="Repository root to bind for this shell session.")
+    shell_parser.add_argument("--host", choices=("127.0.0.1", "localhost"), default="127.0.0.1")
+    shell_parser.add_argument("--port", type=int, default=8787)
+    shell_parser.add_argument("--open", action="store_true", help="Open the shell in the default browser.")
 
     _add_root_format_parser(subparsers, "inspect")
     _add_root_format_parser(subparsers, "assess")
@@ -360,6 +366,10 @@ def _add_agentic_input_parser(subparsers, name: str):
 
 
 def _dispatch(args: argparse.Namespace) -> int:
+    if args.command == "shell":
+        from .operator_shell import serve_operator_shell
+
+        return serve_operator_shell(args.root, args.host, args.port, args.open)
     if args.command == "inspect":
         root = args.root if args.root != "." or args.root_positional is None else args.root_positional
         snapshot = inspect_repository(root or ".")

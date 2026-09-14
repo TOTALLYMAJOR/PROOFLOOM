@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "operator-shell",
+  "surface": "Proofloom Operator Shell",
+  "product": "Design Intelligence",
+  "actor": "repository operator",
+  "baseURL": "http://127.0.0.1:8787",
+  "route": "/",
+  "readinessSelector": "[data-qa-ready]",
+  "artifactRoot": "artifacts/design/operator-shell",
+  "baselineManifest": ".design/baselines/manifest.json",
+  "thresholds": ".design/quality/thresholds.json",
+  "interactions": [
+    {"action": "click", "selector": "[data-workflow='governance-audit']"}
+  ],
+  "contractAssertions": [
+    {"id": "launchpad-title", "type": "text", "selector": "h1", "includes": "Choose the work."},
+    {"id": "governance-selected", "type": "text", "selector": "#operation-title", "includes": "Governance audit"},
+    {"id": "primary-action-visible", "type": "visible", "selector": "[data-qa-primary]"},
+    {"id": "workflow-catalog-visible", "type": "visible", "selector": "#workflow-list"},
+    {"id": "evidence-rail-visible", "type": "visible", "selector": "#evidence-title"}
+  ],
+  "viewports": [
+    {"id": "wide-desktop-1440x1000", "category": "desktop", "width": 1440, "height": 1000},
+    {"id": "desktop-1280x900", "category": "desktop", "width": 1280, "height": 900},
+    {"id": "compact-1024x768", "category": "desktop", "width": 1024, "height": 768},
+    {"id": "tablet-768x1024", "category": "tablet", "width": 768, "height": 1024},
+    {"id": "mobile-390x844", "category": "mobile", "width": 390, "height": 844}
+  ]
+}
