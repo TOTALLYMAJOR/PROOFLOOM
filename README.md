@@ -1,3 +1,6 @@
+# This product has been renamed #
+## PROOFLOOM
+
 # Design Intelligence with Repository Rehabilitation and Design Governance
 
 <p align="center">
