@@ -1,0 +1,58 @@
+{
+  "acceptance": {
+    "claimBoundary": "Acceptance proves that Proofloom creates and verifies an exact clean repository snapshot; it does not prove AgentFlow consumed or enforced it.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "A clean governed fixture produces a v2 handoff bound to commit, authority state, governance report, source hashes, and aggregate snapshot digest.",
+      "Dirty worktree, changed commit, authority drift, missing source, changed source, and untracked authority tests fail closed."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "authorityBoundaries": ["executionApproval", "repositorySnapshot", "crossSystemHandoff"],
+  "completionCriteria": [
+    "An execution-capable handoff records a clean Git base commit, worktree state, authority-state digest, governance-report digest, complete critical-source hashes, and aggregate snapshot digest.",
+    "Approved handoffs without current repository verification remain non-executable.",
+    "Any commit, worktree, authority, report, source-set, or source-content mismatch fails closed.",
+    "The CLI exposes repository-bound creation and validation without weakening proposed or review-required states."
+  ],
+  "context": {
+    "optional": ["docs/TRUST_MODEL.md"],
+    "required": ["AGENTS.md", "docs/AGENTFLOW-INTEGRATION.md", "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md"]
+  },
+  "dependencies": [
+    "TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT",
+    "TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES",
+    "TASK-PROOFLOOM-PROVENANCE-CHAIN"
+  ],
+  "id": "TASK-PROOFLOOM-HANDOFF-V2-SNAPSHOT",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-HANDOFF-V2-SNAPSHOT"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001"],
+    "requirements": ["REQ-ADOPTION-001", "REQ-BACKLOG-001", "REQ-ROUTING-001"],
+    "successMetrics": ["MET-ADOPTION-001", "MET-BACKLOG-001", "MET-ROUTING-001"]
+  },
+  "nonObjectives": [
+    "Do not execute AgentFlow from Proofloom.",
+    "Do not authorize execution from owner approval alone.",
+    "Do not treat a dirty or untracked snapshot as immutable evidence."
+  ],
+  "objective": "Bind every executable AgentFlow handoff to the exact clean, converged repository authority snapshot.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "critical",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/agentflow_contracts.py",
+      "design_intelligence/cli.py",
+      "design_intelligence/data/schemas/governed-task-handoff.schema.json",
+      "tests/test_agentflow_contracts.py",
+      "docs/AGENTFLOW-INTEGRATION.md",
+      "docs/TRUST_MODEL.md"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Bind AgentFlow handoff v2 to the exact repository snapshot",
+  "verification": {"required": ["unit-governance", "design-quick"]},
+  "workType": "architecture"
+}

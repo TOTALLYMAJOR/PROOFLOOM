@@ -23,6 +23,7 @@ from design_intelligence.control_plane import (
     task_context,
     task_packet_schema,
     validate_control_plane,
+    validate_task_packet,
 )
 from design_intelligence.devctl_cli import main as devctl_main
 from design_intelligence.storage import atomic_write_json
@@ -53,7 +54,23 @@ class ControlPlaneTests(unittest.TestCase):
 
         self.assertEqual(report["status"], "PASS", report)
         self.assertEqual(manifest_schema()["properties"]["apiVersion"]["const"], "devctl.design-intelligence/v2")
-        self.assertEqual(task_packet_schema()["properties"]["schemaVersion"]["const"], 2)
+        self.assertEqual(task_packet_schema()["properties"]["schemaVersion"]["enum"], [2, 3])
+
+    def test_task_authoring_requires_acceptance_dependencies_and_human_decision(self) -> None:
+        packet = self._task()
+        packet.pop("acceptance")
+        packet.pop("dependencies")
+
+        errors = validate_task_packet(packet, load_manifest(ROOT))
+
+        self.assertIn("task.acceptance is required", errors)
+        self.assertIn("task.dependencies is required", errors)
+
+        packet = self._task()
+        packet["risk"] = "high"
+        packet["acceptance"]["humanDecision"] = "NOT_REQUIRED"
+        errors = validate_task_packet(packet, load_manifest(ROOT))
+        self.assertIn("high and critical risk tasks require a human acceptance decision", errors)
 
     def test_init_is_additive_idempotent_and_does_not_create_design_authorities(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -268,7 +285,7 @@ class ControlPlaneTests(unittest.TestCase):
 
     def _task(self, identifier: str = "TASK-BOUNDED") -> dict:
         return {
-            "schemaVersion": 2,
+            "schemaVersion": 3,
             "id": identifier,
             "title": "Bounded task",
             "status": "ACTIVE",
@@ -285,6 +302,13 @@ class ControlPlaneTests(unittest.TestCase):
                 "experiments": [],
             },
             "dependencies": [],
+            "authorityBoundaries": ["repositoryMutation"],
+            "acceptance": {
+                "evidenceRequired": ["Focused tests pass for the exact task revision."],
+                "humanDecision": "REQUIRED",
+                "decisionAuthority": "repository owner",
+                "claimBoundary": "Acceptance proves local task completion only.",
+            },
             "scope": {"paths": ["src/**"]},
             "context": {"required": ["AGENTS.md"], "optional": ["README.md"]},
             "verification": {"required": ["unit-governance"]},

@@ -1,0 +1,75 @@
+{
+  "authorityBoundaries": [
+    "majorProductDecision",
+    "canonicalIntentChange"
+  ],
+  "acceptance": {
+    "claimBoundary": "Acceptance ratifies the selected Proofloom product boundary and pilot journey only; it does not authorize implementation, AgentFlow execution, deployment, or production claims.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "The exact-revision capability inventory and contradictory evidence are presented for review.",
+      "The selected journey, requirements, metrics, owner, tests, and review date are recorded in canonical authority."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "completionCriteria": [
+    "An exact-revision capability inventory distinguishes implemented, foundation, proposed, CLI-only, Operator Shell, human-authority, and AgentFlow-owned behavior.",
+    "A repository owner accepts or revises the Proofloom product boundary and selects one bounded pilot journey.",
+    "The canonical intent authority records the pilot actor, starting state, decisions, success state, recovery state, requirements, metrics, tests, owner, and review date.",
+    "The intent index is rebound to the reviewed source hash and reciprocal journey, requirement, and metric validation passes.",
+    "Repository-state tests accept a valid staged IN_PROGRESS backlog without weakening the strict all-terminal completion gate.",
+    "Changed architecture and design-language authority hashes receive an explicit repository-owner ratification or are revised before the design gate is unlocked.",
+    "Every remaining Proofloom task is reviewed against the ratified journey before any task becomes ACTIVE.",
+    "The decision preserves AgentFlow as execution authority and introduces no second backlog, component system, design-token system, evidence graph, analytics store, or E2E hierarchy."
+  ],
+  "context": {
+    "optional": [
+      "docs/FEATURE_MATRIX.md",
+      "docs/AGENTIC-DEVELOPMENT.md",
+      "docs/AGENTFLOW-INTEGRATION.md"
+    ],
+    "required": [
+      "AGENTS.md",
+      "docs/PROOFLOOM-PREIMPLEMENTATION-ASSESSMENT.md",
+      "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+      "docs/ARCHITECTURE.md"
+    ]
+  },
+  "dependencies": [],
+  "id": "TASK-PROOFLOOM-INTENT-RATIFICATION",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-INTENT-RATIFICATION"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001"],
+    "requirements": ["REQ-ADOPTION-001", "REQ-JOURNEY-001", "REQ-BACKLOG-001"],
+    "successMetrics": ["MET-ADOPTION-001", "MET-JOURNEY-001", "MET-BACKLOG-001"]
+  },
+  "nonObjectives": [
+    "Do not implement runtime or interface changes.",
+    "Do not start AgentFlow, dispatch work, or treat a planning artifact as execution approval.",
+    "Do not claim one-for-one parity with an earlier application without a source-bound inventory."
+  ],
+  "objective": "Ratify the consolidated Proofloom product boundary and bind it to one canonical, measurable operator journey before implementation.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      ".dev/intent-index.json",
+      "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
+      "docs/PROOFLOOM-PREIMPLEMENTATION-ASSESSMENT.md",
+      "docs/ARCHITECTURE.md",
+      "docs/FEATURE_MATRIX.md",
+      ".dev/tasks/active/TASK-PROOFLOOM-*.json",
+      "tests/test_control_plane.py",
+      "tests/test_planes.py",
+      "tests/test_self_audit_v2.py"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Ratify Proofloom intent and operator journey",
+  "verification": {
+    "required": ["unit-governance", "design-quick"]
+  },
+  "workType": "governance"
+}

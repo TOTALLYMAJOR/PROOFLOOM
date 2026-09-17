@@ -1,0 +1,55 @@
+{
+  "acceptance": {
+    "claimBoundary": "Acceptance proves that the applied convergence snapshot is invalidated by critical authority additions or changes; it does not ratify the changed authority.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "Regression tests cover added, changed, and missing critical authority after convergence.",
+      "Metrics, experiments, journeys, principles, architecture, backlog, requirements, vision, and instructions participate in the drift state."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "authorityBoundaries": ["authorityRatification", "designReadiness", "snapshotValidity"],
+  "completionCriteria": [
+    "Adding, changing, or removing a critical authority after convergence produces DRIFT_DETECTED.",
+    "The design gate locks and identifies the exact changed paths and roles requiring review.",
+    "New metrics and experiments invalidate convergence just as changed journeys or architecture do.",
+    "Only an explicit repository-owner review and new convergence snapshot can restore readiness."
+  ],
+  "context": {
+    "optional": ["docs/TRUST_MODEL.md"],
+    "required": ["AGENTS.md", "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md"]
+  },
+  "dependencies": [
+    "TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE",
+    "TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE"
+  ],
+  "id": "TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001"],
+    "requirements": ["REQ-ADOPTION-001", "REQ-BACKLOG-001"],
+    "successMetrics": ["MET-ADOPTION-001", "MET-BACKLOG-001"]
+  },
+  "nonObjectives": [
+    "Do not ratify authority changes automatically.",
+    "Do not preserve a READY result after its evidence snapshot changes.",
+    "Do not collapse all authority changes into an untraceable aggregate score."
+  ],
+  "objective": "Invalidate prior convergence whenever critical product or governance authority drifts.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/governance.py",
+      "tests/test_governance_convergence.py",
+      "docs/TRUST_MODEL.md",
+      "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Invalidate convergence on critical authority drift",
+  "verification": {"required": ["unit-governance", "design-quick"]},
+  "workType": "governance"
+}

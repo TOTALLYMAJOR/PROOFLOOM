@@ -1,0 +1,62 @@
+{
+  "acceptance": {
+    "claimBoundary": "Acceptance proves the bounded QuoteFlow Proofloom-AgentFlow trust pilot at exact revisions; production, customer, and business outcomes require separate evidence.",
+    "decisionAuthority": "repository owners for QuoteFlow, Proofloom, and AgentFlow",
+    "evidenceRequired": [
+      "The exact QuoteFlow authority set, Proofloom governance result, handoff v2, AgentFlow enforcement, receipt, rendered evidence, and recovery cases are retained with digests.",
+      "All dependency tasks have evidence-backed terminal dispositions and the final report records accept, defer, or reject without collapsing claim boundaries."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "authorityBoundaries": ["pilotAcceptance", "crossRepositoryClaim", "productionClaim", "humanAcceptance"],
+  "completionCriteria": [
+    "The pilot begins from a tracked and owner-ratified QuoteFlow product-intelligence authority set, including its canonical journey, metrics, experiments, guardrails, and event schema.",
+    "Proofloom reports READY only for the exact converged authority snapshot and locks on every tested addition, change, removal, untracked authority, missing journey, and unrelated E2E substitution.",
+    "AgentFlow independently enforces the exact handoff v2 snapshot before immutable-plan binding or execution and returns a digest-bound receipt.",
+    "Fresh negative-path evidence covers dirty worktree, commit drift, source drift, authority drift, missing proof, wrong dependency state, and absent human acceptance.",
+    "All governed backlog items have explicit dependencies, acceptance evidence, validation, authority boundaries, and a valid terminal disposition before completion is claimed.",
+    "The three repository owners record accept, defer, or reject decisions at exact revisions."
+  ],
+  "context": {
+    "optional": ["docs/USER_MANUAL.md"],
+    "required": ["AGENTS.md", "docs/TRUST_MODEL.md", "docs/AGENTFLOW-INTEGRATION.md", "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md"]
+  },
+  "dependencies": [
+    "TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE",
+    "TASK-PROOFLOOM-JOURNEY-PROOF-BINDING",
+    "TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT",
+    "TASK-PROOFLOOM-AGENTFLOW-V2-ENFORCEMENT",
+    "TASK-PROOFLOOM-DOCS-GRAPH-COVERAGE"
+  ],
+  "id": "TASK-PROOFLOOM-TRUST-PILOT-ACCEPTANCE",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-TRUST-PILOT-ACCEPTANCE"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001", "JRN-PILOT-001"],
+    "requirements": ["REQ-ADOPTION-001", "REQ-JOURNEY-001", "REQ-BACKLOG-001", "REQ-ROUTING-001", "REQ-VISUAL-001"],
+    "successMetrics": ["MET-ADOPTION-001", "MET-JOURNEY-001", "MET-BACKLOG-001", "MET-ROUTING-001", "MET-VISUAL-001"]
+  },
+  "nonObjectives": [
+    "Do not infer customer acceptance or business outcomes from local or CI evidence.",
+    "Do not execute cross-repository writes without separately authorized scope in each repository.",
+    "Do not close the pilot while any dependency lacks an evidence-backed terminal disposition."
+  ],
+  "objective": "Qualify the QuoteFlow pilot as the first end-to-end proof that Proofloom and AgentFlow fail closed on stale or incomplete authority.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "standards-assessment", "structured-output", "visual-evidence"],
+  "risk": "critical",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/**",
+      "tests/**",
+      "artifacts/design/**",
+      "docs/**",
+      ".dev/**",
+      "devctl.yaml"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Accept the cross-system trust pilot",
+  "verification": {"required": ["unit-governance", "design-full"]},
+  "workType": "governance"
+}

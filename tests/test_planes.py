@@ -13,6 +13,7 @@ from design_intelligence.control_plane import (
     route_task_by_id,
 )
 from design_intelligence.planes import (
+    DEFAULT_BACKLOG_DRAFTING_POLICY,
     audit_architecture_plane,
     audit_backlog,
     audit_intelligence_plane,
@@ -242,6 +243,43 @@ class PlaneGovernanceTests(unittest.TestCase):
             self.assertEqual(cycle["status"], "FAIL")
             self.assertTrue(any("dependency cycle" in error for error in cycle["errors"]))
 
+    def test_task_store_enforces_drafting_acceptance_and_dependency_readiness(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            active = root / ".dev/tasks/active"
+            active.mkdir(parents=True)
+            dependency = self._task_packet("TASK-DEPENDENCY", status="STAGED")
+            consumer = self._task_packet(
+                "TASK-CONSUMER",
+                status="ACTIVE",
+                dependencies=["TASK-DEPENDENCY"],
+            )
+            atomic_write_json(active / "TASK-DEPENDENCY.json", dependency)
+            atomic_write_json(active / "TASK-CONSUMER.json", consumer)
+            config = {
+                "completionPolicy": "all-terminal",
+                "draftingPolicy": dict(DEFAULT_BACKLOG_DRAFTING_POLICY),
+                "sources": [{
+                    "path": ".dev/tasks",
+                    "role": "active",
+                    "parser": "task-store",
+                    "includeInCompletion": True,
+                }],
+                "terminalStatuses": ["COMPLETED", "CANCELLED", "DEFERRED_WITH_AUTHORITY"],
+                "dependencies": {},
+            }
+
+            report = audit_backlog(root, config)
+            self.assertEqual(report["status"], "FAIL")
+            self.assertTrue(any("not completed" in error for error in report["errors"]))
+
+            consumer["status"] = "STAGED"
+            consumer.pop("acceptance")
+            atomic_write_json(active / "TASK-CONSUMER.json", consumer)
+            report = audit_backlog(root, config)
+            self.assertEqual(report["status"], "FAIL")
+            self.assertTrue(any("task.acceptance" in error for error in report["errors"]))
+
     def test_stale_standards_profile_fails_closed(self) -> None:
         config = load_manifest(ROOT)["spec"]["planes"]["architecture"]
 
@@ -310,6 +348,31 @@ class PlaneGovernanceTests(unittest.TestCase):
             }],
             "terminalStatuses": ["COMPLETED", "CANCELLED", "DEFERRED_WITH_AUTHORITY"],
             "dependencies": {},
+        }
+
+    @staticmethod
+    def _task_packet(
+        identifier: str,
+        *,
+        status: str,
+        dependencies: list[str] | None = None,
+    ) -> dict:
+        return {
+            "schemaVersion": 3,
+            "id": identifier,
+            "title": identifier,
+            "status": status,
+            "risk": "high",
+            "completionCriteria": ["The governed behavior is demonstrated."],
+            "dependencies": dependencies or [],
+            "authorityBoundaries": ["repositoryMutation"],
+            "verification": {"required": ["unit-governance"]},
+            "acceptance": {
+                "evidenceRequired": ["Focused tests pass."],
+                "humanDecision": "REQUIRED",
+                "decisionAuthority": "repository owner",
+                "claimBoundary": "Acceptance proves local behavior only.",
+            },
         }
 
 

@@ -1,0 +1,52 @@
+{
+  "acceptance": {
+    "claimBoundary": "Acceptance proves explicit journey-to-test linkage; it does not prove the journey passed in production or was accepted by users.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "Regression tests show that an unrelated generic E2E wrapper cannot link canonical journey proof.",
+      "A positive fixture links only explicitly named, existing test paths to the canonical journey."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "authorityBoundaries": ["journeyProof", "testEvidence", "productionClaim"],
+  "completionCriteria": [
+    "Journey proof is LINKED only when the canonical journey explicitly names an existing test or scenario path.",
+    "Generic E2E scripts, smoke wrappers, or unrelated browser tests cannot satisfy the journey-proof gate.",
+    "Missing, renamed, or stale journey test paths produce fragmented proof and keep design locked.",
+    "Reports distinguish test linkage from executed proof, rendered acceptance, hosted behavior, and production outcome."
+  ],
+  "context": {
+    "optional": ["docs/TRUST_MODEL.md"],
+    "required": ["AGENTS.md", "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md"]
+  },
+  "dependencies": ["TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE"],
+  "id": "TASK-PROOFLOOM-JOURNEY-PROOF-BINDING",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-JOURNEY-PROOF-BINDING"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001", "JRN-PILOT-001"],
+    "requirements": ["REQ-JOURNEY-001", "REQ-VISUAL-001"],
+    "successMetrics": ["MET-JOURNEY-001", "MET-VISUAL-001"]
+  },
+  "nonObjectives": [
+    "Do not create a second E2E hierarchy.",
+    "Do not infer linkage from script names or directory placement.",
+    "Do not promote local test linkage into production or human-acceptance proof."
+  ],
+  "objective": "Bind journey readiness to explicit journey-owned proof instead of repository-wide E2E heuristics.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/governance.py",
+      "tests/test_governance_convergence.py",
+      "tests/design/**",
+      "docs/TRUST_MODEL.md"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Bind canonical journeys to explicit proof",
+  "verification": {"required": ["unit-governance", "design-quick"]},
+  "workType": "governance"
+}

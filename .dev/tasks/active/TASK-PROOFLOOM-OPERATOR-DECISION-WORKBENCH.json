@@ -1,0 +1,64 @@
+{
+  "authorityBoundaries": ["majorProductDecision", "baselineMutation", "executionApproval"],
+  "acceptance": {
+    "claimBoundary": "Acceptance proves the local decision-workbench experience and governed interaction boundaries; it does not approve a product direction or execute AgentFlow.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "Fresh desktop/mobile evidence covers success, blocked, stale, invalid, recovery, loading, empty, and error states.",
+      "Keyboard, focus, names, announcements, reduced motion, contrast, target size, zoom, and reflow checks are recorded."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "completionCriteria": [
+    "The Operator Shell provides progressively disclosed preparation and review views for authority capsule, UX state coverage, counterfactual comparison, arena evidence, outcome assessment, AgentFlow handoff, and receipt audit.",
+    "Every view shows current status, evidence boundary, unknowns, governing authority, human next action, and AgentFlow ownership where execution is involved.",
+    "No route starts AgentFlow, selects a design winner, adopts a canonical backlog, promotes memory, or mutates a baseline implicitly.",
+    "The active workflow step exposes aria-current, completed steps expose non-color state text, conditional requiredness is programmatic, and revealed results receive deliberate announcement and focus handling.",
+    "Validation findings appear as a concise, actionable human-readable list before any optional raw JSON evidence payload.",
+    "Reduced-motion preference disables scripted smooth scrolling, prerequisite-disabled and busy states are distinct, and essential operational metadata is at least a 12px equivalent.",
+    "At 320px through wide desktop, every workflow is discoverable and keyboard reachable without depending on a subtle horizontal scrollbar, selection stays visible, and the dominant action plus gate/write state remain easy to find.",
+    "At 200 percent zoom, evidence key/value rows, path fields, authority copy, and step labels reflow without clipped values or two-dimensional panning.",
+    "The shell uses the ratified Proofloom palette and typography with near-flat elevation, no second token system, and no weakened accessibility or quality thresholds.",
+    "Fresh desktop and mobile evidence covers success, blocked, stale, invalid, recovery, loading, empty, and error states."
+  ],
+  "context": {
+    "optional": ["docs/design/UX-MODELS.md", "docs/FEATURE_MATRIX.md"],
+    "required": ["AGENTS.md", "docs/PROOFLOOM-PREIMPLEMENTATION-ASSESSMENT.md", "docs/design/DESIGN-LANGUAGE.md", "docs/ARCHITECTURE.md"]
+  },
+  "dependencies": [
+    "TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES",
+    "TASK-PROOFLOOM-AGENTFLOW-RECEIPT-INTEGRITY"
+  ],
+  "id": "TASK-PROOFLOOM-OPERATOR-DECISION-WORKBENCH",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-OPERATOR-DECISION-WORKBENCH"],
+    "experiments": [],
+    "journeys": ["JRN-PILOT-001"],
+    "requirements": ["REQ-JOURNEY-001", "REQ-VISUAL-001"],
+    "successMetrics": ["MET-JOURNEY-001", "MET-VISUAL-001"]
+  },
+  "nonObjectives": [
+    "Do not turn the shell into an arbitrary terminal or AgentFlow execution console.",
+    "Do not expose raw JSON as the primary interaction model.",
+    "Do not create a second component system, token system, backlog, or E2E hierarchy."
+  ],
+  "objective": "Turn the Proofloom Launchpad into a coherent, accessible decision workbench without transferring execution or approval authority to the interface.",
+  "requiredCapabilities": ["accessibility-analysis", "repository-analysis", "structured-output", "visual-evidence"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/operator_shell.py",
+      "design_intelligence/operator_shell_static/**",
+      "tests/test_operator_shell.py",
+      "tests/design/scenarios/operator-shell.json",
+      "docs/design/DESIGN-LANGUAGE.md",
+      "docs/USER_MANUAL.md",
+      "artifacts/design/operator-shell/**"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Build the governed operator decision workbench",
+  "verification": {"required": ["unit-governance", "design-standard"]},
+  "workType": "frontend"
+}

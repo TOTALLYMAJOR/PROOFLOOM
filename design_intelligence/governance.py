@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import posixpath
 import re
 import subprocess
 from collections import defaultdict
@@ -49,6 +50,8 @@ CRITICAL_ROLES = {
     "personas",
     "requirements",
     "journeys",
+    "metrics",
+    "experiments",
     "backlog",
     "architecture",
     "adrs",
@@ -505,16 +508,31 @@ def _untracked_authority_candidates(root: Path) -> list[dict[str, Any]]:
         if not raw:
             continue
         relative = raw.decode("utf-8", errors="ignore")
-        roles = _roles_for_path(relative)
+        # Fixture repositories are evidence used to exercise discovery. Their
+        # embedded authority files never govern the repository running the audit.
+        if relative.startswith("tests/fixtures/"):
+            continue
+        text = _read_authority_text(root / relative)
+        index_roles = _canonical_index_roles(relative, text)
+        roles = sorted(set(_roles_for_path(relative)) | set(index_roles))
+        critical_roles = sorted(set(roles) & CRITICAL_ROLES)
+        declared_roles = sorted(
+            set(_declared_authority_roles(relative, text, roles)) | set(index_roles)
+        )
         is_direct_authority = Path(relative).name.lower() in {
             "agents.md", "claude.md", "skill.md", ".cursorrules", ".windsurfrules"
         }
         is_hook = relative.startswith((".husky/", ".githooks/"))
-        is_governance_document = relative.startswith("docs/governance/")
-        if roles and not _is_ignored(relative) and (
-            is_direct_authority or is_hook or is_governance_document
+        is_repository_document = relative.startswith(("docs/", ".dev/"))
+        if critical_roles and not _is_ignored(relative) and (
+            is_direct_authority or is_hook or is_repository_document or declared_roles
         ):
-            candidates.append({"path": relative, "roles": roles, "reason": "Untracked files cannot govern other agents."})
+            candidates.append({
+                "path": relative,
+                "roles": critical_roles,
+                "declaredAuthorityRoles": declared_roles,
+                "reason": "Untracked critical authority candidates are outside the sealed repository snapshot.",
+            })
     return sorted(candidates, key=lambda item: item["path"])
 
 
@@ -535,9 +553,11 @@ def _is_git_root(root: Path) -> bool:
 
 
 def _authority_records(root: Path, tracked: Iterable[str]) -> list[dict[str, Any]]:
+    tracked_paths = sorted(set(tracked))
+    index_bindings = _canonical_index_bindings(root, tracked_paths)
     records: list[dict[str, Any]] = []
-    for relative in tracked:
-        roles = _roles_for_path(relative)
+    for relative in tracked_paths:
+        roles = sorted(set(_roles_for_path(relative)) | set(index_bindings.get(relative, [])))
         if not roles:
             continue
         path = root / relative
@@ -545,14 +565,19 @@ def _authority_records(root: Path, tracked: Iterable[str]) -> list[dict[str, Any
             continue
         text = _read_authority_text(path)
         lifecycle = _lifecycle(relative, text, root)
+        declared_roles = sorted(
+            set(_declared_authority_roles(relative, text, roles))
+            | set(index_bindings.get(relative, []))
+        )
         records.append({
             "path": relative,
             "sha256": _sha256_file(path),
             "roles": roles,
             "scope": _scope_for(relative, roles),
             "lifecycle": lifecycle,
-            "authorityLevel": _authority_level(relative, text, lifecycle),
-            "declaresAuthority": bool(re.search(r"\b(binding|canonical|authoritative|source of truth|governing)\b", text, re.I)),
+            "authorityLevel": _authority_level(lifecycle, declared_roles),
+            "declaresAuthority": bool(declared_roles),
+            "declaredAuthorityRoles": declared_roles,
         })
     return sorted(records, key=lambda item: item["path"])
 
@@ -595,9 +620,9 @@ def _roles_for_path(relative: str) -> list[str]:
         roles.add("requirements")
     if any(token in lowered for token in ("vision", "mission", "strategy", "north-star", "core-promise", "platform-spec")):
         roles.add("vision")
-    if "principle" in lowered or "invariant" in lowered:
+    if any(token in lowered for token in ("principle", "invariant", "guardrail")):
         roles.add("principles")
-    if any(token in lowered for token in ("metric", "kpi", "success-measure", "benchmark")):
+    if any(token in lowered for token in ("metric", "kpi", "success-measure", "benchmark", "baseline", "target")):
         roles.add("metrics")
     if "experiment" in lowered or "hypothesis" in lowered:
         roles.add("experiments")
@@ -653,12 +678,106 @@ def _lifecycle(relative: str, text: str, root: Path) -> str:
     return "candidate"
 
 
-def _authority_level(relative: str, text: str, lifecycle: str) -> str:
+def _declared_authority_roles(relative: str, text: str, roles: list[str]) -> list[str]:
+    if relative in {"AGENTS.md", "CLAUDE.md"}:
+        return ["instructions"]
+    if relative == ".dev/intent-index.json":
+        return sorted(set(roles) & CORE_UNDERSTANDING_ROLES)
+
+    declared: set[str] = set()
+    head = "\n".join(text.splitlines()[:120])
+    pattern = re.compile(
+        r"^\s*(?:[-*]\s*)?(?P<label>canonical\s+authority|authority)\s*:\s*(?P<value>[^\n#]+)$",
+        re.I | re.M,
+    )
+    aliases = {
+        "journeys": {"journey", "journeys", "user journey", "product journey"},
+        "requirements": {"requirement", "requirements", "capability", "capabilities"},
+        "adrs": {"adr", "adrs", "decision", "decisions"},
+    }
+    for match in pattern.finditer(head):
+        label = match.group("label").lower()
+        value = match.group("value").strip().lower()
+        binding = label.startswith("canonical") or bool(
+            re.search(r"\b(canonical|binding|authoritative)\b", value)
+        )
+        if not binding:
+            continue
+        normalized = re.sub(r"\b(canonical|binding|authoritative)\b", " ", value)
+        normalized = re.sub(r"\s+", " ", normalized).strip(" ,;/")
+        if not normalized:
+            declared.update(roles)
+            continue
+        for role in roles:
+            names = aliases.get(role, {role, role.rstrip("s")})
+            if any(re.search(rf"\b{re.escape(name)}\b", normalized) for name in names):
+                declared.add(role)
+    return sorted(declared)
+
+
+def _canonical_index_bindings(root: Path, tracked: Iterable[str]) -> dict[str, list[str]]:
+    tracked_paths = sorted(set(tracked))
+    tracked_set = set(tracked_paths)
+    bindings: dict[str, set[str]] = defaultdict(set)
+    for relative in tracked_paths:
+        path = root / relative
+        if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES:
+            continue
+        text = _read_authority_text(path)
+        target_roles = _canonical_index_target_roles(relative, text)
+        for target, roles in target_roles.items():
+            if target not in tracked_set:
+                continue
+            bindings[target].update(roles)
+            bindings[relative].update(roles)
+    return {path: sorted(roles) for path, roles in bindings.items()}
+
+
+def _canonical_index_roles(relative: str, text: str) -> list[str]:
+    roles = {
+        role
+        for target_roles in _canonical_index_target_roles(relative, text).values()
+        for role in target_roles
+    }
+    return sorted(roles)
+
+
+def _canonical_index_target_roles(relative: str, text: str) -> dict[str, list[str]]:
+    head = "\n".join(text.splitlines()[:120])
+    if not re.search(
+        r"^\s*This\s+(?:document\s+|file\s+|index\s+)?is\s+the\s+canonical\s+"
+        r"(?:entry\s+point|index|authority\s+map)\b",
+        head,
+        re.I | re.M,
+    ):
+        return {}
+    section = re.search(
+        r"^##\s+(?:Required artifacts|Canonical authorities|Authority map)\s*$"
+        r"(?P<body>.*?)(?=^##\s+|\Z)",
+        text,
+        re.I | re.M | re.S,
+    )
+    if section is None:
+        return {}
+    bindings: dict[str, list[str]] = {}
+    for match in re.finditer(r"\[[^\]]+\]\(([^)]+)\)", section.group("body")):
+        raw_target = match.group(1).strip().strip("<>").split()[0]
+        target = raw_target.split("#", 1)[0]
+        if not target or target.startswith(("/", "#")) or "://" in target:
+            continue
+        normalized = posixpath.normpath((Path(relative).parent / target).as_posix())
+        if normalized == ".." or normalized.startswith("../"):
+            continue
+        roles = _roles_for_path(normalized)
+        if roles:
+            bindings[normalized] = roles
+    return bindings
+
+
+def _authority_level(lifecycle: str, declared_roles: list[str]) -> str:
     if lifecycle in {"historical", "evidence"}:
         return "evidence"
-    if re.search(r"\b(binding contract|canonical|source of truth|authoritative|governing document)\b", text[:32_000], re.I):
-        return "binding"
-    if relative in {"AGENTS.md", "CLAUDE.md"}:
+    if declared_roles:
         return "binding"
     return "candidate"
 
@@ -747,7 +866,23 @@ def _extract_journeys(root: Path, records: list[dict[str, Any]]) -> dict[str, An
         text = _read_authority_text(path)
         chains = _stage_chains(text)
         is_index = record["path"] == ".dev/intent-index.json"
+        is_canonical_document_index = bool(_canonical_index_target_roles(record["path"], text))
         indexed_journeys = _indexed_journeys(path) if is_index else []
+        canonical_indexed = [
+            item for item in indexed_journeys
+            if item.get("status", "ACTIVE") == "ACTIVE" and item.get("canonical") is True
+        ]
+        selected_indexed = canonical_indexed or [
+            item for item in indexed_journeys if item.get("status", "ACTIVE") == "ACTIVE"
+        ]
+        if is_index:
+            chains.extend(
+                stages
+                for item in selected_indexed
+                if len(stages := [stage for stage in item.get("stages", []) if isinstance(stage, str)]) >= 3
+            )
+        if is_canonical_document_index and not chains:
+            continue
         if not chains and not is_index and record["authorityLevel"] != "binding":
             continue
         title = _first_heading(text) or Path(record["path"]).stem.replace("-", " ").title()
@@ -757,6 +892,22 @@ def _extract_journeys(root: Path, records: list[dict[str, Any]]) -> dict[str, An
             r"`((?:apps|packages|src|components|scripts|e2e|tests)/[A-Za-z0-9_@.\-/\[\]]+)`",
             text,
         )))
+        if is_index:
+            route_values.extend(
+                value
+                for item in selected_indexed
+                for field in ("routes", "touchpoints")
+                for value in item.get(field, [])
+                if isinstance(value, str)
+            )
+            implementation.extend(
+                value
+                for item in selected_indexed
+                for value in item.get("implementationPaths", [])
+                if isinstance(value, str)
+            )
+            route_values = sorted(set(route_values))
+            implementation = sorted(set(implementation))
         test_paths = [item for item in implementation if re.search(r"(?:test|spec|e2e)", item, re.I)]
         if indexed_journeys:
             test_paths.extend(
@@ -765,10 +916,11 @@ def _extract_journeys(root: Path, records: list[dict[str, Any]]) -> dict[str, An
                 for path in item.get("tests", [])
                 if isinstance(path, str)
             )
+        binding_roles = set(record.get("declaredAuthorityRoles", []))
         journeys.append({
             "title": title,
             "source": record["path"],
-            "binding": record["authorityLevel"] == "binding" or is_index,
+            "binding": "journeys" in binding_roles or is_index,
             "stageChains": chains,
             "routes": route_values,
             "implementationPaths": implementation,
@@ -778,27 +930,27 @@ def _extract_journeys(root: Path, records: list[dict[str, Any]]) -> dict[str, An
         if len(journeys) >= 24:
             break
     binding = [item for item in journeys if item["binding"]]
-    primary = next((item for item in binding if item["stageChains"]), binding[0] if binding else None)
+    complete = [
+        item for item in binding
+        if item["stageChains"] and item["implementationPaths"] and item["existingTestPaths"]
+    ]
+    primary = complete[0] if complete else next(
+        (item for item in binding if item["stageChains"]), binding[0] if binding else None
+    )
     primary_tests = sorted(primary["existingTestPaths"] if primary else [])
     supporting_tests = sorted({path for item in journeys for path in item["existingTestPaths"]})
     e2e_scripts = _e2e_script_targets(root)
-    executable_e2e = [
-        item for item in e2e_scripts
-        if item["script"].lower().startswith("test:e2e")
-        and ":install" not in item["script"].lower()
-        and item["targetsExist"]
-        and bool(item["targets"])
-    ]
-    status = "DEFINED" if binding else "PARTIAL" if journeys else "MISSING"
+    status = "DEFINED" if complete else "PARTIAL" if journeys else "MISSING"
     if status == "MISSING":
         proof = "MISSING"
     else:
-        proof = "LINKED" if primary_tests or executable_e2e else "FRAGMENTED" if supporting_tests or e2e_scripts else "MISSING"
+        proof = "LINKED" if complete and primary_tests else "FRAGMENTED" if supporting_tests else "MISSING"
     return {
         "status": status,
         "proofStatus": proof,
         "journeys": journeys,
         "bindingJourneyCount": len(binding),
+        "completeBindingJourneyCount": len(complete),
         "linkedTests": primary_tests,
         "supportingTests": supporting_tests,
         "e2eScriptTargets": e2e_scripts,
@@ -918,11 +1070,12 @@ def _build_findings(
             "ADD_AND_RATIFY_AUTHORITY",
         ))
 
-    if journeys["status"] == "PARTIAL":
+    if journeys["status"] != "DEFINED":
         findings.append(_finding(
-            "JOURNEY-NOT-BINDING", "P1", "journey", "User journey is not binding",
-            "Journey material exists, but no source clearly governs implementation priorities and completion.",
-            "RATIFY_EXISTING_JOURNEY", paths=[item["source"] for item in journeys["journeys"][:6]],
+            "MISSING-CANONICAL-JOURNEY", "P0", "journey", "Canonical product journey is missing",
+            "Feature-level journey material cannot substitute for an explicitly declared canonical product journey.",
+            "DECLARE_AND_RATIFY_CANONICAL_JOURNEY",
+            paths=[item["source"] for item in journeys["journeys"][:6]],
         ))
     if journeys["proofStatus"] != "LINKED":
         findings.append(_finding(
@@ -1016,14 +1169,14 @@ def _audit_authority_drift(root: Path, records: list[dict[str, Any]]) -> dict[st
     missing = sorted(expected.keys() - current.keys())
     added = sorted(current.keys() - expected.keys())
     findings: list[dict[str, Any]] = []
-    if changed or missing:
+    if changed or missing or added:
         findings.append(_finding(
-            "CRITICAL-AUTHORITY-DRIFT", "P1", "vision", "Critical governing authority changed",
-            "Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.",
-            "REVIEW_AND_RATIFY_AUTHORITY_CHANGE", paths=[*changed, *missing],
+            "CRITICAL-AUTHORITY-DRIFT", "P1", "vision", "Critical governing authority drifted",
+            "A critical authority was added, changed, or removed after convergence and requires review.",
+            "REVIEW_AND_RATIFY_AUTHORITY_CHANGE", paths=[*added, *changed, *missing],
         ))
     return {
-        "status": "DRIFT_DETECTED" if changed or missing else "ADDITIONS_DETECTED" if added else "STABLE",
+        "status": "DRIFT_DETECTED" if changed or missing or added else "STABLE",
         "changed": changed,
         "missing": missing,
         "added": added,
@@ -1051,7 +1204,7 @@ def _finalization_readiness(
         status = "DESIGN_READY"
     return {
         "status": status,
-        "understanding": "INCOMPLETE" if missing_core else "MAPPED",
+        "understanding": "INCOMPLETE" if missing_core or p0 else "MAPPED",
         "governance": "CONFLICTED" if p0 or p1 else "COHERENT",
         "missingCoreRoles": sorted(missing_core),
         "blockingFindings": [*p0, *p1],
@@ -1083,6 +1236,7 @@ def _backlog_summary(
             continue
         role = "staged" if "next" in Path(record["path"]).stem.lower() else "active"
         items.extend(_parse_markdown_backlog(root / record["path"], record["path"], role, primary_stages))
+    items.extend(_parse_task_store_backlog(root, primary_stages))
     unique: dict[tuple[str, str], dict[str, Any]] = {}
     for item in items:
         unique[(item["source"], item["id"])] = item
@@ -1131,6 +1285,42 @@ def _backlog_summary(
         ),
         "introduceParallelBacklog": False,
     }
+
+
+def _parse_task_store_backlog(root: Path, journey_stages: list[str]) -> list[dict[str, Any]]:
+    items: list[dict[str, Any]] = []
+    task_root = root / ".dev/tasks"
+    if not task_root.is_dir():
+        return items
+    for path in sorted(task_root.glob("**/*.json")):
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(payload, dict) or not isinstance(payload.get("id"), str):
+            continue
+        source = path.relative_to(root).as_posix()
+        status = str(payload.get("status", "STAGED")).upper()
+        execution = {
+            "CANCELLED": "COMPLETED",
+            "DEFERRED_WITH_AUTHORITY": "DEFERRED",
+        }.get(status, status)
+        criteria = payload.get("completionCriteria", [])
+        linked_journeys = payload.get("intent", {}).get("journeys", []) if isinstance(payload.get("intent"), dict) else []
+        items.append({
+            "id": payload["id"],
+            "title": str(payload.get("title") or payload.get("objective") or payload["id"]),
+            "source": source,
+            "sourceRole": "active" if status == "ACTIVE" else "staged",
+            "section": "Governed task store",
+            "executionStatus": execution,
+            "statusEvidence": f"Task packet status: {status}",
+            "hasOutcome": bool(payload.get("objective")),
+            "hasSuccessSignal": isinstance(criteria, list) and bool(criteria),
+            "hasEvidenceBoundary": bool(payload.get("authorityBoundaries") or payload.get("nonObjectives")),
+            "journeyStages": list(journey_stages) if linked_journeys else [],
+        })
+    return items
 
 
 def _parse_markdown_backlog(
@@ -1345,7 +1535,7 @@ def _validate_authority_drift_ratification(
     if not receipt_path.is_absolute():
         receipt_path = root / receipt_path
     receipt = read_json(receipt_path.resolve(), {}) or {}
-    required_paths = sorted([*drift["changed"], *drift["missing"]])
+    required_paths = sorted([*drift["added"], *drift["changed"], *drift["missing"]])
     receipt_paths = sorted(receipt.get("paths", [])) if isinstance(receipt.get("paths"), list) else []
     errors: list[str] = []
     if receipt.get("kind") != "AuthorityDriftRatification":
@@ -1358,7 +1548,7 @@ def _validate_authority_drift_ratification(
     if not isinstance(approved_by, str) or not approved_by.strip():
         errors.append("approvedBy is required")
     if receipt_paths != required_paths:
-        errors.append("paths must exactly match the currently changed and missing critical authorities")
+        errors.append("paths must exactly match the currently added, changed, and missing critical authorities")
     if receipt.get("authorityStateSha256") != drift["currentAuthorityStateSha256"]:
         errors.append("authorityStateSha256 does not match the current critical authority state")
     reason = receipt.get("reason")

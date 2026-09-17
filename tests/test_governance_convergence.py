@@ -60,13 +60,19 @@ class GovernanceConvergenceTests(unittest.TestCase):
             finding_ids = {item["id"] for item in audit["findings"]}
             self.assertIn("BROKEN-SCRIPT-test-e2e-product", finding_ids)
             self.assertIn("INCOMPLETE-ENTERPRISE-ATLAS", finding_ids)
-            self.assertEqual(audit["journeyModel"]["proofStatus"], "FRAGMENTED")
+            self.assertEqual(audit["journeyModel"]["proofStatus"], "MISSING")
             self.assertEqual(audit["designGate"]["status"], "LOCKED")
-            self.assertEqual(audit["finalizationReadiness"]["status"], "GOVERNANCE_CONFLICTED")
+            self.assertEqual(audit["finalizationReadiness"]["status"], "UNDERSTANDING_INCOMPLETE")
 
-    def test_existing_e2e_wrapper_is_linked_without_filename_keywords(self) -> None:
+    def test_unrelated_e2e_wrapper_cannot_link_canonical_journey_proof(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = self._mature_repository(Path(temporary), create_e2e=False)
+            journey = root / "docs/architecture/mvp-golden-path.md"
+            journey.write_text(
+                "# MVP Golden Path\n\nAuthority: canonical journeys\n\n"
+                "`Inquiry -> Decision -> Completion`\n",
+                encoding="utf-8",
+            )
             self._write(root / "scripts/run-product-smoke.mjs", "// executable journey wrapper\n")
             package = json.loads((root / "package.json").read_text(encoding="utf-8"))
             package["scripts"]["test:e2e:product"] = "node scripts/run-product-smoke.mjs"
@@ -74,7 +80,89 @@ class GovernanceConvergenceTests(unittest.TestCase):
 
             audit = audit_governance(root)
 
+            self.assertEqual(audit["journeyModel"]["proofStatus"], "MISSING", audit)
+            self.assertEqual(audit["journeyModel"]["linkedTests"], [])
+            self.assertEqual(audit["designGate"]["status"], "LOCKED")
+
+    def test_feature_journey_fragments_do_not_define_a_canonical_product_journey(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._mature_repository(Path(temporary))
+            self._write(
+                root / "docs/architecture/mvp-golden-path.md",
+                "# Attendance Workflow\n\n"
+                "This feature preserves canonical pricing; it is not the product journey authority.\n\n"
+                "`Draft -> Confirm -> Complete`\n\n"
+                "Proof: `e2e/product-journey.spec.ts`\n",
+            )
+
+            audit = audit_governance(root)
+
+            self.assertEqual(audit["journeyModel"]["status"], "PARTIAL", audit)
+            self.assertEqual(audit["journeyModel"]["bindingJourneyCount"], 0)
+            self.assertIn(
+                "MISSING-CANONICAL-JOURNEY",
+                {item["id"] for item in audit["findings"]},
+            )
+            self.assertEqual(audit["finalizationReadiness"]["understanding"], "INCOMPLETE")
+            self.assertEqual(audit["designGate"]["status"], "LOCKED")
+
+    def test_repository_native_canonical_index_binds_linked_journey_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._mature_repository(Path(temporary))
+            (root / "docs/architecture/mvp-golden-path.md").unlink()
+            self._write(
+                root / "docs/PRODUCT_INTELLIGENCE.md",
+                "# Product Intelligence\n\n"
+                "This is the canonical entry point for deciding whether the product creates value.\n\n"
+                "## Required artifacts\n\n"
+                "| Artifact | Governing question |\n|---|---|\n"
+                "| [User Journey](product-intelligence/USER_JOURNEY_FUNNELS.md) "
+                "| Where does value creation succeed or fail? |\n"
+                "| [Success Metrics](product-intelligence/SUCCESS_METRICS.md) "
+                "| Which measures distinguish value from activity? |\n",
+            )
+            self._write(
+                root / "docs/product-intelligence/USER_JOURNEY_FUNNELS.md",
+                "# User Journey and Funnel Model\n\nStatus: mixed evidence.\n\n"
+                "`Intent -> Commitment -> Fulfillment`\n\n"
+                "Proof: `e2e/product-journey.spec.ts`\n",
+            )
+            self._write(
+                root / "docs/product-intelligence/SUCCESS_METRICS.md",
+                "# Success Metrics\n\nMET-01 measures a governed outcome.\n",
+            )
+
+            audit = audit_governance(root)
+
+            self.assertEqual(audit["journeyModel"]["status"], "DEFINED", audit)
             self.assertEqual(audit["journeyModel"]["proofStatus"], "LINKED", audit)
+            binding_sources = {
+                item["source"]
+                for item in audit["journeyModel"]["journeys"]
+                if item["binding"]
+            }
+            self.assertEqual(
+                binding_sources,
+                {"docs/product-intelligence/USER_JOURNEY_FUNNELS.md"},
+            )
+            index = next(
+                item for item in audit["authorities"]
+                if item["path"] == "docs/PRODUCT_INTELLIGENCE.md"
+            )
+            self.assertIn("journeys", index["declaredAuthorityRoles"])
+            self.assertIn("metrics", index["declaredAuthorityRoles"])
+
+            apply_governance_convergence(root)
+            self._write(
+                root / "docs/product-intelligence/SUCCESS_METRICS.md",
+                "# Success Metrics\n\nMET-01 now has a materially different definition.\n",
+            )
+            verification = verify_governance_convergence(root)
+            self.assertEqual(verification["status"], "FAIL", verification)
+            self.assertIn(
+                "docs/product-intelligence/SUCCESS_METRICS.md",
+                verification["authorityDrift"]["changed"],
+            )
 
     def test_nested_package_script_resolves_parent_relative_target_from_package_directory(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -192,6 +280,64 @@ class GovernanceConvergenceTests(unittest.TestCase):
             )
             self.assertEqual(audit["designGate"]["status"], "LOCKED")
 
+    def test_untracked_product_intelligence_authority_locks_design(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._mature_repository(Path(temporary))
+            subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+            subprocess.run(["git", "add", "."], cwd=root, check=True)
+            self._write(
+                root / "docs/product-intelligence/USER_JOURNEY_FUNNELS.md",
+                "# User Journey and Funnel Model\n\nAuthority: canonical journeys\n\n"
+                "`Intent -> Commitment -> Fulfillment`\n",
+            )
+            self._write(
+                root / "docs/product-intelligence/BASELINES_AND_TARGETS.md",
+                "# Baselines and Targets\n\nProduction baselines remain uncollected.\n",
+            )
+            self._write(
+                root / "docs/product-intelligence/QUALITY_GUARDRAILS.md",
+                "# Quality Guardrails\n\nUnsafe states stop release.\n",
+            )
+
+            audit = audit_governance(root)
+
+            self.assertTrue(
+                {
+                    "docs/product-intelligence/BASELINES_AND_TARGETS.md",
+                    "docs/product-intelligence/QUALITY_GUARDRAILS.md",
+                    "docs/product-intelligence/USER_JOURNEY_FUNNELS.md",
+                }.issubset({item["path"] for item in audit["untrackedAuthorityCandidates"]}),
+                audit,
+            )
+            self.assertIn("UNTRACKED-AUTHORITY", {item["id"] for item in audit["findings"]})
+            self.assertEqual(audit["designGate"]["status"], "LOCKED")
+
+    def test_added_critical_authority_invalidates_applied_convergence(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._mature_repository(Path(temporary))
+            subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+            subprocess.run(["git", "add", "."], cwd=root, check=True)
+            apply_governance_convergence(root)
+            self._write(
+                root / "docs/product-intelligence/USER_JOURNEY_FUNNELS.md",
+                "# User Journey and Funnel Model\n\nAuthority: canonical journeys\n\n"
+                "`Intent -> Commitment -> Fulfillment`\n",
+            )
+            subprocess.run(
+                ["git", "add", "docs/product-intelligence/USER_JOURNEY_FUNNELS.md"],
+                cwd=root,
+                check=True,
+            )
+
+            verification = verify_governance_convergence(root)
+
+            self.assertEqual(verification["status"], "FAIL", verification)
+            self.assertEqual(verification["authorityDrift"]["status"], "DRIFT_DETECTED")
+            self.assertEqual(
+                verification["authorityDrift"]["added"],
+                ["docs/product-intelligence/USER_JOURNEY_FUNNELS.md"],
+            )
+
     def test_design_front_door_blocks_an_unresolved_repository_in_plain_language(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -249,7 +395,7 @@ class GovernanceConvergenceTests(unittest.TestCase):
         )
         self._write(
             root / "docs/architecture/mvp-golden-path.md",
-            "# MVP Golden Path\n\nThis document is the binding contract.\n\n"
+            "# MVP Golden Path\n\nAuthority: canonical journeys\n\n"
             "`Inquiry -> Decision -> Completion`\n\n"
             "Proof: `e2e/product-journey.spec.ts`\n",
         )

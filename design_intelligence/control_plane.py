@@ -23,10 +23,12 @@ from .governance import (
     verify_governance_convergence,
 )
 from .planes import (
+    DEFAULT_BACKLOG_DRAFTING_POLICY,
     audit_backlog,
     audit_planes,
     intent_context_paths,
     route_task,
+    validate_backlog_task_contract,
 )
 from .quality import audit_thresholds, load_thresholds, score_quality
 from .repository import inspect_repository
@@ -467,6 +469,7 @@ def build_manifest(repository_root: str | Path) -> dict[str, Any]:
                     "journeyRequiredPaths": repository_triggers,
                     "backlog": {
                         "completionPolicy": "all-terminal",
+                        "draftingPolicy": dict(DEFAULT_BACKLOG_DRAFTING_POLICY),
                         "sources": backlog_sources,
                         "terminalStatuses": [
                             "COMPLETED",
@@ -1141,8 +1144,18 @@ def validate_task_packet(packet: Any, manifest: dict[str, Any] | None = None) ->
         "verification", "completionCriteria",
     )
     errors.extend(f"task.{field} is required" for field in required if field not in packet)
-    if packet.get("schemaVersion") != 2:
-        errors.append("task.schemaVersion must be 2")
+    if packet.get("schemaVersion") == 3:
+        errors.extend(
+            f"task.{field} is required"
+            for field in ("dependencies", "authorityBoundaries", "acceptance")
+            if field not in packet
+        )
+    if packet.get("schemaVersion") not in {2, 3}:
+        errors.append("task.schemaVersion must be 2 or 3")
+    if packet.get("status") not in {"COMPLETED", "CANCELLED", "DEFERRED_WITH_AUTHORITY"} and packet.get(
+        "schemaVersion"
+    ) != 3:
+        errors.append("active, blocked, and staged tasks require schemaVersion 3")
     identifier = packet.get("id")
     if not isinstance(identifier, str) or not identifier.startswith("TASK-") or not all(
         character.isupper() or character.isdigit() or character == "-" for character in identifier
@@ -1189,6 +1202,21 @@ def validate_task_packet(packet: Any, manifest: dict[str, Any] | None = None) ->
                 errors.append(f"task.verification.required references unknown check: {check}")
     dependencies = packet.get("dependencies", [])
     _validate_string_array(dependencies, "task.dependencies", errors)
+    drafting_policy = DEFAULT_BACKLOG_DRAFTING_POLICY
+    if manifest:
+        configured_policy = (
+            manifest.get("spec", {})
+            .get("planes", {})
+            .get("intent", {})
+            .get("backlog", {})
+            .get("draftingPolicy")
+        )
+        if isinstance(configured_policy, dict):
+            drafting_policy = configured_policy
+    if packet.get("schemaVersion") == 3:
+        for error in validate_backlog_task_contract(packet, drafting_policy):
+            if error not in errors:
+                errors.append(error)
     terminal = packet.get("status") in {"CANCELLED", "DEFERRED_WITH_AUTHORITY"}
     if terminal:
         disposition = packet.get("terminalDisposition")
@@ -1642,6 +1670,14 @@ def _validate_manifest_shape(manifest: dict[str, Any], errors: list[str]) -> Non
                     errors.append("spec.planes.intent.backlog.sources must be a non-empty array")
                 if not isinstance(backlog.get("dependencies"), dict):
                     errors.append("spec.planes.intent.backlog.dependencies must be an object")
+                drafting_policy = backlog.get("draftingPolicy")
+                if not isinstance(drafting_policy, dict) or any(
+                    drafting_policy.get(field) is not True
+                    for field in DEFAULT_BACKLOG_DRAFTING_POLICY
+                ):
+                    errors.append(
+                        "spec.planes.intent.backlog.draftingPolicy cannot weaken task governance"
+                    )
         architecture = planes.get("architecture", {})
         if isinstance(architecture, dict):
             if not isinstance(architecture.get("enabled"), bool):

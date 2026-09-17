@@ -1,21 +1,23 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://design-intelligence.local/schemas/governed-task-handoff/1.0.0",
+  "$id": "https://design-intelligence.local/schemas/governed-task-handoff/2.0.0",
   "title": "Governed Task Handoff",
   "type": "object",
   "additionalProperties": false,
   "required": ["schemaVersion", "kind", "handoffId", "createdAt", "repository", "objective", "authority", "tasks", "proof"],
   "properties": {
-    "schemaVersion": { "const": "1.0.0" },
+    "schemaVersion": { "const": "2.0.0" },
     "kind": { "const": "design-intelligence/governed-task-handoff" },
     "handoffId": { "type": "string", "minLength": 1 },
     "createdAt": { "type": "string", "format": "date-time" },
     "repository": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["baseCommit"],
+      "required": ["baseCommit", "snapshotSha256", "worktreeState"],
       "properties": {
         "baseCommit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+        "snapshotSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "worktreeState": { "const": "clean" },
         "remote": { "type": "string", "minLength": 1 }
       }
     },
@@ -23,11 +25,13 @@
     "authority": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["status", "sources"],
+      "required": ["status", "stateSha256", "governanceReportSha256", "sources"],
       "properties": {
         "status": { "enum": ["PROPOSED", "APPROVED"] },
         "approvedBy": { "type": "string", "minLength": 1 },
         "approvedAt": { "type": "string", "format": "date-time" },
+        "stateSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "governanceReportSha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
         "sources": {
           "type": "array",
           "minItems": 1,

@@ -1,0 +1,56 @@
+{
+  "authorityBoundaries": ["majorProductDecision", "repositoryMutation"],
+  "acceptance": {
+    "claimBoundary": "Acceptance proves deterministic provenance and tamper rejection; a valid digest is neither human approval nor execution authorization.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "Canonical digest fixtures cover every assumption-to-handoff transition.",
+      "Replay, tampering, stale-revision, skipped-stage, path-escape, and digest-mismatch tests pass."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "completionCriteria": [
+    "The working assumption, assembled brief, proposed backlog, adoption decision, governed handoff, and returned receipt each have a deterministic canonical digest.",
+    "Every downstream artifact binds its predecessor digest, repository revision, and governing source hashes.",
+    "Validation fails closed when the repository revision, source hash, assumption, brief, proposal, adoption decision, or handoff changes.",
+    "A saved proposal remains non-canonical and cannot be compiled into an execution-capable handoff without a separate valid adoption receipt.",
+    "Replay, tampering, stale-revision, skipped-stage, path-escape, and digest-mismatch tests pass."
+  ],
+  "context": {
+    "optional": ["docs/USER_MANUAL.md", "docs/AGENTFLOW-INTEGRATION.md"],
+    "required": ["AGENTS.md", "docs/PROOFLOOM-PREIMPLEMENTATION-ASSESSMENT.md", "docs/ARCHITECTURE.md"]
+  },
+  "dependencies": ["TASK-PROOFLOOM-INTENT-RATIFICATION"],
+  "id": "TASK-PROOFLOOM-PROVENANCE-CHAIN",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-PROVENANCE-CHAIN"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001"],
+    "requirements": ["REQ-ADOPTION-001", "REQ-BACKLOG-001"],
+    "successMetrics": ["MET-ADOPTION-001", "MET-BACKLOG-001"]
+  },
+  "nonObjectives": [
+    "Do not make a proposed backlog canonical automatically.",
+    "Do not dispatch AgentFlow or imply that a valid digest is human approval.",
+    "Do not create a parallel artifact store or authority graph."
+  ],
+  "objective": "Create an unbroken, tamper-evident provenance chain from repository-derived assumption through adopted AgentFlow handoff.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/backlog_assembly.py",
+      "design_intelligence/agentflow_contracts.py",
+      "design_intelligence/data/schemas/**",
+      "tests/test_backlog_assembly.py",
+      "tests/test_agentflow_contracts.py",
+      "docs/AGENTFLOW-INTEGRATION.md",
+      "docs/USER_MANUAL.md"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Bind the assumption-to-handoff provenance chain",
+  "verification": {"required": ["unit-governance", "design-quick"]},
+  "workType": "architecture"
+}

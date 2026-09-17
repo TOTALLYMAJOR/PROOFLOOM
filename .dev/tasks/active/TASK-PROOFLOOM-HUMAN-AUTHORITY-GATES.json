@@ -1,0 +1,60 @@
+{
+  "authorityBoundaries": ["majorProductDecision", "memoryPromotion", "executionApproval"],
+  "acceptance": {
+    "claimBoundary": "Acceptance proves that consequential transitions require artifact-bound human authority; it does not establish external identity-provider assurance.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "Automated tests reject altered, expired, replayed, mismatched, wrong-scope, and agent-authored receipts.",
+      "A repository owner reviews the allowed authority roles and transition matrix."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "completionCriteria": [
+    "Premise agreement is session-bound and digest-bound to the exact assumption presented to the operator.",
+    "Canonical backlog adoption, execution-capable handoff approval, outcome promotion, and retirement each require a separately typed human decision receipt.",
+    "Human receipts identify an allowed repository authority, bind the exact artifact digest and repository revision, state their scope, and enforce expiry or supersession where applicable.",
+    "Agent identities cannot approve execution, select an arena winner, promote institutional learning, or retire an accepted decision.",
+    "Generic memory and handoff commands cannot bypass the required ratification lifecycle.",
+    "Altered, expired, replayed, mismatched, agent-authored, and wrong-scope receipts fail closed in automated tests."
+  ],
+  "context": {
+    "optional": ["docs/DESIGN-MEMORY-PREFLIGHT.md", "docs/AGENTIC-DEVELOPMENT.md"],
+    "required": ["AGENTS.md", "docs/PROOFLOOM-PREIMPLEMENTATION-ASSESSMENT.md", "docs/ARCHITECTURE.md"]
+  },
+  "dependencies": ["TASK-PROOFLOOM-PROVENANCE-CHAIN"],
+  "id": "TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001"],
+    "requirements": ["REQ-ADOPTION-001", "REQ-ROUTING-001"],
+    "successMetrics": ["MET-ADOPTION-001", "MET-ROUTING-001"]
+  },
+  "nonObjectives": [
+    "Do not claim cryptographic human identity without an approved identity-provider boundary.",
+    "Do not permit an agent, model, or UI checkbox to substitute for repository authority.",
+    "Do not rewrite or delete historical decision and outcome records."
+  ],
+  "objective": "Make every consequential Proofloom approval durable, artifact-bound, human-owned, and non-bypassable.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/backlog_assembly.py",
+      "design_intelligence/agentflow_contracts.py",
+      "design_intelligence/memory.py",
+      "design_intelligence/outcome_lifecycle.py",
+      "design_intelligence/cli.py",
+      "design_intelligence/data/schemas/**",
+      "tests/test_backlog_assembly.py",
+      "tests/test_agentflow_contracts.py",
+      "tests/test_memory_v2.py",
+      "tests/test_outcome_lifecycle.py"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Harden human authority and ratification gates",
+  "verification": {"required": ["unit-governance", "design-quick"]},
+  "workType": "governance"
+}

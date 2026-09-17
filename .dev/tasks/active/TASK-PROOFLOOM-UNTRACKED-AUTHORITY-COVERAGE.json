@@ -1,0 +1,53 @@
+{
+  "acceptance": {
+    "claimBoundary": "Acceptance proves local detection and fail-closed behavior for declared authority candidates; it does not make untracked files canonical.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "A QuoteFlow-style regression fixture detects the canonical index plus all eight linked product-intelligence artifacts.",
+      "The exact read-only QuoteFlow pilot reports REVIEW_REQUIRED and design LOCKED while those authorities remain untracked."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "authorityBoundaries": ["canonicalAuthority", "designReadiness", "repositoryMutation"],
+  "completionCriteria": [
+    "The authority scanner detects the product-intelligence index, baselines, capability map, outcome contract, guardrails, experiment ledger, metrics, journey model, and event schema when untracked.",
+    "Every detected candidate records its inferred or declared authority roles without silently promoting it to canonical authority.",
+    "Any untracked critical authority locks material design and produces a reviewable finding.",
+    "Regression evidence distinguishes tracked authority, untracked candidate, and unrelated documentation."
+  ],
+  "context": {
+    "optional": ["docs/TRUST_MODEL.md"],
+    "required": ["AGENTS.md", "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md"]
+  },
+  "dependencies": ["TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE"],
+  "id": "TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001"],
+    "requirements": ["REQ-ADOPTION-001", "REQ-BACKLOG-001"],
+    "successMetrics": ["MET-ADOPTION-001", "MET-BACKLOG-001"]
+  },
+  "nonObjectives": [
+    "Do not automatically track, adopt, or ratify discovered files.",
+    "Do not infer authority from the word canonical outside an explicit declaration or repository-native index.",
+    "Do not claim exhaustive authority discovery when graph or repository coverage is incomplete."
+  ],
+  "objective": "Fail closed when new product-intelligence authorities appear outside the governed repository snapshot.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/governance.py",
+      "tests/test_governance_convergence.py",
+      "tests/fixtures/**",
+      "docs/TRUST_MODEL.md",
+      "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Detect every untracked product-intelligence authority",
+  "verification": {"required": ["unit-governance", "design-quick"]},
+  "workType": "governance"
+}

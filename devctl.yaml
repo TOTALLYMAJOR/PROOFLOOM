@@ -267,6 +267,12 @@
         "backlog": {
           "completionPolicy": "all-terminal",
           "dependencies": {},
+          "draftingPolicy": {
+            "requireAcceptanceContract": true,
+            "requireAuthorityBoundaries": true,
+            "requireExplicitDependencies": true,
+            "requireVerification": true
+          },
           "sources": [
             {
               "includeInCompletion": true,

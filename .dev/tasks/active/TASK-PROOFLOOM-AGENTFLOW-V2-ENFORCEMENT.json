@@ -1,0 +1,57 @@
+{
+  "acceptance": {
+    "claimBoundary": "Acceptance proves compatible enforcement in both local repositories at exact commits; it does not prove deployment, hosted execution, production behavior, or customer outcomes.",
+    "decisionAuthority": "repository owners for Proofloom and AgentFlow",
+    "evidenceRequired": [
+      "AgentFlow rejects v1, dirty, stale, authority-drifted, source-mismatched, and unverified approved handoffs before immutable-plan binding or dispatch.",
+      "A cross-repository fixture proves v2 import, plan binding, execution, receipt, and Proofloom receipt audit against exact commits."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "authorityBoundaries": ["AgentFlowExecution", "immutablePlan", "crossRepositoryAcceptance"],
+  "completionCriteria": [
+    "AgentFlow adopts the governed-task-handoff v2 schema and independently verifies repository currency before plan binding or dispatch.",
+    "Approved authority without current repository proof remains non-executable in AgentFlow, not only in Proofloom.",
+    "The imported backlog preserves IDs, dependencies, ownership, acceptance criteria, evidence requirements, and validation equivalence.",
+    "The returned receipt remains bound to the exact v2 handoff digest and passes Proofloom receipt-integrity validation.",
+    "Both repository owners record acceptance at exact commits before end-to-end enforcement is claimed."
+  ],
+  "context": {
+    "optional": ["docs/TRUST_MODEL.md"],
+    "required": ["AGENTS.md", "docs/AGENTFLOW-INTEGRATION.md"]
+  },
+  "dependencies": [
+    "TASK-PROOFLOOM-HANDOFF-V2-SNAPSHOT",
+    "TASK-PROOFLOOM-AGENTFLOW-RECEIPT-INTEGRITY"
+  ],
+  "id": "TASK-PROOFLOOM-AGENTFLOW-V2-ENFORCEMENT",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-AGENTFLOW-V2-ENFORCEMENT"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001", "JRN-PILOT-001"],
+    "requirements": ["REQ-ADOPTION-001", "REQ-BACKLOG-001", "REQ-ROUTING-001"],
+    "successMetrics": ["MET-ADOPTION-001", "MET-BACKLOG-001", "MET-ROUTING-001"]
+  },
+  "nonObjectives": [
+    "Do not write to the AgentFlow repository from this Proofloom task without separately authorized cross-repository scope.",
+    "Do not keep v1 executable as a compatibility escape hatch.",
+    "Do not treat local cross-repository fixtures as hosted or production execution proof."
+  ],
+  "objective": "Make AgentFlow independently enforce handoff v2 so the trust boundary exists on both sides of execution.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "critical",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/agentflow_contracts.py",
+      "design_intelligence/data/schemas/governed-task-handoff.schema.json",
+      "design_intelligence/data/schemas/agentflow-build-receipt.schema.json",
+      "tests/test_agentflow_contracts.py",
+      "docs/AGENTFLOW-INTEGRATION.md"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Enforce handoff v2 inside AgentFlow",
+  "verification": {"required": ["unit-governance", "design-full"]},
+  "workType": "architecture"
+}

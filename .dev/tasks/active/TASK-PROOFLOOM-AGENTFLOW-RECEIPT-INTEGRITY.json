@@ -1,0 +1,57 @@
+{
+  "authorityBoundaries": ["executionClaim", "integrationClaim"],
+  "acceptance": {
+    "claimBoundary": "Acceptance proves local receipt validation against the declared handoff; it does not prove deployment, production behavior, customer acceptance, or outcomes.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "Focused receipt-contract tests pass for valid and tampered receipts.",
+      "A repository-bound receipt audit records exact handoff, task, commit, ownership, validation, and evidence equivalence."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "completionCriteria": [
+    "The AgentFlow receipt schema is fully enforced before any execution or integration claim is emitted.",
+    "Receipt base commit equals the approved handoff base commit and receipt task IDs exactly equal the approved handoff task IDs.",
+    "Every integrated task has valid result and integration commits, changed files within its declared ownership, and passing required validations.",
+    "Every required evidence class from the handoff is present and digest-verifiable in the receipt.",
+    "Missing tasks, extra tasks, ownership escapes, failed or empty required validations, inconsistent commits, incomplete evidence, and stale handoffs fail closed.",
+    "The audit claim distinguishes local execution and integration from deployment, provider behavior, production readiness, customer acceptance, and outcomes."
+  ],
+  "context": {
+    "optional": ["docs/USER_MANUAL.md"],
+    "required": ["AGENTS.md", "docs/AGENTFLOW-INTEGRATION.md", "docs/PROOFLOOM-PREIMPLEMENTATION-ASSESSMENT.md"]
+  },
+  "dependencies": ["TASK-PROOFLOOM-PROVENANCE-CHAIN"],
+  "id": "TASK-PROOFLOOM-AGENTFLOW-RECEIPT-INTEGRITY",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-AGENTFLOW-RECEIPT-INTEGRITY"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001"],
+    "requirements": ["REQ-BACKLOG-001", "REQ-ROUTING-001"],
+    "successMetrics": ["MET-BACKLOG-001", "MET-ROUTING-001"]
+  },
+  "nonObjectives": [
+    "Do not move execution into Proofloom.",
+    "Do not infer deployment, production, provider, customer, or business outcomes from a build receipt.",
+    "Do not relax task ownership or validation equivalence to accept a receipt."
+  ],
+  "objective": "Strengthen Proofloom's AgentFlow receipt audit until its local execution and integration claim is fully evidence-bound.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/agentflow_contracts.py",
+      "design_intelligence/data/schemas/governed-task-handoff.schema.json",
+      "design_intelligence/data/schemas/agentflow-build-receipt.schema.json",
+      "tests/test_agentflow_contracts.py",
+      "docs/AGENTFLOW-INTEGRATION.md",
+      "docs/FEATURE_MATRIX.md",
+      "docs/USER_MANUAL.md"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Make AgentFlow receipt claims evidence-complete",
+  "verification": {"required": ["unit-governance", "design-quick"]},
+  "workType": "architecture"
+}

@@ -17,6 +17,7 @@ from .adoption import (
 )
 from .agentflow_contracts import (
     audit_agentflow_build_receipt,
+    audit_governed_handoff_repository,
     load_governed_handoff,
     write_governed_handoff,
 )
@@ -254,10 +255,12 @@ def main(argv: list[str] | None = None) -> int:
     agentflow_create = agentflow_subparsers.add_parser("handoff-create")
     agentflow_create.add_argument("--input", required=True, help="Governed handoff source JSON.")
     agentflow_create.add_argument("--output", required=True, help="Explicit output path for the versioned handoff.")
+    agentflow_create.add_argument("--repository", help="Repository root used to re-verify an approved handoff.")
     agentflow_create.add_argument("--format", choices=("json", "text"), default="text")
     agentflow_validate = agentflow_subparsers.add_parser("handoff-validate")
     agentflow_validate.add_argument("--input", required=True)
     agentflow_validate.add_argument("--allow-proposed", action="store_true")
+    agentflow_validate.add_argument("--repository", help="Repository root used to verify current authority state.")
     agentflow_validate.add_argument("--format", choices=("json", "text"), default="text")
     agentflow_receipt = agentflow_subparsers.add_parser("receipt-audit")
     agentflow_receipt.add_argument("--input", required=True, help="AgentFlow build receipt JSON.")
@@ -611,15 +614,37 @@ def _dispatch(args: argparse.Namespace) -> int:
         return 0 if report["status"] == "PASS" else 1
     if args.command == "agentflow":
         if args.agentflow_command == "handoff-create":
-            report = write_governed_handoff(_load_json_required(args.input), args.output)
+            report = write_governed_handoff(
+                _load_json_required(args.input),
+                args.output,
+                repository_root=args.repository,
+            )
         elif args.agentflow_command == "handoff-validate":
             handoff = load_governed_handoff(args.input, require_approved=not args.allow_proposed)
-            report = {
-                "status": "PASS",
-                "handoffId": handoff["handoffId"],
-                "authorityStatus": handoff["authority"]["status"],
-                "executionAuthorized": handoff["authority"]["status"] == "APPROVED",
-            }
+            if args.repository:
+                report = audit_governed_handoff_repository(handoff, args.repository)
+                report.update({
+                    "handoffId": handoff["handoffId"],
+                    "authorityStatus": handoff["authority"]["status"],
+                    "executionAuthorized": (
+                        handoff["authority"]["status"] == "APPROVED"
+                        and report["status"] == "PASS"
+                        and report["currencyVerified"]
+                    ),
+                })
+            else:
+                approved = handoff["authority"]["status"] == "APPROVED"
+                report = {
+                    "status": "REVIEW_REQUIRED" if approved else "PASS",
+                    "handoffId": handoff["handoffId"],
+                    "authorityStatus": handoff["authority"]["status"],
+                    "currencyVerified": False,
+                    "executionAuthorized": False,
+                    "errors": (
+                        ["Approved handoff was not verified against a current repository snapshot"]
+                        if approved else []
+                    ),
+                }
         else:
             report = audit_agentflow_build_receipt(args.input, handoff_path=args.handoff)
         _emit(report, _simple_text("AGENTFLOW CONTRACT", report), args.format)

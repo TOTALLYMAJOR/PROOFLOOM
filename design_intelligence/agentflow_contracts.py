@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import subprocess
 from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
@@ -10,7 +11,8 @@ from typing import Any
 
 HANDOFF_KIND = "design-intelligence/governed-task-handoff"
 RECEIPT_KIND = "agentflow/build-receipt"
-SCHEMA_VERSION = "1.0.0"
+HANDOFF_SCHEMA_VERSION = "2.0.0"
+RECEIPT_SCHEMA_VERSION = "1.0.0"
 
 
 def canonical_json_sha256(document: dict[str, Any]) -> str:
@@ -41,7 +43,12 @@ def load_governed_handoff(path: str | Path, *, require_approved: bool = True) ->
     return document
 
 
-def write_governed_handoff(source: dict[str, Any], path: str | Path) -> dict[str, Any]:
+def write_governed_handoff(
+    source: dict[str, Any],
+    path: str | Path,
+    *,
+    repository_root: str | Path | None = None,
+) -> dict[str, Any]:
     normalized = _normalize_governed_handoff(source)
     errors = validate_governed_handoff(normalized, require_approved=False)
     if errors:
@@ -49,13 +56,145 @@ def write_governed_handoff(source: dict[str, Any], path: str | Path) -> dict[str
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(normalized, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    if repository_root is not None:
+        currency = audit_governed_handoff_repository(normalized, repository_root)
+    elif normalized["authority"]["status"] == "APPROVED":
+        currency = {
+            "status": "REVIEW_REQUIRED",
+            "currencyVerified": False,
+            "errors": ["Approved handoff was not verified against a current repository snapshot"],
+        }
+    else:
+        currency = {"status": "NOT_APPLICABLE", "currencyVerified": False, "errors": []}
+    execution_authorized = (
+        normalized["authority"]["status"] == "APPROVED"
+        and currency["status"] == "PASS"
+        and currency["currencyVerified"]
+    )
     return {
-        "status": "PASS",
+        "status": "PASS" if normalized["authority"]["status"] != "APPROVED" or execution_authorized else "REVIEW_REQUIRED",
         "output": str(output.resolve()),
         "handoffId": normalized["handoffId"],
         "authorityStatus": normalized["authority"]["status"],
         "sha256": canonical_governed_handoff_sha256(normalized),
-        "executionAuthorized": normalized["authority"]["status"] == "APPROVED",
+        "currencyVerified": currency["currencyVerified"],
+        "executionAuthorized": execution_authorized,
+        "errors": currency["errors"],
+    }
+
+
+def build_repository_authority_snapshot(repository_root: str | Path) -> dict[str, Any]:
+    from .governance import CRITICAL_ROLES, audit_governance, verify_governance_convergence
+
+    root = Path(repository_root).resolve()
+    verification = verify_governance_convergence(root)
+    if verification["status"] != "PASS":
+        raise ValueError(
+            "Repository governance is not converged: " + "; ".join(verification["errors"])
+        )
+    audit = audit_governance(root)
+    if audit["untrackedAuthorityCandidates"]:
+        raise ValueError("Repository has untracked critical authority candidates")
+    worktree_changes = _git_worktree_changes(root)
+    if worktree_changes:
+        raise ValueError("Repository worktree is not clean: " + ", ".join(worktree_changes[:20]))
+    sources = sorted(
+        (
+            {"path": item["path"], "sha256": item["sha256"]}
+            for item in audit["authorities"]
+            if set(item["roles"]) & CRITICAL_ROLES
+            and item["lifecycle"] not in {"historical", "evidence"}
+        ),
+        key=lambda item: item["path"],
+    )
+    payload = {
+        "baseCommit": _git_head(root),
+        "worktreeState": "clean",
+        "authorityStateSha256": audit["authorityDrift"]["currentAuthorityStateSha256"],
+        "governanceReportSha256": audit["reportSha256"],
+        "sources": sources,
+    }
+    return {**payload, "snapshotSha256": canonical_json_sha256(payload)}
+
+
+def audit_governed_handoff_repository(
+    document: Any,
+    repository_root: str | Path,
+) -> dict[str, Any]:
+    from .governance import CRITICAL_ROLES, audit_governance, verify_governance_convergence
+
+    errors = validate_governed_handoff(document)
+    root = Path(repository_root).resolve()
+    if errors:
+        return {"status": "FAIL", "currencyVerified": False, "errors": errors, "root": str(root)}
+    assert isinstance(document, dict)
+    if not root.is_dir():
+        errors.append(f"Repository root does not exist: {root}")
+        return {"status": "FAIL", "currencyVerified": False, "errors": errors, "root": str(root)}
+
+    governance = verify_governance_convergence(root)
+    audit = audit_governance(root)
+    if governance["status"] != "PASS":
+        errors.extend(governance["errors"])
+    if audit["untrackedAuthorityCandidates"]:
+        paths = ", ".join(item["path"] for item in audit["untrackedAuthorityCandidates"])
+        errors.append(f"Repository has untracked critical authority candidates: {paths}")
+    try:
+        worktree_changes = _git_worktree_changes(root)
+    except ValueError as error:
+        errors.append(str(error))
+        worktree_changes = []
+    if worktree_changes:
+        errors.append("Repository worktree is not clean: " + ", ".join(worktree_changes[:20]))
+
+    repository = document["repository"]
+    authority = document["authority"]
+    try:
+        current_head = _git_head(root)
+    except ValueError as error:
+        errors.append(str(error))
+        current_head = None
+    if current_head is not None and repository["baseCommit"] != current_head:
+        errors.append("repository.baseCommit does not match the current repository HEAD")
+    if authority["stateSha256"] != audit["authorityDrift"]["currentAuthorityStateSha256"]:
+        errors.append("authority.stateSha256 does not match the current critical authority state")
+    if authority["governanceReportSha256"] != audit["reportSha256"]:
+        errors.append("authority.governanceReportSha256 does not match the current governance report")
+
+    expected_sources = sorted(
+        (
+            {"path": item["path"], "sha256": item["sha256"]}
+            for item in audit["authorities"]
+            if set(item["roles"]) & CRITICAL_ROLES
+            and item["lifecycle"] not in {"historical", "evidence"}
+        ),
+        key=lambda item: item["path"],
+    )
+    provided_sources = sorted(authority["sources"], key=lambda item: item["path"])
+    if provided_sources != expected_sources:
+        errors.append("authority.sources does not exactly match the current critical authority set")
+    current_snapshot = None
+    if current_head is not None:
+        snapshot_payload = {
+            "baseCommit": current_head,
+            "worktreeState": "clean",
+            "authorityStateSha256": audit["authorityDrift"]["currentAuthorityStateSha256"],
+            "governanceReportSha256": audit["reportSha256"],
+            "sources": expected_sources,
+        }
+        current_snapshot = canonical_json_sha256(snapshot_payload)
+        if repository["snapshotSha256"] != current_snapshot:
+            errors.append("repository.snapshotSha256 does not match the current governed snapshot")
+
+    return {
+        "status": "PASS" if not errors else "FAIL",
+        "currencyVerified": not errors,
+        "errors": errors,
+        "root": str(root),
+        "baseCommit": current_head,
+        "snapshotSha256": current_snapshot,
+        "authorityStateSha256": audit["authorityDrift"]["currentAuthorityStateSha256"],
+        "governanceReportSha256": audit["reportSha256"],
     }
 
 
@@ -98,7 +237,7 @@ def validate_governed_handoff(document: Any, *, require_approved: bool = True) -
     if errors:
         return errors
     assert isinstance(document, dict)
-    _constant(document, "schemaVersion", SCHEMA_VERSION, errors)
+    _constant(document, "schemaVersion", HANDOFF_SCHEMA_VERSION, errors)
     _constant(document, "kind", HANDOFF_KIND, errors)
     _required_text(document, "handoffId", errors)
     _datetime_field(document, "createdAt", errors)
@@ -108,6 +247,10 @@ def validate_governed_handoff(document: Any, *, require_approved: bool = True) -
         base_commit = repository.get("baseCommit")
         if not _hex(base_commit, 40):
             errors.append("repository.baseCommit must be a 40-character lowercase Git SHA")
+        if not _hex(repository.get("snapshotSha256"), 64):
+            errors.append("repository.snapshotSha256 must be a 64-character lowercase digest")
+        if repository.get("worktreeState") != "clean":
+            errors.append("repository.worktreeState must equal clean")
     authority = _mapping_field(document, "authority", errors)
     if authority is not None:
         status = authority.get("status")
@@ -118,6 +261,10 @@ def validate_governed_handoff(document: Any, *, require_approved: bool = True) -
         if status == "APPROVED":
             _required_text(authority, "approvedBy", errors, prefix="authority.")
             _datetime_field(authority, "approvedAt", errors, prefix="authority.")
+        if not _hex(authority.get("stateSha256"), 64):
+            errors.append("authority.stateSha256 must be a 64-character lowercase digest")
+        if not _hex(authority.get("governanceReportSha256"), 64):
+            errors.append("authority.governanceReportSha256 must be a 64-character lowercase digest")
         sources = authority.get("sources")
         if not isinstance(sources, list) or not sources:
             errors.append("authority.sources must contain at least one source")
@@ -165,7 +312,7 @@ def validate_agentflow_build_receipt(document: Any) -> list[str]:
     if errors:
         return errors
     assert isinstance(document, dict)
-    _constant(document, "schemaVersion", SCHEMA_VERSION, errors)
+    _constant(document, "schemaVersion", RECEIPT_SCHEMA_VERSION, errors)
     _constant(document, "kind", RECEIPT_KIND, errors)
     handoff = _mapping_field(document, "handoff", errors)
     if handoff is not None:
@@ -195,6 +342,35 @@ def _load_json(path: str | Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError("JSON document must be an object")
     return value
+
+
+def _git_head(root: Path) -> str:
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(root), "rev-parse", "HEAD"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as error:
+        raise ValueError(f"Repository does not have a readable Git HEAD: {root}") from error
+    head = result.stdout.strip().lower()
+    if not _hex(head, 40):
+        raise ValueError(f"Repository Git HEAD is invalid: {root}")
+    return head
+
+
+def _git_worktree_changes(root: Path) -> list[str]:
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(root), "status", "--porcelain=v1", "--untracked-files=all"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as error:
+        raise ValueError(f"Repository worktree status is unavailable: {root}") from error
+    return [line.strip() for line in result.stdout.splitlines() if line.strip()]
 
 
 def _require_mapping(value: Any) -> list[str]:

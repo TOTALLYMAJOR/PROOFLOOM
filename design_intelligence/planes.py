@@ -17,6 +17,94 @@ OPEN_BACKLOG_STATUSES = {"ACTIVE", "BLOCKED", "STAGED"}
 BACKLOG_STATUSES = TERMINAL_BACKLOG_STATUSES | OPEN_BACKLOG_STATUSES
 RISK_RANK = {"low": 1, "medium": 2, "high": 3, "critical": 4}
 VENDOR_MARKERS = ("openai", "anthropic", "claude", "gemini", "gpt-", "llama", "mistral")
+DEFAULT_BACKLOG_DRAFTING_POLICY = {
+    "requireExplicitDependencies": True,
+    "requireAcceptanceContract": True,
+    "requireAuthorityBoundaries": True,
+    "requireVerification": True,
+}
+
+
+def validate_backlog_task_contract(
+    packet: Any,
+    policy: dict[str, Any] | None = None,
+) -> list[str]:
+    """Validate the evidence and authority fields needed to draft executable work."""
+    if not isinstance(packet, dict):
+        return ["task packet must be an object"]
+    configured = policy or DEFAULT_BACKLOG_DRAFTING_POLICY
+    errors: list[str] = []
+
+    if configured.get("requireExplicitDependencies", True):
+        dependencies = packet.get("dependencies")
+        if not isinstance(dependencies, list) or not all(
+            isinstance(item, str) and item.strip() for item in dependencies
+        ):
+            errors.append("task.dependencies must be an explicit array of task IDs")
+
+    criteria = packet.get("completionCriteria")
+    if not isinstance(criteria, list) or not criteria or not all(
+        isinstance(item, str) and item.strip() for item in criteria
+    ):
+        errors.append("task.completionCriteria must be a non-empty string array")
+
+    if configured.get("requireVerification", True):
+        verification = packet.get("verification")
+        required_checks = verification.get("required") if isinstance(verification, dict) else None
+        if not isinstance(required_checks, list) or not required_checks or not all(
+            isinstance(item, str) and item.strip() for item in required_checks
+        ):
+            errors.append("task.verification.required must be a non-empty string array")
+
+    if configured.get("requireAuthorityBoundaries", True):
+        boundaries = packet.get("authorityBoundaries")
+        if not isinstance(boundaries, list) or not boundaries or not all(
+            isinstance(item, str) and item.strip() for item in boundaries
+        ):
+            errors.append("task.authorityBoundaries must be a non-empty string array")
+
+    if configured.get("requireAcceptanceContract", True):
+        acceptance = packet.get("acceptance")
+        if not isinstance(acceptance, dict):
+            errors.append("task.acceptance must be an object")
+        else:
+            evidence = acceptance.get("evidenceRequired")
+            if not isinstance(evidence, list) or not evidence or not all(
+                isinstance(item, str) and item.strip() for item in evidence
+            ):
+                errors.append("task.acceptance.evidenceRequired must be a non-empty string array")
+            human_decision = acceptance.get("humanDecision")
+            if human_decision not in {"REQUIRED", "NOT_REQUIRED"}:
+                errors.append("task.acceptance.humanDecision must be REQUIRED or NOT_REQUIRED")
+            if not isinstance(acceptance.get("decisionAuthority"), str) or not acceptance[
+                "decisionAuthority"
+            ].strip():
+                errors.append("task.acceptance.decisionAuthority must be a non-empty string")
+            if not isinstance(acceptance.get("claimBoundary"), str) or not acceptance[
+                "claimBoundary"
+            ].strip():
+                errors.append("task.acceptance.claimBoundary must be a non-empty string")
+            if packet.get("risk") in {"high", "critical"} and human_decision != "REQUIRED":
+                errors.append("high and critical risk tasks require a human acceptance decision")
+
+    if packet.get("schemaVersion") == 3 and packet.get("status") == "COMPLETED":
+        decision = packet.get("acceptanceDecision")
+        if not isinstance(decision, dict):
+            errors.append("completed schemaVersion 3 tasks require task.acceptanceDecision")
+        else:
+            if decision.get("decision") != "ACCEPTED":
+                errors.append("completed schemaVersion 3 tasks require an ACCEPTED decision")
+            for field in ("authority", "evidence"):
+                value = decision.get(field)
+                if field == "evidence":
+                    valid = isinstance(value, list) and bool(value) and all(
+                        isinstance(item, str) and item.strip() for item in value
+                    )
+                else:
+                    valid = isinstance(value, str) and bool(value.strip())
+                if not valid:
+                    errors.append(f"task.acceptanceDecision.{field} is required")
+    return errors
 
 
 def load_industry_standards() -> dict[str, Any]:
@@ -496,6 +584,18 @@ def audit_backlog(repository_root: str | Path, config: dict[str, Any]) -> dict[s
             "errors": ["Backlog requires at least one declared source"],
             "warnings": [],
         }
+    drafting_policy = config.get("draftingPolicy")
+    uses_task_store = any(
+        isinstance(source, dict) and source.get("parser") == "task-store" for source in sources
+    )
+    if uses_task_store and (
+        not isinstance(drafting_policy, dict)
+        or any(
+            drafting_policy.get(field) is not True
+            for field in DEFAULT_BACKLOG_DRAFTING_POLICY
+        )
+    ):
+        errors.append("Backlog draftingPolicy cannot weaken task drafting and acceptance gates")
     items: list[dict[str, Any]] = []
     for source_index, source in enumerate(sources):
         if not isinstance(source, dict):
@@ -510,7 +610,9 @@ def audit_backlog(repository_root: str | Path, config: dict[str, Any]) -> dict[s
             errors.append(f"Backlog source does not exist: {path}")
             continue
         try:
-            parsed = _parse_backlog_source(root, target, parser, source)
+            parse_options = dict(source)
+            parse_options["draftingPolicy"] = drafting_policy
+            parsed = _parse_backlog_source(root, target, parser, parse_options)
         except (OSError, ValueError, json.JSONDecodeError) as error:
             errors.append(f"Unable to parse backlog source {path}: {error}")
             continue
@@ -613,6 +715,18 @@ def audit_backlog(repository_root: str | Path, config: dict[str, Any]) -> dict[s
     cycle = _dependency_cycle(dependencies)
     if cycle:
         errors.append("Backlog dependency cycle: " + " -> ".join(cycle))
+
+    status_by_id = {
+        item.get("id"): item.get("status") for item in active_items if item.get("id")
+    }
+    for item in active_items:
+        if item.get("status") != "ACTIVE" or not item.get("governedTaskPacket"):
+            continue
+        for dependency in dependencies.get(item.get("id"), []):
+            if status_by_id.get(dependency) != "COMPLETED":
+                errors.append(
+                    f"Active backlog dependency is not completed: {item.get('id')} -> {dependency}"
+                )
 
     waves = _backlog_waves(active_items, dependencies) if not cycle else []
     terminal = [item for item in active_items if item.get("status") in TERMINAL_BACKLOG_STATUSES]
@@ -753,6 +867,18 @@ def _parse_backlog_source(
                 raise ValueError(f"{path.relative_to(root)} status does not match blocked state folder")
             if folder == "completed" and status not in TERMINAL_BACKLOG_STATUSES:
                 raise ValueError(f"{path.relative_to(root)} status does not match completed state folder")
+            if folder != "completed":
+                contract_errors = validate_backlog_task_contract(
+                    packet,
+                    (options or {}).get("draftingPolicy"),
+                )
+                if packet.get("schemaVersion") != 3:
+                    contract_errors.insert(0, "active and blocked task packets require schemaVersion 3")
+                if contract_errors:
+                    raise ValueError(
+                        f"{path.relative_to(root)} violates backlog drafting policy: "
+                        + "; ".join(contract_errors)
+                    )
             records.append({
                 "id": packet.get("id"),
                 "title": packet.get("title"),
@@ -762,6 +888,7 @@ def _parse_backlog_source(
                 "rationale": packet.get("terminalDisposition", {}).get("rationale"),
                 "evidence": packet.get("evidence", []),
                 "evidenceMustExist": True,
+                "governedTaskPacket": True,
             })
         return records
     if not target.is_file():

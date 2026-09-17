@@ -1,0 +1,52 @@
+{
+  "acceptance": {
+    "claimBoundary": "Acceptance proves current indexed coverage for the declared governance-document scope; it does not prove document correctness or human ratification.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "Codebase Memory coverage reports current metadata for every declared material governance document.",
+      "A regression or validation step fails with GRAPH_COVERAGE_BLOCKED when any required document is excluded, stale, skipped, partial, pending, or unknown."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "authorityBoundaries": ["graphEvidence", "documentationCompleteness", "governanceClaim"],
+  "completionCriteria": [
+    "Material governance documents are indexable or have a repository-approved equivalent evidence path.",
+    "Coverage checks enumerate every document used for architecture, authority, trust, or readiness conclusions.",
+    "Excluded, stale, skipped, partial, pending, or unknown document coverage produces GRAPH_COVERAGE_BLOCKED instead of a completeness claim.",
+    "Graph coverage remains explicitly separate from document correctness, authority ratification, and runtime proof."
+  ],
+  "context": {
+    "optional": [".cbmignore", "docs/TRUST_MODEL.md"],
+    "required": ["AGENTS.md"]
+  },
+  "dependencies": ["TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE"],
+  "id": "TASK-PROOFLOOM-DOCS-GRAPH-COVERAGE",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-DOCS-GRAPH-COVERAGE"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001"],
+    "requirements": ["REQ-ADOPTION-001", "REQ-BACKLOG-001"],
+    "successMetrics": ["MET-ADOPTION-001", "MET-BACKLOG-001"]
+  },
+  "nonObjectives": [
+    "Do not treat graph inclusion as proof that a document is correct or current.",
+    "Do not silently bypass graph gaps with direct filesystem reads during exploration.",
+    "Do not broaden indexing to secrets, generated binaries, or unrelated artifacts."
+  ],
+  "objective": "Remove the documentation graph-coverage blind spot without weakening evidence-tier reporting.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      ".cbmignore",
+      "docs/**",
+      "AGENTS.md",
+      "tests/**"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Make governance documentation graph-verifiable",
+  "verification": {"required": ["unit-governance", "design-quick"]},
+  "workType": "governance"
+}

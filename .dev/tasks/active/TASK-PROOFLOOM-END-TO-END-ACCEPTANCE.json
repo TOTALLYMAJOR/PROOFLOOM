@@ -1,0 +1,65 @@
+{
+  "authorityBoundaries": ["releaseClaim", "accessibilityAcceptance", "productionClaim", "humanAcceptance"],
+  "acceptance": {
+    "claimBoundary": "Acceptance is an owner decision over the exact cross-system evidence set; no local, CI, deployment, or AgentFlow receipt alone proves customer or business outcomes.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "Exact-revision governance, full CI, rendered desktop/mobile, accessibility, AgentFlow, and recovery evidence are present.",
+      "The final report separates local, CI, execution, deployment, production, customer-acceptance, and outcome claims."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "completionCriteria": [
+    "The ratified operator journey is exercised end to end from repository evidence through assumption, decision comparison, adopted backlog, approved handoff, externally produced AgentFlow receipt, outcome assessment, and human learning decision.",
+    "Fresh screenshots document every material desktop and mobile step, including success, blocked, stale, invalid, loading, empty, error, and recovery states.",
+    "Keyboard order, focus movement, accessible names, live announcements, reduced motion, contrast, target size, 200 percent zoom, and responsive reflow have explicit evidence; screenshot review alone is not treated as accessibility compliance.",
+    "Governance audit, intent/architecture/intelligence planes, whole-backlog status, quick CI, standard cross-browser CI, and full CI pass at the exact candidate revision without threshold or baseline weakening.",
+    "AgentFlow execution and receipt evidence remain external to Proofloom and require separately verified commits, validations, ownership, and handoff equivalence.",
+    "The final report distinguishes local implementation, CI, AgentFlow execution, deployment, provider behavior, production observation, customer acceptance, and business outcomes.",
+    "A repository owner records the final accept, defer, or reject decision; no automated check substitutes for that decision."
+  ],
+  "context": {
+    "optional": ["docs/FEATURE_MATRIX.md", "docs/USER_MANUAL.md"],
+    "required": ["AGENTS.md", "docs/PROOFLOOM-PREIMPLEMENTATION-ASSESSMENT.md", "docs/ARCHITECTURE.md", "docs/design/DESIGN-LANGUAGE.md"]
+  },
+  "dependencies": [
+    "TASK-PROOFLOOM-OPERATOR-DECISION-WORKBENCH",
+    "TASK-PROOFLOOM-RUNTIME-OUTCOME-PILOT",
+    "TASK-PROOFLOOM-TRUST-PILOT-ACCEPTANCE"
+  ],
+  "id": "TASK-PROOFLOOM-END-TO-END-ACCEPTANCE",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-END-TO-END-ACCEPTANCE"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001", "JRN-PILOT-001"],
+    "requirements": ["REQ-ADOPTION-001", "REQ-JOURNEY-001", "REQ-BACKLOG-001", "REQ-ROUTING-001", "REQ-VISUAL-001"],
+    "successMetrics": ["MET-ADOPTION-001", "MET-JOURNEY-001", "MET-BACKLOG-001", "MET-ROUTING-001", "MET-VISUAL-001"]
+  },
+  "nonObjectives": [
+    "Do not claim deployment, production readiness, customer acceptance, or business outcomes from local or CI evidence.",
+    "Do not update visual baselines silently or weaken governed thresholds.",
+    "Do not close another task merely because this acceptance review ran."
+  ],
+  "objective": "Qualify the complete Proofloom decision-to-execution-to-learning journey with fresh rendered, accessibility, governance, AgentFlow, and claim-boundary evidence.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "standards-assessment", "structured-output", "visual-evidence"],
+  "risk": "critical",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/**",
+      "tests/**",
+      "scripts/design/**",
+      "artifacts/design/operator-shell/**",
+      "artifacts/design/runtime-outcomes/**",
+      "docs/**",
+      ".dev/**",
+      "devctl.yaml",
+      "package.json",
+      "pyproject.toml"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Qualify Proofloom end-to-end acceptance",
+  "verification": {"required": ["unit-governance", "design-full"]},
+  "workType": "design"
+}

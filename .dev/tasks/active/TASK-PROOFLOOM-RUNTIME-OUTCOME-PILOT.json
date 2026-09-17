@@ -1,0 +1,62 @@
+{
+  "authorityBoundaries": ["productionEvidence", "privacyBoundary", "memoryPromotion", "causalClaim"],
+  "acceptance": {
+    "claimBoundary": "Acceptance proves one bounded observation workflow; it does not establish causality, general production readiness, customer acceptance, or business outcomes.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "The pilot binds its release, journey, signals, counter-signals, window, rollback signal, data owner, privacy limits, and ratifying role.",
+      "The report distinguishes product success, agent effectiveness, production observation, customer acceptance, and business outcomes."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "completionCriteria": [
+    "One repository-owner-approved pilot binds a shipped change, release evidence, actor journey, success signals, counter-signals, observation window, rollback signal, data owner, and ratifying human role before observation starts.",
+    "Read-only adapters ingest only declared release, analytics, error, support, accessibility, and agent-effectiveness evidence with provenance, timestamp, freshness, retention, privacy, and tenant boundaries.",
+    "Missing, stale, contradictory, incomplete, privacy-disallowed, or out-of-window evidence produces NOT_READY or a blocked result, never success.",
+    "Product success and agent effectiveness remain separate evaluations, and the assessment makes no causal claim beyond its declared evidence.",
+    "A successful assessment can create only a human-required memory candidate; exact ratification permits one append and retirement preserves history.",
+    "The pilot report separates local adapter proof, release evidence, production observation, customer acceptance, and business outcome claims."
+  ],
+  "context": {
+    "optional": ["docs/FEATURE_MATRIX.md", "docs/USER_MANUAL.md"],
+    "required": ["AGENTS.md", "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md", "docs/AGENTIC-DEVELOPMENT.md", "docs/PROOFLOOM-PREIMPLEMENTATION-ASSESSMENT.md"]
+  },
+  "dependencies": [
+    "TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES",
+    "TASK-PROOFLOOM-ARENA-AGENTFLOW-ADAPTER"
+  ],
+  "id": "TASK-PROOFLOOM-RUNTIME-OUTCOME-PILOT",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-RUNTIME-OUTCOME-PILOT"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001", "JRN-PILOT-001"],
+    "requirements": ["REQ-JOURNEY-001", "REQ-ROUTING-001", "REQ-VISUAL-001"],
+    "successMetrics": ["MET-JOURNEY-001", "MET-ROUTING-001", "MET-VISUAL-001"]
+  },
+  "nonObjectives": [
+    "Do not create a telemetry warehouse, collect secrets, or export raw personal data.",
+    "Do not let a model alter thresholds, decide success, promote memory, or infer causality.",
+    "Do not claim a production or customer outcome from local fixtures or deployment evidence alone."
+  ],
+  "objective": "Prove one privacy-bounded, read-only runtime evidence and outcome-learning loop in an authorized consuming repository.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "standards-assessment", "structured-output", "visual-evidence"],
+  "risk": "critical",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/agentic.py",
+      "design_intelligence/outcome_lifecycle.py",
+      "design_intelligence/data/schemas/outcome-*.json",
+      "tests/test_agentic_capabilities.py",
+      "tests/test_outcome_lifecycle.py",
+      "tests/fixtures/**",
+      "artifacts/design/runtime-outcomes/**",
+      "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
+      "docs/AGENTIC-DEVELOPMENT.md"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Prove a bounded runtime-outcome learning pilot",
+  "verification": {"required": ["unit-governance", "design-full"]},
+  "workType": "product"
+}

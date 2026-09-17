@@ -1,0 +1,57 @@
+{
+  "acceptance": {
+    "claimBoundary": "Acceptance proves that Proofloom rejects under-specified task packets and unsafe dependency state; it does not approve the tasks themselves.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "Schema and validator tests reject missing dependencies, acceptance evidence, authority boundaries, and verification requirements.",
+      "Backlog audit tests reject cycles, unknown dependencies, and ACTIVE work whose dependencies are not completed."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "authorityBoundaries": ["backlogAuthority", "taskAcceptance", "executionReadiness"],
+  "completionCriteria": [
+    "Every non-terminal task packet uses the current governed schema and explicitly declares dependencies, completion criteria, required verification, authority boundaries, acceptance evidence, decision authority, and claim boundary.",
+    "High and critical risk tasks require a human acceptance decision.",
+    "A schemaVersion 3 task cannot become COMPLETED without an ACCEPTED decision, named authority, and acceptance evidence.",
+    "The backlog audit rejects unknown dependencies, dependency cycles, and ACTIVE work with incomplete dependencies.",
+    "Historical schemaVersion 2 terminal records remain readable without weakening governance for new or open work."
+  ],
+  "context": {
+    "optional": ["docs/TRUST_MODEL.md"],
+    "required": ["AGENTS.md", "devctl.yaml", "design_intelligence/data/schemas/task-packet.schema.json"]
+  },
+  "dependencies": [],
+  "id": "TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001"],
+    "requirements": ["REQ-BACKLOG-001", "REQ-ROUTING-001"],
+    "successMetrics": ["MET-BACKLOG-001", "MET-ROUTING-001"]
+  },
+  "nonObjectives": [
+    "Do not automatically approve, activate, execute, or complete drafted work.",
+    "Do not use wording heuristics as a substitute for structured evidence and human authority.",
+    "Do not rewrite historical terminal records merely to make the new policy appear retroactive."
+  ],
+  "objective": "Make backlog drafting, dependencies, acceptance evidence, and terminal decisions machine-governed before trust work can execute.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/control_plane.py",
+      "design_intelligence/planes.py",
+      "design_intelligence/data/schemas/task-packet.schema.json",
+      "design_intelligence/data/schemas/devctl.schema.json",
+      "devctl.yaml",
+      ".dev/tasks/active/TASK-PROOFLOOM-*.json",
+      "tests/test_control_plane.py",
+      "tests/test_planes.py"
+    ]
+  },
+  "status": "ACTIVE",
+  "title": "Govern backlog authoring, dependencies, and acceptance",
+  "verification": {"required": ["unit-governance", "design-quick"]},
+  "workType": "governance"
+}

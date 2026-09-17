@@ -232,9 +232,25 @@
     "backlog": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["completionPolicy", "sources", "terminalStatuses", "dependencies"],
+      "required": ["completionPolicy", "draftingPolicy", "sources", "terminalStatuses", "dependencies"],
       "properties": {
         "completionPolicy": {"const": "all-terminal"},
+        "draftingPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "requireExplicitDependencies",
+            "requireAcceptanceContract",
+            "requireAuthorityBoundaries",
+            "requireVerification"
+          ],
+          "properties": {
+            "requireExplicitDependencies": {"const": true},
+            "requireAcceptanceContract": {"const": true},
+            "requireAuthorityBoundaries": {"const": true},
+            "requireVerification": {"const": true}
+          }
+        },
         "sources": {
           "type": "array",
           "minItems": 1,

@@ -1,0 +1,61 @@
+{
+  "authorityBoundaries": ["executionApproval", "designSelection", "integrationClaim"],
+  "acceptance": {
+    "claimBoundary": "Acceptance proves receipt-bound comparison behavior only; design selection and integration remain separate human and AgentFlow decisions.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "Two contract-equivalent variants are compared using digest-verified AgentFlow receipts.",
+      "Tests reject tampered, stale, incomplete, ownership-escaping, and validation-incomplete variants."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "completionCriteria": [
+    "A read-only adapter consumes actual AgentFlow receipts for at least two isolated, contract-equivalent variants without starting AgentFlow.",
+    "The adapter verifies design-contract, validation-plan, task, source-revision, handoff, build-receipt, and evidence digests before a variant is eligible.",
+    "Failed, partial, stale, ownership-violating, or validation-incomplete execution is ineligible.",
+    "Independent critiques and dissent remain visible and cannot be averaged away into a false consensus.",
+    "A recommended leader remains evidence for a separate human selection and Proofloom cannot integrate the selected variant.",
+    "Tests prove variant-name neutrality, isolation, contract equivalence, receipt tamper rejection, and the human-selection boundary."
+  ],
+  "context": {
+    "optional": ["docs/FEATURE_MATRIX.md"],
+    "required": ["AGENTS.md", "docs/AGENTIC-DEVELOPMENT.md", "docs/AGENTFLOW-INTEGRATION.md", "docs/PROOFLOOM-PREIMPLEMENTATION-ASSESSMENT.md"]
+  },
+  "dependencies": [
+    "TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES",
+    "TASK-PROOFLOOM-AGENTFLOW-RECEIPT-INTEGRITY"
+  ],
+  "id": "TASK-PROOFLOOM-ARENA-AGENTFLOW-ADAPTER",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-ARENA-AGENTFLOW-ADAPTER"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001", "JRN-PILOT-001"],
+    "requirements": ["REQ-ROUTING-001", "REQ-VISUAL-001"],
+    "successMetrics": ["MET-ROUTING-001", "MET-VISUAL-001"]
+  },
+  "nonObjectives": [
+    "Do not execute variants from Proofloom.",
+    "Do not select or integrate a winner automatically.",
+    "Do not treat deterministic comparison as causal or production outcome proof."
+  ],
+  "objective": "Operationalize governed design-arena evaluation using verified AgentFlow receipts while preserving human selection and AgentFlow integration authority.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/agentic.py",
+      "design_intelligence/agentflow_contracts.py",
+      "design_intelligence/data/schemas/design-arena-report.schema.json",
+      "design_intelligence/data/schemas/agentflow-build-receipt.schema.json",
+      "tests/test_agentic_capabilities.py",
+      "tests/test_agentflow_contracts.py",
+      "docs/AGENTIC-DEVELOPMENT.md",
+      "docs/AGENTFLOW-INTEGRATION.md"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Connect design-arena evidence to AgentFlow receipts",
+  "verification": {"required": ["unit-governance", "design-quick"]},
+  "workType": "architecture"
+}

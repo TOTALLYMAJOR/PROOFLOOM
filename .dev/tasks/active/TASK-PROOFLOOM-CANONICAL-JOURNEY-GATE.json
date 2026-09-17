@@ -1,0 +1,55 @@
+{
+  "acceptance": {
+    "claimBoundary": "Acceptance proves that missing canonical journey authority blocks design; it does not ratify any particular journey.",
+    "decisionAuthority": "repository owner",
+    "evidenceRequired": [
+      "A mature-repository fixture without a canonical journey produces MISSING-CANONICAL-JOURNEY and design LOCKED.",
+      "A repository-native canonical index binds an explicitly linked journey only after the source is tracked and recognized."
+    ],
+    "humanDecision": "REQUIRED"
+  },
+  "authorityBoundaries": ["canonicalJourney", "productIntent", "designReadiness"],
+  "completionCriteria": [
+    "A mature repository without a defined canonical journey cannot be marked MAPPED, coherent, or design ready.",
+    "Feature fragments and incidental journey language do not satisfy canonical journey authority.",
+    "An explicit authority declaration or repository-native canonical index can bind the repository's existing journey model without installing a competing authority.",
+    "The repository owner must ratify or revise the canonical journey before the gate unlocks."
+  ],
+  "context": {
+    "optional": ["docs/TRUST_MODEL.md"],
+    "required": ["AGENTS.md", ".dev/intent-index.json", "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md"]
+  },
+  "dependencies": [
+    "TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE",
+    "TASK-PROOFLOOM-INTENT-RATIFICATION"
+  ],
+  "id": "TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE",
+  "intent": {
+    "backlogItems": ["TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE"],
+    "experiments": [],
+    "journeys": ["JRN-ADOPT-001"],
+    "requirements": ["REQ-ADOPTION-001", "REQ-JOURNEY-001"],
+    "successMetrics": ["MET-ADOPTION-001", "MET-JOURNEY-001"]
+  },
+  "nonObjectives": [
+    "Do not create a generic journey that outranks the consuming repository.",
+    "Do not treat a proposed or untracked journey as canonical.",
+    "Do not unlock design from journey keywords alone."
+  ],
+  "objective": "Make canonical journey authority a mandatory, owner-ratified prerequisite for material design work.",
+  "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
+  "risk": "high",
+  "schemaVersion": 3,
+  "scope": {
+    "paths": [
+      "design_intelligence/governance.py",
+      "tests/test_governance_convergence.py",
+      ".dev/intent-index.json",
+      "docs/TRUST_MODEL.md"
+    ]
+  },
+  "status": "STAGED",
+  "title": "Block design without a canonical journey",
+  "verification": {"required": ["unit-governance", "design-quick"]},
+  "workType": "governance"
+}
