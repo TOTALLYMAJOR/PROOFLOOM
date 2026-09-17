@@ -15,6 +15,7 @@ The governing objective is:
 
 See the [feature matrix](docs/FEATURE_MATRIX.md) for the implementation status, primary interface, automated evidence, and proof boundary of every capability. `IMPLEMENTED` means repository source and automated proof exist; it does not imply adoption, deployment, or production outcomes in a consuming repository.
 
+
 ## Rehabilitate mature repositories before design
 
 For a repository that has accumulated product drift, conflicting instructions, incomplete journeys, or years of partial backlog work, start here:
