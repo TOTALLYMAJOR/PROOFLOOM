@@ -76,6 +76,36 @@ class GovernanceConvergenceTests(unittest.TestCase):
 
             self.assertEqual(audit["journeyModel"]["proofStatus"], "LINKED", audit)
 
+    def test_nested_package_script_resolves_parent_relative_target_from_package_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._mature_repository(Path(temporary))
+            self._write(root / "scripts/check-foundation.mjs", "// repository check\n")
+            self._write(
+                root / "functions-connect/package.json",
+                json.dumps({"scripts": {"check": "node ../scripts/check-foundation.mjs"}}),
+            )
+
+            audit = audit_governance(root)
+
+            self.assertEqual(audit["scriptDamage"], [], audit)
+
+    def test_dev_tasks_is_recognized_as_an_existing_backlog_authority(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = self._mature_repository(Path(temporary))
+            (root / "docs/backlog-now.md").unlink()
+            self._write(
+                root / "DEV_TASKS.md",
+                "# Development Tasks\n\n"
+                "This file contains open work only and is the prioritized backlog.\n\n"
+                "## P0\n\n- [ ] Complete the governed local pilot.\n",
+            )
+
+            audit = audit_governance(root)
+
+            self.assertEqual(audit["backlogModel"]["status"], "MAPPED", audit)
+            self.assertEqual(audit["backlogModel"]["activeSources"], ["DEV_TASKS.md"])
+            self.assertNotIn("MISSING-BACKLOG", {item["id"] for item in audit["findings"]})
+
     def test_backlog_projection_prefers_active_items_and_keeps_unique_table_records(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = self._mature_repository(Path(temporary))

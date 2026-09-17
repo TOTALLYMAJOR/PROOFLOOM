@@ -63,6 +63,15 @@ class AgentFlowContractTests(unittest.TestCase):
         self.assertEqual(report["status"], "PASS")
         self.assertFalse(report["executionAuthorized"])
 
+    def test_export_digest_matches_agentflow_defaulted_artifact_arrays(self) -> None:
+        handoff = self.handoff()
+        agentflow_handoff = json.loads(json.dumps(handoff))
+        agentflow_handoff["tasks"][0]["produces"] = []
+        agentflow_handoff["tasks"][0]["consumes"] = []
+        with tempfile.TemporaryDirectory() as directory:
+            report = write_governed_handoff(handoff, Path(directory) / "handoff.json")
+        self.assertEqual(report["sha256"], canonical_json_sha256(agentflow_handoff))
+
     def test_cli_creates_and_validates_approved_handoff(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -97,6 +106,46 @@ class AgentFlowContractTests(unittest.TestCase):
         self.assertEqual(audit["status"], "PASS")
         self.assertTrue(audit["handoffVerified"])
         self.assertTrue(audit["executionComplete"])
+
+    def test_receipt_accepts_agentflow_defaulted_artifact_arrays(self) -> None:
+        handoff = self.handoff()
+        agentflow_handoff = json.loads(json.dumps(handoff))
+        agentflow_handoff["tasks"][0]["produces"] = []
+        agentflow_handoff["tasks"][0]["consumes"] = []
+        receipt = {
+            "schemaVersion": "1.0.0",
+            "kind": "agentflow/build-receipt",
+            "handoff": {
+                "id": handoff["handoffId"],
+                "sha256": canonical_json_sha256(agentflow_handoff),
+            },
+            "build": {
+                "id": "build-1",
+                "status": "completed",
+                "baseCommit": "a" * 40,
+                "integrationCommit": "c" * 40,
+            },
+            "tasks": [{
+                "id": "AF-001",
+                "status": "integrated",
+                "resultCommit": "d" * 40,
+                "integrationCommit": "c" * 40,
+                "changedFiles": ["src/contracts/index.ts"],
+                "validation": [],
+            }],
+            "evidence": {"events": [], "artifacts": [], "approvals": []},
+            "proofBoundary": "Local execution and integration only.",
+            "generatedAt": "2026-09-12T13:00:00Z",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            handoff_path = root / "handoff.json"
+            receipt_path = root / "receipt.json"
+            handoff_path.write_text(json.dumps(handoff), encoding="utf-8")
+            receipt_path.write_text(json.dumps(receipt), encoding="utf-8")
+            audit = audit_agentflow_build_receipt(receipt_path, handoff_path=handoff_path)
+        self.assertEqual(audit["status"], "PASS")
+        self.assertTrue(audit["handoffVerified"])
 
 
 if __name__ == "__main__":

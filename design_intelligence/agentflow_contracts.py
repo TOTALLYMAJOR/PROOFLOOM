@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from copy import deepcopy
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -17,6 +18,21 @@ def canonical_json_sha256(document: dict[str, Any]) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def _normalize_governed_handoff(document: dict[str, Any]) -> dict[str, Any]:
+    normalized = deepcopy(document)
+    tasks = normalized.get("tasks")
+    if isinstance(tasks, list):
+        for task in tasks:
+            if isinstance(task, dict):
+                task.setdefault("produces", [])
+                task.setdefault("consumes", [])
+    return normalized
+
+
+def canonical_governed_handoff_sha256(document: dict[str, Any]) -> str:
+    return canonical_json_sha256(_normalize_governed_handoff(document))
+
+
 def load_governed_handoff(path: str | Path, *, require_approved: bool = True) -> dict[str, Any]:
     document = _load_json(path)
     errors = validate_governed_handoff(document, require_approved=require_approved)
@@ -26,19 +42,20 @@ def load_governed_handoff(path: str | Path, *, require_approved: bool = True) ->
 
 
 def write_governed_handoff(source: dict[str, Any], path: str | Path) -> dict[str, Any]:
-    errors = validate_governed_handoff(source, require_approved=False)
+    normalized = _normalize_governed_handoff(source)
+    errors = validate_governed_handoff(normalized, require_approved=False)
     if errors:
         raise ValueError("Invalid governed task handoff: " + "; ".join(errors))
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(source, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(normalized, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {
         "status": "PASS",
         "output": str(output.resolve()),
-        "handoffId": source["handoffId"],
-        "authorityStatus": source["authority"]["status"],
-        "sha256": canonical_json_sha256(source),
-        "executionAuthorized": source["authority"]["status"] == "APPROVED",
+        "handoffId": normalized["handoffId"],
+        "authorityStatus": normalized["authority"]["status"],
+        "sha256": canonical_governed_handoff_sha256(normalized),
+        "executionAuthorized": normalized["authority"]["status"] == "APPROVED",
     }
 
 
@@ -52,11 +69,12 @@ def audit_agentflow_build_receipt(
     handoff = None
     if handoff_path is not None:
         handoff = load_governed_handoff(handoff_path)
-        expected = canonical_json_sha256(handoff)
+        expected = canonical_governed_handoff_sha256(handoff)
+        legacy_expected = canonical_json_sha256(handoff)
         reference = receipt.get("handoff", {})
         if reference.get("id") != handoff.get("handoffId"):
             errors.append("receipt handoff id does not match the governed handoff")
-        if reference.get("sha256") != expected:
+        if reference.get("sha256") not in {expected, legacy_expected}:
             errors.append("receipt handoff sha256 does not match the governed handoff")
     build = receipt.get("build", {})
     task_states = [task.get("status") for task in receipt.get("tasks", []) if isinstance(task, dict)]

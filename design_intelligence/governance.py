@@ -572,7 +572,12 @@ def _roles_for_path(relative: str) -> list[str]:
         roles.add("hooks")
     if name in {"package.json", "pyproject.toml", "cargo.toml", "go.mod"}:
         roles.update({"contracts", "delivery"})
-    if "backlog" in lowered or "/roadmap" in lowered or name.startswith("roadmap"):
+    if (
+        "backlog" in lowered
+        or "/roadmap" in lowered
+        or name.startswith("roadmap")
+        or name in {"dev_tasks.md", "dev-tasks.md"}
+    ):
         roles.add("backlog")
     if re.search(r"(^|/)(adr[-_/]|architecture/adr/|decisions?/)", lowered) or re.search(r"(^|/)\d{4}-.+\.md$", lowered):
         roles.update({"adrs", "architecture"})
@@ -869,7 +874,7 @@ def _audit_package_scripts(root: Path, tracked: Iterable[str]) -> list[dict[str,
 
 def _literal_script_targets(command: str) -> list[str]:
     pattern = re.compile(
-        r"(?<![A-Za-z0-9_@.-])((?:\./)?(?:scripts|e2e|tests|test|playwright|config)/[A-Za-z0-9_@./\[\]-]+\.(?:json|ya?ml|[cm]?[jt]sx?|py))(?=$|[\s'\"])"
+        r"(?<![A-Za-z0-9_@./-])((?:(?:\.\./)+|\./)?(?:scripts|e2e|tests|test|playwright|config)/[A-Za-z0-9_@./\[\]-]+\.(?:json|ya?ml|[cm]?[jt]sx?|py))(?=$|[\s'\"])"
     )
     return sorted(set(match.group(1).removeprefix("./") for match in pattern.finditer(command)))
 
