@@ -973,8 +973,14 @@ class AdoptionGateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             workspace = Path(directory)
             original = workspace / "original" / "product"
-            relocated = workspace / "clone" / "product"
+            relocated = workspace / "clone" / "renamed-product-checkout"
             self._write_healthy_repository(original)
+            package = json.loads((original / "package.json").read_text(encoding="utf-8"))
+            package["name"] = "portable-product"
+            (original / "package.json").write_text(
+                json.dumps(package, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
             image = original / "reference.png"
             image.write_bytes(
                 b"\x89PNG\r\n\x1a\n" + b"\x00\x00\x00\rIHDR" + struct.pack(">II", 900, 600)

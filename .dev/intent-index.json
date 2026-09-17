@@ -13,7 +13,14 @@
   "experiments": [],
   "journeys": [
     {
+      "canonical": true,
       "id": "JRN-ADOPT-001",
+      "implementationPaths": [
+        "design_intelligence/control_plane.py",
+        "design_intelligence/governance.py",
+        "design_intelligence/planes.py",
+        "design_intelligence/devctl_cli.py"
+      ],
       "lastReviewed": "2026-08-23",
       "metrics": ["MET-ADOPTION-001", "MET-JOURNEY-001", "MET-BACKLOG-001", "MET-STANDARDS-001", "MET-ROUTING-001"],
       "owner": "consuming repository owner",
@@ -23,10 +30,17 @@
         "path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
         "sha256": "dc0719267b00e645d0a47c1bb220d35049c807df063560ee6a059d6b8bddea9e"
       },
+      "stages": [
+        "Discover repository authority",
+        "Review authority and journey gaps",
+        "Bind intent, standards, and capability routing",
+        "Validate additive control-plane configuration",
+        "Run health and failure-injection checks"
+      ],
       "startingState": "An existing repository has its own authorities and incomplete control-plane bindings.",
       "status": "ACTIVE",
       "successState": "One reviewed additive control-plane index reports all governed work without unauthorized mutation.",
-      "tests": ["tests/test_control_plane.py", "tests/test_planes.py"]
+      "tests": ["tests/test_canonical_journey.py"]
     },
     {
       "id": "JRN-PILOT-001",

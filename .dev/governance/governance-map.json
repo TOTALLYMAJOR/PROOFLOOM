@@ -2,29 +2,34 @@
   "authorities": [
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/baselines/manifest.json",
       "roles": [
-        "design"
+        "design",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "03346893f7b9dff8fdd01de647908fb581af1a943ca258ac428057bca65aeef1"
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/baselines/review-policy.json",
       "roles": [
         "design",
-        "governance"
+        "governance",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "d929f11c0db83bbe9ef3d60b882273aced0f5bfe569832fbac00785612155110"
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/component-registry.json",
@@ -36,6 +41,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/product-rules.json",
@@ -47,31 +53,36 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/schemas/baseline-review-receipt.schema.json",
       "roles": [
         "contracts",
-        "design"
+        "design",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "50d74b50c8ccde69934238640c8e1a593c89b0ffff04af8d4a3e8c1feb2fef89"
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/schemas/baseline-review-request.schema.json",
       "roles": [
         "contracts",
-        "design"
+        "design",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "b970cd74f9108d9ac1ffdde1adc133c709e0a37ca3cbd8913988daeb01be553b"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/schemas/design-adoption-report.schema.json",
       "roles": [
@@ -83,6 +94,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/schemas/design-contract.schema.json",
@@ -95,6 +107,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/schemas/design-decision.schema.json",
@@ -107,6 +120,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/schemas/design-exception.schema.json",
@@ -119,6 +133,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/schemas/design-outcome.schema.json",
@@ -131,8 +146,9 @@
       "sha256": "337f3721293ed4cb48cb7d07dde5cbbe8326d09a275f528278aaea7cc48f5a6f"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/schemas/reference-analysis.schema.json",
       "roles": [
@@ -144,6 +160,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/schemas/repair-plan.schema.json",
@@ -156,6 +173,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/memory/schemas/validation-evidence.schema.json",
@@ -169,6 +187,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/quality/latest-score.json",
@@ -181,6 +200,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".design/quality/thresholds.json",
@@ -191,8 +211,13 @@
       "sha256": "d58ebfb2ac7abdc31ac16cf5ad125f67ea6d3e47db442d3c4660d7b5c50f4743"
     },
     {
-      "authorityLevel": "candidate",
-      "declaresAuthority": false,
+      "authorityLevel": "binding",
+      "declaredAuthorityRoles": [
+        "journeys",
+        "requirements",
+        "vision"
+      ],
+      "declaresAuthority": true,
       "lifecycle": "candidate",
       "path": ".dev/intent-index.json",
       "roles": [
@@ -205,10 +230,11 @@
         "vision"
       ],
       "scope": "repository",
-      "sha256": "7ba52a85e49edbb05b8206c2a1628393d6e6cd0ac5fa30625eae3be173ed16cb"
+      "sha256": "6fa212788f7024fa00b7ceb694385fc91c81f926089769d5c14f72b7e6e5995f"
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".dev/model-routing.json",
@@ -220,6 +246,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".dev/standards-profile.json",
@@ -231,6 +258,104 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json",
+      "roles": [
+        "backlog",
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "c58dfc4f80d7bafb9c9d6af161215d3535be81b7aab618cce199e41f07e3082f"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE.json",
+      "roles": [
+        "journeys"
+      ],
+      "scope": "repository",
+      "sha256": "372bc0ade2480f7fc43b1ebd6b8d7215ea3ca59997741b964949663e226a28a1"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT.json",
+      "roles": [
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "bff227f4eb529ab8ba8f78b7bda2772c11b82c71a5ea7a4468a8a7890e8e1ef1"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-HANDOFF-V2-SNAPSHOT.json",
+      "roles": [
+        "evidence"
+      ],
+      "scope": "repository",
+      "sha256": "793ad2504012db5b56b93055944d13c4b275a7958c451e3f53747d0219d30e68"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES.json",
+      "roles": [
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "c4d93fe194466497a028b3195e6ac29d6ee63365df38551ac1fdd0180c0c25be"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-JOURNEY-PROOF-BINDING.json",
+      "roles": [
+        "journeys"
+      ],
+      "scope": "repository",
+      "sha256": "14e8c291ebd0664a346e13d32534cf6096526aaa6ea125d23b2fd63cf141c1c2"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-RUNTIME-OUTCOME-PILOT.json",
+      "roles": [
+        "evidence"
+      ],
+      "scope": "repository",
+      "sha256": "14f98042584265e84646c5c6ca78d20709e538a8507f9302475878255f098adf"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE.json",
+      "roles": [
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "a47dbbefd0d9dbb604467b8a87725d4cb084b76d12f017a05ee32e5f30d5d7a9"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".dev/tasks/completed/TASK-ARCHITECTURE-IMPACT-GRAPH.json",
@@ -242,6 +367,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".dev/tasks/completed/TASK-CONTROL-PLANE-PHASE-4.json",
@@ -253,6 +379,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".dev/tasks/completed/TASK-DESIGN-CONTROL-PLANE-PILOT.json",
@@ -265,6 +392,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": ".github/workflows/design-ci.yml",
@@ -278,6 +406,9 @@
     },
     {
       "authorityLevel": "binding",
+      "declaredAuthorityRoles": [
+        "instructions"
+      ],
       "declaresAuthority": true,
       "lifecycle": "candidate",
       "path": "AGENTS.md",
@@ -289,6 +420,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "adapters/claude/CLAUDE.md",
@@ -300,6 +432,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "adapters/codex/AGENTS.md",
@@ -311,18 +444,21 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/defaults/baseline-review-policy.json",
       "roles": [
         "design",
-        "governance"
+        "governance",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "d929f11c0db83bbe9ef3d60b882273aced0f5bfe569832fbac00785612155110"
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/defaults/industry-standards.json",
@@ -334,6 +470,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/defaults/product-rules.json",
@@ -345,6 +482,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/defaults/quality-thresholds.json",
@@ -356,6 +494,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/product_profiles/leaguepilot.json",
@@ -367,6 +506,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/product_profiles/quietpilot.json",
@@ -378,6 +518,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/product_profiles/quotepilot.json",
@@ -389,6 +530,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/agentflow-build-receipt.schema.json",
@@ -401,6 +543,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/architecture-graph.schema.json",
@@ -414,6 +557,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/authority-capsule.schema.json",
@@ -427,6 +571,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/backlog-portfolio.schema.json",
@@ -440,30 +585,35 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/baseline-review-receipt.schema.json",
       "roles": [
         "contracts",
-        "design"
+        "design",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "50d74b50c8ccde69934238640c8e1a593c89b0ffff04af8d4a3e8c1feb2fef89"
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/baseline-review-request.schema.json",
       "roles": [
         "contracts",
-        "design"
+        "design",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "b970cd74f9108d9ac1ffdde1adc133c709e0a37ca3cbd8913988daeb01be553b"
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/claim-boundary-registry.schema.json",
@@ -476,6 +626,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/counterfactual-report.schema.json",
@@ -488,6 +639,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/design-adoption-report.schema.json",
@@ -500,6 +652,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/design-arena-report.schema.json",
@@ -512,6 +665,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/design-contract.schema.json",
@@ -524,6 +678,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/design-decision.schema.json",
@@ -536,6 +691,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/design-exception.schema.json",
@@ -548,6 +704,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/design-memory-preflight.schema.json",
@@ -560,6 +717,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/design-outcome.schema.json",
@@ -573,6 +731,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/devctl.schema.json",
@@ -581,10 +740,11 @@
         "design"
       ],
       "scope": "repository",
-      "sha256": "c6fdf6d7064f453bbc9eb172770d8dd686af1587594de6959639a5aa540c861b"
+      "sha256": "6008381941f0e94d9f84e487711be0423dcb7dcf195fe2719ca47599fd70cb3a"
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/governed-task-handoff.schema.json",
@@ -594,10 +754,11 @@
         "evidence"
       ],
       "scope": "repository",
-      "sha256": "a50574a76c5cbfd59553a97dcc17448343f60126fafe73d3f528cad4ff684c19"
+      "sha256": "4ed99854b301ee034ee55088f49312e50040291c8462290176953febcbd1140c"
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/intent-index.schema.json",
@@ -610,6 +771,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/model-routing.schema.json",
@@ -622,6 +784,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/outcome-assessment.schema.json",
@@ -635,6 +798,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/outcome-ratification-receipt.schema.json",
@@ -648,6 +812,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/reference-analysis.schema.json",
@@ -660,6 +825,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/repair-plan.schema.json",
@@ -672,6 +838,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/standards-profile.schema.json",
@@ -684,6 +851,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/task-packet.schema.json",
@@ -692,10 +860,11 @@
         "design"
       ],
       "scope": "repository",
-      "sha256": "a5a744051546ab21c981c6c70f9e2d7190fdf22ad5335390ea650bf47c5c9b83"
+      "sha256": "cc99b48e550119b9440f0e6b1327ab5acc4666e7b349129bc620b6e4f3252ba2"
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/ux-state-graph.schema.json",
@@ -708,6 +877,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "design_intelligence/data/schemas/validation-evidence.schema.json",
@@ -721,6 +891,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "devctl.yaml",
@@ -728,11 +899,12 @@
         "governance"
       ],
       "scope": "repository",
-      "sha256": "494729c3d725f79f6bc8baaab1af023efa89f0b0642a6ff6375c5a5e457851cf"
+      "sha256": "985022db78e3bd090a226269cff8bf3379e2c83032322bd647370ce00c18a46b"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/ARCHITECTURE.md",
       "roles": [
@@ -742,8 +914,9 @@
       "sha256": "2cc834244306fb49ba9870e53059c0dcd83e9109de13dda49b498453654de56a"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "active",
       "path": "docs/CONTROL-PLANE-ARCHITECTURE-GRAPH.md",
       "roles": [
@@ -754,8 +927,9 @@
       "sha256": "daf0fee9b278c32a6f4ccf6c40f677d2fd1e850db00ba40fdb67201e1910fa4f"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/CONTROL-PLANE-GAP-MAP.md",
       "roles": [
@@ -765,8 +939,9 @@
       "sha256": "8bcff8ef5d5f1f2467823e3b0d15b42ac5fe7287a03aa10a9acf34900f651944"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/CONTROL-PLANE-INTENT-ARCHITECTURE-INTELLIGENCE.md",
       "roles": [
@@ -778,7 +953,8 @@
     },
     {
       "authorityLevel": "evidence",
-      "declaresAuthority": true,
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "historical",
       "path": "docs/CONTROL-PLANE-PHASE-4.md",
       "roles": [
@@ -789,6 +965,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/CONTROL-PLANE-PHASES-0-3.md",
@@ -800,6 +977,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/CONTROL-PLANE-ROLES.md",
@@ -810,8 +988,9 @@
       "sha256": "05774b065f549d7e61b75df19a2d56302a27b94e809e7a18144de82b9a804f1b"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/DESIGN-MEMORY-PREFLIGHT.md",
       "roles": [
@@ -822,6 +1001,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/IMPLEMENTATION-REPORT-ARCHITECTURE-GRAPH.md",
@@ -833,6 +1013,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASE-4.md",
@@ -843,8 +1024,9 @@
       "sha256": "5751a5e118be71d7715ac31dd91c39a6004248cb4a14b9e870139f32ce0eb2ca"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASES-0-3.md",
       "roles": [
@@ -854,8 +1036,9 @@
       "sha256": "fcee7972a560900374edf29cc5498d56df74141cd365d790b9a2d49fedd0398f"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/IMPLEMENTATION-REPORT-DESIGN-ADOPTION-GATE.md",
       "roles": [
@@ -865,8 +1048,9 @@
       "sha256": "4f7ae8ffd32be7966e2fda1aacea6e250703164723f01bc65a31c75e9c0ad4b8"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/QUIETPILOT-ARCHITECTURE-ADOPTION-REPORT.md",
       "roles": [
@@ -877,6 +1061,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/RELEASE-REPORT-1.0.0.md",
@@ -887,8 +1072,9 @@
       "sha256": "9ab47f52556a62d263321e3b781cb2772173ce6841bda499bb7211fc7d153448"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/RELEASE-REPORT-2.0.0.md",
       "roles": [
@@ -899,6 +1085,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/RELEASE-REPORT-3.0.0.md",
@@ -910,6 +1097,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/RELEASE-REPORT-4.0.0.md",
@@ -920,8 +1108,9 @@
       "sha256": "c5994539b23b5711fb5aad6ac70f8a07f958c288907052f06d6102f8b8f27896"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/RELEASE-REPORT-5.0.0.md",
       "roles": [
@@ -932,6 +1121,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/RELEASE-REPORT-5.0.1.md",
@@ -943,6 +1133,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
@@ -954,8 +1145,21 @@
       "sha256": "a08f06b82608468d552452e5bcdb22296dcc68de74ada22e6922cbc0b254cc56"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
+      "lifecycle": "candidate",
+      "path": "docs/TRAFFIC-CONTROL-AUDIT.md",
+      "roles": [
+        "evidence"
+      ],
+      "scope": "domain:TRAFFIC-CONTROL-AUDIT.md",
+      "sha256": "2a03163d7e4e1287c32c829a7d252a940a1cf520e525a74c9e9a1ab08353fd11"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "active",
       "path": "docs/architecture/ADR-0001-development-control-plane-facade.md",
       "roles": [
@@ -967,8 +1171,9 @@
       "sha256": "b30dfe461266d5b23f2e38a3879b4e5381f8ad54da1710615be9ed0db7cddb67"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "active",
       "path": "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
       "roles": [
@@ -982,6 +1187,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "active",
       "path": "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md",
@@ -994,6 +1200,21 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
+      "lifecycle": "active",
+      "path": "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md",
+      "roles": [
+        "adrs",
+        "architecture",
+        "governance"
+      ],
+      "scope": "domain:architecture",
+      "sha256": "b5ec130a0bb6513a887a4402d9bd0f40e3a6777a7f747744780e8c6d7c2726fc"
+    },
+    {
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V2.md",
@@ -1004,8 +1225,9 @@
       "sha256": "123bf2db7cd53a6ce1066d54b8ebe31395c610b2715746c0ef153d8add7720c6"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/AUTONOMOUS-DESIGN-DEPARTMENT-V3.md",
       "roles": [
@@ -1015,8 +1237,9 @@
       "sha256": "f21748c0d0504d3da4857183c11811f8308703b97019358e7d6a830675dc4fcd"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/COMPONENT-INVENTORY.md",
       "roles": [
@@ -1026,8 +1249,9 @@
       "sha256": "837a5836554b689213c56025058e4d1b521c2f3394c86eebc7a564f1140f7f19"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/DESIGN-ADOPTION-GATE.md",
       "roles": [
@@ -1037,8 +1261,9 @@
       "sha256": "a95699af43ccc12dfa1c7aad45e1e82df8f35e6e5c1e42afa7ada8323f40e3c3"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/DESIGN-DEBT.md",
       "roles": [
@@ -1048,8 +1273,9 @@
       "sha256": "880ba895ecc9b0a8b1354b30d5f70e91b3346dcf4619a34de6483c98d71bf5b1"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/DESIGN-DECISIONS.md",
       "roles": [
@@ -1059,8 +1285,9 @@
       "sha256": "5b82d2fc717eeb2039417aaf235ef47f80fdbdf846e8b9c7ecd92eeddb6361ad"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/DESIGN-LANGUAGE.md",
       "roles": [
@@ -1070,8 +1297,9 @@
       "sha256": "a4cf54a10827ee2fa87b0607920aded66a39bac4eda002d980eaddcb913757d9"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/DESIGN-QUALITY.md",
       "roles": [
@@ -1081,8 +1309,9 @@
       "sha256": "39a9ce3e463b4e96a2b5bc31ff3ddd3a0c420704f364f28c476c91c50417b065"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/REFERENCE-LEDGER.md",
       "roles": [
@@ -1092,8 +1321,9 @@
       "sha256": "c8e1ce8d2cac99c1e64257de068561ed0f7f363059917090097e44241095d043"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/UX-MODELS.md",
       "roles": [
@@ -1103,8 +1333,9 @@
       "sha256": "007e293c254f938d7585ec984fccdb945b10a1b3039bcef79abc6c4cb454c826"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/products/leaguepilot.md",
       "roles": [
@@ -1114,8 +1345,9 @@
       "sha256": "ab9f4dbd5a8c218ecdda4e6afca8016f8bcb55f03989bcc24fd4ee0f7718eba9"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/products/quietpilot.md",
       "roles": [
@@ -1125,8 +1357,9 @@
       "sha256": "a34480f6b05309f3a4e98b3c0f58585f5a58fcc64e6eb533d940ff8b41313200"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "docs/design/products/quotepilot.md",
       "roles": [
@@ -1137,6 +1370,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "package.json",
@@ -1149,6 +1383,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "pyproject.toml",
@@ -1161,6 +1396,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "scripts/design/verify-cross-browser-policy.mjs",
@@ -1173,7 +1409,8 @@
     },
     {
       "authorityLevel": "candidate",
-      "declaresAuthority": true,
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-language/SKILL.md",
       "roles": [
@@ -1185,6 +1422,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-language/agents/openai.yaml",
@@ -1196,6 +1434,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-language/references/accessibility.md",
@@ -1207,6 +1446,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-language/references/anti-patterns.md",
@@ -1218,6 +1458,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-language/references/design-principles.md",
@@ -1230,6 +1471,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-language/references/interaction-language.md",
@@ -1241,6 +1483,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-language/references/mission-workflow.md",
@@ -1254,6 +1497,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-language/references/product-archetypes.md",
@@ -1265,6 +1509,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-language/references/responsive-design.md",
@@ -1276,6 +1521,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-language/references/surface-hierarchy.md",
@@ -1287,6 +1533,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-linter/SKILL.md",
@@ -1299,6 +1546,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-linter/references/deterministic-rules.md",
@@ -1310,6 +1558,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-linter/references/drift-types.md",
@@ -1321,6 +1570,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/design-linter/references/repair-policy.md",
@@ -1333,6 +1583,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/reference-intelligence/SKILL.md",
@@ -1344,7 +1595,8 @@
     },
     {
       "authorityLevel": "candidate",
-      "declaresAuthority": true,
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/ux-architect/SKILL.md",
       "roles": [
@@ -1355,6 +1607,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/ux-architect/references/actor-task-model.md",
@@ -1366,6 +1619,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/ux-architect/references/workflow-diagnosis.md",
@@ -1377,7 +1631,8 @@
     },
     {
       "authorityLevel": "candidate",
-      "declaresAuthority": true,
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "skills/visual-review/SKILL.md",
       "roles": [
@@ -1388,6 +1643,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "templates/DESIGN-CONTRACT.md",
@@ -1400,6 +1656,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "templates/DESIGN-DECISION.md",
@@ -1411,6 +1668,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "templates/PRODUCT-DESIGN-PROFILE.md",
@@ -1422,6 +1680,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/design/scenarios/design-department-surface.json",
@@ -1434,6 +1693,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/design/scenarios/operator-shell.json",
@@ -1446,6 +1706,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/broken-ia/AGENTS.md",
@@ -1458,6 +1719,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/broken-ia/docs/design-system.md",
@@ -1470,6 +1732,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/broken-ia/package.json",
@@ -1483,6 +1746,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/broken-ia/review-manifest.json",
@@ -1494,6 +1758,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/claim-boundary-registry.json",
@@ -1505,6 +1770,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/conflicted-frontend/.github/workflows/ui.yml",
@@ -1517,6 +1783,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/conflicted-frontend/AGENTS.md",
@@ -1529,6 +1796,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/conflicted-frontend/docs/design/DESIGN-LANGUAGE.md",
@@ -1541,6 +1809,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/conflicted-frontend/docs/product/design-system.md",
@@ -1553,6 +1822,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/conflicted-frontend/package.json",
@@ -1566,6 +1836,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/dual-design-system/AGENTS.md",
@@ -1579,6 +1850,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/dual-design-system/design/DESIGN-LANGUAGE.md",
@@ -1591,6 +1863,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/dual-design-system/docs/design-system.md",
@@ -1603,6 +1876,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/dual-design-system/package.json",
@@ -1617,6 +1891,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/established-nextjs/AGENTS.md",
@@ -1629,6 +1904,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/established-nextjs/docs/product/design-system.md",
@@ -1641,6 +1917,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/established-nextjs/package.json",
@@ -1654,6 +1931,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/greenfield-empty/README.md",
@@ -1665,6 +1943,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/mature-repo/AGENTS.md",
@@ -1677,6 +1956,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/mature-repo/ARCHITECTURE.md",
@@ -1688,8 +1968,9 @@
       "sha256": "9fdae54820d7e8b6a845c5c9bc094c1f0545cf4d707182a86078099a1d001bda"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/mature-repo/docs/decisions/ui-001.md",
       "roles": [
@@ -1701,8 +1982,9 @@
       "sha256": "9a4a9c94f0486e6d0dab71d2a5a5d633da1b78c06df0362bc0e7c74b1daf561b"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/mature-repo/docs/design-system.md",
       "roles": [
@@ -1714,6 +1996,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/mature-repo/package.json",
@@ -1727,6 +2010,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/partial-react/package.json",
@@ -1740,6 +2024,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/partial-repo/package.json",
@@ -1753,6 +2038,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/refactor-risk-repo/AGENTS.md",
@@ -1766,6 +2052,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/refactor-risk-repo/ARCHITECTURE.md",
@@ -1778,8 +2065,9 @@
       "sha256": "19f2095c87d7a4cd6915b4babd81a9922cf81e33d17b4096bfd2aeae9ab5acec"
     },
     {
-      "authorityLevel": "binding",
-      "declaresAuthority": true,
+      "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
+      "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/refactor-risk-repo/docs/design-system.md",
       "roles": [
@@ -1792,6 +2080,7 @@
     },
     {
       "authorityLevel": "candidate",
+      "declaredAuthorityRoles": [],
       "declaresAuthority": false,
       "lifecycle": "candidate",
       "path": "tests/fixtures/refactor-risk-repo/package.json",
@@ -1806,18 +2095,18 @@
     }
   ],
   "authoritySummary": {
-    "adrs": 4,
-    "architecture": 13,
-    "backlog": 3,
+    "adrs": 5,
+    "architecture": 14,
+    "backlog": 4,
     "contracts": 48,
     "delivery": 17,
     "design": 97,
-    "evidence": 8,
+    "evidence": 11,
     "experiments": 1,
-    "governance": 19,
+    "governance": 24,
     "instructions": 9,
-    "journeys": 5,
-    "metrics": 1,
+    "journeys": 7,
+    "metrics": 8,
     "personas": 6,
     "principles": 2,
     "requirements": 1,
@@ -1827,26 +2116,406 @@
   },
   "backlogModel": {
     "activeSources": [
+      ".dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json",
       "design_intelligence/data/schemas/backlog-portfolio.schema.json",
       "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
       "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
     ],
-    "canonicalSources": [
-      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
-    ],
-    "completion": "NOT_DETERMINED",
+    "canonicalSources": [],
+    "completion": "IN_PROGRESS",
     "counts": {
-      "ACTIVE": 0,
+      "ACTIVE": 1,
       "BLOCKED": 0,
-      "COMPLETED": 0,
+      "COMPLETED": 3,
       "DEFERRED": 0,
       "PARTIAL": 0,
-      "STAGED": 0
+      "STAGED": 16
     },
     "historicalSources": [],
     "introduceParallelBacklog": false,
-    "itemCount": 0,
-    "items": [],
+    "itemCount": 20,
+    "items": [
+      {
+        "executionStatus": "ACTIVE",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json",
+        "sourceRole": "active",
+        "statusEvidence": "Task packet status: ACTIVE",
+        "title": "Govern backlog authoring, dependencies, and acceptance"
+      },
+      {
+        "executionStatus": "COMPLETED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-ARCHITECTURE-IMPACT-GRAPH",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/completed/TASK-ARCHITECTURE-IMPACT-GRAPH.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: COMPLETED",
+        "title": "Bounded architecture impact graph"
+      },
+      {
+        "executionStatus": "COMPLETED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-CONTROL-PLANE-PHASE-4",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/completed/TASK-CONTROL-PLANE-PHASE-4.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: COMPLETED",
+        "title": "Control-plane Intent, Architecture, Intelligence, and whole-backlog governance"
+      },
+      {
+        "executionStatus": "COMPLETED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/completed/TASK-DESIGN-CONTROL-PLANE-PILOT.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: COMPLETED",
+        "title": "Design control-plane bounded pilot"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-AGENTFLOW-RECEIPT-INTEGRITY",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-AGENTFLOW-RECEIPT-INTEGRITY.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Make AgentFlow receipt claims evidence-complete"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-AGENTFLOW-V2-ENFORCEMENT",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-AGENTFLOW-V2-ENFORCEMENT.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Enforce handoff v2 inside AgentFlow"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-ARENA-AGENTFLOW-ADAPTER",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-ARENA-AGENTFLOW-ADAPTER.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Connect design-arena evidence to AgentFlow receipts"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Block design without a canonical journey"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Invalidate convergence on critical authority drift"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-DOCS-GRAPH-COVERAGE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-DOCS-GRAPH-COVERAGE.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Make governance documentation graph-verifiable"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-END-TO-END-ACCEPTANCE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-END-TO-END-ACCEPTANCE.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Qualify Proofloom end-to-end acceptance"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-HANDOFF-V2-SNAPSHOT",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-HANDOFF-V2-SNAPSHOT.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Bind AgentFlow handoff v2 to the exact repository snapshot"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Harden human authority and ratification gates"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-INTENT-RATIFICATION",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-INTENT-RATIFICATION.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Ratify Proofloom intent and operator journey"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-JOURNEY-PROOF-BINDING",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-JOURNEY-PROOF-BINDING.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Bind canonical journeys to explicit proof"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-OPERATOR-DECISION-WORKBENCH",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-OPERATOR-DECISION-WORKBENCH.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Build the governed operator decision workbench"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-PROVENANCE-CHAIN",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-PROVENANCE-CHAIN.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Bind the assumption-to-handoff provenance chain"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-RUNTIME-OUTCOME-PILOT",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-RUNTIME-OUTCOME-PILOT.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Prove a bounded runtime-outcome learning pilot"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-TRUST-PILOT-ACCEPTANCE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-TRUST-PILOT-ACCEPTANCE.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Accept the cross-system trust pilot"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Detect every untracked product-intelligence authority"
+      }
+    ],
     "itemsMissingOutcome": [],
     "itemsWithoutJourneyStage": [],
     "shadowedRecords": [],
@@ -1906,13 +2575,24 @@
       "authority": "repository-owner",
       "category": "vision",
       "id": "CRITICAL-AUTHORITY-DRIFT",
-      "message": "Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.",
+      "message": "A critical authority was added, changed, or removed after convergence and requires review.",
       "paths": [
-        "tests/design/scenarios/operator-shell.json"
+        ".dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json",
+        ".dev/tasks/active/TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE.json",
+        ".dev/tasks/active/TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT.json",
+        ".dev/tasks/active/TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES.json",
+        ".dev/tasks/active/TASK-PROOFLOOM-JOURNEY-PROOF-BINDING.json",
+        ".dev/tasks/active/TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE.json",
+        "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md",
+        ".dev/intent-index.json",
+        "design_intelligence/data/schemas/devctl.schema.json",
+        "design_intelligence/data/schemas/governed-task-handoff.schema.json",
+        "design_intelligence/data/schemas/task-packet.schema.json",
+        "devctl.yaml"
       ],
       "requiredAction": "REVIEW_AND_RATIFY_AUTHORITY_CHANGE",
       "severity": "P1",
-      "title": "Critical governing authority changed"
+      "title": "Critical governing authority drifted"
     }
   ],
   "generatedBy": "design-intelligence-governance",
@@ -1928,23 +2608,35 @@
   ],
   "journeyModel": {
     "bindingJourneyCount": 1,
+    "completeBindingJourneyCount": 1,
     "e2eScriptTargets": [],
     "journeys": [
       {
         "binding": true,
         "existingTestPaths": [
-          "tests/test_control_plane.py",
-          "tests/test_planes.py",
+          "tests/test_canonical_journey.py",
           "tests/design/scenarios/design-department-surface.json",
           "tests/test_governance_v3.py"
         ],
-        "implementationPaths": [],
+        "implementationPaths": [
+          "design_intelligence/control_plane.py",
+          "design_intelligence/devctl_cli.py",
+          "design_intelligence/governance.py",
+          "design_intelligence/planes.py"
+        ],
         "routes": [],
         "source": ".dev/intent-index.json",
-        "stageChains": [],
+        "stageChains": [
+          [
+            "Discover repository authority",
+            "Review authority and journey gaps",
+            "Bind intent, standards, and capability routing",
+            "Validate additive control-plane configuration",
+            "Run health and failure-injection checks"
+          ]
+        ],
         "testPaths": [
-          "tests/test_control_plane.py",
-          "tests/test_planes.py",
+          "tests/test_canonical_journey.py",
           "tests/design/scenarios/design-department-surface.json",
           "tests/test_governance_v3.py"
         ],
@@ -1953,17 +2645,15 @@
     ],
     "linkedTests": [
       "tests/design/scenarios/design-department-surface.json",
-      "tests/test_control_plane.py",
-      "tests/test_governance_v3.py",
-      "tests/test_planes.py"
+      "tests/test_canonical_journey.py",
+      "tests/test_governance_v3.py"
     ],
     "proofStatus": "LINKED",
     "status": "DEFINED",
     "supportingTests": [
       "tests/design/scenarios/design-department-surface.json",
-      "tests/test_control_plane.py",
-      "tests/test_governance_v3.py",
-      "tests/test_planes.py"
+      "tests/test_canonical_journey.py",
+      "tests/test_governance_v3.py"
     ]
   },
   "root": "/home/administrator/projects_new/design-intelligence",

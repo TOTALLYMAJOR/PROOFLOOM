@@ -6,7 +6,8 @@
       "lifecycle": "candidate",
       "path": ".design/baselines/manifest.json",
       "roles": [
-        "design"
+        "design",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "03346893f7b9dff8fdd01de647908fb581af1a943ca258ac428057bca65aeef1"
@@ -16,7 +17,8 @@
       "path": ".design/baselines/review-policy.json",
       "roles": [
         "design",
-        "governance"
+        "governance",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "d929f11c0db83bbe9ef3d60b882273aced0f5bfe569832fbac00785612155110"
@@ -44,7 +46,8 @@
       "path": ".design/memory/schemas/baseline-review-receipt.schema.json",
       "roles": [
         "contracts",
-        "design"
+        "design",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "50d74b50c8ccde69934238640c8e1a593c89b0ffff04af8d4a3e8c1feb2fef89"
@@ -54,7 +57,8 @@
       "path": ".design/memory/schemas/baseline-review-request.schema.json",
       "roles": [
         "contracts",
-        "design"
+        "design",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "b970cd74f9108d9ac1ffdde1adc133c709e0a37ca3cbd8913988daeb01be553b"
@@ -173,7 +177,7 @@
         "vision"
       ],
       "scope": "repository",
-      "sha256": "7ba52a85e49edbb05b8206c2a1628393d6e6cd0ac5fa30625eae3be173ed16cb"
+      "sha256": "6fa212788f7024fa00b7ceb694385fc91c81f926089769d5c14f72b7e6e5995f"
     },
     {
       "lifecycle": "candidate",
@@ -192,6 +196,61 @@
       ],
       "scope": "repository",
       "sha256": "50fa79b705d265d7935d068adcccbeea390b0a3fee77b94d5afcddcd180646f4"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json",
+      "roles": [
+        "backlog",
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "c58dfc4f80d7bafb9c9d6af161215d3535be81b7aab618cce199e41f07e3082f"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE.json",
+      "roles": [
+        "journeys"
+      ],
+      "scope": "repository",
+      "sha256": "372bc0ade2480f7fc43b1ebd6b8d7215ea3ca59997741b964949663e226a28a1"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT.json",
+      "roles": [
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "bff227f4eb529ab8ba8f78b7bda2772c11b82c71a5ea7a4468a8a7890e8e1ef1"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES.json",
+      "roles": [
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "c4d93fe194466497a028b3195e6ac29d6ee63365df38551ac1fdd0180c0c25be"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-JOURNEY-PROOF-BINDING.json",
+      "roles": [
+        "journeys"
+      ],
+      "scope": "repository",
+      "sha256": "14e8c291ebd0664a346e13d32534cf6096526aaa6ea125d23b2fd63cf141c1c2"
+    },
+    {
+      "lifecycle": "candidate",
+      "path": ".dev/tasks/active/TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE.json",
+      "roles": [
+        "governance"
+      ],
+      "scope": "repository",
+      "sha256": "a47dbbefd0d9dbb604467b8a87725d4cb084b76d12f017a05ee32e5f30d5d7a9"
     },
     {
       "lifecycle": "candidate",
@@ -264,7 +323,8 @@
       "path": "design_intelligence/data/defaults/baseline-review-policy.json",
       "roles": [
         "design",
-        "governance"
+        "governance",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "d929f11c0db83bbe9ef3d60b882273aced0f5bfe569832fbac00785612155110"
@@ -371,7 +431,8 @@
       "path": "design_intelligence/data/schemas/baseline-review-receipt.schema.json",
       "roles": [
         "contracts",
-        "design"
+        "design",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "50d74b50c8ccde69934238640c8e1a593c89b0ffff04af8d4a3e8c1feb2fef89"
@@ -381,7 +442,8 @@
       "path": "design_intelligence/data/schemas/baseline-review-request.schema.json",
       "roles": [
         "contracts",
-        "design"
+        "design",
+        "metrics"
       ],
       "scope": "repository",
       "sha256": "b970cd74f9108d9ac1ffdde1adc133c709e0a37ca3cbd8913988daeb01be553b"
@@ -485,7 +547,7 @@
         "design"
       ],
       "scope": "repository",
-      "sha256": "c6fdf6d7064f453bbc9eb172770d8dd686af1587594de6959639a5aa540c861b"
+      "sha256": "6008381941f0e94d9f84e487711be0423dcb7dcf195fe2719ca47599fd70cb3a"
     },
     {
       "lifecycle": "candidate",
@@ -496,7 +558,7 @@
         "evidence"
       ],
       "scope": "repository",
-      "sha256": "a50574a76c5cbfd59553a97dcc17448343f60126fafe73d3f528cad4ff684c19"
+      "sha256": "4ed99854b301ee034ee55088f49312e50040291c8462290176953febcbd1140c"
     },
     {
       "lifecycle": "candidate",
@@ -578,7 +640,7 @@
         "design"
       ],
       "scope": "repository",
-      "sha256": "a5a744051546ab21c981c6c70f9e2d7190fdf22ad5335390ea650bf47c5c9b83"
+      "sha256": "cc99b48e550119b9440f0e6b1327ab5acc4666e7b349129bc620b6e4f3252ba2"
     },
     {
       "lifecycle": "candidate",
@@ -608,7 +670,7 @@
         "governance"
       ],
       "scope": "repository",
-      "sha256": "494729c3d725f79f6bc8baaab1af023efa89f0b0642a6ff6375c5a5e457851cf"
+      "sha256": "985022db78e3bd090a226269cff8bf3379e2c83032322bd647370ce00c18a46b"
     },
     {
       "lifecycle": "candidate",
@@ -816,6 +878,17 @@
       ],
       "scope": "domain:architecture",
       "sha256": "def1de38269f4a195d46ca9437c23ef098eb111f46ad5d741622a8141ead7b0c"
+    },
+    {
+      "lifecycle": "active",
+      "path": "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md",
+      "roles": [
+        "adrs",
+        "architecture",
+        "governance"
+      ],
+      "scope": "domain:architecture",
+      "sha256": "b5ec130a0bb6513a887a4402d9bd0f40e3a6777a7f747744780e8c6d7c2726fc"
     },
     {
       "lifecycle": "candidate",
@@ -1465,8 +1538,8 @@
       "sha256": "c12279d7c584959bbf43d66e3d795184f9cb622ad1ec54fb49f9d850dcb72156"
     }
   ],
-  "criticalAuthorityCount": 149,
-  "criticalAuthoritySha256": "b89db9cdd0fc5e60b16b3eec5881ec0d7af31f0baaa59f585fd44fd3d970a2a9",
+  "criticalAuthorityCount": 156,
+  "criticalAuthoritySha256": "ebab07aa698db6a4b8d937dbb8b69edee48e20670556fa57101b78483dc3b4c2",
   "designGateAtCreation": {
     "reason": "1 blocking governance or understanding problem(s) must be resolved before design adoption.",
     "requiredBeforeDesign": [
@@ -1476,19 +1549,30 @@
   },
   "generatedBy": "design-intelligence-governance",
   "lastAuthorityDriftRatification": {
-    "approvedAt": "2026-09-14T00:34:26-05:00",
+    "approvedAt": "2026-09-17T13:16:22-05:00",
     "approvedBy": "CodeDripped",
     "authority": "repository-owner",
-    "authorityStateSha256": "7e0cf73ab329027fdf62e3eee09a525b4288daaff3fa400fdeeec0ae67a01454",
+    "authorityStateSha256": "e387874716653d9e1b692ea7bee6171db6f68fef8f8d1d3f3e67fe9c6e6a13ae",
     "decision": "ACCEPT_AUTHORITY_DRIFT",
     "kind": "AuthorityDriftRatification",
     "paths": [
-      "tests/design/scenarios/operator-shell.json"
+      ".dev/intent-index.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-JOURNEY-PROOF-BINDING.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE.json",
+      "design_intelligence/data/schemas/devctl.schema.json",
+      "design_intelligence/data/schemas/governed-task-handoff.schema.json",
+      "design_intelligence/data/schemas/task-packet.schema.json",
+      "devctl.yaml",
+      "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md"
     ],
-    "reason": "Accept the approved Proofloom AI backlog assembly workflow scenario and its governed rendered-proof assertions.",
-    "receiptPath": ".dev/governance/owner-proofloom-ai-backlog-ratification.json"
+    "reason": "Accept the requested Proofloom trust-model repair: governed backlog authoring and dependencies, canonical journey blocking, explicit journey proof binding, critical-authority invalidation, human authority gates, untracked-authority coverage, handoff v2 contracts, and the exact repository-native adoption journey.",
+    "receiptPath": ".dev/governance/owner-proofloom-trust-repair-ratification.json"
   },
   "ratificationClaimed": true,
-  "repository": "design-intelligence",
+  "repository": "design-intelligence-trust-repair-20260917",
   "schemaVersion": 1
 }

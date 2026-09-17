@@ -4,6 +4,7 @@
       "docs/architecture/ADR-0001-development-control-plane-facade.md",
       "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
       "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md",
+      "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md",
       "tests/fixtures/mature-repo/docs/decisions/ui-001.md"
     ],
     "architecture": [
@@ -17,11 +18,13 @@
       "docs/architecture/ADR-0001-development-control-plane-facade.md",
       "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
       "docs/architecture/ADR-0003-bounded-architecture-impact-graph.md",
+      "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md",
       "tests/fixtures/mature-repo/ARCHITECTURE.md",
       "tests/fixtures/mature-repo/docs/decisions/ui-001.md",
       "tests/fixtures/refactor-risk-repo/ARCHITECTURE.md"
     ],
     "backlog": [
+      ".dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json",
       "design_intelligence/data/schemas/backlog-portfolio.schema.json",
       "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
       "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
@@ -197,12 +200,15 @@
     "evidence": [
       ".design/memory/schemas/design-outcome.schema.json",
       ".design/memory/schemas/validation-evidence.schema.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-HANDOFF-V2-SNAPSHOT.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-RUNTIME-OUTCOME-PILOT.json",
       "design_intelligence/data/schemas/design-outcome.schema.json",
       "design_intelligence/data/schemas/governed-task-handoff.schema.json",
       "design_intelligence/data/schemas/outcome-assessment.schema.json",
       "design_intelligence/data/schemas/outcome-ratification-receipt.schema.json",
       "design_intelligence/data/schemas/validation-evidence.schema.json",
-      "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md"
+      "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
+      "docs/TRAFFIC-CONTROL-AUDIT.md"
     ],
     "experiments": [
       ".dev/intent-index.json"
@@ -211,6 +217,10 @@
       ".design/baselines/review-policy.json",
       ".dev/model-routing.json",
       ".dev/standards-profile.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE.json",
       ".dev/tasks/completed/TASK-CONTROL-PLANE-PHASE-4.json",
       ".dev/tasks/completed/TASK-DESIGN-CONTROL-PLANE-PILOT.json",
       "design_intelligence/data/defaults/baseline-review-policy.json",
@@ -225,6 +235,7 @@
       "docs/IMPLEMENTATION-REPORT-CONTROL-PLANE-PHASES-0-3.md",
       "docs/architecture/ADR-0001-development-control-plane-facade.md",
       "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md",
+      "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md",
       "scripts/design/verify-cross-browser-policy.mjs",
       "skills/design-linter/references/repair-policy.md"
     ],
@@ -241,13 +252,22 @@
     ],
     "journeys": [
       ".dev/intent-index.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE.json",
+      ".dev/tasks/active/TASK-PROOFLOOM-JOURNEY-PROOF-BINDING.json",
       ".github/workflows/design-ci.yml",
       "skills/design-language/references/mission-workflow.md",
       "skills/ux-architect/references/workflow-diagnosis.md",
       "tests/fixtures/conflicted-frontend/.github/workflows/ui.yml"
     ],
     "metrics": [
-      ".dev/intent-index.json"
+      ".design/baselines/manifest.json",
+      ".design/baselines/review-policy.json",
+      ".design/memory/schemas/baseline-review-receipt.schema.json",
+      ".design/memory/schemas/baseline-review-request.schema.json",
+      ".dev/intent-index.json",
+      "design_intelligence/data/defaults/baseline-review-policy.json",
+      "design_intelligence/data/schemas/baseline-review-receipt.schema.json",
+      "design_intelligence/data/schemas/baseline-review-request.schema.json"
     ],
     "personas": [
       ".dev/intent-index.json",
@@ -312,26 +332,406 @@
   },
   "backlog": {
     "activeSources": [
+      ".dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json",
       "design_intelligence/data/schemas/backlog-portfolio.schema.json",
       "docs/ROADMAP-V6-RUNTIME-OUTCOMES.md",
       "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
     ],
-    "canonicalSources": [
-      "docs/architecture/ADR-0002-plane-governance-and-whole-backlog.md"
-    ],
-    "completion": "NOT_DETERMINED",
+    "canonicalSources": [],
+    "completion": "IN_PROGRESS",
     "counts": {
-      "ACTIVE": 0,
+      "ACTIVE": 1,
       "BLOCKED": 0,
-      "COMPLETED": 0,
+      "COMPLETED": 3,
       "DEFERRED": 0,
       "PARTIAL": 0,
-      "STAGED": 0
+      "STAGED": 16
     },
     "historicalSources": [],
     "introduceParallelBacklog": false,
-    "itemCount": 0,
-    "items": [],
+    "itemCount": 20,
+    "items": [
+      {
+        "executionStatus": "ACTIVE",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json",
+        "sourceRole": "active",
+        "statusEvidence": "Task packet status: ACTIVE",
+        "title": "Govern backlog authoring, dependencies, and acceptance"
+      },
+      {
+        "executionStatus": "COMPLETED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-ARCHITECTURE-IMPACT-GRAPH",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/completed/TASK-ARCHITECTURE-IMPACT-GRAPH.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: COMPLETED",
+        "title": "Bounded architecture impact graph"
+      },
+      {
+        "executionStatus": "COMPLETED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-CONTROL-PLANE-PHASE-4",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/completed/TASK-CONTROL-PLANE-PHASE-4.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: COMPLETED",
+        "title": "Control-plane Intent, Architecture, Intelligence, and whole-backlog governance"
+      },
+      {
+        "executionStatus": "COMPLETED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-DESIGN-CONTROL-PLANE-PILOT",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/completed/TASK-DESIGN-CONTROL-PLANE-PILOT.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: COMPLETED",
+        "title": "Design control-plane bounded pilot"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-AGENTFLOW-RECEIPT-INTEGRITY",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-AGENTFLOW-RECEIPT-INTEGRITY.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Make AgentFlow receipt claims evidence-complete"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-AGENTFLOW-V2-ENFORCEMENT",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-AGENTFLOW-V2-ENFORCEMENT.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Enforce handoff v2 inside AgentFlow"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-ARENA-AGENTFLOW-ADAPTER",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-ARENA-AGENTFLOW-ADAPTER.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Connect design-arena evidence to AgentFlow receipts"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Block design without a canonical journey"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Invalidate convergence on critical authority drift"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-DOCS-GRAPH-COVERAGE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-DOCS-GRAPH-COVERAGE.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Make governance documentation graph-verifiable"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-END-TO-END-ACCEPTANCE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-END-TO-END-ACCEPTANCE.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Qualify Proofloom end-to-end acceptance"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-HANDOFF-V2-SNAPSHOT",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-HANDOFF-V2-SNAPSHOT.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Bind AgentFlow handoff v2 to the exact repository snapshot"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Harden human authority and ratification gates"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-INTENT-RATIFICATION",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-INTENT-RATIFICATION.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Ratify Proofloom intent and operator journey"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-JOURNEY-PROOF-BINDING",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-JOURNEY-PROOF-BINDING.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Bind canonical journeys to explicit proof"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-OPERATOR-DECISION-WORKBENCH",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-OPERATOR-DECISION-WORKBENCH.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Build the governed operator decision workbench"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-PROVENANCE-CHAIN",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-PROVENANCE-CHAIN.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Bind the assumption-to-handoff provenance chain"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-RUNTIME-OUTCOME-PILOT",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-RUNTIME-OUTCOME-PILOT.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Prove a bounded runtime-outcome learning pilot"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-TRUST-PILOT-ACCEPTANCE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-TRUST-PILOT-ACCEPTANCE.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Accept the cross-system trust pilot"
+      },
+      {
+        "executionStatus": "STAGED",
+        "hasEvidenceBoundary": true,
+        "hasOutcome": true,
+        "hasSuccessSignal": true,
+        "id": "TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE",
+        "journeyStages": [
+          "Discover repository authority",
+          "Review authority and journey gaps",
+          "Bind intent, standards, and capability routing",
+          "Validate additive control-plane configuration",
+          "Run health and failure-injection checks"
+        ],
+        "section": "Governed task store",
+        "source": ".dev/tasks/active/TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE.json",
+        "sourceRole": "staged",
+        "statusEvidence": "Task packet status: STAGED",
+        "title": "Detect every untracked product-intelligence authority"
+      }
+    ],
     "itemsMissingOutcome": [],
     "itemsWithoutJourneyStage": [],
     "shadowedRecords": [],
@@ -388,6 +788,6 @@
     }
   ],
   "mode": "EQUIVALENT_SYSTEM",
-  "repository": "design-intelligence",
+  "repository": "design-intelligence-trust-repair-20260917",
   "schemaVersion": 1
 }

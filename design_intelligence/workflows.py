@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+import tomllib
 from pathlib import Path
 from typing import Any
 
@@ -170,7 +171,7 @@ def contract_from_workflow(
     profile = context.get("profile") or {}
     return {
         "taskId": _slug(task),
-        "product": profile.get("name") or root.name,
+        "product": profile.get("name") or _repository_product_name(root),
         "surface": surface or model["object"],
         "actor": model["actor"],
         "object": model["object"],
@@ -196,6 +197,30 @@ def contract_from_workflow(
         "acceptanceCriteria": ["The primary next action is visible without competing with secondary information.", *context["validation_focus"]],
         "relevantDesignDecisions": [],
     }
+
+
+def _repository_product_name(root: Path) -> str:
+    pyproject = root / "pyproject.toml"
+    if pyproject.is_file():
+        try:
+            project = tomllib.loads(pyproject.read_text(encoding="utf-8")).get("project", {})
+        except (OSError, tomllib.TOMLDecodeError):
+            project = {}
+        name = project.get("name") if isinstance(project, dict) else None
+        if isinstance(name, str) and name.strip():
+            return name.strip()
+
+    package = root / "package.json"
+    if package.is_file():
+        try:
+            payload = json.loads(package.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            payload = {}
+        name = payload.get("name") if isinstance(payload, dict) else None
+        if isinstance(name, str) and name.strip():
+            return name.strip()
+
+    return root.name
 
 
 def write_contract_from_workflow(workflow: dict[str, Any], output: str | Path) -> dict[str, Any]:

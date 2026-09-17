@@ -27,25 +27,32 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class PlaneGovernanceTests(unittest.TestCase):
-    def test_repository_planes_journeys_backlog_and_routing_pass(self) -> None:
+    def test_repository_planes_journeys_backlog_and_routing_are_consistent(self) -> None:
         manifest = load_manifest(ROOT)
 
         report = audit_planes(ROOT, manifest, today=date(2026, 8, 23))
         health = control_plane_health(ROOT)
         route = route_task_by_id(ROOT, "TASK-DESIGN-CONTROL-PLANE-PILOT")
+        backlog = report["intent"]["backlog"]
 
         self.assertEqual(report["status"], "PASS", report)
-        self.assertEqual(report["intent"]["journeyCoverage"]["activeJourneys"], 2)
+        self.assertGreaterEqual(report["intent"]["journeyCoverage"]["activeJourneys"], 2)
         self.assertEqual(report["intent"]["journeyCoverage"]["orphanRequirements"], [])
-        self.assertEqual(report["intent"]["backlog"]["completion"], "COMPLETE")
+        self.assertEqual(backlog["itemCount"], backlog["openCount"] + backlog["terminalCount"])
+        self.assertEqual(
+            backlog["completion"],
+            "COMPLETE" if backlog["openCount"] == 0 else "IN_PROGRESS",
+        )
         self.assertFalse(report["architecture"]["certificationClaimed"])
-        self.assertEqual(report["architecture"]["repositoryArchitecture"]["adrCount"], 3)
+        self.assertGreaterEqual(report["architecture"]["repositoryArchitecture"]["adrCount"], 3)
         self.assertEqual(
             report["architecture"]["repositoryArchitecture"]["technologyPolicy"],
             "contextual-not-latest",
         )
         self.assertTrue(report["intelligence"]["vendorNeutral"])
-        self.assertEqual(health["status"], "PASS", health)
+        self.assertEqual(health["status"], "WARN", health)
+        self.assertEqual(health["backlog"]["completion"], "IN_PROGRESS")
+        self.assertGreater(health["backlog"]["open"], 0)
         self.assertEqual(route["capabilityClass"], "visual-evidence-analysis")
         self.assertFalse(route["vendorSelected"])
 

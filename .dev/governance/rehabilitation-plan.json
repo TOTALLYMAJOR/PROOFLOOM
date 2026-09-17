@@ -6,9 +6,20 @@
       "automatic": false,
       "id": "RESOLVE-CRITICAL-AUTHORITY-DRIFT",
       "mutatesCanonicalAuthority": true,
-      "reason": "Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.",
+      "reason": "A critical authority was added, changed, or removed after convergence and requires review.",
       "target": [
-        "tests/design/scenarios/operator-shell.json"
+        ".dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json",
+        ".dev/tasks/active/TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE.json",
+        ".dev/tasks/active/TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT.json",
+        ".dev/tasks/active/TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES.json",
+        ".dev/tasks/active/TASK-PROOFLOOM-JOURNEY-PROOF-BINDING.json",
+        ".dev/tasks/active/TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE.json",
+        "docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md",
+        ".dev/intent-index.json",
+        "design_intelligence/data/schemas/devctl.schema.json",
+        "design_intelligence/data/schemas/governed-task-handoff.schema.json",
+        "design_intelligence/data/schemas/task-packet.schema.json",
+        "devctl.yaml"
       ]
     }
   ],

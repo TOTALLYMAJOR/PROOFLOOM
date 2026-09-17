@@ -233,13 +233,23 @@ class ControlPlaneTests(unittest.TestCase):
         self.assertNotIn("nodes", graph_summary)
         self.assertNotIn("edges", graph_summary)
 
-    def test_program_status_joins_all_planes_and_requires_whole_backlog_completion(self) -> None:
+    def test_program_status_never_claims_completion_with_open_backlog_items(self) -> None:
         report = program_status(ROOT)
+        backlog = report["backlog"]
 
-        self.assertIn(report["status"], {"BLOCKED", "COMPLETE"}, report)
+        self.assertIn(report["status"], {"BLOCKED", "IN_PROGRESS", "COMPLETE"}, report)
         self.assertEqual(report["completionClaimed"], report["status"] == "COMPLETE")
-        self.assertEqual(report["backlog"]["completionPolicy"], "all-terminal")
-        self.assertEqual(report["backlog"]["open"], 0)
+        self.assertEqual(backlog["completionPolicy"], "all-terminal")
+        self.assertGreater(backlog["items"], 0)
+        self.assertEqual(backlog["items"], backlog["open"] + backlog["terminal"])
+        self.assertEqual(len(backlog["records"]), backlog["items"])
+        self.assertEqual(
+            backlog["completion"],
+            "COMPLETE" if backlog["open"] == 0 else "IN_PROGRESS",
+        )
+        if backlog["open"]:
+            self.assertFalse(report["completionClaimed"])
+            self.assertNotEqual(report["status"], "COMPLETE")
         self.assertEqual([phase["id"] for phase in report["phases"]], [
             "governance",
             "intent",

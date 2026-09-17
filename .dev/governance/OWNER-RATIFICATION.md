@@ -10,8 +10,8 @@ Current design gate: **LOCKED**
 
 ### RESOLVE-CRITICAL-AUTHORITY-DRIFT
 - Required action: **REVIEW_AND_RATIFY_AUTHORITY_CHANGE**
-- Why: Vision, instruction, journey, architecture, backlog, security, or design authority changed after convergence and requires review.
-- Evidence: `tests/design/scenarios/operator-shell.json`
+- Why: A critical authority was added, changed, or removed after convergence and requires review.
+- Evidence: `.dev/tasks/active/TASK-PROOFLOOM-BACKLOG-AUTHORING-GOVERNANCE.json`, `.dev/tasks/active/TASK-PROOFLOOM-CANONICAL-JOURNEY-GATE.json`, `.dev/tasks/active/TASK-PROOFLOOM-CRITICAL-AUTHORITY-DRIFT.json`, `.dev/tasks/active/TASK-PROOFLOOM-HUMAN-AUTHORITY-GATES.json`, `.dev/tasks/active/TASK-PROOFLOOM-JOURNEY-PROOF-BINDING.json`, `.dev/tasks/active/TASK-PROOFLOOM-UNTRACKED-AUTHORITY-COVERAGE.json`, `docs/architecture/ADR-0004-authority-snapshot-and-drift-invalidation.md`, `.dev/intent-index.json`
 - Decision authority: repository-owner
 - Decision: PENDING
 
