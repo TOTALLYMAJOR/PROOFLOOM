@@ -4,7 +4,8 @@
     "decisionAuthority": "repository owners for Proofloom and AgentFlow",
     "evidenceRequired": [
       "AgentFlow rejects v1, dirty, stale, authority-drifted, source-mismatched, and unverified approved handoffs before immutable-plan binding or dispatch.",
-      "A cross-repository fixture proves v2 import, plan binding, execution, receipt, and Proofloom receipt audit against exact commits."
+      "A cross-repository fixture proves v2 import, plan binding, execution, receipt, and Proofloom receipt audit against exact commits.",
+      "Before Governor-supervised execution, compatible Proofloom, AgentFlow, and Traffic-Control-Pilot fixtures prove identical native v2 canonical payload and digest semantics without dropping snapshot or authority fields."
     ],
     "humanDecision": "REQUIRED"
   },
@@ -14,11 +15,13 @@
     "Approved authority without current repository proof remains non-executable in AgentFlow, not only in Proofloom.",
     "The imported backlog preserves IDs, dependencies, ownership, acceptance criteria, evidence requirements, and validation equivalence.",
     "The returned receipt remains bound to the exact v2 handoff digest and passes Proofloom receipt-integrity validation.",
-    "Both repository owners record acceptance at exact commits before end-to-end enforcement is claimed."
+    "Both repository owners record acceptance at exact commits before end-to-end enforcement is claimed.",
+    "The selected continuation follows docs/BEGIN-INTEGRATION.md; native prerequisites retain their identities and evidence-backed dispositions, and completed historical AgentFlow MRI work is not selected for rerun.",
+    "Traffic Control Pilot protocol-version and canonicalization parity are resolved before native Governor supervision is enabled; a task handoff manifest is not misrepresented as a governed build receipt."
   ],
   "context": {
     "optional": ["docs/TRUST_MODEL.md"],
-    "required": ["AGENTS.md", "docs/AGENTFLOW-INTEGRATION.md"]
+    "required": ["AGENTS.md", "docs/AGENTFLOW-INTEGRATION.md", "docs/BEGIN-INTEGRATION.md"]
   },
   "dependencies": [
     "TASK-PROOFLOOM-HANDOFF-V2-SNAPSHOT",
@@ -35,7 +38,9 @@
   "nonObjectives": [
     "Do not write to the AgentFlow repository from this Proofloom task without separately authorized cross-repository scope.",
     "Do not keep v1 executable as a compatibility escape hatch.",
-    "Do not treat local cross-repository fixtures as hosted or production execution proof."
+    "Do not treat local cross-repository fixtures as hosted or production execution proof.",
+    "Do not treat this task-context update or the operator word begin as a fabricated human approval receipt, completion claim, or authorization to deploy.",
+    "Do not import the conversation-exported V7-EPI handoff package as a second canonical backlog, protocol, verifier, or execution authority."
   ],
   "objective": "Make AgentFlow independently enforce handoff v2 so the trust boundary exists on both sides of execution.",
   "requiredCapabilities": ["dependency-analysis", "repository-analysis", "structured-output"],
