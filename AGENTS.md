@@ -47,3 +47,11 @@ This repository owns the reusable utility itself. It does not outrank consuming 
 - Run the skill validator for each skill before tagging.
 - Keep `VERSION`, `pyproject.toml`, and `design_intelligence/__init__.py` aligned.
 - Automatic repair stops after 3 iterations or at authority, scope, architecture, baseline, threshold, test, backend, or product-behavior boundaries.
+
+## Prepared integration work: `begin`
+
+The selected continuation is the native Proofloom / AgentFlow / Traffic-Control-Pilot integration, not a new cognitive operating system. Before acting on an explicit operator `begin` for this initiative, read [the work directive](docs/BEGIN-INTEGRATION.md) and the referenced native task dependency closure.
+
+Begin with branch/authority reconciliation; then close governed-handoff v2 compatibility, native AgentFlow enforcement, Governor observations/interventions and the audited local return loop. Do not recreate capabilities already implemented, rerun completed historical work, install exported V7-EPI task packs as canonical, or automatically expand into DecisionIntelligence UI work.
+
+This is a natural-language continuation instruction, not a new CLI command or an authenticated approval receipt. The preparation itself starts no implementation. At execution time preserve distinct native adoption/approval/acceptance gates, exact-revision evidence and AgentFlow ownership. Do not ask the owner to restate the selected direction; stop only for a concrete unresolved authority, scope, environment or evidence boundary.
